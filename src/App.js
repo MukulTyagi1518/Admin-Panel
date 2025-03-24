@@ -20,12 +20,17 @@ import Classified from "./components/settings/Classified.js";
 import NewestPreorderProducts from "./components/settings/NewestPreorderProducts.js";
 import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
-import LatestOrders from "./components/orders/LatestOrders.js";
-import Preorders from "./components/preorders/PreOrders.js";
+import AllOrders from "./components/sales/AllOrders.js";
+import InHouseOrders from "./components/sales/InHouseOrders.js";
+import SellerOrders from "./components/sales/SellerOrders.js";
+import UnpaidOrders from "./components/sales/UnpaidOrders.js";
+import PaidOrders from "./components/sales/PaidOrders.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+
+  
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -49,6 +54,7 @@ function App() {
               <Route path="/preorders" element={<PreordersPage />} />
               <Route path="/earnings" element={<EarningsPage />} />
               <Route path="/settings" element={<SettingsLayout />}>
+                <Route index element={<HomeSlider />} />
                 <Route path="home-slider" element={<HomeSlider />} />
                 <Route path="todays-deal" element={<TodaysDeals />} />
                 <Route path="banner-level-1" element={<BannerLevel1 />} />
@@ -67,8 +73,11 @@ function App() {
                 />
                 <Route path="top-brands" element={<TopBrands />} />
               </Route>
-              <Route path="/sales/all" element={<LatestOrders/>}/>
-              <Route path="/sales/inhouse" element={<Preorders/>}/>
+              <Route path="/sales/all" element={<AllOrders />} />
+              <Route path="/sales/inhouse" element={<InHouseOrders />} />
+              <Route path="/sales/seller" element={<SellerOrders />} />
+              <Route path="/sales/unpaid" element={<UnpaidOrders />} />
+              <Route path="/sales/paid" element={<PaidOrders />} />
             </Routes>
           </div>
         </div>

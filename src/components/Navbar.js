@@ -2,13 +2,16 @@
 import { Bell, Menu, Plus, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAdminContext } from "../adminContext";
 
 // Reusable Dropdown Component
 const Dropdown = ({ isOpen, onClose, items, className }) => {
   if (!isOpen) return null;
 
   return (
-    <div className={`absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 ${className}`}>
+    <div
+      className={`absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 ${className}`}
+    >
       {items.map((item, index) => (
         <Link
           key={index}
@@ -46,6 +49,8 @@ function Navbar({ activeTab, setActiveTab, toggleSidebar }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
+  const { admin, adminData } = useAdminContext();
+
   const tabs = [
     { name: "Dashboard", path: "/" },
     { name: "Orders", path: "/orders" },
@@ -82,7 +87,12 @@ function Navbar({ activeTab, setActiveTab, toggleSidebar }) {
       {/* Tabs */}
       <div className="hidden lg:flex h-full">
         {tabs.map((tab) => (
-          <Tab key={tab.name} tab={tab} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Tab
+            key={tab.name}
+            tab={tab}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         ))}
       </div>
 
@@ -116,7 +126,9 @@ function Navbar({ activeTab, setActiveTab, toggleSidebar }) {
         {/* User Profile and Dropdown */}
         <div className="flex items-center gap-2.5">
           <div className="text-right">
-            <div className="font-medium">Nikhil V Lathigara</div>
+            <div className="font-medium">
+              {admin ? adminData.firstName : "Login"}
+            </div>
             <div className="text-[#6c7293] text-xs">admin</div>
           </div>
           <div className="relative">
