@@ -22,6 +22,14 @@ import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
 import LatestOrders from "./components/orders/LatestOrders.js";
 import Preorders from "./components/preorders/PreOrders.js";
+import Productadd from "./pages/products/Productadd.jsx"
+import Seo from "./pages/products/Seo.jsx"
+import Shipping from "./pages/products/Shipping.jsx"
+import Warrenty from "./pages/products/Warrenty.jsx"
+import FrequentlyBought from "./pages/products/FrequentlyBought.jsx"
+import Productprice from "./pages/products/Productprice.jsx"
+import CategoryBased from "./pages/products/CategoryBased.jsx"
+import General from "./pages/products/General.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -42,6 +50,15 @@ function App() {
           />
           <div className="flex-1 bg-[#f5f6fa] overflow-y-auto">
             <Routes>
+            <Route path="/products/add" element={<Productadd />} />
+            <Route path="/products/seo" element={<Seo />} />
+            <Route path="/products/shipping" element={<Shipping />} />
+            <Route path="/products/warrenty" element={<Warrenty />} />
+            <Route path="/products/FrequentlyBought" element={<FrequentlyBought />} />
+            <Route path="/products/Productprice" element={<Productprice />} />
+            <Route path="/products/CategoryBased" element={<CategoryBased />} />
+            <Route path="/products/General" element={<General />} />
+           
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
               <Route path="/" element={<Dashboard />} />
