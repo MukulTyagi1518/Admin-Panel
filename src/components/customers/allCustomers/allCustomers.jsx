@@ -125,10 +125,10 @@ export default function AllCustomers() {
                                             <td>
                                                 <div className="actions">
                                                     <div className="action">
-                                                        <Ban color="red" size={18} />
+                                                        <Ban color="blue" size={18} />
                                                     </div>
                                                     <div className="action">
-                                                        <Trash2 color="red" size={18} />
+                                                        <Trash2 color="blue" size={18} />
                                                     </div>
                                                 </div>
                                             </td>
