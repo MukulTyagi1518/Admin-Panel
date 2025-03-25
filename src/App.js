@@ -25,12 +25,16 @@ import InHouseOrders from "./components/sales/InHouseOrders.js";
 import SellerOrders from "./components/sales/SellerOrders.js";
 import UnpaidOrders from "./components/sales/UnpaidOrders.js";
 import PaidOrders from "./components/sales/PaidOrders.js";
+import AllCustomers from "./components/customers/allCustomers/allCustomers.jsx";
+import PreorderProducts from "./components/preorders/preOrderProducts/preorderProducts.jsx";
+import PreOrderQueries from "./components/preorders/preOrderQueries/preOrderQueries.jsx";
+import PreOrderReviews from "./components/preorders/preOrderReviews/preOrderReviews.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
-  
+
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -78,6 +82,10 @@ function App() {
               <Route path="/sales/seller" element={<SellerOrders />} />
               <Route path="/sales/unpaid" element={<UnpaidOrders />} />
               <Route path="/sales/paid" element={<PaidOrders />} />
+              <Route path="/customers/all" element={<AllCustomers />} />
+              <Route path="/preorder/product" element={<PreorderProducts />} />
+              <Route path="/preorder/queries" element={<PreOrderQueries />} />
+              <Route path="/preorder/reviews" element={<PreOrderReviews />} />
             </Routes>
           </div>
         </div>
