@@ -25,12 +25,16 @@ import InHouseOrders from "./components/sales/InHouseOrders.js";
 import SellerOrders from "./components/sales/SellerOrders.js";
 import UnpaidOrders from "./components/sales/UnpaidOrders.js";
 import PaidOrders from "./components/sales/PaidOrders.js";
+import Earnings from "./components/reports/Earnings.js";
+import InhouseProductSale from "./components/reports/InhouseProductSale.js";
+import SellerProductSale from "./components/reports/SellerProductSale.js";
+import ProductStock from "./components/reports/ProductStock.js";
+import UserSearches from "./components/reports/UserSearches.js";
+import CommissionHistory from "./components/reports/CommissionHistory.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-
-  
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -73,11 +77,22 @@ function App() {
                 />
                 <Route path="top-brands" element={<TopBrands />} />
               </Route>
-              <Route path="/sales/all" element={<AllOrders />} />
-              <Route path="/sales/inhouse" element={<InHouseOrders />} />
-              <Route path="/sales/seller" element={<SellerOrders />} />
-              <Route path="/sales/unpaid" element={<UnpaidOrders />} />
-              <Route path="/sales/paid" element={<PaidOrders />} />
+              <Route path="/sales">
+                <Route path="all" element={<AllOrders />} />
+                <Route path="inhouse" element={<InHouseOrders />} />
+                <Route path="seller" element={<SellerOrders />} />
+                <Route path="unpaid" element={<UnpaidOrders />} />
+                <Route path="paid" element={<PaidOrders />} />
+              </Route>
+              <Route path="/reports">
+                <Route path="earnings" element={<Earnings />} />
+                <Route path="inhouse-sale" element={<InhouseProductSale />} />
+                <Route path="seller-sale" element={<SellerProductSale />} />
+                <Route path="stock" element={<ProductStock />} />
+                <Route path="searches" element={<UserSearches />} />
+                <Route path="commission" element={<CommissionHistory />} />
+                
+              </Route>
             </Routes>
           </div>
         </div>
