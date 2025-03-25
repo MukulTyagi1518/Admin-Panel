@@ -23,12 +23,32 @@ export default function PreOrderFaq() {
         {
             id: 5,
             question: "How can I contact customer support ?"
+        },
+        {
+            id: 6,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 7,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 8,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 9,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 10,
+            question: "How can I contact customer support ?"
         }
     ]
 
 
     return (
-        <div className="PreOrderFaq">
+        <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox">
                 <div className="preOrderFaqLeft">
                     <div className="preOrderLeftUpper">
@@ -36,7 +56,7 @@ export default function PreOrderFaq() {
                         <input type="text" placeholder="Type to search...." className="searchFaq" />
                     </div>
                     <div className="preOrderLeftLower">
-                        <div className="table-container">
+                        <div className="table-container faqTable">
                             <table>
                                 <thead>
                                     <tr>

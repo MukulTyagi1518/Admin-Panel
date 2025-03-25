@@ -31,7 +31,7 @@ export default function PreOrderNotification() {
     ]
 
     return (
-        <div className="PreOrderNotification">
+        <div className="PreOrderNotification ma10">
             <div className="preOrderNotificationBox">
                 <div className="preOrderNotificationBoxHeader">
                     <p className="notificationTypes">Notification Types</p>

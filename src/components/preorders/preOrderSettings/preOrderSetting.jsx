@@ -26,7 +26,7 @@ export default function PreOrderSetting() {
     });
 
     return (
-        <div className="PreOrderSetting">
+        <div className="PreOrderSetting ma10">
             {/* First Section */}
             <div className="preOrderSettingBox">
                 <div className="preOrderBoxHead">

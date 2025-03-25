@@ -80,7 +80,7 @@ export default function PreorderProducts() {
     };
 
     return (
-        <div className="PreorderProducts">
+        <div className="PreorderProducts ma10">
             <div className="preOrderProductsBox">
                 <div className="preOrderProductsHeader">
                     <p className="allCustomersHead">

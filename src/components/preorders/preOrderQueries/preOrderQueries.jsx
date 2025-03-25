@@ -38,7 +38,7 @@ export default function PreOrderQueries() {
     ];
 
     return (
-        <div className="productQueriesBox">
+        <div className="productQueriesBox ma10">
             <div className="allCustomersLowerBox productQueries">
                 <div className="allCustomersLowerHeader">
                     <p className="customersText">
