@@ -29,12 +29,16 @@ import AllCustomers from "./components/customers/allCustomers/allCustomers.jsx";
 import PreorderProducts from "./components/preorders/preOrderProducts/preorderProducts.jsx";
 import PreOrderQueries from "./components/preorders/preOrderQueries/preOrderQueries.jsx";
 import PreOrderReviews from "./components/preorders/preOrderReviews/preOrderReviews.jsx";
+import Earnings from "./components/reports/Earnings.js";
+import InhouseProductSale from "./components/reports/InhouseProductSale.js";
+import SellerProductSale from "./components/reports/SellerProductSale.js";
+import ProductStock from "./components/reports/ProductStock.js";
+import UserSearches from "./components/reports/UserSearches.js";
+import CommissionHistory from "./components/reports/CommissionHistory.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-
-
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -77,15 +81,30 @@ function App() {
                 />
                 <Route path="top-brands" element={<TopBrands />} />
               </Route>
-              <Route path="/sales/all" element={<AllOrders />} />
-              <Route path="/sales/inhouse" element={<InHouseOrders />} />
-              <Route path="/sales/seller" element={<SellerOrders />} />
-              <Route path="/sales/unpaid" element={<UnpaidOrders />} />
-              <Route path="/sales/paid" element={<PaidOrders />} />
+
               <Route path="/customers/all" element={<AllCustomers />} />
-              <Route path="/preorder/product" element={<PreorderProducts />} />
-              <Route path="/preorder/queries" element={<PreOrderQueries />} />
-              <Route path="/preorder/reviews" element={<PreOrderReviews />} />
+
+              <Route path="/preorder">
+                <Route path="product" element={<PreorderProducts />} />
+                <Route path="queries" element={<PreOrderQueries />} />
+                <Route path="reviews" element={<PreOrderReviews />} />
+              </Route>
+              <Route path="/sales">
+                <Route path="all" element={<AllOrders />} />
+                <Route path="inhouse" element={<InHouseOrders />} />
+                <Route path="seller" element={<SellerOrders />} />
+                <Route path="unpaid" element={<UnpaidOrders />} />
+                <Route path="paid" element={<PaidOrders />} />
+              </Route>
+              <Route path="/reports">
+                <Route path="earnings" element={<Earnings />} />
+                <Route path="inhouse-sale" element={<InhouseProductSale />} />
+                <Route path="seller-sale" element={<SellerProductSale />} />
+                <Route path="stock" element={<ProductStock />} />
+                <Route path="searches" element={<UserSearches />} />
+                <Route path="commission" element={<CommissionHistory />} />
+
+              </Route>
             </Routes>
           </div>
         </div>
