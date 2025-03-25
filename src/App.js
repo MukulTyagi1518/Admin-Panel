@@ -30,6 +30,24 @@ import FrequentlyBought from "./pages/products/FrequentlyBought.jsx"
 import Productprice from "./pages/products/Productprice.jsx"
 import CategoryBased from "./pages/products/CategoryBased.jsx"
 import General from "./pages/products/General.jsx";
+import AllOrders from "./components/sales/AllOrders.js";
+import InHouseOrders from "./components/sales/InHouseOrders.js";
+import SellerOrders from "./components/sales/SellerOrders.js";
+import UnpaidOrders from "./components/sales/UnpaidOrders.js";
+import PaidOrders from "./components/sales/PaidOrders.js";
+import AllCustomers from "./components/customers/allCustomers/allCustomers.jsx";
+import PreorderProducts from "./components/preorders/preOrderProducts/preorderProducts.jsx";
+import PreOrderQueries from "./components/preorders/preOrderQueries/preOrderQueries.jsx";
+import PreOrderReviews from "./components/preorders/preOrderReviews/preOrderReviews.jsx";
+import Earnings from "./components/reports/Earnings.js";
+import InhouseProductSale from "./components/reports/InhouseProductSale.js";
+import SellerProductSale from "./components/reports/SellerProductSale.js";
+import ProductStock from "./components/reports/ProductStock.js";
+import UserSearches from "./components/reports/UserSearches.js";
+import CommissionHistory from "./components/reports/CommissionHistory.js";
+import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSetting.jsx";
+import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
+import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -66,6 +84,7 @@ function App() {
               <Route path="/preorders" element={<PreordersPage />} />
               <Route path="/earnings" element={<EarningsPage />} />
               <Route path="/settings" element={<SettingsLayout />}>
+                <Route index element={<HomeSlider />} />
                 <Route path="home-slider" element={<HomeSlider />} />
                 <Route path="todays-deal" element={<TodaysDeals />} />
                 <Route path="banner-level-1" element={<BannerLevel1 />} />
@@ -84,8 +103,33 @@ function App() {
                 />
                 <Route path="top-brands" element={<TopBrands />} />
               </Route>
-              <Route path="/sales/all" element={<LatestOrders/>}/>
-              <Route path="/sales/inhouse" element={<Preorders/>}/>
+
+              <Route path="/customers/all" element={<AllCustomers />} />
+
+              <Route path="/preorder">
+                <Route path="product" element={<PreorderProducts />} />
+                <Route path="queries" element={<PreOrderQueries />} />
+                <Route path="reviews" element={<PreOrderReviews />} />
+                <Route path="setting" element={<PreOrderSetting />} />
+                <Route path="notification" element={<PreOrderNotification />} />
+                <Route path="faq" element={<PreOrderFaq />} />
+              </Route>
+              <Route path="/sales">
+                <Route path="all" element={<AllOrders />} />
+                <Route path="inhouse" element={<InHouseOrders />} />
+                <Route path="seller" element={<SellerOrders />} />
+                <Route path="unpaid" element={<UnpaidOrders />} />
+                <Route path="paid" element={<PaidOrders />} />
+              </Route>
+              <Route path="/reports">
+                <Route path="earnings" element={<Earnings />} />
+                <Route path="inhouse-sale" element={<InhouseProductSale />} />
+                <Route path="seller-sale" element={<SellerProductSale />} />
+                <Route path="stock" element={<ProductStock />} />
+                <Route path="searches" element={<UserSearches />} />
+                <Route path="commission" element={<CommissionHistory />} />
+
+              </Route>
             </Routes>
           </div>
         </div>

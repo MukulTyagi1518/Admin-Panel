@@ -103,7 +103,7 @@ const menuItems = [
     name: "Reports",
     icon: <FileText size={20} />,
     subItems: [
-      { name: "Earning reports", path: "/reports/earning" },
+      { name: "Earning reports", path: "/reports/earnings" },
       { name: "Inhouse product sale", path: "/reports/inhouse-sale" },
       { name: "Seller product sale", path: "/reports/seller-sale" },
       { name: "Product stock", path: "/reports/stock" },

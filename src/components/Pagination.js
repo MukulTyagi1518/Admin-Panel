@@ -2,7 +2,10 @@ import React from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const maxPageNumbersToShow = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbersToShow / 2));
+  let startPage = Math.max(
+    1,
+    currentPage - Math.floor(maxPageNumbersToShow / 2)
+  );
   let endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
 
   if (endPage - startPage < maxPageNumbersToShow - 1) {
@@ -15,7 +18,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2 justify-center md:justify-start">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -27,8 +30,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`px-4 py-2 bg-white border rounded-md text-black hover:bg-gray-50 ${
-            currentPage === page ? "bg-blue-500 text-white" : ""
+          className={`px-4 py-2 border rounded-md text-black hover:bg-gray-50 ${
+            currentPage === page ? " text-black" : " "
           }`}
         >
           {page}
