@@ -35,6 +35,9 @@ import SellerProductSale from "./components/reports/SellerProductSale.js";
 import ProductStock from "./components/reports/ProductStock.js";
 import UserSearches from "./components/reports/UserSearches.js";
 import CommissionHistory from "./components/reports/CommissionHistory.js";
+import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSetting.jsx";
+import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
+import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -88,6 +91,9 @@ function App() {
                 <Route path="product" element={<PreorderProducts />} />
                 <Route path="queries" element={<PreOrderQueries />} />
                 <Route path="reviews" element={<PreOrderReviews />} />
+                <Route path="setting" element={<PreOrderSetting />} />
+                <Route path="notification" element={<PreOrderNotification />} />
+                <Route path="faq" element={<PreOrderFaq />} />
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />

@@ -1,0 +1,113 @@
+import { Delete, Edit, Trash } from "lucide-react"
+import "./preOrderFaq.scss"
+
+export default function PreOrderFaq() {
+
+    const faqs = [
+        {
+            id: 1,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 2,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 3,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 4,
+            question: "How can I contact customer support ?"
+        },
+        {
+            id: 5,
+            question: "How can I contact customer support ?"
+        }
+    ]
+
+
+    return (
+        <div className="PreOrderFaq">
+            <div className="preOrderFaqBox">
+                <div className="preOrderFaqLeft">
+                    <div className="preOrderLeftUpper">
+                        <p className="allFaq">All FAQ</p>
+                        <input type="text" placeholder="Type to search...." className="searchFaq" />
+                    </div>
+                    <div className="preOrderLeftLower">
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+
+
+                                        <th >Question</th>
+
+
+                                        <th >Status</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {faqs.map((n) => (
+                                        <tr key={n.id}>
+                                            <td>
+                                                {n.id}
+                                            </td>
+
+                                            <td>{n.question}</td>
+
+                                            <td >
+                                                <div className="toggle-item">
+
+                                                    <label className="switch">
+                                                        <input
+                                                            type="checkbox"
+                                                        />
+                                                        <span className="slider"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div className="actions">
+                                                    <div className="action">
+                                                        <Edit color="blue" size={18} />
+                                                    </div>
+                                                    <div className="action">
+                                                        <Trash color="blue" size={18} />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="preOrderFaqRight">
+                    <div className="preOrderFaqRightHead">
+                        <p className="allFaq">Add new FAQ</p>
+                    </div>
+
+                    <div className="faqForm">
+                        <input type="text" placeholder="Enter question" className="faqInp" />
+                        <textarea type="text" placeholder="Enter answer" className="faqTxt" />
+                        <div className="inpSubBox">
+                            <input type="submit" value="Save" className="inpSub" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
