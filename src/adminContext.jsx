@@ -2,6 +2,7 @@ import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "./firebase";
+import api from "./utils/axios"
 
 // import { useNavigate } from "react-router-dom";
 
@@ -34,8 +35,8 @@ export const AdminProvider = ({ children }) => {
         try {
           
 
-          const response = await axios.post(
-            "http://localhost:5000/api/admin/check-admin",
+          const response = await api.post(
+            "/admin/check-admin",
             {
               email: adminData.email,
             }

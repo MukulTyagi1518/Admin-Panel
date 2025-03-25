@@ -5,7 +5,6 @@
   transition: max-height 0.3s ease-in-out;
 }
 
-
 .sidebar ul.open {
   max-height: 500px; /* Adjust based on your content */
 }

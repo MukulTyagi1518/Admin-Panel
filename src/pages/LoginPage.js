@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import axios from "axios";
 import { useAdminContext } from "../adminContext";
+import api from "../utils/axios"
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +28,7 @@ function LoginPage() {
       mailOtp: otpCode,
     }));
 
-    await axios.post("http://localhost:5000/api/admin/send-mail-otp", {
+    await api.post("/admin/send-mail-otp", {
       adminEmail: adminData.email,
       otp: otpCode,
     });
