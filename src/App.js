@@ -48,6 +48,7 @@ import CommissionHistory from "./components/reports/CommissionHistory.js";
 import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSetting.jsx";
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
+import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -68,15 +69,25 @@ function App() {
           />
           <div className="flex-1 bg-[#f5f6fa] overflow-y-auto">
             <Routes>
-            <Route path="/products/add" element={<Productadd />} />
-            <Route path="/products/seo" element={<Seo />} />
-            <Route path="/products/shipping" element={<Shipping />} />
-            <Route path="/products/warrenty" element={<Warrenty />} />
-            <Route path="/products/FrequentlyBought" element={<FrequentlyBought />} />
-            <Route path="/products/Productprice" element={<Productprice />} />
-            <Route path="/products/CategoryBased" element={<CategoryBased />} />
-            <Route path="/products/General" element={<General />} />
-           
+
+              <Route path="/products/CategoryBased" element={<CategoryBased />} />
+
+
+
+              <Route path="/products" >
+                <Route path="create" element={<AddNewProductMain />}>
+                  <Route index element={<General />} />
+                  <Route path="general" element={<General />} />
+                  <Route path="add" element={<Productadd />} />
+                  <Route path="seo" element={<Seo />} />
+                  <Route path="shipping" element={<Shipping />} />
+                  <Route path="warranty" element={<Warrenty />} />
+                  <Route path="frequently-bought" element={<FrequentlyBought />} />
+                  <Route path="price-stock" element={<Productprice />} />
+
+                </Route>
+              </Route>
+
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
               <Route path="/" element={<Dashboard />} />

@@ -19,7 +19,7 @@ const menuItems = [
     icon: <Package size={20} />,
     subItems: [
       { name: "All product", path: "/products/all" },
-      { name: "Add new product", path: "/products/add" },
+      { name: "Add new product", path: "/products/create" },
       { name: "Inhouse product", path: "/products/inhouse" },
       { name: "Bulk import", path: "/products/bulk-import" },
       { name: "Bulk export", path: "/products/bulk-export" },
@@ -29,7 +29,7 @@ const menuItems = [
       { name: "Brand", path: "/products/brand" },
       { name: "Attribute", path: "/products/attribute" },
       { name: "Colour", path: "/products/colour" },
-      { name: "Warrenty", path: "/products/warrenty" },
+      { name: "Warrenty", path: "/products/warranty" },
       { name: "Product review", path: "/products/review" },
     ],
     path: "/products",

@@ -1,0 +1,32 @@
+.addNewProductBox {
+    padding: .5cm;
+    display: flex;
+    align-items: flex-start;
+    // border: 1px solid black;
+    gap: 1cm;
+}
+
+
+.addNewProductMenu {
+    display: flex;
+    flex-direction: column;
+    // gap: .3cm;
+    flex-shrink: 0;
+    padding: .5cm 0cm 0cm 0cm;
+    width: fit-content;
+}
+
+.addNewProductMenuItem {
+    color: black;
+    opacity: .6;
+    font-size: 14px;
+    cursor: pointer;
+    padding: .2cm .3cm;
+    font-weight: 500;
+    // background-color: rgb(211, 211, 255);
+}
+
+.addNewProductOutlet{
+    // border: 1px solid black;
+    width: 100%;
+}
