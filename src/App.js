@@ -49,11 +49,15 @@ import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSet
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
+<<<<<<< HEAD
 import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
 import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
 import FlashDeals from "./components/marketing/FlashDeals.js";
 import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
 import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
+=======
+import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
+>>>>>>> 042cc5cf7be0eb0ffe0cb6e8e7069857c35dbd12
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -151,6 +155,7 @@ function App() {
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
+                <Route path="dashboard" element={<PreOrderDashboard />} />
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />
