@@ -1,7 +1,5 @@
 import { useState } from "react";
 import "./preOrderSetting.scss";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import { X } from "lucide-react";
 
 export default function PreOrderSetting() {
@@ -18,12 +16,6 @@ export default function PreOrderSetting() {
             setFile({ name: "Choose file", src: "" });
         }
     };
-
-    // Tiptap editor setup
-    const editor = useEditor({
-        extensions: [StarterKit], // Includes bold, italic, lists, undo, redo
-        content: "<p>Write something...</p>",
-    });
 
     return (
         <div className="PreOrderSetting ma10">
@@ -84,7 +76,7 @@ export default function PreOrderSetting() {
                 </div>
             </div>
 
-            {/* Third Section (Tiptap Editor) */}
+            
             <div className="preOrderSettingBox">
                 <div className="preOrderBoxHead">
                     <p className="preOrderBoxHeadText">PreOrder Instructions</p>
