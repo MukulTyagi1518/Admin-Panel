@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import VerifyOtp from "./pages/VerifyOtp";
@@ -22,13 +22,13 @@ import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
 import LatestOrders from "./components/orders/LatestOrders.js";
 import Preorders from "./components/preorders/PreOrders.js";
-import Productadd from "./pages/products/Productadd.jsx"
-import Seo from "./pages/products/Seo.jsx"
-import Shipping from "./pages/products/Shipping.jsx"
-import Warrenty from "./pages/products/Warrenty.jsx"
-import FrequentlyBought from "./pages/products/FrequentlyBought.jsx"
-import Productprice from "./pages/products/Productprice.jsx"
-import CategoryBased from "./pages/products/CategoryBased.jsx"
+import Productadd from "./pages/products/Productadd.jsx";
+import Seo from "./pages/products/Seo.jsx";
+import Shipping from "./pages/products/Shipping.jsx";
+import Warrenty from "./pages/products/Warrenty.jsx";
+import FrequentlyBought from "./pages/products/FrequentlyBought.jsx";
+import Productprice from "./pages/products/Productprice.jsx";
+import CategoryBased from "./pages/products/CategoryBased.jsx";
 import General from "./pages/products/General.jsx";
 import AllOrders from "./components/sales/AllOrders.js";
 import InHouseOrders from "./components/sales/InHouseOrders.js";
@@ -49,18 +49,43 @@ import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSet
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
+import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
+import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
+import FlashDeals from "./components/marketing/FlashDeals.js";
+import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
+import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
+
   return (
     <>
       <div className="flex h-screen overflow-hidden">
-        {isSidebarVisible && <Sidebar />}
+        {/* <Sidebar isSidebarVisible={isSidebarVisible} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Navbar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            toggleSidebar={toggleSidebar}
+          /> */}
+        {(!isMobile || isSidebarVisible) && (
+          <Sidebar isSidebarVisible={isMobile ? true : isSidebarVisible} />
+        )}
         <div className="flex-1 flex flex-col overflow-hidden">
           <Navbar
             activeTab={activeTab}
@@ -69,12 +94,12 @@ function App() {
           />
           <div className="flex-1 bg-[#f5f6fa] overflow-y-auto">
             <Routes>
+              <Route
+                path="/products/CategoryBased"
+                element={<CategoryBased />}
+              />
 
-              <Route path="/products/CategoryBased" element={<CategoryBased />} />
-
-
-
-              <Route path="/products" >
+              <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>
                   <Route index element={<General />} />
                   <Route path="general" element={<General />} />
@@ -82,9 +107,11 @@ function App() {
                   <Route path="seo" element={<Seo />} />
                   <Route path="shipping" element={<Shipping />} />
                   <Route path="warranty" element={<Warrenty />} />
-                  <Route path="frequently-bought" element={<FrequentlyBought />} />
+                  <Route
+                    path="frequently-bought"
+                    element={<FrequentlyBought />}
+                  />
                   <Route path="price-stock" element={<Productprice />} />
-
                 </Route>
               </Route>
 
@@ -139,7 +166,13 @@ function App() {
                 <Route path="stock" element={<ProductStock />} />
                 <Route path="searches" element={<UserSearches />} />
                 <Route path="commission" element={<CommissionHistory />} />
-
+              </Route>
+              <Route path="/marketing">
+                <Route path="best-weekly" element={<BestWeeklyProducts />} />
+                <Route path="best-seller" element={<BestSellerProducts />} />
+                <Route path="flash-deal" element={<FlashDeals />} />
+                <Route path="flash-deal/edit" element={<FlashDealEdit />} />
+                <Route path="ads" element={<SellerAdsMarketing />} />
               </Route>
             </Routes>
           </div>

@@ -72,7 +72,7 @@ const menuItems = [
   },
   {
     name: "Refunds",
-    icon: <RefreshCcw size={20} />,
+    icon: <RefreshCcw size={20}/>,
     subItems: [
       { name: "Refund request", path: "/refunds/request" },
       { name: "Approved request", path: "/refunds/approved" },
@@ -173,7 +173,7 @@ const menuItems = [
   },
 ];
 
-function Sidebar() {
+function Sidebar({isSidebarVisible}) {
   const [openItems, setOpenItems] = useState({});
   const navigate = useNavigate();
 
@@ -189,48 +189,62 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-[280px] bg-slate-900 text-white flex flex-col overflow-y-auto py-5">
+    <div 
+      className={`
+        ${isSidebarVisible ? 'w-[280px]' : 'w-[70px]'} 
+        bg-slate-900 text-white flex flex-col overflow-y-auto py-5 transition-all duration-300
+      `}
+    >
       {/* Logo */}
-      <div className="flex items-center px-5 mb-5">
-        <div className="flex flex-row leading-5">
-          <span className="text-white font-bold">Admin</span>
-          <span className="text-sky-600 font-bold">Panel</span>
+      {isSidebarVisible && (
+        <div className="flex items-center px-5 mb-5">
+          <div className="flex flex-row leading-5">
+            <span className="text-white font-bold">Admin</span>
+            <span className="text-sky-600 font-bold">Panel</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Search */}
-      <div className="relative px-5 mb-5">
-        <input
-          type="text"
-          placeholder="Search in menu"
-          className="w-full bg-[#2a2f42] border-none rounded-md py-2.5 px-3.5 pr-10 text-white placeholder-[#6c7293] focus:outline-none"
-        />
-        <Search size={18} className="absolute right-8 top-1/2 transform -translate-y-1/2 text-[#6c7293]" />
-      </div>
+      {isSidebarVisible && (
+        <div className="relative px-5 mb-5">
+          <input
+            type="text"
+            placeholder="Search in menu"
+            className="w-full bg-[#2a2f42] border-none rounded-md py-2.5 px-3.5 pr-10 text-white placeholder-[#6c7293] focus:outline-none"
+          />
+          <Search size={18} className="absolute right-14 lg:right-7 top-1/2 transform -translate-y-1/2 text-[#6c7293]" />
+        </div>
+      )}
+
 
       {/* Menu */}
       <div className="flex flex-col">
         {menuItems.map((item, index) => (
           <div key={index} className="flex flex-col">
             <div
-              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${
-                openItems[index] ? "text-white bg-white/5 border-l-4 border-[#ff5722]" : "text-white"
-              }`}
+              className={`
+                flex items-center ${isSidebarVisible ? 'justify-between' : 'justify-center'} 
+                py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 
+                ${openItems[index] ? 'text-white bg-white/5 border-l-4 border-[#ff5722]' : 'text-white'}
+              `}
               onClick={() => toggleItem(index)}
             >
-              <div className="flex items-center gap-2">
+               <div className="flex items-center gap-2">
                 {item.icon}
-                <span>{item.name}</span>
+                {isSidebarVisible && <span>{item.name}</span>}
               </div>
-              {item.subItems.length > 0 && (openItems[index] ? <ChevronUp size={20} /> : <ChevronDown size={20} />)}
+              {isSidebarVisible && item.subItems.length > 0 && (
+                openItems[index] ? <ChevronUp size={20} /> : <ChevronDown size={20} />
+              )}
             </div>
-            {openItems[index] && item.subItems.length > 0 && (
+            {openItems[index] && item.subItems.length > 0 && isSidebarVisible && (
               <ul className="pl-12 py-2 space-y-1">
                 {item.subItems.map((subItem, subIndex) => (
                   <li
                     key={subIndex}
                     className="py-1 cursor-pointer text-white hover:text-sky-500"
-                    onClick={() => handleSubItemClick(subItem.path)} // Navigate on click
+                    onClick={() => handleSubItemClick(subItem.path)}
                   >
                     {subItem.name}
                   </li>
