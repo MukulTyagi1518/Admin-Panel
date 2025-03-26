@@ -49,15 +49,17 @@ import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSet
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
-<<<<<<< HEAD
 import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
 import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
 import FlashDeals from "./components/marketing/FlashDeals.js";
 import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
 import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
-=======
 import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
->>>>>>> 042cc5cf7be0eb0ffe0cb6e8e7069857c35dbd12
+import AllOrdersPreOrders from "./components/preorders/orders/allOrders.jsx";
+import InHousePreOrders from "./components/preorders/orders/inhouseorders.jsx";
+import SellersPreOrders from "./components/preorders/orders/sellerorders.jsx";
+import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
+import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -156,6 +158,11 @@ function App() {
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
                 <Route path="dashboard" element={<PreOrderDashboard />} />
+                <Route path="all-orders" element={<AllOrdersPreOrders />} />
+                <Route path="inhouse-orders" element={<InHousePreOrders />} />
+                <Route path="seller-orders" element={<SellersPreOrders />} />
+                <Route path="delayed-prepayment-orders" element={<DelayedPrepaymentPreOrders />} />
+                <Route path="delayed-final-orders" element={<DelayedFinalPreOrders />} />
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />

@@ -45,6 +45,11 @@ const menuItems = [
       { name: "Preorder Product Reviews", path: "/preorder/reviews" },
       { name: "Preorder Notification", path: "/preorder/notification" },
       { name: "Preorder FAQ", path: "/preorder/faq" },
+      { name: "All Orders", path: "/preorder/all-orders" },
+      { name: "Inhouse Orders", path: "/preorder/inhouse-orders" },
+      { name: "Sellers Orders", path: "/preorder/seller-orders" },
+      { name: "Delayed Prepayment Orders", path: "/preorder/delayed-prepayment-orders" },
+      { name: "Delayed Final Orders", path: "/preorder/delayed-final-orders" },
     ],
     path: "/preorder",
   },
@@ -73,7 +78,7 @@ const menuItems = [
   },
   {
     name: "Refunds",
-    icon: <RefreshCcw size={20}/>,
+    icon: <RefreshCcw size={20} />,
     subItems: [
       { name: "Refund request", path: "/refunds/request" },
       { name: "Approved request", path: "/refunds/approved" },
@@ -174,7 +179,7 @@ const menuItems = [
   },
 ];
 
-function Sidebar({isSidebarVisible}) {
+function Sidebar({ isSidebarVisible }) {
   const [openItems, setOpenItems] = useState({});
   const navigate = useNavigate();
 
@@ -190,7 +195,7 @@ function Sidebar({isSidebarVisible}) {
   };
 
   return (
-    <div 
+    <div
       className={`
         ${isSidebarVisible ? 'w-[280px]' : 'w-[70px]'} 
         bg-slate-900 text-white flex flex-col overflow-y-auto py-5 transition-all duration-300
@@ -224,19 +229,11 @@ function Sidebar({isSidebarVisible}) {
         {menuItems.map((item, index) => (
           <div key={index} className="flex flex-col">
             <div
-<<<<<<< HEAD
-              className={`
-                flex items-center ${isSidebarVisible ? 'justify-between' : 'justify-center'} 
-                py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 
-                ${openItems[index] ? 'text-white bg-white/5 border-l-4 border-[#ff5722]' : 'text-white'}
-              `}
-=======
               className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${openItems[index] ? "text-white bg-white/5 border-l-4 border-[#ff5722]" : "text-white"
                 }`}
->>>>>>> 042cc5cf7be0eb0ffe0cb6e8e7069857c35dbd12
               onClick={() => toggleItem(index)}
             >
-               <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 {item.icon}
                 {isSidebarVisible && <span>{item.name}</span>}
               </div>
