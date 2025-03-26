@@ -49,6 +49,7 @@ import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSet
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
+import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -124,6 +125,7 @@ function App() {
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
+                <Route path="dashboard" element={<PreOrderDashboard />} />
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />

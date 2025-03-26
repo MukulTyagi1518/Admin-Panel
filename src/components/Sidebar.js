@@ -38,6 +38,7 @@ const menuItems = [
     name: "Preorder",
     icon: <Clock size={20} />,
     subItems: [
+      { name: "Dashboard", path: "/preorder/dashboard" },
       { name: "Preorder product", path: "/preorder/product" },
       { name: "Preorder setting", path: "/preorder/setting" },
       { name: "Preorder Product Queries", path: "/preorder/queries" },
@@ -213,9 +214,8 @@ function Sidebar() {
         {menuItems.map((item, index) => (
           <div key={index} className="flex flex-col">
             <div
-              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${
-                openItems[index] ? "text-white bg-white/5 border-l-4 border-[#ff5722]" : "text-white"
-              }`}
+              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${openItems[index] ? "text-white bg-white/5 border-l-4 border-[#ff5722]" : "text-white"
+                }`}
               onClick={() => toggleItem(index)}
             >
               <div className="flex items-center gap-2">
