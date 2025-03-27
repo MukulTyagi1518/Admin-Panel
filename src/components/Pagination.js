@@ -26,17 +26,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       >
         Previous
       </button>
-      {pageNumbers.map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          className={`px-4 py-2 border rounded-md text-black hover:bg-gray-50 ${
-            currentPage === page ? " text-black" : " "
-          }`}
-        >
-          {page}
-        </button>
-      ))}
+          <span className= "px-4 py-2 text-sm text-gray-500">
+            Page {currentPage} of {totalPages}
+          </span>
+
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
