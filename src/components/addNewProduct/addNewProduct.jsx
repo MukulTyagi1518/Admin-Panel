@@ -4,7 +4,9 @@ export default function AddNewProductMain() {
     return (
         <div className="addNewProductMain">
             <div className="addNewProductBox">
-                <div className="addNewProductMenu">
+               <div className="addNewProductMenu">
+                  <label>Add Product</label>
+                  <div className="divider"></div>
                     <Link to='/products/create/general'>
                         <p className="addNewProductMenuItem">
                             General

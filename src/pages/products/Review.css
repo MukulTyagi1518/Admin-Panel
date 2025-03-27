@@ -1,0 +1,34 @@
+.product-table {
+    display: flex;  /* Flexbox enable */
+    justify-content: space-between;  /* Left & Right alignment */
+    align-items: center;  /* Vertically center */
+    padding: 10px; /* Add spacing if needed */
+}
+.allCustomersLowerHeader h5{
+    font-weight: bold;
+}
+.filter-container {
+    display: flex;
+    justify-content: flex-end; /* Right align */
+    gap: 10px;
+    padding: 10px;
+    background-color: rgb(178, 193, 205);
+  }
+  
+  .filter-dropdown, 
+  .filter-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .filter-dropdown {
+    width: 150px;
+    cursor: pointer;
+  }
+  
+  .filter-input {
+    width: 200px;
+  }
+  

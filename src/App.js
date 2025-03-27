@@ -49,6 +49,13 @@ import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSet
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
+import Attribute from "./pages/products/Attribute.jsx"
+import Warranties from "./pages/products/Warranties.jsx"
+import Colors from "./pages/products/Colors.jsx"
+import Allbrand from "./pages/products/Allbrand.jsx"
+import Brandimport from "./pages/products/Brandimport.jsx"
+import Review from "./pages/products/Review.jsx"
+import Addreview from "./pages/products/Addreview.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -71,6 +78,13 @@ function App() {
             <Routes>
 
               <Route path="/products/CategoryBased" element={<CategoryBased />} />
+              <Route path="/products/Attribute" element={<Attribute />} />
+              <Route path="/products/Warranties" element={<Warranties />} />
+              <Route path="/products/Colors" element={<Colors />} />
+              <Route path="/products/Allbrand" element={<Allbrand />} />
+              <Route path="/products/Brandimport" element={<Brandimport />} />
+              <Route path="/products/Review" element={<Review />} />
+              <Route path="/products/Addreview" element={<Addreview />}/>
 
 
 
@@ -103,6 +117,8 @@ function App() {
                 <Route path="banner-level-2" element={<BannerLevel2 />} />
                 <Route path="banner-level-3" element={<BannerLevel3 />} />
                 <Route path="auction-products" element={<AuctionBanner />} />
+
+
                 <Route
                   path="category-wise-products"
                   element={<CategoryWiseProducts />}
