@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./Product.css";
 import { X } from "lucide-react";
+import { useProductContext } from "../../productContex";
+import { Link } from "react-router-dom"
+
 
 
 
@@ -9,6 +12,11 @@ const ProductMediaForm = () => {
   const [galleryImgs, setGalleryImgs] = useState([])
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [pdfSpecification, setPdfSpecification] = useState(null)
+
+
+  const { productData, setProductData } = useProductContext()
+
+  console.log(productData)
 
   // Handle file selection for gallery (multiple)
   const handleGalleryChange = (e) => {
@@ -96,7 +104,12 @@ const ProductMediaForm = () => {
       <div className="form-group">
         <label>Video Provider</label>
         <div className="input-container">
-          <select className="dropdown" value={videoProvider} onChange={(e) => setVideoProvider(e.target.value)}>
+          <select className="dropdown" value={productData.videoProvider} onChange={(e) => {
+            setProductData((prev) => ({
+              ...prev,
+              videoProvider: e.target.value
+            }))
+          }}>
             <option value="Youtube">Youtube</option>
             <option value="Vimeo">Vimeo</option>
             <option value="Dailymotion">Dailymotion</option>
@@ -107,7 +120,12 @@ const ProductMediaForm = () => {
       <div className="form-group">
         <label>Video Link</label>
         <div className="input-container">
-          <input type="text" placeholder="Video Link" className="text-input" />
+          <input type="text" placeholder="Video Link" value={productData.videoLink} onChange={(e) => {
+            setProductData((prev) => ({
+              ...prev,
+              videoLink: e.target.value
+            }))
+          }} className="text-input" />
           <p className="description">
             Use a proper link without extra parameters. Don't use short share links or embedded iframe code.
           </p>
@@ -117,16 +135,29 @@ const ProductMediaForm = () => {
       <div className="form-group">
         <label>PDF Specification</label>
         <div className="input-container">
-          <div className="custom-file-input">
-            <button className="browse-btn">Browse</button>
-            <span className="file-name">No file chosen</span>
+          <div className="PreProductInputDiv">
+            <label className="file-label">
+              Browse
+
+              <input type="file" className="file-input" onChange={handlePdfSpecificationChange} />
+            </label>
+            <span className="file-name">{pdfSpecification?.name}</span>
           </div>
         </div>
       </div>
 
       <div className="button-group">
         <button className="btn btn-gray">Save & Unpublish</button>
-        <button className="btn btn-green">Save & Publish</button>
+        <Link to='/products/create/price-stock' >
+          <button className="btn btn-green" onClick={() => {
+            setProductData((prev) => ({
+              ...prev,
+              galleryImages: galleryImgs,
+              thumbnailImage: thumbnailImage,
+              pdfSpecification: pdfSpecification
+            }))
+          }} >Save & Publish</button>
+        </Link>
       </div>
     </div>
   );

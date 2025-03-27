@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./General.css";
 import { useProductContext } from "../../productContex";
+import { X } from "lucide-react"
+import {Link} from "react-router-dom"
 
 const General = () => {
 
@@ -16,6 +18,8 @@ const General = () => {
   const [vat, setVat] = useState(0);
   const [vatType, setVatType] = useState("flat");
   const [content, setContent] = useState("");
+  const [tagInput, setTagInput] = useState("");
+
 
   const { productData, setProductData } = useProductContext()
 
@@ -34,6 +38,28 @@ const General = () => {
   const handleFormat = (command) => {
     document.execCommand(command, false, null);
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && tagInput.trim() !== "") {
+      e.preventDefault(); // Prevent form submission
+      setProductData((prev) => ({
+        ...prev,
+        tags: [...prev.tags, tagInput.trim()],
+      }));
+      setTagInput(""); // Clear input field
+    }
+  };
+
+  const removeTag = (index) => {
+    setProductData((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((_, i) => i !== index),
+    }));
+  };
+
+
+
+
   return (
     <div className="container">
       {/* Left Side - Form */}
@@ -59,12 +85,12 @@ const General = () => {
 
           <div className="form-group">
             <label>Unit *</label>
-            <input type="text" placeholder="Unit (e.g. KG, Pc etc)"  name="unit" value={productData.unit} onChange={handleChangeInputFields} />
+            <input type="text" placeholder="Unit (e.g. KG, Pc etc)" name="unit" value={productData.unit} onChange={handleChangeInputFields} />
           </div>
 
           <div className="form-group">
             <label>Weight (In Kg)</label>
-            <input type="number" placeholder="0" name="weight" value={productData.weight} onChange={handleChangeInputFields}/>
+            <input type="number" placeholder="0" name="weight" value={productData.weight} onChange={handleChangeInputFields} />
           </div>
 
           <div className="form-group">
@@ -74,8 +100,27 @@ const General = () => {
 
           <div className="form-group">
             <label>Tags</label>
-            <input type="text" placeholder="Type and hit enter to add a tag" name="tags" value={productData.tags} onChange={handleChangeInputFields} />
+            <input
+              type="text"
+              placeholder="Type and hit enter to add a tag"
+              name="tagInput"
+              value={tagInput}
+              onChange={(e) => { setTagInput(e.target.value) }}
+              onKeyDown={handleKeyDown}
+            />
           </div>
+
+          {
+            productData.tags && productData.tags.length > 0 ?
+              <div className=" flex flex-wrap gap-[.3cm] ">
+                {productData.tags.map((t, i) => (
+                  <p className="px-[.25cm] flex items-center gap-[.1cm] bg-[forestgreen] text-white rounded-[20px]  "  >
+                    {t} <X size={16} onClick={() => { removeTag(i) }} />
+                  </p>
+                ))}
+              </div>
+              : null
+          }
 
           <div className="form-group">
             <label>Barcode</label>
@@ -124,7 +169,14 @@ const General = () => {
           <div
             className="editor"
             contentEditable
-            onInput={(e) => setContent(e.target.innerHTML)}
+            name="description"
+            onInput={(e) => {
+              setProductData((prev) => ({
+                ...prev,
+                description: e.target.innerHTML
+              }))
+            }}
+
           ></div>
         </div>
 
@@ -144,7 +196,13 @@ const General = () => {
                 id="refundToggle"
                 className="custom-toggle"
                 checked={isRefundable}
-                onChange={() => setIsRefundable(!isRefundable)}
+                onChange={() => {
+                  setIsRefundable(!isRefundable)
+                  setProductData((prev) => ({
+                    ...prev,
+                    refundable: !isRefundable ? "Refundable" : "Non-Refundable"
+                  }))
+                }}
               />
               <label htmlFor="refundToggle" className="toggle-label"></label>
             </div>
@@ -173,7 +231,13 @@ const General = () => {
               id="featuredToggle"
               className="custom-toggle"
               checked={isFeatured}
-              onChange={() => setIsFeatured(!isFeatured)}
+              onChange={() => {
+                setIsFeatured(!isFeatured)
+                setProductData((prev) => ({
+                  ...prev,
+                  featured: !isFeatured ? "Featured" : "Not Featured"
+                }))
+              }}
             />
             <label htmlFor="featuredToggle" className="toggle-label"></label>
             <p>If you enable this, this product will be granted as a featured product.</p>
@@ -185,7 +249,13 @@ const General = () => {
               id="dealToggle"
               className="custom-toggle"
               checked={isTodaysDeal}
-              onChange={() => setIsTodaysDeal(!isTodaysDeal)}
+              onChange={() => {
+                setIsTodaysDeal(!isTodaysDeal)
+                setProductData((prev) => ({
+                  ...prev,
+                  todaysDeal: !isTodaysDeal ? "In Today's Deal" : "Not in today's deal"
+                }))
+              }}
             />
             <label htmlFor="dealToggle" className="toggle-label"></label>
             <p>If you enable this, this product will be granted as a today's deal product.</p>
@@ -201,7 +271,15 @@ const General = () => {
           {/* Add to Flash */}
           <div className="input-group">
             <label>Add To Flash</label>
-            <select value={flashTitle} onChange={(e) => setFlashTitle(e.target.value)}>
+            <select value={productData.flashDeal.addToFlash} onChange={(e) => {
+              setProductData((prev) => ({
+                ...prev,
+                flashDeal: {
+                  ...prev.flashDeal,
+                  addToFlash: e.target.value
+                }
+              }))
+            }}>
               <option value="">Choose Flash Title</option>
               <option value="flash_sale_1">Flash Sale 1</option>
               <option value="flash_sale_2">Flash Sale 2</option>
@@ -213,8 +291,16 @@ const General = () => {
             <label>Discount</label>
             <input
               type="number"
-              value={discount}
-              onChange={(e) => setDiscount(e.target.value)}
+              value={productData.flashDeal.discount}
+              onChange={(e) => {
+                setProductData((prev) => ({
+                  ...prev,
+                  flashDeal: {
+                    ...prev.flashDeal,
+                    discount: e.target.value
+                  }
+                }))
+              }}
               min="0"
             />
           </div>
@@ -222,7 +308,15 @@ const General = () => {
           {/* Discount Type */}
           <div className="input-group">
             <label>Discount Type</label>
-            <select value={discountType} onChange={(e) => setDiscountType(e.target.value)}>
+            <select value={productData.flashDeal.discountType} onChange={(e) => {
+              setProductData((prev) => ({
+                ...prev,
+                flashDeal: {
+                  ...prev.flashDeal,
+                  discountType: e.target.value
+                }
+              }))
+            }}>
               <option value="">Choose Discount Type</option>
               <option value="percentage">Percentage</option>
               <option value="fixed">Fixed Amount</option>
@@ -236,8 +330,26 @@ const General = () => {
         <div className="row">
           <label className="label">Tax</label>
           <div className="input-group-Dropdown">
-            <input type="number" className="input" defaultValue="0" min="0" />
-            <select className="dropdown">
+            <input type="number" value={productData.tax.value} className="input" onChange={(e) => {
+              setProductData((prev) => ({
+                ...prev,
+                tax: {
+                  ...prev.tax,
+                  value: e.target.value
+
+                }
+              }))
+            }} defaultValue="0" min="0" />
+            <select className="dropdown" value={productData.tax.type} onChange={(e) => {
+              setProductData((prev) => ({
+                ...prev,
+                tax: {
+                  ...prev.tax,
+                  type: e.target.value
+
+                }
+              }))
+            }}>
               <option>Flat</option>
               <option>Percentage</option>
             </select>
@@ -249,8 +361,26 @@ const General = () => {
           <label className="label">Vat</label>
           <div className="row-drop">
             <div className="input-group-Dropdown">
-              <input type="number" className="input" defaultValue="0" min="0" />
-              <select className="dropdown">
+              <input type="number" className="input" value={productData.vat.value} onChange={(e) => {
+                setProductData((prev) => ({
+                  ...prev,
+                  vat: {
+                    ...prev.vat,
+                    value: e.target.value
+
+                  }
+                }))
+              }} defaultValue="0" min="0" />
+              <select className="dropdown" value={productData.vat.type} onChange={(e) => {
+                setProductData((prev) => ({
+                  ...prev,
+                  vat: {
+                    ...prev.vat,
+                    type: e.target.value
+
+                  }
+                }))
+              }}>
                 <option>Flat</option>
                 <option>Percentage</option>
               </select>
@@ -261,7 +391,9 @@ const General = () => {
 
         <div className="button-group">
           <button className="btn btn-gray">Save & Unpublish</button>
-          <button className="btn btn-green">Save & Publish</button>
+          <Link to='/products/create/add' >
+            <button className="btn btn-green">Save & Publish</button>
+          </Link>
         </div>
       </div>
 

@@ -11,7 +11,7 @@ export default function ProductProvider({ children }) {
         unit: "",
         weight: "",
         minPurchaseQty: "",
-        tags: [],
+        tags: [], 
         barcode: "",
         category: [],
         description: "",
@@ -21,16 +21,16 @@ export default function ProductProvider({ children }) {
         todaysDeal: "",
         flashDeal: {
             addToFlash: "",
-            discount: "",
+            discount: "0",
             discountType: ""
         },
         tax: {
             type: "",
-            value: ""
+            value: "0"
         },
         vat: {
             type: "",
-            value: ""
+            value: "0"
         },
         videoProvider: "",
         videoLink: "",

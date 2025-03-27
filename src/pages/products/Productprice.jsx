@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useProductContext } from "../../productContex";
 import "./Productprice.css";
+import { Link } from "react-router-dom";
 
 const ProductForm = () => {
   const [showColors, setShowColors] = useState(false);
@@ -15,6 +16,8 @@ const ProductForm = () => {
     showTextOnly: false,
     hideStock: false,
   });
+
+  console.log(productData)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +40,7 @@ const ProductForm = () => {
       published: publish,
       colors: showColors ? [selectedColor] : []
     };
-    
+
     // Here you would typically send the data to an API
     console.log("Product data to save:", updatedProduct);
   }
@@ -294,19 +297,21 @@ const ProductForm = () => {
             </div>
           </div>
 
-         <div className="button-group">
-            <button 
-              className="btn btn-gray" 
+          <div className="button-group">
+            <button
+              className="btn btn-gray"
               onClick={() => handleSubmit(false)}
             >
               Save & Unpublish
             </button>
-            <button 
-              className="btn btn-green" 
-              onClick={() => handleSubmit(true)}
-            >
-              Save & Publish
-            </button>
+            <Link to='/products/create/seo'>
+              <button
+                className="btn btn-green"
+                onClick={() => handleSubmit(true)}
+              >
+                Save & Publish
+              </button>
+            </Link>
           </div>
         </div>
       </div>
