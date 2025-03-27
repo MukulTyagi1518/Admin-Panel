@@ -1,0 +1,151 @@
+.addwhole-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .addwhole-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .addwhole-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .addwhole-label {
+    width: 40%;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .addwhole-input {
+    width: 58%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+ 
+  .addwhole-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Label & Input ke beech gap */
+  }
+  
+  .addwhole-tags-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .addwhole-tags-label {
+    width: 40%;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .addwhole-tags-input {
+    width: 58%;
+    padding: 10px; /* Yahan padding badha diya */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .addwhole-tags-helper {
+    font-size: 12px;
+    color: #777;
+    margin-left: 42%; /* Taaki paragraph input box ke neeche align ho */
+  }
+  
+  
+  .addwhole-helper-text {
+    font-size: 12px;
+    color: #777;
+    margin-top: 4px;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  .pro-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f0f2f6;
+    border-radius: 8px;
+    border: #c3c8cc 1px solid;
+  }
+  
+  .pro-heading {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .pro-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .pro-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .pro-size {
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .pro-file-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .pro-btn {
+    background: #e0e0e0;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .pro-input {
+    display: none;
+  }
+  
+  .pro-placeholder {
+    flex-grow: 1;
+    padding: 8px;
+    color: #777;
+  }
+  
+  .pro-helper {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+  }
+  .procol{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }

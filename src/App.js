@@ -67,6 +67,8 @@ import InHousePreOrders from "./components/preorders/orders/inhouseorders.jsx";
 import SellersPreOrders from "./components/preorders/orders/sellerorders.jsx";
 import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
+import Allwholesale from "./components/Wholesale/Allwholesale.jsx"
+import Addwholesale from "./components/Wholesale/Addwholesale.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -121,6 +123,9 @@ function App() {
               <Route path="/products/Review" element={<Review />} />
               <Route path="/products/Addreview" element={<Addreview />}/>
 
+
+              <Route path="/Wholesale/Allwholesale" element={<Allwholesale />}/>
+              <Route path="/Wholesale/Addwholesale" element={<Addwholesale />}/>
 
 
              
