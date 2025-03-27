@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 const ProductForm = () => {
   const [showColors, setShowColors] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedAttribute, setSelectedAttribute] = useState("");
-  const [selectedSleeve, setSelectedSleeve] = useState("");
   const { productData, setProductData } = useProductContext();
 
   const [quantity, setQuantity] = useState(1);
@@ -21,29 +19,26 @@ const ProductForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProductData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setProductData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleToggle = (key) => {
-    setStockVisibility((prev) => ({
-      showQuantity: key === "showQuantity" ? !prev.showQuantity : false,
-      showTextOnly: key === "showTextOnly" ? !prev.showTextOnly : false,
-      hideStock: key === "hideStock" ? !prev.hideStock : false,
-    }));
+    setProductData((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-  const handleSubmit = (publish = false) => {
-    const updatedProduct = {
+
+  const handleSubmit = (publish) => {
+    setProductData((prev) => ({
+      ...prev,
+      published: publish,
+      colors: showColors ? [selectedColor] : [],
+    }));
+
+    console.log("Product data to save:", {
       ...productData,
       published: publish,
-      colors: showColors ? [selectedColor] : []
-    };
-
-    // Here you would typically send the data to an API
-    console.log("Product data to save:", updatedProduct);
-  }
+      colors: showColors ? [selectedColor] : [],
+    });
+  };
   return (
     <div className="product-container">
       <div className="product-box">
@@ -55,8 +50,8 @@ const ProductForm = () => {
           {showColors && (
             <select
               className="dropdown"
-              value={productData.colors}
-              onChange={(e) => setProductData(e.target.value)}
+              value={selectedColor}
+              onChange={(e) => setSelectedColor(e.target.value)}
             >
               <option value="">Select Color</option>
               <option value="red">Red</option>
@@ -73,7 +68,7 @@ const ProductForm = () => {
         </div>
 
         {/* Attributes Dropdown */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label-box">Attributes</label>
           <select
             className="dropdown"
@@ -87,7 +82,7 @@ const ProductForm = () => {
             <option value="">Wheel</option>
             <option value="short">Liter</option>
           </select>
-        </div>
+        </div> */}
 
         {/* Description under Attributes Dropdown */}
         <p className="description-text">
@@ -258,44 +253,17 @@ const ProductForm = () => {
           </div>
           <br />
           <h3 className="stock-heading">Stock Visibility State</h3>
-          <div className="divider"></div>
-          <div className="toggle-group">
-            <div className="toggle-item">
-              <span>Show Stock Quantity</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={productData.showStockQuantity || false}
-                  onChange={() => handleToggle("showQuantity")}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
+        <div className="divider"></div>
 
-            <div className="toggle-item">
-              <span>Show Stock With Text Only</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={productData.showStockWithTextOnly || false}
-                  onChange={() => handleToggle("showTextOnly")}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
-
-            <div className="toggle-item">
-              <span>Hide Stock</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={productData.hideStock || false}
-                  onChange={() => handleToggle("hideStock")}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
+        {["show Stock Quantity", "show Stock With Text Only", "hide Stock"].map((key) => (
+          <div className="toggle-item" key={key}>
+            <span>{key}</span>
+            <label className="switch">
+              <input type="checkbox" checked={productData[key] || false} onChange={() => handleToggle(key)} />
+              <span className="slider"></span>
+            </label>
           </div>
+        ))}
 
           <div className="button-group">
             <button
