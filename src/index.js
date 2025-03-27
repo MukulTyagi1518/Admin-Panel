@@ -5,17 +5,20 @@ import App from "./App";
 import "./index.css"; // Ensure this import is present
 import { AdminProvider } from "./adminContext";
 import reportWebVitals from "./reportWebVitals";
+import ProductProvider from "./productContex";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
   <AdminProvider>
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
+    <ProductProvider>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </React.StrictMode>
+    </ProductProvider>
   </AdminProvider>
 );
 

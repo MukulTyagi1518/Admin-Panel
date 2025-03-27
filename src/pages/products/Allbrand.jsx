@@ -2,7 +2,7 @@ import { Delete, Edit, Trash } from "lucide-react"
 import "./Allbrand.css"
 import { useState } from "react";
 
-export default function PreOrderFaq() {
+export default function AllBrands() {
 
      const [fileName, setFileName] = useState("Choose file");
     
