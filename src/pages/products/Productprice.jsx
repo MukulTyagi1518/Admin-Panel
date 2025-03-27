@@ -70,7 +70,7 @@ const ProductForm = () => {
         </div>
 
         {/* Attributes Dropdown */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label-box">Attributes</label>
           <select
             className="dropdown"
@@ -84,7 +84,7 @@ const ProductForm = () => {
             <option value="">Wheel</option>
             <option value="short">Liter</option>
           </select>
-        </div>
+        </div> */}
 
         {/* Description under Attributes Dropdown */}
         <p className="description-text">
