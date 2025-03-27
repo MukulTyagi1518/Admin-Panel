@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./preOrderSetting.scss";
 import { X } from "lucide-react";
 
-export default function PreOrderSetting() {
+export default function PreOrderSetting() { 
     const [file, setFile] = useState({ name: "Choose file", src: "" });
 
     const handleFileChange = (event) => {

@@ -20,6 +20,8 @@ export const AdminProvider = ({ children }) => {
     uid: "",
   });
 
+
+
   const [admin, setAdmin] = useState(null);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export const AdminProvider = ({ children }) => {
     const fetchUser = async () => {
       if (admin) {
         try {
-          
+
 
           const response = await api.post(
             "/admin/check-admin",
@@ -48,7 +50,7 @@ export const AdminProvider = ({ children }) => {
             setAdminData((prev) => ({
               ...prev,
               ...response.data.data,
-              uid : admin.uid
+              uid: admin.uid
             }));
           }
         } catch (error) {

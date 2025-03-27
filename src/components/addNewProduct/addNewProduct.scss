@@ -1,6 +1,7 @@
 .addNewProductBox {
     padding: .5cm;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     // border: 1px solid black;
     gap: 1cm;
@@ -9,7 +10,7 @@
 
 .addNewProductMenu {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     // gap: .3cm;
     flex-shrink: 0;
     padding: .5cm 0cm 0cm 0cm;

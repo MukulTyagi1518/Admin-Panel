@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useProductContext } from "../../productContex";
 import "./Productprice.css";
 
 const ProductForm = () => {
@@ -6,13 +7,21 @@ const ProductForm = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedAttribute, setSelectedAttribute] = useState("");
   const [selectedSleeve, setSelectedSleeve] = useState("");
-
+  const [productsData,setProductsData]=useProductContext()
     const [quantity, setQuantity] = useState(1);
     const [stockVisibility, setStockVisibility] = useState({
       showQuantity: true,
       showTextOnly: false,
       hideStock: false,
     });
+
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    };
   
     const handleToggle = (key) => {
       setStockVisibility((prev) => ({
@@ -76,7 +85,7 @@ const ProductForm = () => {
         {/* Unit Price Input */}
         <div className="form-group">
           <label className="label-unit">Unit price <span className="required">*</span></label>
-          <input type="text" className="unit-input" placeholder="0" />
+          <input type="text" className="unit-input" placeholder="0" name="unit-input" value={formData.unitPrice} onChange={handleInputChange} />
         </div>
 
         <div className="form-group">

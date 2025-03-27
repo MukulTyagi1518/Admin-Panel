@@ -3,10 +3,10 @@ import { useState } from "react";
 function ImageUpload(initialGroups = [{ images: [] }], maxGroups = 3) {
   const [imageGroups, setImageGroups] = useState(initialGroups);
 
-  const handleImageUpload = (event, groupIndex) => {
+  const handleImageUpload = (event, groupIndex) => { 
     const files = Array.from(event.target.files);
     const newImages = files.map((file) => ({
-      file,
+      file, 
       url: URL.createObjectURL(file),
     }));
     setImageGroups((prev) => {

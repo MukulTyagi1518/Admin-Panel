@@ -67,6 +67,7 @@ import InHousePreOrders from "./components/preorders/orders/inhouseorders.jsx";
 import SellersPreOrders from "./components/preorders/orders/sellerorders.jsx";
 import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
+import AllBrands from "./pages/products/Allbrand.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -112,18 +113,11 @@ function App() {
                 element={<CategoryBased />}
               />
 
-              <Route path="/products/CategoryBased" element={<CategoryBased />} />
-              <Route path="/products/Attribute" element={<Attribute />} />
-              <Route path="/products/Warranties" element={<Warranties />} />
-              <Route path="/products/Colors" element={<Colors />} />
-              <Route path="/products/Allbrand" element={<Allbrand />} />
-              <Route path="/products/Brandimport" element={<Brandimport />} />
-              <Route path="/products/Review" element={<Review />} />
-              <Route path="/products/Addreview" element={<Addreview />}/>
 
 
 
-             
+
+
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>
                   <Route index element={<General />} />
@@ -138,6 +132,16 @@ function App() {
                   />
                   <Route path="price-stock" element={<Productprice />} />
                 </Route>
+
+                <Route path="category-discount" element={<CategoryBased />} />
+                <Route path="brand" element={<AllBrands />} />
+                <Route path="attribute" element={<Attribute />} />
+                <Route path="warranty" element={<Warranties />} />
+                <Route path="colour" element={<Colors />} />
+                <Route path="brands" element={<Allbrand />} />
+                <Route path="review" element={<Review />} />
+                <Route path="Addreview" element={<Addreview />} />
+
               </Route>
 
               <Route path="/login" element={<LoginPage />} />
