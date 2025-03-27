@@ -33,11 +33,7 @@ const ProductForm = () => {
       colors: showColors ? [selectedColor] : [],
     }));
 
-    console.log("Product data to save:", {
-      ...productData,
-      published: publish,
-      colors: showColors ? [selectedColor] : [],
-    });
+   
   };
   return (
     <div className="product-container">
