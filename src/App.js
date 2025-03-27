@@ -49,25 +49,19 @@ import PreOrderSetting from "./components/preorders/preOrderSettings/preOrderSet
 import PreOrderNotification from "./components/preorders/preOrderNotifications/preOrderNotification.jsx";
 import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
-import Attribute from "./pages/products/Attribute.jsx"
-import Warranties from "./pages/products/Warranties.jsx"
-import Colors from "./pages/products/Colors.jsx"
-import Allbrand from "./pages/products/Allbrand.jsx"
-import Brandimport from "./pages/products/Brandimport.jsx"
-import Review from "./pages/products/Review.jsx"
-import Addreview from "./pages/products/Addreview.jsx"
 import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
 import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
 import FlashDeals from "./components/marketing/FlashDeals.js";
 import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
 import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
 import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
-import AllOrdersPreOrders from "./components/preorders/orders/allOrders.jsx";
-import InHousePreOrders from "./components/preorders/orders/inhouseorders.jsx";
-import SellersPreOrders from "./components/preorders/orders/sellerorders.jsx";
+import AllBrands from "./pages/products/Allbrand.jsx";
+import Addreview from "./pages/products/Addreview.jsx";
+import Attribute from "./pages/products/Attribute.jsx";
+import Colors from "./pages/products/Colors.jsx";
+import Review from "./pages/products/Review.jsx";
 import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
-import AllBrands from "./pages/products/Allbrand.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -136,9 +130,8 @@ function App() {
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
-                <Route path="warranty" element={<Warranties />} />
+                <Route path="warranty" element={<Warrenty />} />
                 <Route path="colour" element={<Colors />} />
-                <Route path="brands" element={<Allbrand />} />
                 <Route path="review" element={<Review />} />
                 <Route path="Addreview" element={<Addreview />} />
 
@@ -183,9 +176,9 @@ function App() {
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
                 <Route path="dashboard" element={<PreOrderDashboard />} />
-                <Route path="all-orders" element={<AllOrdersPreOrders />} />
-                <Route path="inhouse-orders" element={<InHousePreOrders />} />
-                <Route path="seller-orders" element={<SellersPreOrders />} />
+                <Route path="all-orders" element={<AllOrders />} />
+                <Route path="inhouse-orders" element={<InHouseOrders />} />
+                <Route path="seller-orders" element={<SellerOrders />} />
                 <Route path="delayed-prepayment-orders" element={<DelayedPrepaymentPreOrders />} />
                 <Route path="delayed-final-orders" element={<DelayedFinalPreOrders />} />
               </Route>
