@@ -123,6 +123,9 @@ const General = () => {
           </div>
           <div
             className="editor"
+            name="description"
+            value={productData.description}
+            onChange={handleChangeInputFields}
             contentEditable
             onInput={(e) => setContent(e.target.innerHTML)}
           ></div>
@@ -140,6 +143,9 @@ const General = () => {
             </div>
             <div className="refund">
               <input
+                name=" refundable"
+                value={productData.refundable}
+                // onChange={handleChangeInputFields}
                 type="checkbox"
                 id="refundToggle"
                 className="custom-toggle"
@@ -169,6 +175,9 @@ const General = () => {
           <div className="toggle-group">
             <label>Featured</label>
             <input
+              name="featured"
+              value={productData.featured}
+              // onChange={handleChangeInputFields}
               type="checkbox"
               id="featuredToggle"
               className="custom-toggle"
@@ -181,6 +190,9 @@ const General = () => {
           <div className="toggle-group">
             <label>Today's Deal</label>
             <input
+              name="todaysDeal"
+              value={productData.todaysDeal}
+              // onChange={handleChangeInputFields}
               type="checkbox"
               id="dealToggle"
               className="custom-toggle"
@@ -201,7 +213,7 @@ const General = () => {
           {/* Add to Flash */}
           <div className="input-group">
             <label>Add To Flash</label>
-            <select value={flashTitle} onChange={(e) => setFlashTitle(e.target.value)}>
+            <select name="flashDeal" value={flashTitle} onChange={(e) => setFlashTitle(e.target.value)}>
               <option value="">Choose Flash Title</option>
               <option value="flash_sale_1">Flash Sale 1</option>
               <option value="flash_sale_2">Flash Sale 2</option>
@@ -212,6 +224,8 @@ const General = () => {
           <div className="input-group">
             <label>Discount</label>
             <input
+              name="discount"
+              
               type="number"
               value={discount}
               onChange={(e) => setDiscount(e.target.value)}
@@ -222,7 +236,7 @@ const General = () => {
           {/* Discount Type */}
           <div className="input-group">
             <label>Discount Type</label>
-            <select value={discountType} onChange={(e) => setDiscountType(e.target.value)}>
+            <select name="discountType" value={productData.discountType} onChange={(e) => setDiscountType(e.target.value)}>
               <option value="">Choose Discount Type</option>
               <option value="percentage">Percentage</option>
               <option value="fixed">Fixed Amount</option>
@@ -237,7 +251,7 @@ const General = () => {
           <label className="label">Tax</label>
           <div className="input-group-Dropdown">
             <input type="number" className="input" defaultValue="0" min="0" />
-            <select className="dropdown">
+            <select name="tax" value={productData.tax} onChange={handleChangeInputFields} className="dropdown">
               <option>Flat</option>
               <option>Percentage</option>
             </select>
@@ -250,7 +264,7 @@ const General = () => {
           <div className="row-drop">
             <div className="input-group-Dropdown">
               <input type="number" className="input" defaultValue="0" min="0" />
-              <select className="dropdown">
+              <select name="vat"  value={productData.vat} onChange={handleChangeInputFields} className="dropdown">
                 <option>Flat</option>
                 <option>Percentage</option>
               </select>
