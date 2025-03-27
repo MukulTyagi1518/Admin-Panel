@@ -200,7 +200,7 @@ const General = () => {
                   setIsRefundable(!isRefundable)
                   setProductData((prev) => ({
                     ...prev,
-                    refundable: !isRefundable ? "Refundable" : "Non-Refundable"
+                    refundable: !isRefundable ? true : false
                   }))
                 }}
               />
@@ -235,7 +235,7 @@ const General = () => {
                 setIsFeatured(!isFeatured)
                 setProductData((prev) => ({
                   ...prev,
-                  featured: !isFeatured ? "Featured" : "Not Featured"
+                  featured: !isFeatured ? true : false
                 }))
               }}
             />
@@ -253,7 +253,7 @@ const General = () => {
                 setIsTodaysDeal(!isTodaysDeal)
                 setProductData((prev) => ({
                   ...prev,
-                  todaysDeal: !isTodaysDeal ? "In Today's Deal" : "Not in today's deal"
+                  todaysDeal: !isTodaysDeal ? true : false
                 }))
               }}
             />

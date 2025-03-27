@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useProductContext } from "../../productContex";
 import "./warrenty.css";
+import { Link } from "react-router-dom";
 
 const WarrantyConfig = () => {
   const { productData, setProductData } = useProductContext();
@@ -81,9 +82,11 @@ const WarrantyConfig = () => {
         >
           Save & Unpublish
         </button>
-        <button className="btn btn-publish" onClick={() => handleSubmit(true)}>
-          Save & Publish
-        </button>
+        <Link to='/products/create/frequently-bought'>
+          <button className="btn btn-publish" onClick={() => handleSubmit(true)}>
+            Save & Publish
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -2,44 +2,47 @@ import React, { useState } from "react";
 import { useProductContext } from "../../productContex";
 import "./Shipping.css";
 import { type } from "@testing-library/user-event/dist/type";
+import { Link } from "react-router-dom";
 
 const ShippingConfig = () => {
-  const {productData, setProductData} = useProductContext();
+  const { productData, setProductData } = useProductContext();
   const [cashOnDelivery, setCashOnDelivery] = useState(false);
   const [freeShipping, setFreeShipping] = useState(false);
   const [flatRate, setFlatRate] = useState(false);
   const [productQuantityMultiply, setProductQuantityMultiply] = useState(false);
   const [shippingDays, setShippingDays] = useState("");
 
+
+
   const handleTogglecashOnDelivery = () => {
     setCashOnDelivery(!cashOnDelivery);
     setProductData((prev) => ({
       ...prev,
-      shippingConfiguration: {...prev.shippingConfiguration, cashOnDelivery: !cashOnDelivery},
+      shippingConfiguration: { ...prev.shippingConfiguration, cashOnDelivery: !cashOnDelivery },
     }));
   };
   const handleTogglefreeShiping = (key) => {
     setFreeShipping(!freeShipping);
     setProductData((prev) => ({
       ...prev,
-      shippingConfiguration: {...prev.shippingConfiguration, freeShipping: !freeShipping},
+      shippingConfiguration: { ...prev.shippingConfiguration, freeShipping: !freeShipping },
     }));
   };
   const handleToggleflatRate = () => {
     setFlatRate(!flatRate);
     setProductData((prev) => ({
       ...prev,
-      shippingConfiguration: {...prev.shippingConfiguration, flatRate: !flatRate},
+      shippingConfiguration: { ...prev.shippingConfiguration, flatRate: !flatRate },
     }));
   };
   const handleToggleproductQuantityMultiply = () => {
     setProductQuantityMultiply(!productQuantityMultiply);
     setProductData((prev) => ({
       ...prev,
-      shippingConfiguration: {...prev.shippingConfiguration, isProductQuantityMultiply: !productQuantityMultiply},
+      shippingConfiguration: { ...prev.shippingConfiguration, isProductQuantityMultiply: !productQuantityMultiply },
     }));
   };
-  const handleInputChange=(e)=>{
+  const handleInputChange = (e) => {
     setShippingDays(e.target.value);
     setProductData((prev) => ({
       ...prev,
@@ -125,9 +128,11 @@ const ShippingConfig = () => {
       </div>
 
       <div className="button-group">
-  <button className="btn btn-unpublish" onClick={() => handleSubmit(false)}>Save & Unpublish</button>
-  <button className="btn btn-publish" onClick={() => handleSubmit(true)}>Save & Publish</button>
-</div>
+        <button className="btn btn-unpublish" onClick={() => handleSubmit(false)}>Save & Unpublish</button>
+        <Link to='/products/create/warranty'>
+          <button className="btn btn-publish" onClick={() => handleSubmit(true)}>Save & Publish</button>
+        </Link>
+      </div>
     </div>
   );
 };

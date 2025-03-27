@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./FrequentlyBought.css";
 import { IoClose } from "react-icons/io5";
 import { useProductContext } from "../../productContex";
+import axios from "axios"
+import api from "../../utils/axios.js"
 
 const FrequentlyBought = () => {
   const { productData, setProductData } = useProductContext();
@@ -49,9 +51,18 @@ const FrequentlyBought = () => {
       setShowModal(false); // Close the modal
     }
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Submitting:", productData);
-    // Add API call or saving logic here
+
+    try {
+      await api.post("/products/store", productData)
+
+      alert("Product added")
+    }
+    catch (err) {
+      console.log(err)
+    }
+
   };
   return (
     <div className="frequently-container">
@@ -104,8 +115,8 @@ const FrequentlyBought = () => {
           </select>
         </div>
       )}
-     {/* Selected Products */}
-     {productData.frequentlyBought.selectionType === "product" &&
+      {/* Selected Products */}
+      {productData.frequentlyBought.selectionType === "product" &&
         productData.frequentlyBought.products &&
         productData.frequentlyBought.products.length > 0 && (
           <div className="selected-products">
@@ -168,9 +179,9 @@ const FrequentlyBought = () => {
       )}
       {/* Buttons */}
       <div className="button-group">
-  <button className="btn btn-unpublish" onClick={handleSubmit}>Save & Unpublish</button>
-  <button className="btn btn-publish" onClick={handleSubmit}>Save & Publish</button>
-</div>
+        <button className="btn btn-unpublish" onClick={handleSubmit}>Save & Unpublish</button>
+        <button className="btn btn-publish" onClick={handleSubmit}>Save & Publish</button>
+      </div>
     </div>
   );
 };
