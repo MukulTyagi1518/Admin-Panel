@@ -9,15 +9,18 @@ export default function CategoryProvider({ children }) {
 
   useEffect(() => {
     const fetchCategoryData = async () => {
-      const response = await api.get("/categories/Get-all-categories");
-      setCategoryData(response.data)
+      try {
+        const response = await api.get("/categories/Get-all-categories");
+        setCategoryData(response.data || []);
+      } catch (error) {
+        setCategoryData([]);
+      }
+    };
 
-    }
+    fetchCategoryData();
+  }, []);
 
-    fetchCategoryData()
-  }, [])
-  
-  console.log(categoryData)
+
 
 
   return (
