@@ -11,7 +11,14 @@ export default function CategoryProvider({ children }) {
     const fetchCategoryData = async () => {
       try {
         const response = await api.get("/categories/Get-all-categories");
-        setCategoryData(response.data || []);
+
+        if (response.data) {
+          setCategoryData(response.data);
+        }
+        else {
+          alert("Please start backend server to fetch data")
+          setCategoryData([]);
+        }
       } catch (error) {
         setCategoryData([]);
       }
@@ -19,9 +26,6 @@ export default function CategoryProvider({ children }) {
 
     fetchCategoryData();
   }, []);
-
-
-
 
   return (
     <CategoryContext.Provider value={{ categoryData, setCategoryData }}>
