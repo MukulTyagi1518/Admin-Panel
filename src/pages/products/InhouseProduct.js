@@ -287,9 +287,9 @@ const InhouseProduct = () => {
                             </tr>
                         ))}
                     </tbody>
-                </table>
 
-                <div className="pagination">
+
+                    <div className="pagination">
                 <button
                     onClick={() => paginate(currentPage - 1)}
                     disabled={currentPage === 1}
@@ -316,6 +316,9 @@ const InhouseProduct = () => {
                     &rsaquo;
                 </button>
             </div>
+                </table>
+
+                
             </div>
         </div>
     );

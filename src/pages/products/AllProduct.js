@@ -12,7 +12,7 @@ const AllProduct = () => {
             addedBy: "Filon Asset Store",
             info: { sale: 16, price: "$559.990", rating: 5 },
             stock: "Low",
-            deal: true,
+            deal: "true",
             published: true,
             featured: false,
         },
@@ -261,7 +261,7 @@ const handleExpandRow = (id) => {
                     <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" />
+                                <input type="checkbox" className="check25" />
                             </th>
                             <th>Name</th>
                             <th>Added By</th>
@@ -393,6 +393,7 @@ const handleExpandRow = (id) => {
         </td>
         <td className="hide-on-small">
           <label className="switch">
+
             <input
               type="checkbox"
               checked={product.featured}
@@ -401,7 +402,7 @@ const handleExpandRow = (id) => {
             <span className="slider"></span>
           </label>
         </td>
-        <td className="hide-on-small">
+        <td className="hide-on-small ">
           <button className="btn view-btn">
             <FaEye />
           </button>
@@ -415,7 +416,7 @@ const handleExpandRow = (id) => {
       </tr>
 
       {/* Expanded Row for Small Screens */}
-      {product.expanded && (
+      {/* {product.expanded && (
         <tr className="row-details">
           <td colSpan="9">
             <div className="details-container">
@@ -424,13 +425,77 @@ const handleExpandRow = (id) => {
                 Info: Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}
               </div>
               <div>Total Stock: {product.stock}</div>
-              <div>Today's Deal: {product.deal ? "Yes" : "No"}</div>
-              <div>Published: {product.published ? "Yes" : "No"}</div>
-              <div>Featured: {product.featured ? "Yes" : "No"}</div>
+              <div>Today's Deal: {product.deal }</div>
+              <div>Published: {product.published}</div>
+              <div>Featured: {product.featured}</div>
             </div>
           </td>
         </tr>
-      )}
+      )} */}
+      {product.expanded && (
+  <tr className="row-details mt-0">
+    <td colSpan="9">
+      <div className="details-container">
+        <div>Added By: {product.addedBy}</div>
+        <div>
+          Info: Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}
+        </div>
+        <div>Total Stock: {product.stock}</div>
+        
+        <div>
+          Today's Deal:
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={product.deal}
+              onChange={() => handleToggleChange(product.id, "deal")}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
+
+        <div>
+          Published:
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={product.published}
+              onChange={() => handleToggleChange(product.id, "published")}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
+
+        <div>
+          Featured:
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={product.featured}
+              onChange={() => handleToggleChange(product.id, "featured")}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
+
+        <div>
+          Options:
+          <button className="btn view-btn">
+            <FaEye />
+          </button>
+          <button className="btn edit-btn">
+            <FaEdit />
+          </button>
+          <button className="btn delete-btn">
+            <FaTrash />
+          </button>
+        </div>
+
+      </div>
+    </td>
+  </tr>
+)}
+
     </>
   ))}
 </tbody>
@@ -438,11 +503,7 @@ const handleExpandRow = (id) => {
 
 
 
-                    
-
-                </table>
-
-                <div className="pagination">
+<div className="pagination ">
                 <button
                     onClick={() => paginate(currentPage - 1)}
                     disabled={currentPage === 1}
@@ -469,6 +530,11 @@ const handleExpandRow = (id) => {
                     &rsaquo;
                 </button>
             </div>
+                    
+
+                </table>
+
+              
 
             </div>
         </div>

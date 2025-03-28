@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function AllBrands() {
 
      const [fileName, setFileName] = useState("Choose file");
-    
+
       const handleFileChange = (event) => {
         if (event.target.files.length > 0) {
           setFileName(event.target.files[0].name);
@@ -71,7 +71,7 @@ export default function AllBrands() {
 
                                             <td>{n.name}</td>
 
-                                            
+
 
                                             <td>
                                                 <div className="actions">
@@ -100,7 +100,7 @@ export default function AllBrands() {
                         <label>Name</label>
                         <input type="text" placeholder="Enter question" className="faqInp" />
                         <div className="faqForm-warranty">
-                       
+
                         <label>Logo</label>
                         <div className="file-upload-container">
                             <label className="file-upload-label">

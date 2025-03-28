@@ -35,7 +35,7 @@ export default function PreOrderFaq() {
 
     return (
         <div className="PreOrderFaq ma10">
-            <div className="preOrderFaqBox">
+            <div className="preOrderFaqBox ">
                 <div className="preOrderFaqLeft">
                     <div className="preOrderLeftUpper">
                         <p className="allFaq">Attribute</p>
