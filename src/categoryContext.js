@@ -1,27 +1,24 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import api from "./utils/axios.js";
 
 const CategoryContext = createContext();
 
 export default function CategoryProvider({ children }) {
-  const [categoryData, setCategoryData] = useState({
-    discountDateRange: {
-      from: "",
-      to: "",
-    },
-    _id: "",
-    name: "",
-    // type: "main",
-    parentCategory: null,
-    // orderingNumber: 1,
-    // metaTitle: "Electronics Category",
-    // metaDescription: "A collection of electronic devices.",
-    // filteringAttributes: ["warranty", "brand", "price"],
-    discount: "",
-    sallerProduct: false,
-    // createdAt: "2025-03-25T07:01:24.445Z",
-    // updatedAt: "2025-03-25T07:01:24.445Z",
-    // __v: 0,
-  });
+  const [categoryData, setCategoryData] = useState([]);
+
+
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      const response = await api.get("/categories/Get-all-categories");
+      setCategoryData(response.data)
+
+    }
+
+    fetchCategoryData()
+  }, [])
+  
+  console.log(categoryData)
+
 
   return (
     <CategoryContext.Provider value={{ categoryData, setCategoryData }}>
