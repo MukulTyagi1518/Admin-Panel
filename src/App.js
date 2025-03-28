@@ -22,6 +22,10 @@ import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
 import LatestOrders from "./components/orders/LatestOrders.js";
 import Preorders from "./components/preorders/PreOrders.js";
+import AllProduct from "./pages/products/AllProduct.js";
+import InhouseProduct from "./pages/products/InhouseProduct.js";
+import Category from "./pages/products/Category.js";
+
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -69,6 +73,9 @@ function App() {
               </Route>
               <Route path="/sales/all" element={<LatestOrders/>}/>
               <Route path="/sales/inhouse" element={<Preorders/>}/>
+              <Route path="/products/all" element={<AllProduct/>} />
+              <Route path="/products/inhouse" element={<InhouseProduct/>} />
+              <Route path="/products/category" element={<Category/>} />
             </Routes>
           </div>
         </div>
