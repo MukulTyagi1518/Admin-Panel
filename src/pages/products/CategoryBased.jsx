@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./CategoryBased.css";
-import { GiLargeDress } from "react-icons/gi";
-import { GiClothes } from "react-icons/gi";
+import { GiLargeDress, GiClothes } from "react-icons/gi";
 import { FaTools } from "react-icons/fa";
+import { useCategoryContext } from "../../categoryContext"; // Adjust import path as needed
 
 const categories = [
   {
@@ -38,7 +38,7 @@ const categories = [
   {
     id: 6,
     icon: "—",
-    name: "Men’s Watch",
+    name: "Men's Watch",
     parentCategory: "Jewelry & Watches",
   },
   {
@@ -65,36 +65,76 @@ const categories = [
     name: "Mens swimwear",
     parentCategory: "Swimming",
   },
- 
 ];
 
 const CategoryDiscountTable = () => {
+  const { categoryData, setCategoryData } = useCategoryContext();
+  
+  // Initialize discounts state from context or create default
   const [discounts, setDiscounts] = useState(
     categories.reduce((acc, category) => {
-      acc[category.id] = { discount: 0, sellerProduct: false, date: "" };
+      acc[category.id] = { 
+        discount: categoryData.discount || 0, 
+        sellerProduct: categoryData.sallerProduct || false, 
+        startDate: categoryData.discountDateRange.from.split('T')[0] || "", 
+        endDate: categoryData.discountDateRange.to.split('T')[0] || "" 
+      };
       return acc;
     }, {})
   );
 
   const handleDiscountChange = (id, value) => {
-    setDiscounts((prev) => ({
-      ...prev,
-      [id]: { ...prev[id], discount: value },
-    }));
+    const updatedDiscounts = {
+      ...discounts,
+      [id]: { ...discounts[id], discount: value },
+    };
+    setDiscounts(updatedDiscounts);
+    updateContext(updatedDiscounts[id]);
   };
 
   const handleToggle = (id) => {
-    setDiscounts((prev) => ({
+    const updatedDiscounts = {
+      ...discounts,
+      [id]: { ...discounts[id], sellerProduct: !discounts[id].sellerProduct },
+    };
+    setDiscounts(updatedDiscounts);
+    updateContext(updatedDiscounts[id]);
+  };
+
+  const handleStartDateChange = (id, value) => {
+    const updatedDiscounts = {
+      ...discounts,
+      [id]: { ...discounts[id], startDate: value },
+    };
+    setDiscounts(updatedDiscounts);
+    updateContext(updatedDiscounts[id]);
+  };
+
+  const handleEndDateChange = (id, value) => {
+    const updatedDiscounts = {
+      ...discounts,
+      [id]: { ...discounts[id], endDate: value },
+    };
+    setDiscounts(updatedDiscounts);
+    updateContext(updatedDiscounts[id]);
+  };
+
+  const updateContext = (discountData) => {
+    setCategoryData(prev => ({
       ...prev,
-      [id]: { ...prev[id], sellerProduct: !prev[id].sellerProduct },
+      discount: discountData.discount,
+      sallerProduct: discountData.sellerProduct,
+      discountDateRange: {
+        from: `${discountData.startDate}T00:00:00.000Z`,
+        to: `${discountData.endDate}T00:00:00.000Z`
+      }
     }));
   };
 
-  const handleDateChange = (id, value) => {
-    setDiscounts((prev) => ({
-      ...prev,
-      [id]: { ...prev[id], date: value },
-    }));
+  const handleSetDiscount = (id) => {
+    // Here you would typically make an API call to save the discount
+    console.log("Setting discount for category:", id, discounts[id]);
+    alert(`Discount settings saved for ${categories.find(c => c.id === id).name}`);
   };
 
   return (
@@ -127,37 +167,54 @@ const CategoryDiscountTable = () => {
                 <td className="category-name">{category.name}</td>
                 <td>{category.parentCategory}</td>
                 <td>
-                        <div className="discount-input-container">
-                            <input
-                                type="number"
-                                min="0"
-                                max="100"
-                                value={discounts[category.id].discount}
-                                onChange={(e) => handleDiscountChange(category.id, e.target.value)}
-                                className="discount-input"
-                            />
-                        </div>
-                    </td>
+                  <div className="discount-input-container">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={discounts[category.id]?.discount || 0}
+                      onChange={(e) => handleDiscountChange(category.id, e.target.value)}
+                      className="discount-input"
+                    />
+                  </div>
+                </td>
                 <td>
-                  <input
-                    type="date"
-                    value={discounts[category.id].date}
-                    onChange={(e) => handleDateChange(category.id, e.target.value)}
-                    className="date-input"
-                  />
+                  <div className="date-range-container">
+                    <input
+                      type="date"
+                      value={discounts[category.id]?.startDate || ""}
+                      onChange={(e) => handleStartDateChange(category.id, e.target.value)}
+                      className="date-input"
+                      placeholder="Start date"
+                    />
+                    <span className="date-range-separator">to</span>
+                    <input
+                      type="date"
+                      value={discounts[category.id]?.endDate || ""}
+                      onChange={(e) => handleEndDateChange(category.id, e.target.value)}
+                      className="date-input"
+                      placeholder="End date"
+                      min={discounts[category.id]?.startDate}
+                    />
+                  </div>
                 </td>
                 <td>
                   <label className="switch">
                     <input
                       type="checkbox"
-                      checked={discounts[category.id].sellerProduct}
+                      checked={discounts[category.id]?.sellerProduct || false}
                       onChange={() => handleToggle(category.id)}
                     />
                     <span className="slider round"></span>
                   </label>
                 </td>
                 <td>
-                  <button className="set-button">Set</button>
+                  <button 
+                    className="set-button"
+                    onClick={() => handleSetDiscount(category.id)}
+                  >
+                    Set
+                  </button>
                 </td>
               </tr>
             ))}
