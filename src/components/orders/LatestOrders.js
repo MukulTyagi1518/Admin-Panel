@@ -3,27 +3,30 @@ import React, { useState } from "react";
 import OrderHeader from "./OrderHeader";
 import Pagination from "../Pagination";
 
-const LatestOrders = () => {
+const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
   const [orders, setOrders] = useState([
-    { id: 1, code: "ORD001", products: 2, customer: "John Doe", seller: "Seller A", amount: "$100.00", deliveryStatus: "Pending", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "No" },
-    { id: 2, code: "ORD002", products: 3, customer: "Jane Smith", seller: "Seller B", amount: "$150.00", deliveryStatus: "Shipping", paymentMethod: "PayPal", paymentStatus: "Paid", refund: "No" },
-    { id: 3, code: "ORD003", products: 1, customer: "Alice Johnson", seller: "Seller C", amount: "$50.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes" },
-    { id: 4, code: "ORD004", products: 4, customer: "Bob Brown", seller: "Seller D", amount: "$200.00", deliveryStatus: "Pending", paymentMethod: "Credit Card", paymentStatus: "Unpaid", refund: "No" },
-    { id: 5, code: "ORD005", products: 2, customer: "Charlie Davis", seller: "Seller E", amount: "$120.00", deliveryStatus: "Shipping", paymentMethod: "PayPal", paymentStatus: "Paid", refund: "No" },
-    { id: 6, code: "ORD006", products: 1, customer: "Eve White", seller: "Seller F", amount: "$80.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes" },
+    { id: 1, code: "ORD001", products: 2, customer: "John Doe", seller: "InHouse Order", amount: "$100.00", deliveryStatus: "Pending", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "No" },
+    { id: 2, code: "ORD002", products: 3, customer: "Jane Smith", seller: "Seller", amount: "$150.00", deliveryStatus: "Shipping", paymentMethod: "PayPal", paymentStatus: "Paid", refund: "No" },
+    { id: 3, code: "ORD003", products: 1, customer: "Alice Johnson", seller: "Seller", amount: "$50.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes" },
+    { id: 4, code: "ORD004", products: 4, customer: "Bob Brown", seller: "Seller", amount: "$200.00", deliveryStatus: "Pending", paymentMethod: "Credit Card", paymentStatus: "Unpaid", refund: "No" },
+    { id: 5, code: "ORD005", products: 2, customer: "Charlie Davis", seller: "InHouse Order", amount: "$120.00", deliveryStatus: "Shipping", paymentMethod: "PayPal", paymentStatus: "Paid", refund: "No" },
+    { id: 6, code: "ORD006", products: 1, customer: "Eve White", seller: "Seller", amount: "$80.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes" },
     // Add more orders as needed
   ]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Number of items per page
 
+  // Apply custom filter if provided
+  const filteredOrders = customFilter ? customFilter(orders) : orders;
+
   // Calculate total pages
-  const totalPages = Math.ceil(orders.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
 
   // Get current orders
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentOrders = orders.slice(indexOfFirstItem, indexOfLastItem);
+  const currentOrders = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
 
   // Handle page change
   const handlePageChange = (pageNumber) => {
@@ -50,7 +53,7 @@ const LatestOrders = () => {
       <OrderHeader />
 
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">Latest Orders</h2>
+        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
       </div>
 
       <div className="overflow-x-auto">
@@ -107,7 +110,7 @@ const LatestOrders = () => {
       {/* Pagination */}
       <div className="flex justify-between items-center mt-6">
         <div className="text-sm text-gray-500">
-          Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, orders.length)} of {orders.length} entries
+          Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredOrders.length)} of {filteredOrders.length} entries
         </div>
         <Pagination
           currentPage={currentPage}

@@ -36,7 +36,7 @@ function CustomerSection() {
     const increasePercentage = ((totalCustomers - previousTotalCustomers) / previousTotalCustomers) * 100;
 
     return { totalCustomers, increasePercentage };
-  }, [customerGrowthData]);
+  }, [customerGrowthData]); 
 
   // Chart data configuration
   const chartData = useMemo(() => ({

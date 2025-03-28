@@ -1,35 +1,61 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import axios from "axios";
+import { useAdminContext } from "../adminContext";
+import api from "../utils/axios"
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { adminData, setAdminData } = useAdminContext();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setAdminData((prev) => ({
+      ...prev,
+      [name]: value,
+    })); 
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Perform login logic here
-    navigate('/verify-otp');
+
+    const otpCode = Math.floor(100000 + Math.random() * 900000);
+    await setAdminData((prev) => ({
+      ...prev,
+      mailOtp: otpCode,
+    }));
+
+    await api.post("/admin/send-mail-otp", {
+      adminEmail: adminData.email,
+      otp: otpCode,
+    });
+
+    navigate("/verify-otp");
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-purple-50">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-        {/* Left Side - Image */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-r from-blue-600 to-purple-600 items-center justify-center p-10">
           <div className="text-center text-white">
-            <img src='images/loginImg.webp' alt='ACTIVE ECOMMERCE CMS' className='w-full h-auto rounded-lg shadow-lg' />
+            <img
+              src="images/loginImg.webp"
+              alt="ACTIVE ECOMMERCE CMS"
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
             <h2 className="text-3xl font-bold mt-6">Welcome Back!</h2>
             <p className="mt-2 text-lg">Login to access your admin panel.</p>
           </div>
         </div>
 
-        {/* Right Side - Form */}
         <div className="w-full lg:w-1/2 p-8 sm:p-12">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome to Admin Panel</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Welcome to Admin Panel
+            </h1>
             <p className="text-gray-600 mt-2">Login to your account</p>
           </div>
 
@@ -38,7 +64,9 @@ function LoginPage() {
             {/* Email Input */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium text-gray-700">Email</span>
+                <span className="label-text font-medium text-gray-700">
+                  Email
+                </span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -48,8 +76,9 @@ function LoginPage() {
                   type="email"
                   className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                   placeholder="johndoe@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={adminData.email}
+                  name="email"
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -58,7 +87,9 @@ function LoginPage() {
             {/* Password Input */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium text-gray-700">Password</span>
+                <span className="label-text font-medium text-gray-700">
+                  Password
+                </span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -68,8 +99,9 @@ function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                   placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={adminData.password}
+                  name="password"
+                  onChange={handleInputChange}
                   required
                 />
                 <button
@@ -95,7 +127,6 @@ function LoginPage() {
                 />
                 <span className="ml-2 text-gray-600">Remember Me</span>
               </label>
-              
             </div>
 
             {/* Login Button */}
