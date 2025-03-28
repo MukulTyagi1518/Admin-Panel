@@ -4,229 +4,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios"
 
-const initialCategories = [
-  {
-    id: 1,
-    name: "Women Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner.webp",
-    icon: "/images/icon1.webp",
-    coverImage: "/images/coverimage.webp",
-    featured: true,
-  },
-  {
-    id: 2,
-    name: "Men Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner2.webp",
-    icon: "/images/icon2.webp",
-    coverImage: "/images/coverimage2.webp",
-    featured: true,
-  },
-  {
-    id: 3,
-    name: "Computer & Accessories 1",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 4,
-    name: "Computer & Accessories 2",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 5,
-    name: "Computer & Accessories 3",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 6,
-    name: "Computer & Accessories 4",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 7,
-    name: "Computer & Accessories 5",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 8,
-    name: "Computer & Accessories 6",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 9,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
 
-  {
-    id: 10,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 11,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 12,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 13,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 14,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 15,
-    name: "Computer & Accessories 7",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner3.webp",
-    icon: "/images/icon3.webp",
-    coverImage: "/images/coverimage3.webp",
-    featured: false,
-  },
-  {
-    id: 16,
-    name: "Women Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner.webp",
-    icon: "/images/icon1.webp",
-    coverImage: "/images/coverimage.webp",
-    featured: true,
-  },
-  {
-    id: 17,
-    name: "Women Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner.webp",
-    icon: "/images/icon1.webp",
-    coverImage: "/images/coverimage.webp",
-    featured: true,
-  },
-  {
-    id: 18,
-    name: "Women Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner.webp",
-    icon: "/images/icon1.webp",
-    coverImage: "/images/coverimage.webp",
-    featured: true,
-  },
-  {
-    id: 19,
-    name: "Women Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner.webp",
-    icon: "/images/icon1.webp",
-    coverImage: "/images/coverimage.webp",
-    featured: true,
-  },
-  {
-    id: 20,
-    name: "Women Clothing & Fashion",
-    parentCategory: "—",
-    orderLevel: 0,
-    level: 0,
-    banner: "/images/banner.webp",
-    icon: "/images/icon1.webp",
-    coverImage: "/images/coverimage.webp",
-    featured: true,
-  },
-];
 
 const Category = () => {
 
@@ -241,16 +19,16 @@ const Category = () => {
   };
 
 
-  const [categories, setCategories] = useState(initialCategories);
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Har page pe kitne items chahiye
-  const totalPages = Math.ceil(categories.length / itemsPerPage);
+  const totalPages = Math.ceil(categoryData.length / itemsPerPage);
 
   // Calculate start and end index for pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = categories.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = categoryData.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -300,12 +78,7 @@ const Category = () => {
 
 
 
-  const handleToggle = (id) => {
-    const updatedCategories = categories.map((category) =>
-      category.id === id ? { ...category, featured: !category.featured } : category
-    );
-    setCategories(updatedCategories);
-  };
+
 
 
 
