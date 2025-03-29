@@ -3,6 +3,7 @@ import "./category.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios"
+import { Link } from "react-router-dom";
 
 
 
@@ -88,7 +89,9 @@ const Category = () => {
       {/* Top Header Section */}
       <div className="top-header">
         <h5 className="table-title">All Categories</h5>
+        <Link to="create">
         <button className="add-category-btn">Add New Category</button>
+        </Link>
       </div>
 
       {/* Search Bar Section */}
@@ -262,9 +265,11 @@ const Category = () => {
                     </label>
                   </td>
                   <td>
+                    <Link to="edit">
                     <button className="btn btn-outline-primary me-1">
                       <FaEdit />
                     </button>
+                    </Link>
                     <button onClick={() => { handleDeleteCategory(category._id) }} className="btn btn-outline-danger">
                       <FaTrash />
                     </button>

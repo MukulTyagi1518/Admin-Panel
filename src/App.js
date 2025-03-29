@@ -66,9 +66,10 @@ import AllProduct from "./pages/products/AllProduct.js";
 import InhouseProduct from "./pages/products/InhouseProduct.js";
 import Category from "./pages/products/Category.js";
 
-
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
 import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/EmailTemplateEditor.js";
+import AddNewCategory from "./pages/products/AddNewCategory.jsx";
+import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -114,11 +115,6 @@ function App() {
                 element={<CategoryBased />}
               />
 
-
-
-
-
-
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>
                   <Route index element={<General />} />
@@ -132,11 +128,12 @@ function App() {
                     element={<FrequentlyBought />}
                   />
                   <Route path="price-stock" element={<Productprice />} />
-                 
                 </Route>
-                <Route path="/products/all" element={<AllProduct/>} />
-                <Route path="/products/Inhouse" element={<InhouseProduct/>} />
-                <Route path="/products/category" element={<Category/>} />
+                <Route path="/products/all" element={<AllProduct />} />
+                <Route path="/products/Inhouse" element={<InhouseProduct />} />
+                <Route path="/products/category" element={<Category />}/>
+                <Route path="/products/category/create" element={<AddNewCategory />}/>
+                <Route path="/products/category/edit" element={<CategoryEdit />}/>
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
@@ -144,7 +141,6 @@ function App() {
                 <Route path="colour" element={<Colors />} />
                 <Route path="review" element={<Review />} />
                 <Route path="Addreview" element={<Addreview />} />
-
               </Route>
 
               <Route path="/login" element={<LoginPage />} />
@@ -162,7 +158,6 @@ function App() {
                 <Route path="banner-level-2" element={<BannerLevel2 />} />
                 <Route path="banner-level-3" element={<BannerLevel3 />} />
                 <Route path="auction-products" element={<AuctionBanner />} />
-
 
                 <Route
                   path="category-wise-products"
@@ -189,9 +184,14 @@ function App() {
                 <Route path="all-orders" element={<AllOrders />} />
                 <Route path="inhouse-orders" element={<InHouseOrders />} />
                 <Route path="seller-orders" element={<SellerOrders />} />
-                <Route path="delayed-prepayment-orders" element={<DelayedPrepaymentPreOrders />} />
-                <Route path="delayed-final-orders" element={<DelayedFinalPreOrders />} />
-               
+                <Route
+                  path="delayed-prepayment-orders"
+                  element={<DelayedPrepaymentPreOrders />}
+                />
+                <Route
+                  path="delayed-final-orders"
+                  element={<DelayedFinalPreOrders />}
+                />
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />
@@ -214,8 +214,14 @@ function App() {
                 <Route path="flash-deal" element={<FlashDeals />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
-                <Route path="admin-email-template" element={<EmailTemplateAdmin />} />
-                <Route path="admin-email-template/edit" element={<EmailTemplateEditor />} />
+                <Route
+                  path="admin-email-template"
+                  element={<EmailTemplateAdmin />}
+                />
+                <Route
+                  path="admin-email-template/edit"
+                  element={<EmailTemplateEditor />}
+                />
               </Route>
             </Routes>
           </div>
