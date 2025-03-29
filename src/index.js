@@ -6,6 +6,7 @@ import "./index.css"; // Ensure this import is present
 import { AdminProvider } from "./adminContext";
 import reportWebVitals from "./reportWebVitals";
 import ProductProvider from "./productContex";
+import CategoryProvider from "./categoryContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -13,11 +14,13 @@ const root = createRoot(container);
 root.render(
   <AdminProvider>
     <ProductProvider>
+      <CategoryProvider>
       <React.StrictMode>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </React.StrictMode>
+      </CategoryProvider>
     </ProductProvider>
   </AdminProvider>
 );
