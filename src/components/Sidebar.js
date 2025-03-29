@@ -126,6 +126,7 @@ const menuItems = [
       { name: "Best seller product", path: "/marketing/best-seller" },
       { name: "Flash deal", path: "/marketing/flash-deal" },
       { name: "Seller ads marketing", path: "/marketing/ads" },
+      { name: "Admin Email Template", path: "/marketing/admin-email-template" },
     ],
     path: "/marketing",
   },

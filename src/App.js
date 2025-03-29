@@ -62,6 +62,8 @@ import Colors from "./pages/products/Colors.jsx";
 import Review from "./pages/products/Review.jsx";
 import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
+import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
+import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/EmailTemplateEditor.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -203,6 +205,8 @@ function App() {
                 <Route path="flash-deal" element={<FlashDeals />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
+                <Route path="admin-email-template" element={<EmailTemplateAdmin />} />
+                <Route path="admin-email-template/edit" element={<EmailTemplateEditor />} />
               </Route>
             </Routes>
           </div>
