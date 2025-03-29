@@ -83,9 +83,9 @@ const ProductMediaForm = () => {
             <label className="file-label">
               Browse
 
-              <input type="file" className="file-input" multiple onChange={handleThumbnailChange} />
+              <input type="file" className="file-input" onChange={handleThumbnailChange} />
             </label>
-            <span className="file-name">{thumbnailImage.name}</span>
+            <span className="file-name">{thumbnailImage?.name}</span>
           </div>
           <p className="description">
             This image is visible in all product boxes. Minimum dimensions required: 195px width X 195px height.
