@@ -62,6 +62,11 @@ import Colors from "./pages/products/Colors.jsx";
 import Review from "./pages/products/Review.jsx";
 import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
+import AllProduct from "./pages/products/AllProduct.js";
+import InhouseProduct from "./pages/products/InhouseProduct.js";
+import Category from "./pages/products/Category.js";
+
+
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
 import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/EmailTemplateEditor.js";
 
@@ -127,8 +132,11 @@ function App() {
                     element={<FrequentlyBought />}
                   />
                   <Route path="price-stock" element={<Productprice />} />
+                 
                 </Route>
-
+                <Route path="/products/all" element={<AllProduct/>} />
+                <Route path="/products/Inhouse" element={<InhouseProduct/>} />
+                <Route path="/products/category" element={<Category/>} />
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
@@ -183,6 +191,7 @@ function App() {
                 <Route path="seller-orders" element={<SellerOrders />} />
                 <Route path="delayed-prepayment-orders" element={<DelayedPrepaymentPreOrders />} />
                 <Route path="delayed-final-orders" element={<DelayedFinalPreOrders />} />
+               
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />
