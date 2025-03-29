@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import api from "../../utils/axios"
 
 const AddNewCategory = () => {
   const [formData, setFormData] = useState({
@@ -68,10 +69,15 @@ const AddNewCategory = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission here
+    
     console.log('Form submitted:', formData);
+    try {
+      await api.post("/categories/Create-new-category",formData)
+    } catch (error) {
+      console.log("Error",error)
+    }
   };
 
   return (
