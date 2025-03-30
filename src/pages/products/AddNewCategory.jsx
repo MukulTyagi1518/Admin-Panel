@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import api from "../../utils/axios"
+import { useCategoryContext } from '../../categoryContext';
 
 const AddNewCategory = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ const AddNewCategory = () => {
     metaDescription: '',
     filteringAttributes: []
   });
+
+  const { setFetchData } = useCategoryContext();
 
   const [preview, setPreview] = useState({
     banner: null,
@@ -35,7 +39,7 @@ const AddNewCategory = () => {
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     const file = files[0];
-    
+
     if (file) {
       setFormData({
         ...formData,
@@ -68,16 +72,26 @@ const AddNewCategory = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    try {
+      await api.post('/categories/Create-new-category', formData)
+      setFetchData(true)
+    }
+    catch (err) {
+      console.log(err)
+    }
+    alert("Category added")
+    console.log(
+      formData
+    )
+
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Category Information</h1>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
         <div>
