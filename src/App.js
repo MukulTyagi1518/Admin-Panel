@@ -133,7 +133,7 @@ function App() {
                 <Route path="/products/Inhouse" element={<InhouseProduct />} />
                 <Route path="/products/category" element={<Category />}/>
                 <Route path="/products/category/create" element={<AddNewCategory />}/>
-                <Route path="/products/category/edit" element={<CategoryEdit />}/>
+                <Route path="/products/category/edit/:id" element={<CategoryEdit />}/>
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />

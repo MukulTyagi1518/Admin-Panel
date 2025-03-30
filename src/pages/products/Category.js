@@ -4,6 +4,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios"
 import { Link } from "react-router-dom";
+import CategoryEdit from "./CategoryEdit"; // Assuming CategoryEdit is imported from the correct path
 
 
 
@@ -265,7 +266,7 @@ const Category = () => {
                     </label>
                   </td>
                   <td>
-                    <Link to="edit">
+                    <Link to={`/products/category/edit/${category._id}`}>
                     <button className="btn btn-outline-primary me-1">
                       <FaEdit />
                     </button>
@@ -301,6 +302,7 @@ const Category = () => {
                         | <strong>Featured:</strong>{" "}
                         {category.featured ? "Yes" : "No"}
                       </div>
+                      <CategoryEdit categoryId={category._id} />
                     </td>
                   </tr>
                 )}
