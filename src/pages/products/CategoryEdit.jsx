@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios";
+import mongoose from "mongoose";
 import { useParams, useNavigate } from "react-router-dom";
 
 const CategoryEdit = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { categoryData, setCategoryData } = useCategoryContext();
+  const { categoryData, setCategoryData, setFetchData } = useCategoryContext();
+
   const [formData, setFormData] = useState({
     name: "",
     type: "",
@@ -58,7 +60,7 @@ const CategoryEdit = () => {
     const { name, files } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: files[0] || prev[name] 
+      [name]: files[0] || prev[name]
     }));
   };
 
@@ -75,36 +77,24 @@ const CategoryEdit = () => {
     setError(null);
 
     try {
-      const formDataToSend = new FormData();
-      
-      // apply all fields to FormData
-      Object.entries(formData).forEach(([key, value]) => {
-        if (value !== null && value !== undefined) {
-          if (key === 'filteringAttributes') {
-            formDataToSend.append(key, JSON.stringify(value));
-          } else if (value instanceof File) {
-            formDataToSend.append(key, value);
-          } else {
-            formDataToSend.append(key, value);
-          }
-        }
-      });
 
-      const response = await api.put(`/Update-category/${id}`, formDataToSend);
+      console.log(formData)
 
-      // Update with new data
-      setCategoryData(prevData =>
-        prevData.map(category =>
-          category._id === id ? response.data : category
-        )
-      );
+
+
+      await api.put(`categories/Update-category/${id}`, formData);
+
+
       alert("Category updated successfully!");
-      navigate("/products/category"); // Redirect back to category list
+      setFetchData(true)
+      navigate("/products/category");
     } catch (err) {
       console.error("Error updating category:", err);
       setError(err.response?.data?.error || "Failed to update category");
     }
   };
+
+
 
   return (
     <div className="max-w-4xl mx-auto m-6 p-6 bg-white rounded-lg shadow-md">
