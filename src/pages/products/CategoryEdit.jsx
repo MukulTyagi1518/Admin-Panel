@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios";
+import { useParams, useNavigate } from "react-router-dom";
 
 const CategoryEdit = () => {
+  const { id } = useParams(); 
+  const navigate = useNavigate();
   const { categoryData, setCategoryData } = useCategoryContext();
-  
-  // Initialize form data with proper structure
   const [formData, setFormData] = useState({
     name: "",
     type: "",
@@ -13,130 +14,121 @@ const CategoryEdit = () => {
     orderingNumber: "",
     metaTitle: "",
     metaDescription: "",
-    filteringAttributes: "",
+    filteringAttributes: [],
     banner: null,
     icon: null,
-    coverImage: null,
+    coverImage: null
   });
+  const [error, setError] = useState(null);
 
-  const [preview, setPreview] = useState({
-    banner: null,
-    icon: null,
-    coverImage: null,
-  });
+  const categoryTypes = ['Main Category', 'Sub Category'];
+  const parentCategories = ['Electronics', 'Clothing', 'Home & Garden', 'None'];
+  const attributeOptions = ['Size', 'Fabric', 'Sleeve', 'Wheel', 'Liter'];
 
-  const categoryTypes = ["Main Category", "Sub Category"];
-  const parentCategories = ["Electronics", "Clothing", "Home & Garden", "None"];
-  const attributeOptions = ["Size", "Fabric", "Sleeve", "Wheel", "Liter"];
+  useEffect(() => {
+    console.log(id)
+    if (id) {
+      const currentCategory = categoryData.find(c => c._id === id);
+      if (currentCategory) {
+        setFormData({
+          name: currentCategory.name || "",
+          type: currentCategory.type || "",
+          parentCategory: currentCategory.parentCategory || "",
+          orderingNumber: currentCategory.orderingNumber || "",
+          metaTitle: currentCategory.metaTitle || "",
+          metaDescription: currentCategory.metaDescription || "",
+          filteringAttributes: currentCategory.filteringAttributes || [],
+          banner: currentCategory.banner || null,
+          icon: currentCategory.icon || null,
+          coverImage: currentCategory.coverImage || null
+        });
+      }
+    }
+  }, [id, categoryData]);
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    const file = files[0];
+    setFormData(prev => ({
+      ...prev,
+      [name]: files[0] || prev[name] 
+    }));
+  };
 
-    if (file) {
-      setFormData(prev => ({
-        ...prev,
-        [name]: file,
-      }));
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview({
-          ...preview,
-          [name]: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleMultiSelect = (e) => {
+    const options = Array.from(e.target.selectedOptions).map(option => option.value);
+    setFormData(prev => ({
+      ...prev,
+      filteringAttributes: options
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setError(null);
+
     try {
-      // Create FormData for file uploads
-      const data = new FormData();
+      const formDataToSend = new FormData();
       
-      // Append all fields
-      data.append('name', formData.name);
-      data.append('type', formData.type);
-      data.append('parentCategory', formData.parentCategory);
-      data.append('orderingNumber', formData.orderingNumber);
-      data.append('metaTitle', formData.metaTitle);
-      data.append('metaDescription', formData.metaDescription);
-      data.append('filteringAttributes', formData.filteringAttributes);
-
-      
-      // Append files if they exist
-      if (formData.banner) data.append('banner', formData.banner);
-      if (formData.icon) data.append('icon', formData.icon);
-      if (formData.coverImage) data.append('coverImage', formData.coverImage);
-
-      const response = await api.post("/categories/Create-new-category", data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      // apply all fields to FormData
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          if (key === 'filteringAttributes') {
+            formDataToSend.append(key, JSON.stringify(value));
+          } else if (value instanceof File) {
+            formDataToSend.append(key, value);
+          } else {
+            formDataToSend.append(key, value);
+          }
         }
       });
 
-      console.log("Response:", response.data);
-      alert("Category added successfully!");
-      
-      // Update context if needed
-      setCategoryData(response.data);
-      
-      // Reset form
-      setFormData({
-        name: "",
-        type: "",
-        parentCategory: "",
-        orderingNumber: "",
-        metaTitle: "",
-        metaDescription: "",
-        filteringAttributes: "",
-        banner: null,
-        icon: null,
-        coverImage: null,
+      const response = await api.put(`/Update-category/${id}`, formDataToSend);
 
-      });
-      
-      setPreview({
-        banner: null,
-        icon: null,
-        coverImage: null,
-      });
-      
+      // Update with new data
+      setCategoryData(prevData =>
+        prevData.map(category =>
+          category._id === id ? response.data : category
+        )
+      );
+      alert("Category updated successfully!");
+      navigate("/products/category"); // Redirect back to category list
     } catch (err) {
-      console.error("Error submitting form:", err);
-      alert("Failed to add category. Please try again.");
+      console.error("Error updating category:", err);
+      setError(err.response?.data?.error || "Failed to update category");
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto m-5 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-4xl mx-auto m-6 p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        Category Information
+        Edit Category
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name */}
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+          {error}
+        </div>
+      )}
+
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        {/* Name Field */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            id="name"
             name="name"
             value={formData.name}
-            onChange={handleInputChange}
+            onChange={handleChange}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -151,7 +143,7 @@ const CategoryEdit = () => {
             id="type"
             name="type"
             value={formData.type}
-            onChange={handleInputChange}
+            onChange={handleChange}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
@@ -173,7 +165,7 @@ const CategoryEdit = () => {
             id="parentCategory"
             name="parentCategory"
             value={formData.parentCategory}
-            onChange={handleInputChange}
+            onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Parent Category</option>
@@ -195,7 +187,7 @@ const CategoryEdit = () => {
             id="orderingNumber"
             name="orderingNumber"
             value={formData.orderingNumber}
-            onChange={handleInputChange}
+            onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -216,14 +208,8 @@ const CategoryEdit = () => {
             onChange={handleFileChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {preview.banner && (
-            <div className="mt-2">
-              <img
-                src={preview.banner}
-                alt="Banner preview"
-                className="h-32 object-contain border rounded"
-              />
-            </div>
+          {formData.banner && !(formData.banner instanceof File) && (
+            <p className="text-sm text-gray-500 mt-1">Current: {formData.banner}</p>
           )}
         </div>
 
@@ -243,14 +229,8 @@ const CategoryEdit = () => {
             onChange={handleFileChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {preview.icon && (
-            <div className="mt-2">
-              <img
-                src={preview.icon}
-                alt="Icon preview"
-                className="h-16 object-contain border rounded"
-              />
-            </div>
+          {formData.icon && !(formData.icon instanceof File) && (
+            <p className="text-sm text-gray-500 mt-1">Current: {formData.icon}</p>
           )}
         </div>
 
@@ -270,14 +250,8 @@ const CategoryEdit = () => {
             onChange={handleFileChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {preview.coverImage && (
-            <div className="mt-2">
-              <img
-                src={preview.coverImage}
-                alt="Cover preview"
-                className="h-40 object-contain border rounded"
-              />
-            </div>
+          {formData.coverImage && !(formData.coverImage instanceof File) && (
+            <p className="text-sm text-gray-500 mt-1">Current: {formData.coverImage}</p>
           )}
         </div>
 
@@ -291,7 +265,7 @@ const CategoryEdit = () => {
             id="metaTitle"
             name="metaTitle"
             value={formData.metaTitle}
-            onChange={handleInputChange}
+            onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -305,7 +279,7 @@ const CategoryEdit = () => {
             id="metaDescription"
             name="metaDescription"
             value={formData.metaDescription}
-            onChange={handleInputChange}
+            onChange={handleChange}
             rows={3}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -314,32 +288,33 @@ const CategoryEdit = () => {
         {/* Filtering Attributes */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Filtering Attributes <span className="text-red-500">*</span>
+            Filtering Attributes
           </label>
           <select
+            multiple
             id="filteringAttributes"
             name="filteringAttributes"
             value={formData.filteringAttributes}
-            onChange={handleInputChange}
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleMultiSelect}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto"
           >
-            <option value="">Select Filtering Attributes</option>
             {attributeOptions.map((attr) => (
               <option key={attr} value={attr}>
                 {attr}
               </option>
             ))}
           </select>
+          <p className="text-xs text-gray-500 mt-1">
+            Hold Ctrl/Cmd to select multiple options
+          </p>
         </div>
 
         {/* Submit Button */}
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Save Category
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >Save
           </button>
         </div>
       </form>
