@@ -4,7 +4,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios"
 import { Link } from "react-router-dom";
-import CategoryEdit from "./CategoryEdit"; // Assuming CategoryEdit is imported from the correct path
+import CategoryEdit from "./CategoryEdit"; 
 
 
 

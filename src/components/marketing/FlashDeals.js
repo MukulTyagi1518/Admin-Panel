@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Clock, Plus, Edit2, Trash2, X, Image } from 'lucide-react';
 import ProductTable from '../reports/ProductTable';
+import { Link } from 'react-router-dom';
 
 const FlashDeals = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -8,58 +10,30 @@ const FlashDeals = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [flashDeals, setFlashDeals] = useState([]);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 5;
 
-  // Sample data with banner images
-  const flashDeals = [
-    {
-      id: 1,
-      title: "Summer Sale",
-      banner: "https://example.com/summer-sale.jpg",
-      startDate: "2023-06-01",
-      endDate: "2023-06-30",
-      status: "Active",
-      featured: true,
-      discount: "30% OFF"
-    },
-    {
-      id: 2,
-      title: "Back to School",
-      banner: "https://example.com/school-sale.jpg",
-      startDate: "2023-07-15",
-      endDate: "2023-08-15",
-      status: "Upcoming",
-      featured: false,
-      discount: "20% OFF"
-    },
-    {
-      id: 3,
-      title: "Black Friday",
-      banner: "https://example.com/black-friday.jpg",
-      startDate: "2023-11-24",
-      endDate: "2023-11-27",
-      status: "Upcoming",
-      featured: true,
-      discount: "50% OFF"
-    },
-    {
-      id: 4,
-      title: "Spring Clearance",
-      banner: "https://example.com/spring-clearance.jpg",
-      startDate: "2023-03-15",
-      endDate: "2023-04-15",
-      status: "Expired",
-      featured: false,
-      discount: "40% OFF"
-    },
-  ];
+  useEffect(() => {
+    const fetchFlashDeals = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/api/flash-deals');
+        setFlashDeals(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching flash deals:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchFlashDeals();
+  }, []);
 
   const filteredDeals = flashDeals.filter(deal => {
     const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesTab = activeTab === 'all' || deal.status.toLowerCase() === activeTab;
     return matchesSearch && matchesTab;
   });
-
 
   const featuredBadge = (featured) => {
     return featured ? (
@@ -200,13 +174,14 @@ const columns = [
           <h2 className="text-xl font-bold text-gray-800">Flash Deals</h2>
           <p className="text-sm text-gray-500">Create and manage limited-time offers</p>
         </div>
-        <button 
-          onClick={() => setShowAddModal(true)}
+        <Link
+to="create"
           className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add New Flash Deal
-        </button>
+        </Link
+        >
       </div>
 
       {/* Filters */}
@@ -274,13 +249,19 @@ const columns = [
       </div>
 
       {/* Product Table */}
-      <ProductTable
-        columns={columns}
-        data={filteredDeals}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
-      />
+      {loading ? (
+  <div className="flex justify-center items-center py-8">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+  </div>
+) : (
+  <ProductTable
+    columns={columns}
+    data={filteredDeals}
+    currentPage={currentPage}
+    itemsPerPage={itemsPerPage}
+    onPageChange={setCurrentPage}
+  />
+)}
 
       {/* Add Deal Modal */}
       {showAddModal && (

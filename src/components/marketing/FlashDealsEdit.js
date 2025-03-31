@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Save, Upload, X } from 'lucide-react';
+import axios from 'axios';
 
 const FlashDealEdit = () => {
   const { id } = useParams();
@@ -19,28 +20,30 @@ const FlashDealEdit = () => {
     products: [],
   });
 
-  // Mock data fetch - replace with actual API call
+  // Fetch flash deal data
   useEffect(() => {
     const fetchFlashDeal = async () => {
       try {
-        // Simulate API call
-        setTimeout(() => {
-          setFormData({
-            title: 'Summer Sale',
-            start_date: '2023-06-01',
-            end_date: '2023-06-30',
-            status: 1,
-            featured: 1,
-            background_color: '#FF5733',
-            text_color: '#FFFFFF',
-            banner_preview: '',
-            products: [
-              { id: 1, name: 'Wireless Headphones', discount: 20, discount_type: 'percent' },
-              { id: 2, name: 'Smart Watch', discount: 15, discount_type: 'percent' },
-            ],
-          });
-          setLoading(false);
-        }, 500);
+        const response = await axios.get(`http://localhost:5001/api/flash-deals/${id}`);
+        const deal = response.data;
+        
+        setFormData({
+          title: deal.title,
+          start_date: deal.startDate.split('T')[0],
+          end_date: deal.endDate.split('T')[0],
+          status: deal.status ? 1 : 0,
+          featured: deal.featured ? 1 : 0,
+          background_color: deal.backgroundColor || '#FFFFFF',
+          text_color: deal.textColor || '#000000',
+          banner_preview: deal.banner || '',
+          products: deal.products.map(p => ({
+            id: p.productId,
+            name: p.name,
+            discount: p.discount,
+            discount_type: p.discountType || 'percent'
+          }))
+        });
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching flash deal:', error);
         setLoading(false);
@@ -81,7 +84,7 @@ const FlashDealEdit = () => {
   const addProduct = () => {
     setFormData(prev => ({
       ...prev,
-      products: [...prev.products, { id: '', discount: '', discount_type: 'percent' }]
+      products: [...prev.products, { id: '', name: '', discount: 0, discount_type: 'percent' }]
     }));
   };
 
@@ -94,12 +97,53 @@ const FlashDealEdit = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting:', formData);
-    // Add your API submission logic here
-    alert('Flash deal updated successfully!');
-    navigate('/marketing/flash-deal');
+    setLoading(true);
+    
+    try {
+      const formattedData = {
+        title: formData.title,
+        banner: formData.banner_preview, // Existing URL or will be replaced by new upload
+        startDate: new Date(formData.start_date).toISOString(),
+        endDate: new Date(formData.end_date).toISOString(),
+        status: formData.status === 1,
+        featured: formData.featured === 1,
+        backgroundColor: formData.background_color,
+        textColor: formData.text_color,
+        products: formData.products.map(p => ({
+          productId: p.id,
+          name: p.name,
+          discount: parseFloat(p.discount),
+          discountType: p.discount_type
+        }))
+      };
+
+      // Create FormData if we have a new banner file
+      let requestData;
+      if (formData.banner) {
+        const formDataObj = new FormData();
+        formDataObj.append('banner', formData.banner);
+        Object.keys(formattedData).forEach(key => {
+          if (key !== 'banner') {
+            formDataObj.append(key, JSON.stringify(formattedData[key]));
+          }
+        });
+        requestData = formDataObj;
+      } else {
+        requestData = formattedData;
+      }
+
+      await axios.put(`http://localhost:5001/api/flash-deals/${id}`, requestData);
+
+      alert('Flash deal updated successfully!');
+      navigate('/marketing/flash-deal');
+    } catch (error) {
+      console.error('Error updating flash deal:', error);
+      alert('Failed to update flash deal. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -108,9 +152,8 @@ const FlashDealEdit = () => {
 
   return (
     <div className="container px-4 py-6 flex justify-center">
-
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 w-full max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {/* Basic Information */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold border-b pb-2">Basic Information</h2>

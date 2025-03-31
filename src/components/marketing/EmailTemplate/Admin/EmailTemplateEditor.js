@@ -3,8 +3,6 @@ import {
   Mail,
   ChevronLeft,
   Save,
-  Eye,
-  Code,
   Bold,
   Italic,
   Underline,
@@ -67,7 +65,7 @@ const EmailTemplateEditor = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <a href="/marketing/admin-email-template" className="mr-4 text-gray-600 hover:text-gray-900">
+            <a href="/marketing/email-templates/admin" className="mr-4 text-gray-600 hover:text-gray-900">
               <ChevronLeft className="w-6 h-6" />
             </a>
             <h1 className="text-2xl font-bold flex items-center">
@@ -75,16 +73,7 @@ const EmailTemplateEditor = () => {
               Edit Email Template
             </h1>
           </div>
-          <div className="flex gap-2">
-            <button 
-              type="submit" 
-              form="templateForm"
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center"
-            >
-              <Save className="w-4 h-4 mr-2" />
-              Save Template
-            </button>
-          </div>
+         
         </div>
 
         {/* Template Editor */}

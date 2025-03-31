@@ -70,6 +70,7 @@ import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/Email
 import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/EmailTemplateEditor.js";
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
+import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -212,14 +213,15 @@ function App() {
                 <Route path="best-weekly" element={<BestWeeklyProducts />} />
                 <Route path="best-seller" element={<BestSellerProducts />} />
                 <Route path="flash-deal" element={<FlashDeals />} />
+                <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
                 <Route
-                  path="admin-email-template"
+                  path="email-templates/admin"
                   element={<EmailTemplateAdmin />}
                 />
                 <Route
-                  path="admin-email-template/edit"
+                  path="email-templates/admin/edit"
                   element={<EmailTemplateEditor />}
                 />
               </Route>
