@@ -150,12 +150,29 @@ const ProductMediaForm = () => {
         <button className="btn-btn-gray">Save & Unpublish</button>
         <Link to='/products/create/price-stock' >
           <button className="btn-btn-green" onClick={() => {
+
+            const data = new FormData();
+
+            galleryImgs.forEach((file) => {
+              data.append("galleryImages", file);
+            });
+
+            if (thumbnailImage) {
+              data.append("thumbnailImage", thumbnailImage);
+            }
+
+            if (pdfSpecification) {
+              data.append("pdfSpecification", pdfSpecification);
+            }
+
+            console.log("FormData Entries:", [...data.entries()]);
+
             setProductData((prev) => ({
               ...prev,
               galleryImages: galleryImgs,
-              thumbnailImage: thumbnailImage,
-              pdfSpecification: pdfSpecification
-            }))
+              thumbnailImage: data.get("thumbnailImage"),
+              pdfSpecification: data.get("pdfSpecification")
+            }));
           }} >Save & Publish</button>
         </Link>
       </div>
