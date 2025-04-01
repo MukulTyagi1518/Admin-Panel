@@ -4,7 +4,7 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 const AllProduct = () => {
   const [products, setProducts] = useState([
-    // ... (आपका उत्पाद डेटा) ...
+
     {
       id: 1,
       name: "Acer Nitro 50 N50-620 - UA91 Gaming Desktop",
@@ -347,9 +347,8 @@ const AllProduct = () => {
                 <tr key={product.id}>
                   <td>
                     <div
-                      className={`plus-icon ${
-                        product.expanded ? "rotate" : ""
-                      }`}
+                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                        }`}
                       onClick={() =>
                         setProducts((prevProducts) =>
                           prevProducts.map((p) =>
@@ -529,9 +528,8 @@ const AllProduct = () => {
               <button
                 key={index}
                 onClick={() => typeof page === "number" && paginate(page)}
-                className={`pagination-btn ${
-                  currentPage === page ? "active" : ""
-                } ${page === "..." ? "dots" : ""}`}
+                className={`pagination-btn ${currentPage === page ? "active" : ""
+                  } ${page === "..." ? "dots" : ""}`}
               >
                 {page}
               </button>
