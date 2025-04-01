@@ -49,7 +49,10 @@ const menuItems = [
       { name: "All Orders", path: "/preorder/all-orders" },
       { name: "Inhouse Orders", path: "/preorder/inhouse-orders" },
       { name: "Sellers Orders", path: "/preorder/seller-orders" },
-      { name: "Delayed Prepayment Orders", path: "/preorder/delayed-prepayment-orders" },
+      {
+        name: "Delayed Prepayment Orders",
+        path: "/preorder/delayed-prepayment-orders",
+      },
       { name: "Delayed Final Orders", path: "/preorder/delayed-final-orders" },
     ],
     path: "/preorder",
@@ -127,7 +130,25 @@ const menuItems = [
       { name: "Best seller product", path: "/marketing/best-seller" },
       { name: "Flash deal", path: "/marketing/flash-deal" },
       { name: "Seller ads marketing", path: "/marketing/ads" },
-      { name: "Admin Email Template", path: "/marketing/admin-email-template" },
+      {
+        name: "Email Template",
+        path: "/marketing/email-templates",
+        subItems: [
+          { name: "Admin Templates", path: "/marketing/email-templates/admin" },
+          {
+            name: "Seller Templates",
+            path: "/marketing/email-templates/seller",
+          },
+          {
+            name: "Customer Templates",
+            path: "/marketing/email-templates/customer",
+          },
+          {
+            name: "Common Templates",
+            path: "/marketing/email-templates/common",
+          },
+        ],
+      },
     ],
     path: "/marketing",
   },
@@ -195,11 +216,46 @@ function Sidebar({ isSidebarVisible }) {
   const handleSubItemClick = (path) => {
     navigate(path); // Navigate to the specified path
   };
+  const renderSubItems = (subItems) => {
+    return (
 
+<ul className=" pl-5 py-2 space-y-1">
+        {subItems.map((subItem, subIndex) => (
+          <li
+            key={subIndex}
+            className= "flex flex-col items-start py-1 cursor-pointer text-white hover:text-sky-500"
+          >
+            {subItem.subItems ? (
+              <>
+                <div
+                  className="flex items-center justify-between cursor-pointer"
+                  onClick={() => toggleItem(subItem.name)}
+                >
+                  <span>{subItem.name}</span>
+                  {openItems[subItem.name] ? (
+                    <ChevronUp size={18} />
+                  ) : (
+                    <ChevronDown size={18} />
+                  )}
+                </div>
+                {openItems[subItem.name] && (
+                  <ul className="flex flex-col">{renderSubItems(subItem.subItems)}</ul>
+                )}
+              </>
+            ) : (
+              <span onClick={() => handleSubItemClick(subItem.path)}>
+                {subItem.name}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    );
+  };
   return (
     <div
       className={`
-        ${isSidebarVisible ? 'w-[280px]' : 'w-[70px]'} 
+        ${isSidebarVisible ? "w-[280px]" : "w-[70px]"} 
         bg-slate-900 text-white flex flex-col overflow-y-auto py-5 transition-all duration-300
       `}
     >
@@ -221,48 +277,47 @@ function Sidebar({ isSidebarVisible }) {
             placeholder="Search in menu"
             className="w-full bg-[#2a2f42] border-none rounded-md py-2.5 px-3.5 pr-10 text-white placeholder-[#6c7293] focus:outline-none"
           />
-          <Search size={18} className="absolute right-14 lg:right-7 top-1/2 transform -translate-y-1/2 text-[#6c7293]" />
+          <Search
+            size={18}
+            className="absolute right-14 lg:right-7 top-1/2 transform -translate-y-1/2 text-[#6c7293]"
+          />
         </div>
       )}
-
 
       {/* Menu */}
       <div className="flex flex-col">
         {menuItems.map((item, index) => (
           <div key={index} className="flex flex-col">
             <div
-              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${openItems[index] ? "text-white bg-white/5 border-l-4 border-[#ff5722]" : "text-white"
-                }`}
+              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${
+                openItems[index]
+                  ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
+                  : "text-white"
+              }`}
               onClick={() => toggleItem(index)}
             >
               <div className="flex items-center gap-2">
                 {item.icon}
                 {isSidebarVisible && <span>{item.name}</span>}
               </div>
-              {isSidebarVisible && item.subItems.length > 0 && (
-                openItems[index] ? <ChevronUp size={20} /> : <ChevronDown size={20} />
-              )}
-            </div>
-            {openItems[index] && item.subItems.length > 0 && isSidebarVisible && (
-              <ul className="pl-12 py-2 space-y-1">
-                {item.subItems.map((subItem, subIndex) => (
-                  <li
-                    key={subIndex}
-                    className="py-1 cursor-pointer text-white hover:text-sky-500"
-                    onClick={() => handleSubItemClick(subItem.path)}
-                  >
-                    {subItem.name}
-                  </li>
+              {isSidebarVisible &&
+                item.subItems.length > 0 &&
+                (openItems[index] ? (
+                  <ChevronUp size={20} />
+                ) : (
+                  <ChevronDown size={20} />
                 ))}
-              </ul>
-            )}
+            </div>
+            {openItems[index] &&
+              item.subItems.length > 0 &&
+              isSidebarVisible && (
+                <div className="pl-5">{renderSubItems(item.subItems)}</div>
+              )}
           </div>
         ))}
       </div>
     </div>
   );
 }
-
-
 
 export default Sidebar;
