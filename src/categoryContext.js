@@ -5,6 +5,7 @@ const CategoryContext = createContext();
 
 export default function CategoryProvider({ children }) {
   const [categoryData, setCategoryData] = useState([]);
+  const [fetchData, setFetchData] = useState(false)
 
 
   useEffect(() => {
@@ -14,6 +15,7 @@ export default function CategoryProvider({ children }) {
 
         if (response.data) {
           setCategoryData(response.data);
+          setFetchData(false)
         }
         else {
           alert("Please start backend server to fetch data")
@@ -25,10 +27,10 @@ export default function CategoryProvider({ children }) {
     };
 
     fetchCategoryData();
-  }, []);
+  }, [fetchData]);
 
   return (
-    <CategoryContext.Provider value={{ categoryData, setCategoryData }}>
+    <CategoryContext.Provider value={{ categoryData, setCategoryData, fetchData, setFetchData }}>
       {children}
     </CategoryContext.Provider>
   );
