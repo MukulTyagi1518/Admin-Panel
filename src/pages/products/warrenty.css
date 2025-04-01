@@ -136,12 +136,12 @@
     cursor: pointer;
   }
   
-  .btn-unpublish {
+  .btn-btn-unpublish {
     background: #f8f9fa;
     border: 1px solid #ddd;
   }
   
-  .btn-publish {
+  .btn-btn-publish {
     background: #28a745;
     color: white;
     border: none;

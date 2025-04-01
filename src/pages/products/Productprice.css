@@ -19,7 +19,7 @@
   margin-bottom: 15px;
 }
 
-.form-group {
+.form-group-pri {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
@@ -99,7 +99,7 @@
 
 /* Responsive Design */
 @media (max-width: 600px) {
-  .form-group {
+  .form-group-pri {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -135,7 +135,7 @@
   margin-bottom: 20px;
 }
 
-.form-row {
+.form-row-row {
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
@@ -148,9 +148,10 @@
   /* justify-content: space-between; */
   margin-bottom: 15px;
 }
-.form-label {
+.form-label-pri {
   font-weight: normal;
   flex: 1;
+  
 }
 
 
@@ -397,10 +398,12 @@
 }
 
 /* Button Styles */
-.button-group {
+.button-group-pri {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+  gap: 3px;
+ 
 }
 
 .btn {
@@ -411,7 +414,7 @@
   cursor: pointer;
 }
 
-.btn-gray {
+.btn-btn-gray {
   background: #e0e0e0;
   color: #333;
   font-weight: bold ;
@@ -419,19 +422,21 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   margin-right: 10px;
   transition: all 0.3s ease-in-out;
+  padding: 5px;
 }
 
-.btn-gray:hover {
+.btn-btn-gray:hover {
   background: #d6d6d6;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-.btn-green {
+.btn-btn-green {
   background: #28a745;
   color: white;
   border: 1px solid rgb(152, 218, 152);
   transition: all 0.3s ease-in-out;
   box-shadow: 3px 3px 8px rgba(77, 200, 84, 0.859);
+  padding: 5px;
 }
 /* Responsive Design */
 @media (max-width: 600px) {
@@ -449,9 +454,10 @@
     justify-content: space-between;
   }
 
-  .button-group {
+  .button-group-pri {
     flex-direction: column;
     align-items: center;
+    gap: 15px;
   }
 
   .btn {

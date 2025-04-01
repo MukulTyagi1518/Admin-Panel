@@ -16,7 +16,7 @@ function LoginPage() {
     setAdminData((prev) => ({
       ...prev,
       [name]: value,
-    }));
+    })); 
   };
 
   const handleLogin = async (e) => {

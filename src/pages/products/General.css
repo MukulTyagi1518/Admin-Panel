@@ -28,7 +28,7 @@
     gap: 10px;
   }
   
-  .form-group {
+  .form-group-gen {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -445,6 +445,7 @@
     font-size: 14px;
     font-weight: normal;
     margin-bottom: 5px;
+    text-align: left;
 }
 
 /* Input & Dropdown Wrapper */
@@ -596,4 +597,105 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .form-container-general {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .category-container {
+        width: 100%;
+    }
+
+    .expandable-textarea {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .toggle-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .input-group,
+    .vat-tax-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .input-group input,
+    .input-group select,
+    .vat-tax-row input,
+    .vat-tax-row select {
+        width: 100%;
+    }
+
+    .editor-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .refund {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .flash-deal-container,
+    .vat-tax-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .row-drop {
+        width: 100%;
+    }
+
+    .input-group-Dropdown {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .editor {
+        min-height: 120px;
+    }
+
+    .toolbar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .toggle-label {
+        width: 35px;
+        height: 18px;
+    }
+
+    .toggle-label::before {
+        width: 16px;
+        height: 16px;
+    }
+
+    .custom-toggle:checked + .toggle-label::before {
+        transform: translateX(17px);
+    }
 }

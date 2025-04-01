@@ -64,6 +64,13 @@ import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedpre
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
 import Allwholesale from "./components/Wholesale/Allwholesale.jsx"
 import Addwholesale from "./components/Wholesale/Addwholesale.jsx"
+import AllProduct from "./pages/products/AllProduct.js";
+import InhouseProduct from "./pages/products/InhouseProduct.js";
+import Category from "./pages/products/Category.js";
+import Brandimport from "./pages/products/Brandimport.jsx";
+import Bulkimport from "./pages/products/Bulkimport.jsx"
+import Bulkexport from "./pages/products/Bulkexport.jsx"
+
 
 
 function App() {
@@ -114,6 +121,11 @@ function App() {
 
               <Route path="/Wholesale/Allwholesale" element={<Allwholesale />}/>
               <Route path="/Wholesale/Addwholesale" element={<Addwholesale />}/>
+              <Route path="/products/Brandimport" element={<Brandimport />}/>
+              <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
+              <Route path="/products/bulk-export" element={<Bulkexport />}/>
+
+
 
 
 
@@ -131,8 +143,11 @@ function App() {
                     element={<FrequentlyBought />}
                   />
                   <Route path="price-stock" element={<Productprice />} />
+                 
                 </Route>
-
+                <Route path="/products/all" element={<AllProduct/>} />
+                <Route path="/products/Inhouse" element={<InhouseProduct/>} />
+                <Route path="/products/category" element={<Category/>} />
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
@@ -187,6 +202,7 @@ function App() {
                 <Route path="seller-orders" element={<SellerOrders />} />
                 <Route path="delayed-prepayment-orders" element={<DelayedPrepaymentPreOrders />} />
                 <Route path="delayed-final-orders" element={<DelayedFinalPreOrders />} />
+               
               </Route>
               <Route path="/sales">
                 <Route path="all" element={<AllOrders />} />

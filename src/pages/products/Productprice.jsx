@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useProductContext } from "../../productContex";
 import "./Productprice.css";
+import { Link } from "react-router-dom";
 
 const ProductForm = () => {
   const [showColors, setShowColors] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedAttribute, setSelectedAttribute] = useState("");
-  const [selectedSleeve, setSelectedSleeve] = useState("");
   const { productData, setProductData } = useProductContext();
 
   const [quantity, setQuantity] = useState(1);
@@ -16,44 +15,39 @@ const ProductForm = () => {
     hideStock: false,
   });
 
+  console.log(productData)
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProductData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setProductData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleToggle = (key) => {
-    setStockVisibility((prev) => ({
-      showQuantity: key === "showQuantity" ? !prev.showQuantity : false,
-      showTextOnly: key === "showTextOnly" ? !prev.showTextOnly : false,
-      hideStock: key === "hideStock" ? !prev.hideStock : false,
-    }));
+    setProductData((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-  const handleSubmit = (publish = false) => {
-    const updatedProduct = {
-      ...productData,
+
+  const handleSubmit = (publish) => {
+    setProductData((prev) => ({
+      ...prev,
       published: publish,
-      colors: showColors ? [selectedColor] : []
-    };
-    
-    // Here you would typically send the data to an API
-    console.log("Product data to save:", updatedProduct);
-  }
+      colors: showColors ? [selectedColor] : [],
+    }));
+
+   
+  };
   return (
     <div className="product-container">
       <div className="product-box">
         <h3 className="section-title">Product price + stock</h3>
         <div className="divider"></div>
         {/* Colors Dropdown (Hidden by default) */}
-        <div className="form-group">
+        <div className="form-group-pri">
           <label className="label-box">Colors</label>
           {showColors && (
             <select
               className="dropdown"
-              value={productData.colors}
-              onChange={(e) => setProductData(e.target.value)}
+              value={selectedColor}
+              onChange={(e) => setSelectedColor(e.target.value)}
             >
               <option value="">Select Color</option>
               <option value="red">Red</option>
@@ -70,7 +64,7 @@ const ProductForm = () => {
         </div>
 
         {/* Attributes Dropdown */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label-box">Attributes</label>
           <select
             className="dropdown"
@@ -84,7 +78,7 @@ const ProductForm = () => {
             <option value="">Wheel</option>
             <option value="short">Liter</option>
           </select>
-        </div>
+        </div> */}
 
         {/* Description under Attributes Dropdown */}
         <p className="description-text">
@@ -93,7 +87,7 @@ const ProductForm = () => {
         </p>
 
         {/* Unit Price Input */}
-        <div className="form-group">
+        <div className="form-group-pri">
           <label className="label-unit">
             Unit price <span className="required">*</span>
           </label>
@@ -107,7 +101,7 @@ const ProductForm = () => {
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-group-pri">
           <label className="label-unit">
             Discount Date Range<span className="required">*</span>
           </label>
@@ -122,7 +116,7 @@ const ProductForm = () => {
 
         {/* Discount Section */}
         <div className="form-row">
-          <label className="form-label">
+          <label className="form-label-pri">
             Discount <span className="required">*</span>
           </label>
           <div className="form-row-row">
@@ -147,7 +141,7 @@ const ProductForm = () => {
         </div>
 
         {/* Set Point */}
-        <div className="form-group">
+        <div className="form-group-pri">
           <label className="label-unit">Set Point</label>
           <input
             type="number"
@@ -160,8 +154,8 @@ const ProductForm = () => {
         </div>
 
         {/* External Link */}
-        <div className="form-row">
-          <label className="form-label">External Link</label>
+        <div className="form-row-row">
+          <label className="form-label-pri">External Link</label>
           <input
             type="url"
             className="form-input-link"
@@ -176,8 +170,8 @@ const ProductForm = () => {
         </p>
 
         {/* External Link Button Text */}
-        <div className="form-row">
-          <label className="form-label">External Link Button Text</label>
+        <div className="form-row-row">
+          <label className="form-label-pri">External Link Button Text</label>
           <input
             type="text"
             className="form-input-link"
@@ -255,58 +249,33 @@ const ProductForm = () => {
           </div>
           <br />
           <h3 className="stock-heading">Stock Visibility State</h3>
-          <div className="divider"></div>
-          <div className="toggle-group">
-            <div className="toggle-item">
-              <span>Show Stock Quantity</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={productData.showStockQuantity || false}
-                  onChange={() => handleToggle("showQuantity")}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
+        <div className="divider"></div>
 
-            <div className="toggle-item">
-              <span>Show Stock With Text Only</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={productData.showStockWithTextOnly || false}
-                  onChange={() => handleToggle("showTextOnly")}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
-
-            <div className="toggle-item">
-              <span>Hide Stock</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={productData.hideStock || false}
-                  onChange={() => handleToggle("hideStock")}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
+        {["show Stock Quantity", "show Stock With Text Only", "hide Stock"].map((key) => (
+          <div className="toggle-item" key={key}>
+            <span>{key}</span>
+            <label className="switch">
+              <input type="checkbox" checked={productData[key] || false} onChange={() => handleToggle(key)} />
+              <span className="slider"></span>
+            </label>
           </div>
+        ))}
 
-         <div className="button-group">
-            <button 
-              className="btn btn-gray" 
+          <div className="button-group-pri">
+            <button
+              className="btn-btn-gray"
               onClick={() => handleSubmit(false)}
             >
               Save & Unpublish
             </button>
-            <button 
-              className="btn btn-green" 
-              onClick={() => handleSubmit(true)}
-            >
-              Save & Publish
-            </button>
+            <Link to='/products/create/seo'>
+              <button
+                className="btn-btn-green"
+                onClick={() => handleSubmit(true)}
+              >
+                Save & Publish
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -108,10 +108,11 @@
   
   
   /* Buttons */
-  .button-group {
+  .button-group-ship {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
+    gap: 5px;
   }
   
   .btn {
@@ -122,7 +123,7 @@
     cursor: pointer;
   }
   
-  .btn-unpublish {
+  .btn-btn-grey {
     background: #e0e0e0;
     color: #333;
     border: 1px solid #ccc;
@@ -131,9 +132,10 @@
     font-weight: bold;
     transition: all 0.3s ease-in-out;
     margin-right: 10px;
+    padding: 6px;
   }
   
-  .btn-publish {
+  .btn-btn-green {
     background: #28a745;
     color: white;
     border: 1px solid rgb(152, 218, 152);
@@ -161,7 +163,7 @@
       width: 100%;
     }
   
-    .button-group {
+    .button-group-ship{
       flex-direction: column;
       align-items: center;
     }

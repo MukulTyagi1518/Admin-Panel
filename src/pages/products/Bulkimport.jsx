@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Brandimport.css";
+import "./Bulkimport.css";
 
 const BrandBulkUpload = () => {
 
@@ -15,7 +15,7 @@ const BrandBulkUpload = () => {
   return (
     <div className="container">
       <div className="card">
-        <h2 className="title">Brand Bulk Upload</h2>
+        <h2 className="title">Product Bulk Upload</h2>
         <div className="divider"></div>
         <div className="info-box">
           <strong>Step 1:</strong>
@@ -33,6 +33,26 @@ const BrandBulkUpload = () => {
         </div>
         <button className="download-btn">Download CSV</button>
       </div>
+
+      <div className="card">
+        <h2 className="title">Brand Bulk Upload</h2>
+        <div className="divider"></div>
+        <div className="info-box">
+          <strong>Step 2:</strong>
+          <ol>
+            <li>1. Category and Brand should be in numerical id.</li>
+            <li>
+                2. You can download the pdf to get Category and Brand id.
+            </li>
+          </ol>
+        </div>
+        <div className="download-buttons-container">
+          <button className="download-btn-btn">Download Category</button>
+          <button className="download-btn-btn">Download Brand</button>
+        </div>
+
+      </div>
+
       <div className="card upload-section">
       <h2 className="title">Upload Brand File</h2>
       <div className="divider"></div>

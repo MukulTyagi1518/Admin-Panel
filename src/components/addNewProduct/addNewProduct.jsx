@@ -1,48 +1,38 @@
-import "./addNewProduct.scss"
-import { Link, Outlet } from "react-router-dom"
+import "./addNewProduct.scss";
+import { Link, Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 export default function AddNewProductMain() {
+    const [activeTab, setActiveTab] = useState("general");
+    const tabs = [
+        { name: "General", path: "general" },
+        { name: "Files & Media", path: "add" },
+        { name: "Price & Stock", path: "price-stock" },
+        { name: "SEO", path: "seo" },
+        { name: "Shipping", path: "shipping" },
+        { name: "Warranty", path: "warranty" },
+        { name: "Frequently Bought", path: "frequently-bought" }
+    ];
+
     return (
         <div className="addNewProductMain">
             <div className="addNewProductBox">
-               <div className="addNewProductMenu">
-                  <label>Add Product</label>
-                  <div className="divider"></div>
-                    <Link to='/products/create/general'>
-                        <p className="addNewProductMenuItem">
-                            General
-                        </p>
-                    </Link>
-                    <Link to='/products/create/add'>
-                        <p className="addNewProductMenuItem">
-                            File & Media
-                        </p>
-                    </Link>
+                <div className="header">
+                    <h2>Add New Product</h2>
+                    <button className="clearTempData">Clear Tempdata</button>
+                </div>
 
-                    <Link to='/products/create/price-stock'>
-                        <p className="addNewProductMenuItem">
-                            Price & Stock
-                        </p>
-                    </Link>
-                    <Link to='/products/create/seo'>
-                        <p className="addNewProductMenuItem">
-                            SEO
-                        </p>
-                    </Link>
-                    <Link to='/products/create/shipping'>
-                        <p className="addNewProductMenuItem">
-                            Shipping
-                        </p>
-                    </Link>
-                    <Link to='/products/create/warranty'>
-                        <p className="addNewProductMenuItem">
-                            Warranty
-                        </p>
-                    </Link>
-                    <Link to='/products/create/frequently-bought'>
-                        <p className="addNewProductMenuItem">
-                            Frequently Bought
-                        </p>
-                    </Link>
+                <div className="tabContainer">
+                    {tabs.map((tab) => (
+                        <Link 
+                            to={`/products/create/${tab.path}`}
+                            key={tab.path}
+                            className={`tabItem ${activeTab === tab.path ? "active" : "disabled"}`}
+                            onClick={() => setActiveTab(tab.path)}
+                        >
+                            {tab.name}
+                        </Link>
+                    ))}
                 </div>
 
                 <div className="addNewProductOutlet">
@@ -50,5 +40,5 @@ export default function AddNewProductMain() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

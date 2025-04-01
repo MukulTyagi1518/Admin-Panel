@@ -13,8 +13,6 @@
     width: fit-content;
 
 }
-
-
 .preOrderBoxHead {
     padding: .3cm .5cm;
     border-bottom: 1px solid rgb(226, 226, 226);
@@ -49,7 +47,7 @@
 
 .PreProductInputDiv {
     display: flex;
-    width: 15cm;
+    width: 13cm;
     border: 1px solid rgb(223, 223, 223);
     border-radius: 5px;
 }
@@ -83,9 +81,6 @@
     border-radius: 5px;
 
 }
-
-
-
 .file-label {
     background-color: rgb(223, 223, 223);
     padding: .2cm .5cm;
@@ -148,4 +143,55 @@
     top: -.3cm;
     right: -0.35cm;
     cursor: pointer;
+}
+@media (max-width: 768px) {
+    .PreOrderSetting {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .preOrderSettingBox {
+        width: 100%;
+    }
+
+    .productBoxLowerdiv {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .productBoxLowerText {
+        width: 100%;
+    }
+
+    .PreProductInputDiv {
+        width: 100%;
+    }
+
+    .editor-container {
+        width: 100%;
+        min-height: 150px;
+    }
+
+    .updateButtonBox {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .updatePreOrderSetting {
+        width: 100%;
+        text-align: center;
+    }
+
+    .qrcode {
+        width: 100%;
+        max-width: 120px;
+        margin: 10px auto;
+    }
+
+    .crossImg {
+        top: -5px;
+        right: -5px;
+        padding: 5px;
+    }
 }
