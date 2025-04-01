@@ -22,48 +22,6 @@ const Category = () => {
 
 
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 10; 
-  // const totalPages = Math.ceil(categoryData.length / itemsPerPage);
-
-  
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = categoryData.slice(indexOfFirstItem, indexOfLastItem);
-
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // const getPageNumbers = () => {
-  //   const pages = [];
-  //   const totalVisiblePages = 8;
-  //   if (totalPages <= totalVisiblePages) {
-  //     for (let i = 1; i <= totalPages; i++) {
-  //       pages.push(i);
-  //     }
-  //   } else {
-  //     let startPage = Math.max(1, currentPage - 2);
-  //     let endPage = Math.min(totalPages, currentPage + 2);
-  //     if (currentPage <= 3) {
-  //       endPage = 5;
-  //     }
-  //     if (currentPage >= totalPages - 2) {
-  //       startPage = totalPages - 4;
-  //     }
-  //     for (let i = startPage; i <= endPage; i++) {
-  //       pages.push(i);
-  //     }
-  //     if (startPage > 1) {
-  //       pages.unshift("...");
-  //       pages.unshift(1);
-  //     }
-  //     if (endPage < totalPages) {
-  //       pages.push("...");
-  //       pages.push(totalPages);
-  //     }
-  //   }
-  //   return pages;
-  // };
-
  
   const handleDeleteCategory = async (id) => {
     await api.delete(`categories/Delete-category/${id}`);
@@ -72,12 +30,6 @@ const Category = () => {
     )
     alert("Category deleted!!")
   }
-
-
-
-
-
-
 
 
   
@@ -169,7 +121,7 @@ const Category = () => {
                   </td>
                 </tr>
 
-                {/* ✅ Hidden Row Section */}
+                {/* Hidden Row Section */}
                 {expandedRows.includes(category.id) && (
                   <tr className="row-details">
                     <td colSpan="10">
@@ -200,37 +152,6 @@ const Category = () => {
               </React.Fragment>
             ))}
           </tbody>
-
-
-
-          {/* Pagination Section */}
-          {/* <div className="pagination">
-            <button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="pagination-btn"
-            >
-              &lsaquo;
-            </button>
-            {getPageNumbers().map((page, index) => (
-              <button
-                key={index}
-                onClick={() => typeof page === "number" && paginate(page)}
-                className={`pagination-btn ${currentPage === page ? "active" : ""} ${
-                  page === "..." ? "dots" : ""
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-            <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="pagination-btn"
-            >
-              &rsaquo;
-            </button>
-          </div> */}
         </table>
       </div>
     </div>

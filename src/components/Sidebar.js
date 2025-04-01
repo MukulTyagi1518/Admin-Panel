@@ -31,6 +31,7 @@ const menuItems = [
       { name: "Colour", path: "/products/colour" },
       { name: "Warrenty", path: "/products/warranty" },
       { name: "Product review", path: "/products/review" },
+      { name: "Product based discount", path: "/products/product-discount"}
     ],
     path: "/products",
   },

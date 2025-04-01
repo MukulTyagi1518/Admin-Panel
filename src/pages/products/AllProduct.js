@@ -438,37 +438,7 @@ const handleExpandRow = (id) => {
   ))}
 </tbody>
 
-
-
-
-<div className="pagination ">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-btn"
-                >
-                    &lsaquo;
-                </button>
-
-                {getPageNumbers().map((page, index) => (
-                    <button
-                        key={index}
-                        onClick={() => typeof page === "number" && paginate(page)}
-                        className={`pagination-btn ${currentPage === page ? "active" : ""} ${page === "..." ? "dots" : ""}`}
-                    >
-                        {page}
-                    </button>
-                ))}
-
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="pagination-btn"
-                >
-                    &rsaquo;
-                </button>
-            </div>
-                    
+                   
 
                 </table>
 

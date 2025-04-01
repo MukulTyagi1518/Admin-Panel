@@ -65,6 +65,9 @@ import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalord
 import AllProduct from "./pages/products/AllProduct.js";
 import InhouseProduct from "./pages/products/InhouseProduct.js";
 import Category from "./pages/products/Category.js";
+import Productbased from "./pages/products/productbased.js";
+import ReviewDetail from "./pages/products/ReviewDetail.js";
+
 
 
 
@@ -142,6 +145,8 @@ function App() {
                 <Route path="colour" element={<Colors />} />
                 <Route path="review" element={<Review />} />
                 <Route path="Addreview" element={<Addreview />} />
+                <Route path="/products/ReviewDetail" element={<ReviewDetail/>} />
+                <Route path="/products/product-discount" element={<Productbased/>} />
 
               </Route>
 

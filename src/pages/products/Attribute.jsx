@@ -71,7 +71,7 @@ export default function PreOrderFaq() {
 
 
                                             <td>
-                                                <div className="actions">
+                                                <div className="flex flex-row gap-[.3cm]">
                                                     <div className="action">
                                                         <MdOutlineSettings color="blue" size={18} />
                                                     </div>
