@@ -126,8 +126,8 @@ function App() {
 
 
 
-              <Route path="/Wholesale/Allwholesale" element={<Allwholesale />}/>
-              <Route path="/Wholesale/Addwholesale" element={<Addwholesale />}/>
+              <Route path="/wholesale/all" element={<Allwholesale />}/>
+              <Route path="/wholesale/add" element={<Addwholesale />}/>
               <Route path="/products/Brandimport" element={<Brandimport />}/>
               <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
               <Route path="/products/bulk-export" element={<Bulkexport />}/>
