@@ -113,6 +113,7 @@ const AllProduct = () => {
 
 
     const [expandedRow, setExpandedRow] = useState(null);
+    
 
 const handleExpandRow = (id) => {
     setExpandedRow(expandedRow === id ? null : id);
@@ -273,70 +274,7 @@ const handleExpandRow = (id) => {
                             <th>Options</th>
                         </tr>
                     </thead>
-                    {/* <tbody>
-                        {products.map((product) => (
-                            <tr key={product.id}>
-                                <td>
-                                    <input type="checkbox" />
-                                </td>
-                                <td className="product-name">
-                                    <img src={product.image} alt={product.name} className="product-img" />
-                                    <span>{product.name}</span>
-                                </td>
-                                <td>{product.addedBy}</td>
-                                <td>
-                                    <div>Num of Sale: {product.info.sale} times</div>
-                                    <div>Base Price: {product.info.price}</div>
-                                    <div>Rating: {product.info.rating}</div>
-                                </td>
-                                <td>{product.stock}</td>
-                                
-                                <td>
-                                    <label className="switch">
-                                        <input
-                                            type="checkbox"
-                                            checked={product.deal}
-                                            onChange={() => handleToggleChange(product.id, "deal")}
-                                        />
-                                        <span className="slider"></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label className="switch">
-                                        <input
-                                            type="checkbox"
-                                            checked={product.published}
-                                            onChange={() => handleToggleChange(product.id, "published")}
-                                        />
-                                        <span className="slider"></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label className="switch">
-                                        <input
-                                            type="checkbox"
-                                            checked={product.featured}
-                                            onChange={() => handleToggleChange(product.id, "featured")}
-                                        />
-                                        <span className="slider"></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <button className="btn view-btn">
-                                        <FaEye />
-                                    </button>
-                                    <button className="btn edit-btn">
-                                        <FaEdit />
-                                    </button>
-                                    <button className="btn delete-btn">
-                                        <FaTrash />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-
-
-                    </tbody> */}
+                  
                    <tbody>
   {products.map((product) => (
     <>
@@ -500,37 +438,7 @@ const handleExpandRow = (id) => {
   ))}
 </tbody>
 
-
-
-
-<div className="pagination ">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-btn"
-                >
-                    &lsaquo;
-                </button>
-
-                {getPageNumbers().map((page, index) => (
-                    <button
-                        key={index}
-                        onClick={() => typeof page === "number" && paginate(page)}
-                        className={`pagination-btn ${currentPage === page ? "active" : ""} ${page === "..." ? "dots" : ""}`}
-                    >
-                        {page}
-                    </button>
-                ))}
-
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="pagination-btn"
-                >
-                    &rsaquo;
-                </button>
-            </div>
-                    
+                   
 
                 </table>
 
