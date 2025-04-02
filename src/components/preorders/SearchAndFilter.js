@@ -24,7 +24,6 @@ const SearchAndFilter = ({ searchTerm, setSearchTerm, dateFilter, setDateFilter,
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search Orders"
           />
-          <SearchIcon className="w-5 h-5 absolute left-3 top-2.5 text-gray-400" />
         </div>
         <select
           className="border rounded-lg px-4 py-2"
@@ -39,7 +38,7 @@ const SearchAndFilter = ({ searchTerm, setSearchTerm, dateFilter, setDateFilter,
           ))}
         </select>
       <DatePicker
-      className="border rounded-lg px-4 py-2"
+      className="border rounded-lg px-4 py-2 mr-3"
         selectsRange
         startDate={startDate}
         endDate={endDate}
