@@ -72,17 +72,23 @@ import Bulkimport from "./pages/products/Bulkimport.jsx";
 import Bulkexport from "./pages/products/Bulkexport.jsx";
 import Productbased from "./pages/products/productbased.js";
 import ReviewDetail from "./pages/products/ReviewDetail.js";
-
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
-import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/EmailTemplateEditor.js";
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
 import CreateNewCustomer from "./components/customers/allCustomers/CreateNewCustomer.jsx";
+import EmailTemplateSeller from "./components/marketing/EmailTemplate/Seller/EmailTemplateSeller.js";
+import EmailTemplateCustomer from "./components/marketing/EmailTemplate/Customer/EmailTemplateCustomer.js";
+import AdminEmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/AdminEmailTemplateEditor.js";
+import SellerEmailTemplateEditor from "./components/marketing/EmailTemplate/Seller/SellerEmailTemplateEditor.js";
+import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Customer/CustomerEmailTemplateEditor.js";
+import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
+import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
+import NewsLetter from "./components/marketing/NewsLetter.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -202,10 +208,7 @@ function App() {
 
               <Route path="/customers">
                 <Route path="all" element={<AllCustomers />} />
-                <Route
-                  path="create"
-                  element={<CreateNewCustomer />}
-                />
+                <Route path="create" element={<CreateNewCustomer />} />
               </Route>
 
               <Route path="/preorder">
@@ -250,14 +253,29 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
-                <Route
-                  path="email-templates/admin"
-                  element={<EmailTemplateAdmin />}
-                />
-                <Route
-                  path="email-templates/admin/edit"
-                  element={<EmailTemplateEditor />}
-                />
+                <Route path="email-templates">
+                  <Route path="admin" element={<EmailTemplateAdmin />} />
+                  <Route path="seller" element={<EmailTemplateSeller />} />
+                  <Route path="customer" element={<EmailTemplateCustomer />} />
+                  <Route path="common" element={<EmailTemplateCommon />} />
+                  <Route
+                    path="admin/edit"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="seller/edit"
+                    element={<SellerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="customer/edit"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="common/edit"
+                    element={<CommonEmailTemplateEditor />}
+                  />
+                </Route>
+                <Route path="news-letter" element={<NewsLetter />} />
               </Route>
             </Routes>
           </div>

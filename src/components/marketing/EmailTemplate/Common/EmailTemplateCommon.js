@@ -3,104 +3,12 @@ import { Mail, Edit2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Pagination from "../../../Pagination"; // Import Pagination Component
 
-const EmailTemplateAdmin = () => {
+const EmailTemplateCommon = () => {
   const [templates, setTemplates] = useState([
     {
       id: 1,
-      EmailType: "Customer Registration",
-      subject: "New Customer Registration - [[customer_name]]",
-      status: "Active",
-    },
-    {
-      id: 2,
-      EmailType: "Seller Registration",
-      subject: "New Seller Registration - [[shop_name]]",
-      status: "Active",
-    },
-    {
-      id: 3,
-      EmailType: "Order Placed",
-      subject: "Order Placed - [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 4,
-      EmailType: "Order Confirmed",
-      subject: "New Order Confirmed - [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 5,
-      EmailType: "Order Picked Up",
-      subject: "Order Picked Up - [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 6,
-      EmailType: "Order On The Way",
-      subject: "Order On The Way - [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 7,
-      EmailType: "Order Delivered",
-      subject: "Order Delivered - [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 8,
-      EmailType: "Order Cancelled",
-      subject: "Order Cancelled - [[order_code]]",
-      status: "Inactive",
-    },
-    {
-      id: 9,
-      EmailType: "Order Paid",
-      subject: "Payment Received for Order [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 10,
-      EmailType: "Refund Request",
-      subject: "New Refund Request for Order [[order_code]]",
-      status: "Inactive",
-    },
-    {
-      id: 11,
-      EmailType: "Refund Request Accepted by Admin",
-      subject: "Refund Request Accepted for Order [[order_code]]",
-      status: "Active",
-    },
-    {
-      id: 12,
-      EmailType: "Refund Request Accepted by Seller",
-      subject:
-        "Refund Request for Order [[order_code]] has been accepted by [[shop_name]]",
-      status: "Active",
-    },
-    {
-      id: 13,
-      EmailType: "Refund Request Denied by Admin",
-      subject: "Refund Request Denied for Order [[order_code]]",
-      status: "Inactive",
-    },
-    {
-      id: 14,
-      EmailType: "Refund Request Denied by Seller",
-      subject:
-        "Refund Request Denied by seller [[shop_name]] for Order [[order_code]]",
-      status: "Inactive",
-    },
-    {
-      id: 15,
-      EmailType: "Seller Payout Request",
-      subject: "Seller Payout Request [[shop_name]]",
-      status: "Active",
-    },
-    {
-      id: 16,
-      EmailType: "Seller Payout",
-      subject: "Seller Payment Processed – [[shop_name]]",
+      EmailType: "Password Reset",
+      subject: "Password Reset - [[store_name]]",
       status: "Active",
     },
   ]);
@@ -242,4 +150,4 @@ const EmailTemplateAdmin = () => {
   );
 };
 
-export default EmailTemplateAdmin;
+export default EmailTemplateCommon;
