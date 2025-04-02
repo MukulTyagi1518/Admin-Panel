@@ -62,58 +62,58 @@ const ShippingConfig = () => {
       <h2 className="shipping-title">Shipping Configuration</h2>
       <div className="shipping-divider"></div>
 
-      <div className="shipping-option">
+      <div className="shipping-option-new">
         <span>Cash On Delivery</span>
-        <label className="toggle-switch">
+        <label className="toggle-switch-new">
           <input
             type="checkbox"
             checked={cashOnDelivery}
             onChange={handleTogglecashOnDelivery}
           />
-          <span className="toggle-slider"></span>
+          <span className="toggle-slider-new"></span>
         </label>
       </div>
 
-      <div className="shipping-option">
+      <div className="shipping-option-new">
         <span>Free Shipping</span>
-        <label className="toggle-switch">
+        <label className="toggle-switch-new">
           <input
             type="checkbox"
             checked={productData.freeShipping}
             onChange={handleTogglefreeShiping}
           />
-          <span className="toggle-slider"></span>
+          <span className="toggle-slider-new"></span>
         </label>
       </div>
 
-      <div className="shipping-option">
+      <div className="shipping-option-new">
         <span>Flat Rate</span>
-        <label className="toggle-switch">
+        <label className="toggle-switch-new">
           <input
             type="checkbox"
             checked={flatRate}
             onChange={handleToggleflatRate}
           />
-          <span className="toggle-slider"></span>
+          <span className="toggle-slider-new"></span>
         </label>
       </div>
 
-      <div className="shipping-option">
+      <div className="shipping-option-new">
         <span>Is Product Quantity Multiply</span>
-        <label className="toggle-switch">
+        <label className="toggle-switch-new">
           <input
             type="checkbox"
             checked={productQuantityMultiply}
             onChange={handleToggleproductQuantityMultiply}
           />
-          <span className="toggle-slider"></span>
+          <span className="toggle-slider-new"></span>
         </label>
       </div>
 
       <h2 className="shipping-title">Estimate Shipping Time</h2>
       <div className="shipping-divider"></div>
 
-      <div className="shipping-option">
+      <div className="shipping-option-new">
         <span>Shipping Days</span>
         <div className="input-box">
           <input
