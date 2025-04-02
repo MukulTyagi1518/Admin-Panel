@@ -32,9 +32,17 @@ const FrequentlyBought = () => {
   const handleCategoryChange = (e) => {
     setProductData((prev) => ({
       ...prev,
-      frequentlyBought: { ...prev.frequentlyBought, category: e.target.value },
+      frequentlyBought: {
+        ...prev.frequentlyBought,
+        categories: [
+          ...(prev.frequentlyBought.categories || []), // Keep existing categories
+          e.target.value, // Add the new category
+        ],
+      },
     }));
   };
+
+
   const handleAddProduct = () => {
     if (product) {
       setProductData((prev) => ({
@@ -47,7 +55,7 @@ const FrequentlyBought = () => {
           ],
         },
       }));
-      setproduct(""); // Reset the selected product
+      setproduct(""); // Reset the selected product 
       setShowModal(false); // Close the modal
     }
   };

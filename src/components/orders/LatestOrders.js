@@ -14,11 +14,21 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     // Add more orders as needed
   ]);
 
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Number of items per page
 
   // Apply custom filter if provided
-  const filteredOrders = customFilter ? customFilter(orders) : orders;
+  const filteredOrders = customFilter
+    ? customFilter(orders)
+    : orders.filter(
+        (order) =>
+          order.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.deliveryStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.paymentStatus.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
   // Calculate total pages
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
@@ -50,11 +60,8 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mx-auto">
-      <OrderHeader />
-
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
-      </div>
+      {/* Pass the search handler to OrderHeader */}
+      <OrderHeader onSearch={setSearchTerm} />
 
       <div className="overflow-x-auto">
         <table className="min-w-full">

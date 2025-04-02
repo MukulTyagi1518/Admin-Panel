@@ -131,9 +131,13 @@ function Preorders() {
     return PREORDERS.filter((order) => {
       const matchesStatus =
         selectedStatus === "All" || order.status.includes(selectedStatus);
-      const matchesSearch =
-        order.id.includes(searchTerm) ||
-        order.product.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch =
+        order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.status.toLowerCase().includes(searchTerm.toLowerCase());
 
       const orderDate = new Date(order.createdAt);
       const matchesDate = dateFilter.start && dateFilter.end
@@ -187,7 +191,7 @@ function Preorders() {
 
       {/* Orders Table */}
       <div className="bg-white rounded-lg shadow overflow-x-auto">
-        <table className="w-full">
+        <table className="">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

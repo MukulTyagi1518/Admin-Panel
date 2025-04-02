@@ -75,18 +75,38 @@ const AddNewCategory = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/categories/Create-new-category', formData)
-      setFetchData(true)
-    }
-    catch (err) {
-      console.log(err)
-    }
-    alert("Category added")
-    console.log(
-      formData
-    )
+      const data = new FormData();
 
+      // Append all form fields
+      Object.keys(formData).forEach((key) => {
+        if (formData[key] instanceof File) {
+          data.append(key, formData[key]); // Append files
+        } else if (Array.isArray(formData[key])) {
+          formData[key].forEach((item) => data.append(`${key}[]`, item)); // Append arrays properly
+        } else {
+          data.append(key, formData[key]); // Append other fields
+        }
+      });
+
+      // Debugging: Log the FormData contents
+      for (let [key, value] of data.entries()) {
+        console.log(key, value);
+      }
+
+      // API Call
+      await api.post('/categories/Create-new-category', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      setFetchData(true);
+      alert("Category added successfully");
+    } catch (err) {
+      console.error("Error adding category:", err);
+    }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Mail,
   ChevronLeft,
-  Save,
   Bold,
   Italic,
   Underline,
@@ -18,7 +17,7 @@ import {
   Redo2
 } from 'lucide-react';
 
-const EmailTemplateEditor = () => {
+const SellerEmailTemplateEditor = () => {
   const [template, setTemplate] = useState({
     name: 'Order Confirmation',
     subject: 'Your Order #{order_id} has been confirmed',
@@ -65,7 +64,7 @@ const EmailTemplateEditor = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <a href="/marketing/email-templates/admin" className="mr-4 text-gray-600 hover:text-gray-900">
+            <a href="/marketing/email-templates/seller" className="mr-4 text-gray-600 hover:text-gray-900">
               <ChevronLeft className="w-6 h-6" />
             </a>
             <h1 className="text-2xl font-bold flex items-center">
@@ -207,4 +206,4 @@ const EmailTemplateEditor = () => {
   );
 };
 
-export default EmailTemplateEditor;
+export default SellerEmailTemplateEditor;

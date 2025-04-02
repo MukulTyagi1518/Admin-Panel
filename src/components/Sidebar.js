@@ -10,10 +10,16 @@ import {
   User,
   ChevronDown,
   ChevronUp,
+  Grid,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const menuItems = [
+  {
+    name:"DashBoard",
+    path:"/",
+    icon:<Grid size={20}/>,
+  },
   {
     name: "Products",
     icon: <Package size={20} />,
@@ -149,6 +155,18 @@ const menuItems = [
           },
         ],
       },
+      {
+        name:"Custom Alert popup",
+        path:"/marketing/custom-alert-popup"
+      },
+      {
+        name:"News Letter",
+        path:"/marketing/news-letter"
+      },
+      {
+        name:"Notification",
+        path:"/marketing/notification"
+      }
     ],
     path: "/marketing",
   },
@@ -206,10 +224,10 @@ function Sidebar({ isSidebarVisible }) {
   const [openItems, setOpenItems] = useState({});
   const navigate = useNavigate();
 
-  const toggleItem = (index) => {
+  const toggleItem = (key) => {
     setOpenItems((prev) => ({
       ...prev,
-      [index]: !prev[index],
+      [key]: !prev[key], 
     }));
   };
 
@@ -294,25 +312,32 @@ function Sidebar({ isSidebarVisible }) {
                   ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
                   : "text-white"
               }`}
-              onClick={() => toggleItem(index)}
-            >
+              onClick={() => {
+                if (item.subItems && item.subItems.length > 0) {
+                  toggleItem(index);
+                } else {
+                  navigate(item.path);
+                }
+              }}            >
               <div className="flex items-center gap-2">
                 {item.icon}
                 {isSidebarVisible && <span>{item.name}</span>}
               </div>
               {isSidebarVisible &&
-                item.subItems.length > 0 &&
-                (openItems[index] ? (
-                  <ChevronUp size={20} />
-                ) : (
-                  <ChevronDown size={20} />
-                ))}
+    item.subItems &&
+    item.subItems.length > 0 &&
+    (openItems[index] ? (
+      <ChevronUp size={20} />
+    ) : (
+      <ChevronDown size={20} />
+    ))}
             </div>
             {openItems[index] &&
-              item.subItems.length > 0 &&
-              isSidebarVisible && (
-                <div className="pl-5">{renderSubItems(item.subItems)}</div>
-              )}
+  item.subItems &&
+  item.subItems.length > 0 &&
+  isSidebarVisible && (
+    <div className="pl-5">{renderSubItems(item.subItems)}</div>
+  )}
           </div>
         ))}
       </div>
