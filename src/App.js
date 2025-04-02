@@ -79,6 +79,10 @@ import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/Emai
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
+import Sellerverification from "./components/Seller/Sellerverification.jsx";
+import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
+import Inhouse from "./components/Wholesale/Inhouse.jsx"
+import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -131,6 +135,11 @@ function App() {
               <Route path="/products/Brandimport" element={<Brandimport />}/>
               <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
               <Route path="/products/bulk-export" element={<Bulkexport />}/>
+              <Route path="/sellers/verify" element={<Sellerverification />}/>
+              <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
+              <Route path="/wholesale/inhouse" element={<Inhouse />}/>
+              <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
+
 
 
 
