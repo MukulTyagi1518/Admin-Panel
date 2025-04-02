@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./General.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
+import ProductCategory from "../../components/ProductCategory";
 
 const General = () => {
 
@@ -19,6 +20,20 @@ const General = () => {
   const [vatType, setVatType] = useState("flat");
   const [content, setContent] = useState("");
   const [tagInput, setTagInput] = useState("");
+  // const [showHotCategories, setShowHotCategories] = useState(false);
+
+  // const toggleHotCategories = () => {
+  //   setShowHotCategories(!showHotCategories);
+  // }
+
+
+
+
+
+
+
+
+
 
 
   const { productData, setProductData } = useProductContext()
@@ -61,10 +76,11 @@ const General = () => {
 
 
   return (
-    <div className="container">
+    <div className="container2 ">
       {/* Left Side - Form */}
       <div className="form-container-general">
         <h2>Product Information</h2>
+        
         <br />
         <div className="divider"></div>
         <form>
@@ -398,49 +414,19 @@ const General = () => {
       </div>
 
 
-      {/* Right Side - Table-like Category Section */}
-      <div className="category-container">
-        <h3>Product Category</h3>
-        <div className="category-list">
-          <ul>
-            {/* <li>
-              <input type="checkbox" /> Women Clothing & Fashion
-            </li>
-            <ul c lassName="sub-category">
-              <li>
-                <input type="checkbox" /> Hot Categories
-              </li>
-              <ul className="sub-category">
-                <li>
-                  <input type="checkbox" /> Party Dress
-                </li>
-                <li>
-                  <input type="checkbox" /> Beauty & Health
-                </li>
-                <li>
-                  <input type="checkbox" /> Women Shoe
-                </li>
-                <li>
-                  <input type="checkbox" /> Sleeping Dress
-                </li>
-                <li>
-                  <input type="checkbox" /> Casual Dress
-                </li>
-                <li>
-                  <input type="checkbox" /> Hoodies & Sweatshirts
-                </li>
-                <li>
-                  <input type="checkbox" /> Jackets
-                </li>
-                <li>
-                  <input type="checkbox" /> T-shirts
-                </li>
-              </ul>
-            </ul> */}
-          </ul>
 
-        </div>
-      </div>
+      {/* <div className="category-container">
+        <h3>Product Category</h3>
+        
+      </div> */}
+
+
+
+
+<div className="pro3">
+<ProductCategory/>
+</div>
+
 
     </div>
   );
