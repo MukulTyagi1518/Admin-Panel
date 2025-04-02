@@ -1,62 +1,85 @@
-import { Ban, ChevronDownIcon, Trash2 } from "lucide-react";
+import { Ban, ChevronDownIcon, ShieldAlert, ShieldCheck, Trash2, UserPlus } from "lucide-react";
 import "./allCustomers.scss";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CreateNewCustomer from "./CreateNewCustomer";
 import { useNavigate } from "react-router-dom";
+import apiInstance from "../../../utils/axios"
+import { useCustomerContext } from "../../../context/customerContext";
 
 export default function AllCustomers() {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  const { customers, setCustomers, setFetchCustomers } = useCustomerContext()
   const [selected, setSelected] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/user1/");
-      setUsers(response.data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
+
+
   const handleBlockUser = async (userId) => {
     try {
-      await axios.patch(`http://localhost:5000/api/user1/block/${userId}`);
-      fetchUsers();
+      await apiInstance.patch(`/user1/block/${userId}`);
+      setFetchCustomers(true)
+      alert("Customer Blocked")
     } catch (error) {
       console.error("Error blocking user:", error);
     }
   };
   const handleUnblockUser = async (userId) => {
     try {
-      await axios.patch(`http://localhost:5000/api/user1/unblock/${userId}`);
-      fetchUsers();
+      await apiInstance.patch(`/user1/unblock/${userId}`);
+      setFetchCustomers(true)
+      alert("Customer Unblocked")
     } catch (error) {
       console.error("Error unblocking user:", error);
     }
   };
+
+  const deleteCustomer = async (id) => {
+    try {
+      await apiInstance.delete(`/user1/${id}`);
+      setFetchCustomers(true)
+      alert("Customer Deleted")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleVerifyToggle = async (id, verificationStatus) => {
+    try {
+      if (verificationStatus) {
+        await apiInstance.patch(`/user1/unverify/${id}`);
+        alert("Customer Unverified")
+        setFetchCustomers(true)
+      }
+      else {
+        await apiInstance.patch(`/user1/verify/${id}`);
+        alert("Customer Verified")
+        setFetchCustomers(true)
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 
   const handleCheckboxChange = (user) => {
     let updatedSelected = selected.some((item) => item.id === user.id)
       ? selected.filter((item) => item.id !== user.id)
       : [...selected, user];
     setSelected(updatedSelected);
-    setSelectAll(updatedSelected.length === users.length);
+    setSelectAll(updatedSelected.length === customers.length);
   };
 
   const handleSelectAll = () => {
-    setSelected(selectAll ? [] : users);
+    setSelected(selectAll ? [] : customers);
     setSelectAll(!selectAll);
   };
 
   return (
     <div className="AllCustomers">
-      {showCreateForm && <CreateNewCustomer onCustomerAdded={fetchUsers} />}
+      {showCreateForm && <CreateNewCustomer />}
       <div className="allCustomersBox">
         <div className="allCustromersHeader">
           <p className="allCustomersHead">All Customers</p>
@@ -113,7 +136,7 @@ export default function AllCustomers() {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((user) => (
+                  {customers.map((user) => (
                     <tr key={user.id}>
                       <td>
                         <input
@@ -128,24 +151,53 @@ export default function AllCustomers() {
                       <td className="vstath">
                         <span
                           className={
-                            user.status === "Verified"
+                            user.isVerified
                               ? "badge badgeVerified"
                               : "badge"
                           }
                         >
-                          {user.status}
+                          {
+                            user.isVerified ? "Verified" : "Not verified"
+                          }
                         </span>
                       </td>
                       <td>
                         <td>
                           <div className="actions">
+
+                            {
+                              user.isVerified ?
+                                <div
+                                  className="action"
+                                  onClick={() => handleVerifyToggle(user._id, user.isVerified)}
+                                >
+                                  <ShieldCheck
+                                    color="blue"
+                                    size={18}
+                                    className="cursor-pointer"
+                                    title="Unblock User"
+                                  />
+                                </div>
+                                : <div
+                                  className="action"
+                                  onClick={() => handleVerifyToggle(user._id, user.isVerified)}
+                                >
+                                  <ShieldAlert
+                                    color="blue"
+                                    size={18}
+                                    className="cursor-pointer"
+                                    title="Unblock User"
+                                  />
+                                </div>
+                            }
+
                             {user.isBlocked ? (
                               <div
                                 className="action"
-                                onClick={() => handleUnblockUser(user.id)}
+                                onClick={() => handleUnblockUser(user._id)}
                               >
-                                <Ban
-                                  color="green"
+                                <UserPlus
+                                  color="blue"
                                   size={18}
                                   className="cursor-pointer"
                                   title="Unblock User"
@@ -154,7 +206,7 @@ export default function AllCustomers() {
                             ) : (
                               <div
                                 className="action"
-                                onClick={() => handleBlockUser(user.id)}
+                                onClick={() => handleBlockUser(user._id)}
                               >
                                 <Ban
                                   color="red"
@@ -165,7 +217,9 @@ export default function AllCustomers() {
                               </div>
                             )}
                             <div className="action">
-                              <Trash2 color="blue" size={18} />
+                              <Trash2 color="blue" onClick={() => {
+                                deleteCustomer(user._id)
+                              }} size={18} />
                             </div>
                           </div>
                         </td>
