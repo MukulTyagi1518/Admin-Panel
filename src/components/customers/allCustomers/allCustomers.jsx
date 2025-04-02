@@ -18,7 +18,7 @@ export default function AllCustomers() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5001/api/user1/");
+      const response = await axios.get("http://localhost:5000/api/user1/");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -26,16 +26,16 @@ export default function AllCustomers() {
   };
   const handleBlockUser = async (userId) => {
     try {
-      await axios.patch(`http://localhost:5001/api/user1/block/${userId}`);
-      fetchUsers(); 
+      await axios.patch(`http://localhost:5000/api/user1/block/${userId}`);
+      fetchUsers();
     } catch (error) {
       console.error("Error blocking user:", error);
     }
   };
   const handleUnblockUser = async (userId) => {
     try {
-      await axios.patch(`http://localhost:5001/api/user1/unblock/${userId}`);
-      fetchUsers(); 
+      await axios.patch(`http://localhost:5000/api/user1/unblock/${userId}`);
+      fetchUsers();
     } catch (error) {
       console.error("Error unblocking user:", error);
     }

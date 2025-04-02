@@ -3,7 +3,7 @@ import "./Product.css";
 import { X } from "lucide-react";
 import { useProductContext } from "../../productContex";
 import { Link } from "react-router-dom"
-
+import api from "../../utils/axios"
 
 
 
@@ -149,7 +149,7 @@ const ProductMediaForm = () => {
       <div className="button-group">
         <button className="btn-btn-gray">Save & Unpublish</button>
         <Link to='/products/create/price-stock' >
-          <button className="btn-btn-green" onClick={() => {
+          <button className="btn-btn-green" onClick={async () => {
 
             const data = new FormData();
 
@@ -166,6 +166,14 @@ const ProductMediaForm = () => {
             }
 
             console.log("FormData Entries:", [...data.entries()]);
+            await api.post("/products/store", data, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+
+
+
 
             setProductData((prev) => ({
               ...prev,
@@ -176,7 +184,7 @@ const ProductMediaForm = () => {
           }} >Save & Publish</button>
         </Link>
       </div>
-    </div>
+    </div >
   );
 };
 

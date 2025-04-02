@@ -21,7 +21,7 @@ export default function ProductProvider({ children }) {
         featured: "",
         todaysDeal: "",
         flashDeal: {
-            addToFlash: "",
+            addToFlash: "", 
             discount: "0",
             discountType: ""
         },
