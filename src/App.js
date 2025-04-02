@@ -76,6 +76,10 @@ import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/Email
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
+import Sellerverification from "./components/Seller/Sellerverification.jsx";
+import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
+import Inhouse from "./components/Wholesale/Inhouse.jsx"
+import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx"
 import CreateNewCustomer from "./components/customers/allCustomers/CreateNewCustomer.jsx";
 import EmailTemplateSeller from "./components/marketing/EmailTemplate/Seller/EmailTemplateSeller.js";
 import EmailTemplateCustomer from "./components/marketing/EmailTemplate/Customer/EmailTemplateCustomer.js";
@@ -130,11 +134,18 @@ function App() {
                 element={<CategoryBased />}
               />
 
-              <Route path="/wholesale/all" element={<Allwholesale />} />
-              <Route path="/wholesale/add" element={<Addwholesale />} />
-              <Route path="/products/Brandimport" element={<Brandimport />} />
-              <Route path="/products/bulk-import" element={<Bulkimport />} />
-              <Route path="/products/bulk-export" element={<Bulkexport />} />
+
+
+              <Route path="/wholesale/all" element={<Allwholesale />}/>
+              <Route path="/wholesale/add" element={<Addwholesale />}/>
+              <Route path="/products/Brandimport" element={<Brandimport />}/>
+              <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
+              <Route path="/products/bulk-export" element={<Bulkexport />}/>
+              <Route path="/sellers/verify" element={<Sellerverification />}/>
+              <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
+              <Route path="/wholesale/inhouse" element={<Inhouse />}/>
+              <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
+
 
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>

@@ -18,60 +18,67 @@
     margin-bottom: 20px;
   }
   
-  .shipping-option {
+  .shipping-option-new {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
   }
   
-  .shipping-option span {
+  .shipping-option-new span {
     font-size: 15px;
     color: #333;
   }
   
   /* Toggle Switch */
-  .toggle-switch {
+.toggle-switch-new {
     position: relative;
-    width: 40px;
-    height: 20px;
-  }
-  
-  .toggle-switch input {
-    display: none;
-  }
-  
-  .toggle-slider {
+    width: 36px;  /* Thoda bada kiya for smooth animation */
+    height: 18px;
+    display: inline-block;
+}
+
+.toggle-switch-new input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider-new {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
+   
     bottom: 0;
     background-color: #ccc;
     border-radius: 20px;
     cursor: pointer;
     transition: background 0.3s;
-  }
-  
-  .toggle-slider::before {
+}
+
+.toggle-slider-new::before {
     content: "";
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 14px;  /* Adjusted for better fit */
+    height: 14px;
     left: 2px;
-    bottom: 2px;
-    background-color: white;
+    bottom: 1px;
+    background-color:white;
     border-radius: 50%;
     transition: transform 0.3s;
-  }
-  
-  .toggle-switch input:checked + .toggle-slider {
+}
+
+.toggle-switch-new input:checked + .toggle-slider-new {
     background-color: #28a745;
-  }
-  
-  .toggle-switch input:checked + .toggle-slider::before {
-    transform: translateX(20px);
-  }
+    
+    
+}
+
+.toggle-switch-new input:checked + .toggle-slider-new::before {
+    transform: translateX(14px);  /* Fix for correct movement */
+}
+
   
   /* Input Box */
   /* Input Box - Matches the Image */
@@ -150,12 +157,12 @@
       padding: 15px;
     }
   
-    .shipping-option {
+    .shipping-option-new {
       flex-direction: row;
       justify-content: space-between;
     }
   
-    .toggle-switch {
+    .toggle-switch-new {
       align-self: flex-end;
     }
   

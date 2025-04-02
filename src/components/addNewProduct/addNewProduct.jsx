@@ -1,9 +1,12 @@
 import "./addNewProduct.scss";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function AddNewProductMain() {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [activeTab, setActiveTab] = useState("general");
+
     const tabs = [
         { name: "General", path: "general" },
         { name: "Files & Media", path: "add" },
@@ -14,6 +17,20 @@ export default function AddNewProductMain() {
         { name: "Frequently Bought", path: "frequently-bought" }
     ];
 
+    useEffect(() => {
+        const currentPath = location.pathname.split("/").pop();
+        setActiveTab(currentPath);
+    }, [location]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const currentIndex = tabs.findIndex(tab => tab.path === activeTab);
+        if (currentIndex < tabs.length - 1) {
+            const nextTab = tabs[currentIndex + 1].path;
+            navigate(`/products/create/${nextTab}`);
+        }
+    };
+
     return (
         <div className="addNewProductMain">
             <div className="addNewProductBox">
@@ -23,16 +40,20 @@ export default function AddNewProductMain() {
                 </div>
 
                 <div className="tabContainer">
-                    {tabs.map((tab) => (
-                        <Link 
-                            to={`/products/create/${tab.path}`}
-                            key={tab.path}
-                            className={`tabItem ${activeTab === tab.path ? "active" : "disabled"}`}
-                            onClick={() => setActiveTab(tab.path)}
-                        >
-                            {tab.name}
-                        </Link>
-                    ))}
+                    {tabs.map((tab, index) => {
+                        const isActive = activeTab === tab.path;
+                        const isCompleted = tabs.findIndex(t => t.path === activeTab) > index;
+
+                        return (
+                            <Link 
+                                to={`/products/create/${tab.path}`}
+                                key={tab.path}
+                                className={`tabItem ${isActive ? "active" : ""} ${isCompleted ? "completed" : ""}`}
+                            >
+                                {tab.name}
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 <div className="addNewProductOutlet">
