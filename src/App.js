@@ -83,6 +83,7 @@ import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
+import Ticket from "./pages/support/Ticket.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -261,6 +262,16 @@ function App() {
 
               <Route path="/sellers">
                 <Route path="all" element={<AllSellers/>} />
+                <Route path="rating" element={<Rating/>} />
+                <Route path="payout" element={<Payout/>} />
+                <Route path="" element={<UnpaidOrders />} />
+                <Route path="create" element={<Create />} />
+
+              </Route>
+
+
+              <Route path="/support">
+                <Route path="ticket" element={<Ticket/>} />
                 <Route path="rating" element={<Rating/>} />
                 <Route path="payout" element={<Payout/>} />
                 <Route path="" element={<UnpaidOrders />} />
