@@ -79,6 +79,10 @@ import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/Emai
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
+import Payout from "./pages/sellers/Payout.js";
+import Rating from "./pages/sellers/Rating.js";
+import AllSellers from "./pages/sellers/AllSellers.js";
+import Create from "./pages/sellers/Create.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -248,6 +252,20 @@ function App() {
                   path="email-templates/admin/edit"
                   element={<EmailTemplateEditor />}
                 />
+              </Route>
+
+
+
+
+
+
+              <Route path="/sellers">
+                <Route path="all" element={<AllSellers/>} />
+                <Route path="rating" element={<Rating/>} />
+                <Route path="payout" element={<Payout/>} />
+                <Route path="" element={<UnpaidOrders />} />
+                <Route path="create" element={<Create />} />
+
               </Route>
             </Routes>
           </div>

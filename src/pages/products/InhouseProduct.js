@@ -568,29 +568,7 @@ const handleExpandRow = (id) => {
                     <option value="">Bulk Action</option>
                     <option value="">Delete Section </option>
                 </select>
-                {/* <select className="filter-dropdown">
-                    <option value="">All Sellers</option>
-                    
-                </select> */}
-                {/* <div className="seller-dropdown">
-                    <div className="seller-dropdown-header" onClick={toggleSellerDropdown}>
-                        {selectedSeller}
-                        <span className={`arrow ${isSellerDropdownOpen ? "up" : "down"}`}></span>
-                    </div>
-                    {isSellerDropdownOpen && (
-                        <div className="seller-dropdown-list">
-                            {sellers.map((seller) => (
-                                <div key={seller} className="seller-dropdown-item" onClick={() => selectSeller(seller)}>
-                                    {seller}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div> */}
-                {/* <select className="filter-dropdown">
-                    <option value="">Sort By</option>
-                    
-                </select> */}
+               
                 <select className="filter-dropdown" onChange={(e) => handleSortChange(e.target.value)}>
                     <option value="">Sort By</option>
                     <option value="rating-high">Rating (High - Low)</option>

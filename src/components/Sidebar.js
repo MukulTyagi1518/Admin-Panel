@@ -106,6 +106,7 @@ const menuItems = [
       { name: "Payout request", path: "/sellers/payout-request" },
       { name: "Seller verify account", path: "/sellers/verify" },
       { name: "Seller commission", path: "/sellers/commission" },
+      
     ],
     path: "/sellers",
   },
