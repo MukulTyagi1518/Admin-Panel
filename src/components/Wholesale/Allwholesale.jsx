@@ -2,6 +2,7 @@ import { Ban, ChevronDownIcon, Edit, Eye, Trash, Trash2 } from "lucide-react"
 import "./Allwholesale.css"
 import { useNavigate } from "react-router-dom"; 
 import { MdOutlineSettings } from "react-icons/md";
+import { useState } from "react";
 
 export default function PreOrderReviews() {
   
@@ -12,8 +13,16 @@ export default function PreOrderReviews() {
         navigate("/wholesale/Addwholesale"); 
       };
 
-    
+       const [user, setUser] = useState()
 
+    
+      const handleToggleChange = (id, field) => {
+        setUser((prevUser) =>
+            prevUser.map((user) =>
+                user.id === id ? { ...user, [field]: !user[field] } : user
+            )
+        );
+    };
     
 
       
@@ -29,9 +38,9 @@ export default function PreOrderReviews() {
                    Rating: "0",
                  },
             totalstock:"Low",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
+            todaysdeal: true,
+            published: true,
+            featured: true,
            
         },
         {
@@ -44,9 +53,9 @@ export default function PreOrderReviews() {
                    Rating: "0",
                  },
             totalstock:"Low",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
+            todaysdeal: true,
+            published: true,
+            featured: true,
         },
         {
             id: 3,
@@ -58,9 +67,9 @@ export default function PreOrderReviews() {
                    Rating: "0",
                  },
             totalstock:"4999",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
+            todaysdeal: true,
+            published: true,
+            featured: true,
         },
         {
             id: 4,
@@ -72,9 +81,9 @@ export default function PreOrderReviews() {
                    Rating: "0",
                  },
             totalstock:"5000",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
+            todaysdeal: true,
+            published: true,
+            featured: true,
         }
     ]
 
@@ -157,10 +166,40 @@ export default function PreOrderReviews() {
                                         )}
                                     </td>
                                     <td >{user.totalstock}</td>
+
+                                    <td className="hide-on-small">
+                                        <label className="switch">
+                                            <input
+                                                type="checkbox"
+                                                checked={user.deal}
+                                                onChange={() => handleToggleChange(user.id, "deal")}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
+                                    </td>
+
                                    
-                                    <td >{user.todaysdeal}</td>
-                                    <td >{user.published}</td>
-                                    <td >{user.featured}</td>
+                                    <td className="hide-on-small">
+                                        <label className="switch">
+                                            <input
+                                                type="checkbox"
+                                                checked={user.published}
+                                                onChange={() => handleToggleChange(user.id, "published")}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
+                                    </td>
+                                    <td className="hide-on-small">
+                                        <label className="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                checked={user.featured}
+                                                onChange={() => handleToggleChange(user.id, "featured")}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
+                                    </td>
 
 
 

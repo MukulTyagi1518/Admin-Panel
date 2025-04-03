@@ -5,19 +5,9 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 const InhouseProduct = () => {
     const [products, setProducts] = useState([
        
+      
         {
             id: 1,
-            name: "Acer Nitro 50 N50-620 - UA91 Gaming Desktop",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt_2CbogDKB0QPLB2m-rRnMC_e3U9mxkCA-A&s",
-           
-            info: { sale: 16, price: "$559.990", rating: 5 },
-            stock: "Low",
-            deal: true,
-            published: true,
-            featured: false,
-        },
-        {
-            id: 2,
             name: "Lenovo V30a Business All-in-One Desktop",
             image: "https://p1-ofp.static.pub/fes/cms/2022/09/26/qk8uzm6ql6ofjomb78nkvxug1v2uto368400.png",
            
@@ -28,7 +18,7 @@ const InhouseProduct = () => {
             featured: true,
         },
         {
-            id: 3,
+            id: 2,
             name: "Acer Chromebook Spin 314 Convertible Laptop",
             image: "https://images-cdn.ubuy.co.in/665e08180f42d314230e8f57-acer-chromebook-spin-314-convertible.jpg",
           
@@ -39,7 +29,7 @@ const InhouseProduct = () => {
             featured: false,
         },
         {
-            id: 4,
+            id: 3,
             name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGUcY0ATlqDiHE2LJrJZeYQKz7bGGbi7hy9A&s",
             info: { sale: 1, price: "$53.810", rating: 0 },
@@ -49,7 +39,7 @@ const InhouseProduct = () => {
             featured: true,
         },
         {
-            id: 5,
+            id: 4,
             name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGUcY0ATlqDiHE2LJrJZeYQKz7bGGbi7hy9A&s",
            
@@ -60,7 +50,7 @@ const InhouseProduct = () => {
             featured: true,
         },
         {
-            id: 6,
+            id: 5,
             name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
             image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
             
@@ -71,7 +61,7 @@ const InhouseProduct = () => {
             featured: true,
         },
         {
-            id: 7,
+            id: 6,
             name: "Acer Chromebook Spin 314 Convertible Laptop",
             image: "https://images-cdn.ubuy.co.in/665e08180f42d314230e8f57-acer-chromebook-spin-314-convertible.jpg",
            
@@ -82,7 +72,7 @@ const InhouseProduct = () => {
             featured: false,
         },
         {
-            id: 8,
+            id: 7,
             name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
             image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
            
