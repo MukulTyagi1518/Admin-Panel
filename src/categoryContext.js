@@ -26,6 +26,10 @@ export default function CategoryProvider({ children }) {
       }
     };
 
+
+
+
+    
     fetchCategoryData();
   }, [fetchData]);
 
