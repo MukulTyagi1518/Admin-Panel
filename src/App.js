@@ -89,6 +89,10 @@ import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Cu
 import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
 import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
 import NewsLetter from "./components/marketing/NewsLetter.js";
+import Payout from "./pages/sellers/Payout.js";
+import Rating from "./pages/sellers/Rating.js";
+import AllSellers from "./pages/sellers/AllSellers.js";
+import Create from "./pages/sellers/Create.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -287,6 +291,20 @@ function App() {
                   />
                 </Route>
                 <Route path="news-letter" element={<NewsLetter />} />
+              </Route>
+
+
+
+
+
+
+              <Route path="/sellers">
+                <Route path="all" element={<AllSellers/>} />
+                <Route path="rating" element={<Rating/>} />
+                <Route path="payout" element={<Payout/>} />
+                <Route path="" element={<UnpaidOrders />} />
+                <Route path="create" element={<Create />} />
+
               </Route>
             </Routes>
           </div>
