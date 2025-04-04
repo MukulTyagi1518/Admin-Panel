@@ -21,9 +21,6 @@ export const AdminProvider = ({ children }) => {
   });
 
 
-  
-
-
   const [admin, setAdmin] = useState(null);
 
   useEffect(() => {

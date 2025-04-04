@@ -4,7 +4,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios"
 import { Link } from "react-router-dom";
-import CategoryEdit from "./CategoryEdit"; 
+import CategoryEdit from "./CategoryEdit";
 
 
 
@@ -24,7 +24,7 @@ const Category = () => {
 
 
 
- 
+
   const handleDeleteCategory = async (id) => {
     await api.delete(`categories/Delete-category/${id}`);
     setCategoryData((prevData) =>
@@ -33,15 +33,17 @@ const Category = () => {
     alert("Category deleted!!")
   }
 
+  const [enabled, setEnabled] = useState(true)
 
-  
+
+
 
   return (
     <div className="container14 my-5">
       <div className="top-header">
         <h5 className="table-title">All Categories</h5>
         <Link to="create">
-        <button className="add-category-btn">Add New Category</button>
+          <button className="add-category-btn">Add New Category</button>
         </Link>
       </div>
       <div className="search-section">
@@ -69,10 +71,10 @@ const Category = () => {
             </tr>
 
           </thead>
-          
 
 
-          
+
+
 
 
           <tbody>
@@ -104,22 +106,26 @@ const Category = () => {
                     <img src={category.coverImage} alt="cover" className="table-img" />
                   </td>
                   <td className="hide-on-small">
-                    <label className="featured-switch">
-                      <input
-                        type="checkbox"
-                        checked={category.featured}
 
-                        disabled
-                        className="cursor-not-allowed "
-                      />
-                      <span className="slider cursor-not-allowed"></span>
-                    </label>
+                    <div
+                      className={`w-12 h-6 flex items-center rounded-full p-1 transition-all cursor-not-allowed ${enabled ? "bg-green-500" : "bg-gray-300"
+                        }`}
+
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all ${enabled ? "translate-x-5" : "translate-x-0"
+                          } flex items-center justify-center`}
+                      >
+                        {enabled && <div className="w-2 h-2 bg-green-700 rounded-full"></div>}
+                      </div>
+                    </div>
+
                   </td>
                   <td>
                     <Link to={`/products/category/edit/${category._id}`}>
-                    <button className="btn btn-outline-primary me-1">
-                      <FaEdit />
-                    </button>
+                      <button className="btn btn-outline-primary me-1">
+                        <FaEdit />
+                      </button>
                     </Link>
                     <button onClick={() => { handleDeleteCategory(category._id) }} className="btn btn-outline-danger">
                       <FaTrash />
