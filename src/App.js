@@ -89,6 +89,12 @@ import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Cu
 import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
 import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
 import NewsLetter from "./components/marketing/NewsLetter.js";
+import Refundrequest from "./components/Refund/Refundrequest.jsx"
+import Approvedrefund from "./components/Refund/Approvedrefund.jsx"
+import Reject from "./components/Refund/Reject.jsx"
+import Physical from "./pages/products/Sellerproduct/Physical.jsx"
+import Digital from "./pages/products/Sellerproduct/Digital.jsx"
+import Commision from "./components/Seller/Commision.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -145,6 +151,16 @@ function App() {
               <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
               <Route path="/wholesale/inhouse" element={<Inhouse />}/>
               <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
+              <Route path="/products/seller" element={<Physical />}/>
+              <Route path="/products/digital" element={<Digital />}/>
+
+
+              <Route path="/refunds/request" element={<Refundrequest />}/>
+              <Route path="/refunds/approved" element={<Approvedrefund />}/>
+              <Route path="/refunds/reject" element={<Reject />}/>
+              <Route path="/sellers/commission" element={<Commision />}/>
+
+
 
 
               <Route path="/products">
