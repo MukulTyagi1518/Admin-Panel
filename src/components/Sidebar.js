@@ -162,7 +162,7 @@ const menuItems = [
       },
       {
         name:"News Letter",
-        path:"/marketing/news-letter"
+        path:"/marketing/all-news-letters"
       },
       {
         name:"Notification",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiInstance from '../../utils/axios';
 import { Clock, Plus, Edit2, Trash2, X, Image } from 'lucide-react';
 import ProductTable from '../reports/ProductTable';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const FlashDeals = () => {
   useEffect(() => {
     const fetchFlashDeals = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/flash-deals');
+        const response = await apiInstance.get('/flash-deals');
         setFlashDeals(response.data);
         setLoading(false);
       } catch (error) {

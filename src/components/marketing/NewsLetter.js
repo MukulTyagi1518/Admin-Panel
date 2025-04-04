@@ -1,43 +1,24 @@
 import { useState } from "react";
-import {
-  Mail,
-  ChevronLeft,
-  Bold,
-  Italic,
-  Underline,
-  List,
-  ListOrdered,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
-  Image,
-  Link,
-  Paperclip,
-  Undo2,
-  Redo2,
-  Send,
-  ChevronDown,
-  Users,
-  UserCheck,
-  UserCog,
-  X,
-} from "lucide-react";
+import { ChevronLeft, Mail, Send, Users, UserCheck, X, ChevronDown } from "lucide-react";
+import { TextEditor } from "../marketing/EmailTemplate/EditorComponents/TextEditor";
+import { newsletterService } from "../../services/newsLetterService";
+import { useNavigate } from "react-router-dom";
+import { useCustomerContext } from "../../context/customerContext";
+
 
 const NewsLetter = () => {
+  const navigate = useNavigate();
+  const { customers } = useCustomerContext();
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
   // Mock data - in a real app, this would come from your API
   const userGroups = {
-    allUsers: [
-      { id: 1, email: "user1@example.com", name: "John Doe" },
-      { id: 2, email: "user2@example.com", name: "Jane Smith" },
-      { id: 3, email: "user3@example.com", name: "Bob Johnson" },
-    ],
-    subscribers: [
-      { id: 4, email: "sub1@example.com", name: "Alice Brown" },
-      { id: 5, email: "sub2@example.com", name: "Charlie Wilson" },
-    ],
+    allUsers: customers,
+    subscribers: customers.filter(user => user.isSubscribed),
   };
-
-  const [activeTab, setActiveTab] = useState("design");
 
   const [formData, setFormData] = useState({
     subject: "",
@@ -85,11 +66,11 @@ const NewsLetter = () => {
 
   const handleUserSelect = (user) => {
     setFormData((prev) => {
-      const isSelected = prev.selectedUsers.some((u) => u.id === user.id);
+      const isSelected = prev.selectedUsers.some((u) => u._id === user._id);
       return {
         ...prev,
         selectedUsers: isSelected
-          ? prev.selectedUsers.filter((u) => u.id !== user.id)
+          ? prev.selectedUsers.filter((u) => u._id !== user._id)
           : [...prev.selectedUsers, user],
       };
     });
@@ -102,10 +83,40 @@ const NewsLetter = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Newsletter sent:", formData);
-    // Here you would typically send the data to your backend
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const newsletterData = {
+        emails: formData.selectedUsers.map(user => user.email),
+        subject: formData.subject,
+        content: formData.content
+      };
+      const response = await newsletterService.saveNewsletter(newsletterData);
+      
+      setSuccess("Newsletter saved successfully!");
+      alert("NewsLetter Sent")
+      console.log("Newsletter saved:", response);
+ 
+      resetForm();
+    } catch (error) {
+      console.error("Error saving newsletter:", error);
+      setError(error.message || "Failed to save newsletter");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      subject: "",
+      content: "",
+      selectedUsers: [],
+      specificEmails: "",
+    });
   };
 
   const filteredUsers = (type) => {
@@ -122,12 +133,12 @@ const NewsLetter = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <a
-              href="/marketing/newsletters"
+            <button
+              onClick={() => navigate("/marketing/all-news-letters")}
               className="mr-4 text-gray-600 hover:text-gray-900"
             >
               <ChevronLeft className="w-6 h-6" />
-            </a>
+            </button>
             <h1 className="text-2xl font-bold flex items-center">
               <Mail className="w-6 h-6 mr-2" />
               Send Newsletter
@@ -135,11 +146,24 @@ const NewsLetter = () => {
           </div>
         </div>
 
+        {/* Error/Success Messages */}
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            {success}
+          </div>
+        )}
+
         {/* Newsletter Form */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <form onSubmit={handleSubmit}>
             <div className="p-6">
               <div className="grid grid-cols-1 gap-6 mb-6">
+                {/* Subject Field */}
                 <div>
                   <label
                     htmlFor="subject"
@@ -158,6 +182,7 @@ const NewsLetter = () => {
                   />
                 </div>
 
+                {/* Recipient Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Select Recipients
@@ -196,35 +221,59 @@ const NewsLetter = () => {
                               autoFocus
                             />
                           </div>
+                          {/* Select All checkbox */}
+                          <div className="border-b border-gray-200 px-3 py-2 flex items-center hover:bg-gray-50">
+                            <input
+                              type="checkbox"
+                              checked={
+                                filteredUsers("allUsers").length > 0 &&
+                                filteredUsers("allUsers").every(user => 
+                                  formData.selectedUsers.some(u => u._id === user._id)
+                                )
+                              }
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  const newUsers = filteredUsers("allUsers").filter(
+                                    user => !formData.selectedUsers.some(u => u._id === user._id)
+                                  );
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    selectedUsers: [...prev.selectedUsers, ...newUsers]
+                                  }));
+                                } else {
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    selectedUsers: prev.selectedUsers.filter(
+                                      u => !filteredUsers("allUsers").some(user => user._id === u._id)
+                                    )
+                                  }));
+                                }
+                              }}
+                              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
+                            />
+                            <span className="text-sm font-medium text-gray-900">Select All</span>
+                          </div>
                           <ul className="divide-y divide-gray-200">
                             {filteredUsers("allUsers").length > 0 ? (
                               filteredUsers("allUsers").map((user) => (
-                                <li key={user.id} className="hover:bg-gray-50">
+                                <li key={user._id} className="hover:bg-gray-50">
                                   <button
                                     type="button"
                                     className={`w-full text-left px-3 py-3 flex items-center ${
-                                      formData.selectedUsers.some(
-                                        (u) => u.id === user.id
-                                      )
+                                      formData.selectedUsers.some(u => u._id === user._id)
                                         ? "bg-blue-50"
                                         : ""
                                     }`}
                                     onClick={() => handleUserSelect(user)}
                                   >
-                                    <div
-                                      className={`flex items-center h-5 mr-3 ${
-                                        formData.selectedUsers.some(
-                                          (u) => u.id === user.id
-                                        )
-                                          ? "text-blue-600"
-                                          : "text-gray-400"
-                                      }`}
-                                    >
+                                    <div className={`flex items-center h-5 mr-3 ${
+                                      formData.selectedUsers.some(u => u._id === user._id)
+                                        ? "text-blue-600"
+                                        : "text-gray-400"
+                                    }`}>
                                       <input
                                         type="checkbox"
-                                        checked={formData.selectedUsers.some(
-                                          (u) => u.id === user.id
-                                        )}
+                                        checked={formData.selectedUsers.some(u => u._id === user._id)}
                                         readOnly
                                         className="h-4 w-4 rounded border-gray-300 focus:ring-blue-500"
                                       />
@@ -240,6 +289,7 @@ const NewsLetter = () => {
                                   </button>
                                 </li>
                               ))
+                              
                             ) : (
                               <li className="px-3 py-3 text-sm text-gray-500 text-center">
                                 No users found
@@ -284,6 +334,38 @@ const NewsLetter = () => {
                               onChange={(e) => setSearchTerm(e.target.value)}
                               autoFocus
                             />
+                          </div>
+                          {/* Select All checkbox */}
+                          <div className="border-b border-gray-200 px-3 py-2 flex items-center hover:bg-gray-50">
+                            <input
+                              type="checkbox"
+                              checked={
+                                filteredUsers("subscribers").length > 0 &&
+                                filteredUsers("subscribers").every(user => 
+                                  formData.selectedUsers.some(u => u.id === user.id)
+                                )
+                              }
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  const newSubscribers = filteredUsers("subscribers").filter(
+                                    user => !formData.selectedUsers.some(u => u.id === user.id)
+                                  );
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    selectedUsers: [...prev.selectedUsers, ...newSubscribers]
+                                  }));
+                                } else {
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    selectedUsers: prev.selectedUsers.filter(
+                                      u => !filteredUsers("subscribers").some(user => user.id === u.id)
+                                    )
+                                  }));
+                                }
+                              }}
+                              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
+                            />
+                            <span className="text-sm font-medium text-gray-900">Select All</span>
                           </div>
                           <ul className="divide-y divide-gray-200">
                             {filteredUsers("subscribers").length > 0 ? (
@@ -340,7 +422,7 @@ const NewsLetter = () => {
                     </div>
                   </div>
 
-                  {/* Specific Emails Multi-select */}
+                  {/* Selected Recipients Display */}
                   <div className="mt-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Selected Recipients ({formData.selectedUsers.length})
@@ -373,150 +455,29 @@ const NewsLetter = () => {
                   </div>
                 </div>
 
-                <div className="border border-gray-300 rounded-md overflow-hidden">
-                  {/* Toolbar */}
-                  <div className="bg-gray-100 border-b border-gray-300 p-2 flex flex-wrap items-center gap-1">
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Bold className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Italic className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Underline className="w-4 h-4" />
-                    </button>
-                    <div className="h-5 w-px bg-gray-400 mx-1"></div>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <List className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <ListOrdered className="w-4 h-4" />
-                    </button>
-                    <div className="h-5 w-px bg-gray-400 mx-1"></div>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <AlignLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <AlignCenter className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <AlignRight className="w-4 h-4" />
-                    </button>
-                    <div className="h-5 w-px bg-gray-400 mx-1"></div>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Image className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Link className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Paperclip className="w-4 h-4" />
-                    </button>
-                    <div className="h-5 w-px bg-gray-400 mx-1"></div>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Undo2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 hover:bg-gray-200 rounded"
-                    >
-                      <Redo2 className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  {/* Editor Tabs */}
-                  <div className="border-b border-gray-300 flex">
-                    <button
-                      type="button"
-                      className={`px-4 py-2 text-sm font-medium ${
-                        activeTab === "design"
-                          ? "text-blue-600 border-b-2 border-blue-600"
-                          : "text-gray-600 hover:text-gray-800"
-                      }`}
-                      onClick={() => setActiveTab("design")}
-                    >
-                      Design
-                    </button>
-                    <button
-                      type="button"
-                      className={`px-4 py-2 text-sm font-medium ${
-                        activeTab === "html"
-                          ? "text-blue-600 border-b-2 border-blue-600"
-                          : "text-gray-600 hover:text-gray-800"
-                      }`}
-                      onClick={() => setActiveTab("html")}
-                    >
-                      HTML
-                    </button>
-                  </div>
-
-                  {/* Editor Content */}
-                  <div className="p-4">
-                    {activeTab === "design" ? (
-                      <div
-                        id="content"
-                        className="min-h-[300px] p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        contentEditable
-                        dangerouslySetInnerHTML={{ __html: formData.content }}
-                        onBlur={(e) => handleContentChange(e.target.innerHTML)}
-                      />
-                    ) : (
-                      <textarea
-                        id="contentHtml"
-                        name="content"
-                        value={formData.content}
-                        onChange={(e) => handleContentChange(e.target.value)}
-                        className="w-full min-h-[300px] p-2 font-mono text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    )}
-                  </div>
-                </div>
+                {/* Rich Text Editor */}
+                <TextEditor
+                  content={formData.content}
+                  onChange={handleContentChange}
+                />
               </div>
             </div>
 
+            {/* Submit Button */}
             <div className="flex justify-end mb-6 mr-5">
               <button
                 type="submit"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                disabled={loading}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
               >
-                <Send className="w-4 h-4 mr-2" />
-                Send Newsletter
+                {loading ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 mr-2" />
+                    Send Newsletter
+                  </>
+                )}
               </button>
             </div>
           </form>

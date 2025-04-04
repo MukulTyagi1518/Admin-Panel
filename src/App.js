@@ -78,8 +78,8 @@ import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
 import Sellerverification from "./components/Seller/Sellerverification.jsx";
 import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
-import Inhouse from "./components/Wholesale/Inhouse.jsx"
-import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx"
+import Inhouse from "./components/Wholesale/Inhouse.jsx";
+import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx";
 import CreateNewCustomer from "./components/customers/allCustomers/CreateNewCustomer.jsx";
 import EmailTemplateSeller from "./components/marketing/EmailTemplate/Seller/EmailTemplateSeller.js";
 import EmailTemplateCustomer from "./components/marketing/EmailTemplate/Customer/EmailTemplateCustomer.js";
@@ -93,6 +93,7 @@ import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
+import AllNewslettersPage from "./components/marketing/AllNewsLetterPage.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -138,18 +139,18 @@ function App() {
                 element={<CategoryBased />}
               />
 
-
-
-              <Route path="/wholesale/all" element={<Allwholesale />}/>
-              <Route path="/wholesale/add" element={<Addwholesale />}/>
-              <Route path="/products/Brandimport" element={<Brandimport />}/>
-              <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
-              <Route path="/products/bulk-export" element={<Bulkexport />}/>
-              <Route path="/sellers/verify" element={<Sellerverification />}/>
-              <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
-              <Route path="/wholesale/inhouse" element={<Inhouse />}/>
-              <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
-
+              <Route path="/wholesale/all" element={<Allwholesale />} />
+              <Route path="/wholesale/add" element={<Addwholesale />} />
+              <Route path="/products/Brandimport" element={<Brandimport />} />
+              <Route path="/products/bulk-import" element={<Bulkimport />} />
+              <Route path="/products/bulk-export" element={<Bulkexport />} />
+              <Route path="/sellers/verify" element={<Sellerverification />} />
+              <Route
+                path="/sellers/payout-request"
+                element={<Payoutrequest />}
+              />
+              <Route path="/wholesale/inhouse" element={<Inhouse />} />
+              <Route path="/wholesale/seller" element={<Sellerwholesale />} />
 
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>
@@ -270,9 +271,42 @@ function App() {
                 <Route path="ads" element={<SellerAdsMarketing />} />
                 <Route path="email-templates">
                   <Route path="admin" element={<EmailTemplateAdmin />} />
+                  <Route
+                    path="/marketing/email-templates/admin/new"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/admin/:id"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+
                   <Route path="seller" element={<EmailTemplateSeller />} />
+                  <Route
+                    path="/marketing/email-templates/seller/new"
+                    element={<SellerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/seller/:id"
+                    element={<SellerEmailTemplateEditor />}
+                  />
                   <Route path="customer" element={<EmailTemplateCustomer />} />
+                  <Route
+                    path="/marketing/email-templates/customer/new"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/customer/:id"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
                   <Route path="common" element={<EmailTemplateCommon />} />
+                  <Route
+                    path="/marketing/email-templates/common/new"
+                    element={<CommonEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/common/:id"
+                    element={<CommonEmailTemplateEditor />}
+                  />
                   <Route
                     path="admin/edit"
                     element={<AdminEmailTemplateEditor />}
@@ -290,21 +324,23 @@ function App() {
                     element={<CommonEmailTemplateEditor />}
                   />
                 </Route>
-                <Route path="news-letter" element={<NewsLetter />} />
+
+                <Route
+                  path="all-news-letters"
+                  element={<AllNewslettersPage />}
+                />
+                <Route path="news-letter" element={<NewsLetter />}>
+                  <Route path="edit/:id" element={<NewsLetter />} />
+                  <Route path="view/:id" element={<NewsLetter />} />
+                </Route>
               </Route>
 
-
-
-
-
-
               <Route path="/sellers">
-                <Route path="all" element={<AllSellers/>} />
-                <Route path="rating" element={<Rating/>} />
-                <Route path="payout" element={<Payout/>} />
+                <Route path="all" element={<AllSellers />} />
+                <Route path="rating" element={<Rating />} />
+                <Route path="payout" element={<Payout />} />
                 <Route path="" element={<UnpaidOrders />} />
                 <Route path="create" element={<Create />} />
-
               </Route>
             </Routes>
           </div>
