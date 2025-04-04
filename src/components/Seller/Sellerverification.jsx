@@ -63,7 +63,7 @@ export default function SellerVerificationForm() {
                                     className="flex-1 px-3 py-2 border rounded-md focus:outline-none" 
                                 />
                                 <button 
-                                    className="text-red-500 ml-3" 
+                                    className="text-black-500 ml-3" 
                                     onClick={() => removeField(field.id)}
                                 >
                                   <RxCross2 />
@@ -80,7 +80,7 @@ export default function SellerVerificationForm() {
                                                 placeholder={`Option ${index + 1}`} 
                                             />
                                             <button 
-                                                className="text-red-500 ml-2"
+                                                className="text-black-500 ml-2"
                                                 onClick={() => removeOption(field.id, index)}
                                             >
                                                 <RxCross2 />
@@ -88,7 +88,7 @@ export default function SellerVerificationForm() {
                                         </div>
                                     ))}
                                     <button 
-                                        className="bg-green-600 text-white px-4 py-2 mt-2 rounded-md self-start"
+                                        className="bg-green-600 text-white px-4 py-2 mt-2 rounded-md self-center"
                                         onClick={() => addOption(field.id)}
                                     >
                                         Add option

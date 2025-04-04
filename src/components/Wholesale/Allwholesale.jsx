@@ -1,190 +1,280 @@
-import { Ban, ChevronDownIcon, Edit, Eye, Trash, Trash2 } from "lucide-react"
-import "./Allwholesale.css"
-import { useNavigate } from "react-router-dom"; 
+import { Edit, Trash } from "lucide-react";
+import "./Allwholesale.css";
+import { useNavigate } from "react-router-dom";
 import { MdOutlineSettings } from "react-icons/md";
+import { useState } from "react";
 
 export default function PreOrderReviews() {
-  
     const navigate = useNavigate();
-
     const handleSubmit = (e) => {
-        e.preventDefault(); 
-        navigate("/wholesale/Addwholesale"); 
-      };
+        e.preventDefault();
+        navigate("/wholesale/Addwholesale");
+    };
 
-    
-
-    
-
-      
-
-    const users = [
+    const [expandedId, setExpandedId] = useState(null);
+    const [editingUser, setEditingUser] = useState(null);
+    const [userData, setUserData] = useState([
         {
             id: 1,
-            prodName: "Little Tikes Street Burner Ride-On with Motorcycle Styling, Adjustable Seat",
+            prodName: "Little Tikes Street Burner Ride-On",
             productOwner: "Ketaki",
-            info:{ 
-                   NumofSale :" 0 times",
-                   BasePrice: "$25.000",
-                   Rating: "0",
-                 },
-            totalstock:"Low",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
-           
+            info: { NumofSale: "0 times", BasePrice: "$25.000", Rating: "0" },
+            totalstock: "Low",
+            todaysdeal: true,
+            published: true,
+            featured: true,
         },
         {
             id: 2,
-            prodName: "Mens Zip Up Hoodie Winter Fleece Lined Graphic Jacket Heavy Big And Tall Warm Coat Thermal Graphic Tie Dye Outwear",
+            prodName: "Mens Zip Up Hoodie Winter Jacket",
             productOwner: "Ketaki",
-            info:{ 
-                   NumofSale :" 0 times",
-                   BasePrice: "$25.000",
-                   Rating: "0",
-                 },
-            totalstock:"Low",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
+            info: { NumofSale: "0 times", BasePrice: "$25.000", Rating: "0" },
+            totalstock: "Low",
+            todaysdeal: true,
+            published: true,
+            featured: true,
         },
-        {
-            id: 3,
-            prodName: "Gillette Sensor3 Comfort Disposable Razors for Men, 12 Count",
-            productOwner: "Ketaki",
-            info:{ 
-                   NumofSale :" 0 times",
-                   BasePrice: "$25.000",
-                   Rating: "0",
-                 },
-            totalstock:"4999",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
-        },
-        {
-            id: 4,
-            prodName: "Adidas Team Force Deodorant Body Spray For Men",
-            productOwner: "Ketaki",
-            info:{ 
-                   NumofSale :" 0 times",
-                   BasePrice: "$25.000",
-                   Rating: "0",
-                 },
-            totalstock:"5000",     
-            todaysdeal: "",
-            published: "",
-            featured: "",
+    ]);
+
+    const handleToggleChange = (id, field) => {
+        setUserData((prevUser) =>
+            prevUser.map((user) =>
+                user.id === id ? { ...user, [field]: !user[field] } : user
+            )
+        );
+    };
+
+    const handleEditChange = (field, value) => {
+        if (!editingUser) return;
+        if (field.startsWith("info.")) {
+            const subField = field.split(".")[1];
+            setEditingUser((prev) => ({
+                ...prev,
+                info: { ...prev.info, [subField]: value },
+            }));
+        } else {
+            setEditingUser((prev) => ({ ...prev, [field]: value }));
         }
-    ]
+    };
+
+    const handleEditSubmit = (e) => {
+        e.preventDefault();
+        setUserData((prev) =>
+            prev.map((u) => (u.id === editingUser.id ? editingUser : u))
+        );
+        setEditingUser(null);
+    };
+
+    const toggleMobileView = (id) => {
+        setExpandedId(expandedId === id ? null : id);
+    };
 
     return (
         <div className="productQueriesBox ma10">
             <div className="product-table">
-               <p className="customersText">
-                      All wholesale products
-
-                    </p>
-                    <button type="button" onClick={handleSubmit} className="submit-btn">
-                                               +Add new wholesale product
-                    </button>
+                <p className="customersText">All wholesale products</p>
+                <button type="button" onClick={handleSubmit} className="submit-btn">
+                    +Add new wholesale product
+                </button>
             </div>
-           
-            <div className="allCustomersLowerBox productQueries">
-                
-                {/* <div className="allCustomersLowerHeader"> */}
-                 
-                   <div className="flex justify-end items-center gap-4 p-4 bg-white shadow-md rounded-lg">
-      {/* Dropdown: All */}
-      <select className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none">
-        <option>Bulk Action</option>
-      </select>
 
-      {/* Dropdown: Filter by Rating */}
-      <select className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none">
-        <option>All Seller</option>
-      </select>
-         
-      <select className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none">
-        <option>Sort By</option>
-        <option>Rating (High - Low)</option>
-        <option>Rating (Low - High)</option>
-        <option>Sort By</option>
-        <option>Sort By</option>
-      </select>
-  
-      {/* Input Box */}
-      <input
-        type="text"
-        placeholder="Type & Enter"
-        className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none w-64"
-      />
-    </div>
-                {/* </div> */}
-               
-                <div className="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-
-                                <th >Added By</th>
-                                <th>Info</th>
-                                <th >Total Stock</th>
-
-                                <th >Todays Deal</th>
-                                <th>Published</th>
-                                <th>Featured</th>
-                                <th>Options</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.map((user) => (
-                                <tr key={user.id}>
-                                    <td>{user.id}</td>
-                                    <td className="prodNameQuery" >{user.prodName}</td>
-                                    <td>{user.productOwner}</td>
-                                    <td>
-                                        {user.info && typeof user.info === "object" ? (
-                                            <>
-                                                <p>Num of Sale: {user.info?.NumofSale ?? "N/A"}</p>
-                                                <p>Base Price: {user.info?.BasePrice ?? "N/A"}</p>
-                                                <p>Rating: {user.info?.Rating ?? "N/A"}</p>
-                                            </>
-                                        ) : (
-                                            <p>No Info Available</p>
-                                        )}
-                                    </td>
-                                    <td >{user.totalstock}</td>
-                                   
-                                    <td >{user.todaysdeal}</td>
-                                    <td >{user.published}</td>
-                                    <td >{user.featured}</td>
-
-
-
-                                    <td>
+            <div className="table-container">
+                {/* Desktop Table */}
+                <table className="desktop-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Added By</th>
+                            <th>Info</th>
+                            <th>Total Stock</th>
+                            <th>Todays Deal</th>
+                            <th>Published</th>
+                            <th>Featured</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userData.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td className="prodNameQuery">{user.prodName}</td>
+                                <td>{user.productOwner}</td>
+                                <td>
+                                    <p>Num of Sale: {user.info.NumofSale}</p>
+                                    <p>Base Price: {user.info.BasePrice}</p>
+                                    <p>Rating: {user.info.Rating}</p>
+                                </td>
+                                <td>{user.totalstock}</td>
+                                <td>
+                                    <label className="switch">
+                                        <input type="checkbox" checked={user.todaysdeal} onChange={() => handleToggleChange(user.id, "todaysdeal")} />
+                                        <span className="slider"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label className="switch">
+                                        <input type="checkbox" checked={user.published} onChange={() => handleToggleChange(user.id, "published")} />
+                                        <span className="slider"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label className="switch">
+                                        <input type="checkbox" checked={user.featured} onChange={() => handleToggleChange(user.id, "featured")} />
+                                        <span className="slider"></span>
+                                    </label>
+                                </td>
+                                <td>
                                     <div className="actions">
-                                                    <div className="action">
-                                                        <MdOutlineSettings color="blue" size={18} />
-                                                    </div>
-                                                    <div className="action">
-                                                        <Edit color="blue" size={18} />
-                                                    </div>
-                                                    <div className="action">
-                                                        <Trash color="blue" size={18} />
-                                                    </div>
+                                        <div className="action">
+                                            <MdOutlineSettings color="blue" size={18} />
+                                        </div>
+                                        <div className="action" onClick={() => setEditingUser(user)}>
+                                            <Edit color="blue" size={18} />
+                                        </div>
+                                        <div className="action">
+                                            <Trash color="blue" size={18} />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
 
-                                                </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                {/* Mobile View */}
+                <div className="block md:hidden w-full">
+  {userData.map((user) => (
+    <div key={user.id} className="border rounded-lg shadow-md mb-4 p-4">
+      {/* Summary Row */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => toggleMobileView(user.id)}
+            className="text-xl font-bold text-gray-700"
+          >
+            {expandedId === user.id ? "−" : "+"}
+          </button>
+          <span className="font-semibold text-sm">#{user.id}</span>
+          <span className="font-medium text-gray-800 text-sm">{user.prodName}</span>
+        </div>
+      </div>
+
+      {/* Expanded Details */}
+      {expandedId === user.id && (
+        <div className="mt-4 space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-600">Added By:</span>
+            <span>{user.productOwner}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-600">Num of Sale:</span>
+            <span>{user.info.NumofSale}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-600">Base Price:</span>
+            <span>{user.info.BasePrice}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-600">Rating:</span>
+            <span>{user.info.Rating}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-600">Total Stock:</span>
+            <span>{user.totalstock}</span>
+          </div>
+
+          {/* Toggle Switches */}
+          <div className="flex items-center">
+            <span className="font-medium text-gray-600">Today's Deal:</span>
+            <label className="inline-flex items-center cursor-pointer ml-auto">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={user.todaysdeal}
+                onChange={() => handleToggleChange(user.id, "todaysdeal")}
+              />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
+                <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
+              </div>
+            </label>
+          </div>
+
+          <div className="flex items-center">
+            <span className="font-medium text-gray-600">Published:</span>
+            <label className="inline-flex items-center cursor-pointer ml-auto">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={user.published}
+                onChange={() => handleToggleChange(user.id, "published")}
+              />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
+                <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
+              </div>
+            </label>
+          </div>
+
+          <div className="flex items-center">
+            <span className="font-medium text-gray-600">Featured:</span>
+            <label className="inline-flex items-center cursor-pointer ml-auto">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={user.featured}
+                onChange={() => handleToggleChange(user.id, "featured")}
+              />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
+                <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+
 
             </div>
+
+            {/* Edit Modal */}
+            {editingUser && (
+                <div className="edit-modal">
+                    <form className="edit-form" onSubmit={handleEditSubmit}>
+                        <h2>Edit Product</h2>
+                        <input
+                            type="text"
+                            value={editingUser.prodName}
+                            onChange={(e) => handleEditChange("prodName", e.target.value)}
+                            placeholder="Product Name"
+                        />
+                        <input
+                            type="text"
+                            value={editingUser.productOwner}
+                            onChange={(e) => handleEditChange("productOwner", e.target.value)}
+                            placeholder="Product Owner"
+                        />
+                        <input
+                            type="text"
+                            value={editingUser.info.BasePrice}
+                            onChange={(e) => handleEditChange("info.BasePrice", e.target.value)}
+                            placeholder="Base Price"
+                        />
+                        <input
+                            type="text"
+                            value={editingUser.totalstock}
+                            onChange={(e) => handleEditChange("totalstock", e.target.value)}
+                            placeholder="Total Stock"
+                        />
+                        <div className="form-buttons">
+                            <button type="submit">Save</button>
+                            <button type="button" onClick={() => setEditingUser(null)}>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            )}
         </div>
-    )
+    );
 }
