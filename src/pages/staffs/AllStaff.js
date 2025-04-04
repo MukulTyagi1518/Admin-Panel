@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const AllStaff = () => {
   const [expandedRows, setExpandedRows] = useState({});
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
   const navigate = useNavigate();
 
   const staffsData = [
@@ -44,43 +46,65 @@ const AllStaff = () => {
       role: "Order clerks",
     },
     {
-        id:6,
-        name: "Lindsay S Engel",
-        email: "staff5@example.com",
-        phone: "678-417-4134",
-        role: "Order clerks",
-      },
-      {
-        id: 7,
-        name: "Lindsay S Engel",
-        email: "staff5@example.com",
-        phone: "678-417-4134",
-        role: "Order clerks",
-      },
-      {
-        id: 8,
-        name: "Lindsay S Engel",
-        email: "staff5@example.com",
-        phone: "678-417-4134",
-        role: "Order clerks",
-      },
+      id: 6,
+      name: "Lindsay S Engel",
+      email: "staff5@example.com",
+      phone: "678-417-4134",
+      role: "Order clerks",
+    },
+    {
+      id: 7,
+      name: "Lindsay S Engel",
+      email: "staff5@example.com",
+      phone: "678-417-4134",
+      role: "Order clerks",
+    },
+    {
+      id: 8,
+      name: "Lindsay S Engel",
+      email: "staff5@example.com",
+      phone: "678-417-4134",
+      role: "Order clerks",
+    },
   ];
 
   const toggleRow = (id) => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+
   const handlereview = (e) => {
     e.preventDefault();
     navigate("/staffs/create");
   };
+
   const handleStaff = (e) => {
     e.preventDefault();
     navigate("/staffs/editInfo");
   };
+
+  const handleDeleteClick = (roleId) => {
+    setRoleToDelete(roleId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const confirmDelete = () => {
+    // Implement your delete logic here
+    console.log(`Deleting role with ID: ${roleToDelete}`);
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
+
+
   return (
     <div className="all-staffs-container">
       <h1 className="staff">All Staffs</h1>
-      <button className="add-new-staffs-button mb-5"   onClick={handlereview}>Add New Staffs</button>
+      <button className="add-new-staffs-button mb-5" onClick={handlereview}>Add New Staffs</button>
       <table className="staffs-table">
         <thead>
           <tr>
@@ -98,8 +122,8 @@ const AllStaff = () => {
             <React.Fragment key={staff.id}>
               <tr>
                 <td> <button className="responsive-expand-button" onClick={() => toggleRow(staff.id)}>
-                      {expandedRows[staff.id] ? <FaMinus /> : <FaPlus />  }
-                    </button></td>
+                  {expandedRows[staff.id] ? <FaMinus /> : <FaPlus />}
+                </button></td>
                 <td className="hide-on-responsive">{staff.id}</td>
                 <td>{staff.name}</td>
                 <td className="hide-on-responsive">{staff.email}</td>
@@ -107,9 +131,9 @@ const AllStaff = () => {
                 <td className="hide-on-responsive">{staff.role}</td>
                 <td>
                   <div className="options-container">
-                   
-                    <FaEdit className="edit-icon"  onClick={handleStaff}/>
-                    <FaTrash className="delete-icon" />
+
+                    <FaEdit className="edit-icon" onClick={handleStaff} />
+                    <FaTrash className="delete-icon"  onClick={() => handleDeleteClick(staff.id)} />
                   </div>
                 </td>
               </tr>
@@ -131,32 +155,59 @@ const AllStaff = () => {
                 </tr>
               )} */}
               {expandedRows[staff.id] && (
-  <tr className="expanded-row">
-    <td colSpan="7">
-      <table className="expanded-table">
-        <tbody>
-          <tr>
-            <th>Email</th>
-            <td>{staff.email}</td>
-          </tr>
-          <tr>
-            <th>Phone</th>
-            <td>{staff.phone}</td>
-          </tr>
-          <tr>
-            <th>Role</th>
-            <td>{staff.role}</td>
-          </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-)}
+                <tr className="expanded-row">
+                  <td colSpan="7">
+                    <table className="expanded-table">
+                      <tbody>
+                        <tr>
+                          <th>Email</th>
+                          <td>{staff.email}</td>
+                        </tr>
+                        <tr>
+                          <th>Phone</th>
+                          <td>{staff.phone}</td>
+                        </tr>
+                        <tr>
+                          <th>Role</th>
+                          <td>{staff.role}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              )}
 
             </React.Fragment>
           ))}
         </tbody>
       </table>
+
+      {showDeleteConfirmation && (
+        <div className="delete-confirmation-overlay">
+          <div className="delete-confirmation-dialog">
+            <div className="dialog-header">
+              <h2>Delete Confirmation</h2>
+              <button
+                className="close-dialog-btn"
+                onClick={cancelDelete}
+              >
+                X
+              </button>
+            </div>
+            <div className="dialog-content">
+              <p>Are you sure to delete this?</p>
+            </div>
+            <div className="dialog-actions">
+              <button className="cancel-btn" onClick={cancelDelete}>
+                Cancel
+              </button>
+              <button className="delete-btn" onClick={confirmDelete}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

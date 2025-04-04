@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useProductContext } from "../../productContex";
 import "./warrenty.css";
 import { Link } from "react-router-dom";
+import Switch from "../../components/Switch";
 
 const WarrantyConfig = () => {
   const { productData, setProductData } = useProductContext();
@@ -33,7 +34,7 @@ const WarrantyConfig = () => {
       <div className="divider"></div>
 
       {/* Toggle Switch */}
-      <div className="config-option">
+      {/* <div className="config-option">
         <span className="option-label">Warranty</span>
         <label className="toggle-switch">
           <input
@@ -43,6 +44,15 @@ const WarrantyConfig = () => {
           />
           <span className="slider"></span>
         </label>
+      </div> */}
+
+      <div className="config-option">
+        <span className="option-label">Warranty</span>
+        <Switch
+          checked={warrantyEnabled}
+          onClick={handleToggleWarranty }
+          inputProps={{ "aria-label": "controlled" }}
+        />
       </div>
 
       {/* Show form when Warranty is enabled */}

@@ -380,7 +380,7 @@ export default function Edit() {
             </div>
           ))}
           <div className="save-btn1">
-            <button type="submit" className="save-button">Save</button>
+            <button type="submit" className="save-button">Update</button>
           </div>
         </div>
       </div>

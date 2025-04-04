@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./allProduct.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../../components/Switch";
+import { useNavigate } from "react-router-dom";
 
 const AllProduct = () => {
   const [products, setProducts] = useState([
@@ -113,6 +114,11 @@ const AllProduct = () => {
 
   const [selectedSeller, setSelectedSeller] = useState("All Sellers");
   const [isSellerDropdownOpen, setIsSellerDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+    const handleEdit = (id) => {
+      navigate(`/editinhouse`); 
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Adjust as needed
@@ -358,7 +364,7 @@ const AllProduct = () => {
                       <FaEye />
                     </button>
                     <button className="btn edit-btn1">
-                      <FaEdit />
+                      <FaEdit onClick={() => handleEdit(product.id)}/>
                     </button>
                     <button className="btn delete-btn1">
                       <FaTrash />

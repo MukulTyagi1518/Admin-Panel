@@ -105,6 +105,7 @@ import RolesCreate from "./pages/staffs/RolesCreate.js";
 import Edit from "./pages/staffs/Edit.js";
 import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
+import EditInhouse from "./components/Edit/EditInhouse.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -338,6 +339,9 @@ function App() {
                 <Route path="editInfo" element={<EditInfo/>} />
                 
               </Route>
+
+
+              <Route path="editInhouse" element={<EditInhouse/>}/>
             </Routes>
           </div>
         </div>
