@@ -1,10 +1,10 @@
 
 /* General Styles */
-.product-container {
+.product-container2 {
     padding: 10px;
     max-width: 1400px;
     margin: auto;
- 
+   
 }
 
 /* Header Section */
@@ -92,7 +92,7 @@
 
 
 
-.product-table table {
+.product-table2 table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
@@ -100,14 +100,14 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.product-table th,
-.product-table td {
+.product-table2 th,
+.product-table2 td {
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
 }
 
-.product-table th {
+.product-table2 th {
     background-color: #f5f5f5;
     font-weight: bold;
     
@@ -132,24 +132,14 @@
   }
   
 
-
-
-
-
-
-
-
-
-
-/* Checkbox and Toggles */
 input[type="checkbox"] {
     width: 16px !important;
     height: 16px !important;
     cursor: pointer;
 }
 
-/* Buttons */
-.btn {
+
+.btn3 {
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -157,30 +147,30 @@ input[type="checkbox"] {
     margin: 0 4px;
 }
 
-/* Button Colors */
-.view-btn {
-    color: #4caf50;
+
+.view-btn3 {
+    color: #4caf50 !important;
     padding-left: 4px;
 }
 
-.edit-btn {
-    color: #ffc107;
+.edit-btn3 {
+    color: #ffc107 !important;
     padding-left: 4px;
 }
 
-.delete-btn {
-    color: rgb(243, 101, 136);
+.delete-btn3 {
+    color: rgb(243, 101, 136) !important;
     padding-left: 4px;
 }
 
-/* Align Options in Single Line */
-.product-table td {
+
+.product-table2 td {
     white-space: nowrap;
     text-align: center;
     /* line-height: 50px; */
 }
 
-.product-table td .btn {
+.product-table2 td .btn3 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -196,7 +186,7 @@ input[type="checkbox"] {
     }
 }
 
-/* Plus Icon Styles */
+
 .plus-icon {
     color: black;
     border-radius: 50%;
@@ -217,33 +207,21 @@ input[type="checkbox"] {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/* Large Screen - Hide Plus Icon */
 @media (min-width: 1400px) {
     .plus-icon {
         display: none;
     }
-    .product-table th {
+    .product-table2 th {
         display: table-cell !important;
       }
 }
 
-/* Responsive Design for Small Screens */
+
 @media (max-width: 1400px) {
     .plus-icon {
         display: flex;
     }
-    .product-table td {
+    .product-table2 td {
         white-space: nowrap;
         text-align: left;
         line-height: 50px;
@@ -258,23 +236,16 @@ input[type="checkbox"] {
     }
     
   
-    .product-table thead {
+    .product-table2 thead {
         display: table-header-group !important;
     }
 
-    .product-table th {
+    .product-table2 th {
         display: none !important; 
     }
 
-    /* .product-table th:nth-child(2) {
-        display: table-cell !important; 
-        text-align: center  !important;
-      
-        padding: 12px 16px;
-        background-color: #f5f5f5;
-        font-weight: bold;
-    } */
-    .product-table th:nth-child(2) {
+   
+    .product-table2 th:nth-child(2) {
         display: block !important;
         text-align: center !important;
         width: 100%;
@@ -288,17 +259,7 @@ input[type="checkbox"] {
 
 
 
-
-
-
-
-
-
-
-
-
-
-    .product-table input[type="checkbox"] {
+    .product-table2 input[type="checkbox"] {
         display: none;
     }
 
@@ -318,7 +279,7 @@ input[type="checkbox"] {
         
     }
 
-    .product-table td {
+    .product-table2 td {
         flex-wrap: wrap; 
          justify-content: center;
         gap:5px;
@@ -326,10 +287,10 @@ input[type="checkbox"] {
         /* margin-right: 40px !important; */
     }
 
-    .btn {
+    .btn3 {
         margin-top: 0;
     }
-    .product-table{
+    .product-table2{
         align-items: center;
     }
     .product-name {
