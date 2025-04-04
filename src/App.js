@@ -84,6 +84,17 @@ import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
 import Ticket from "./pages/support/Ticket.js";
+import ProductQuires from "./pages/support/ProductQuires.js";
+import Conversation from "./pages/support/ProductQuires.js";
+import Queries from "./pages/support/Queries.js";
+import Contact from "./pages/support/Contact.js";
+import AllStaff from "./pages/staffs/AllStaff.js";
+import StaffCreate from "./pages/staffs/StaffCreate.js";
+import Roles from "./pages/staffs/Roles.js";
+import RolesCreate from "./pages/staffs/RolesCreate.js";
+import Edit from "./pages/staffs/Edit.js";
+import Supports from "./pages/support/Supports.js";
+import EditInfo from "./pages/staffs/editInfo.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -272,11 +283,21 @@ function App() {
 
               <Route path="/support">
                 <Route path="ticket" element={<Ticket/>} />
-                <Route path="rating" element={<Rating/>} />
-                <Route path="payout" element={<Payout/>} />
-                <Route path="" element={<UnpaidOrders />} />
+                <Route path="conversations" element={<Conversation/>} />
+                <Route path="queries" element={<Queries/>} />
+                <Route path="contact" element={<Contact/>} />
                 <Route path="create" element={<Create />} />
+                <Route path="supports" element={< Supports/>} />
+              </Route>
 
+              <Route path="/staffs">
+                <Route path="all" element={<AllStaff/>} />
+                <Route path="create" element={<StaffCreate/>} />
+                <Route path="roles" element={<Roles/>} />
+                <Route path="rolecreate" element={<RolesCreate/>} />
+                <Route path="edit" element={<Edit/>} />
+                <Route path="editInfo" element={<EditInfo/>} />
+                
               </Route>
             </Routes>
           </div>

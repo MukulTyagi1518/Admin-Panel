@@ -52,13 +52,13 @@
     font-size: 16px;
   }
   
-  .expanded-row {
+  /* .expanded-row {
     background-color: #f9f9f9;
   }
   
   .expanded-details {
     padding: 10px;
-  }
+  } */
   
   @media (max-width: 1400px) {
     .hide-on-small {
@@ -71,38 +71,23 @@
   /* ... (आपके पिछले CSS नियम वही रहेंगे) */
 /* ... (आपके पिछले CSS नियम वही रहेंगे) */
 
-.status-open {
-    background-color: #e0f7fa; /* हल्का नीला */
-    color: #1593fa; /* गहरा नीला */
-    padding: 5px 10px;
-    border-radius: 15px;
-    display: inline-block;
+
+  .status1{
+    color: #ff9800!important; /* गहरा हरा */
+    
   }
   
-  .status-solved {
-    background-color: #e8f5e9; /* हल्का हरा */
-    color: #4caf50; /* गहरा हरा */
-    padding: 5px 10px;
-    border-radius: 15px;
-    display: inline-block;
-  }
-  
-  .status-pending {
-    background-color: #ffe0b2; /* हल्का पीला */
-    color: #ff9800; /* गहरा पीला */
-    padding: 5px 10px;
-    border-radius: 15px;
-    display: inline-block;
-  }
   
   /* ... (आपके पिछले CSS नियम वही रहेंगे) */
   .eye-icon {
     color: #1593fa;
     cursor: pointer;
+   font-size: 16px;
   }
   
-  .eye-icon svg:hover {
-    background-color: #e0f7fa;
-    padding: 10px;
+ /* button svg:hover {
+    background-color: #c0d8db;
+    padding: 5px;
     border-radius: 5px;
-  }
+    font-size: 16px;
+  } */

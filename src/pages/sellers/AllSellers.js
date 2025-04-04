@@ -3,6 +3,7 @@ import "./AllSellers.css"; // Import CSS file
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
+
 const sellers = [
     {
         id: 1,

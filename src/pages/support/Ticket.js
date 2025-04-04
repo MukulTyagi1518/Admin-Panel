@@ -77,14 +77,14 @@ const Ticket = () => {
                 <td className="hide-on-small">{ticket.sendingDate}</td>
                 <td>{ticket.subject}</td>
                 <td className="hide-on-small">{ticket.user}</td>
-                <td className="hide-on-small">{ticket.status}</td>
+                <td className="hide-on-small status1">{ticket.status}</td>
                 <td className="hide-on-small">{ticket.lastReply}</td>
                 {/* <td><FaEye /></td> */}
                 <td>
-                  <FaEye className="eye-icon" />
+                  <button><FaEye className="eye-icon" /></button>
                 </td>
               </tr>
-              {expandedRows[ticket.id] && (
+              {/* {expandedRows[ticket.id] && (
                 <tr className="expanded-row">
                   <td colSpan="8">
                     <div className="expanded-details">
@@ -94,6 +94,36 @@ const Ticket = () => {
                       <p><strong>Status:</strong> {ticket.status}</p>
                       <p><strong>Last reply:</strong> {ticket.lastReply}</p>
                     </div>
+                  </td>
+                </tr>
+              )} */}
+               {expandedRows[ticket.id] && (
+                <tr className="expanded-row">
+                  <td colSpan="8">
+                    <table className="expanded-table">
+                      <tbody>
+                        <tr>
+                          <td><strong>Ticket ID:</strong></td>
+                          <td>{ticket.id}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Sending Date:</strong></td>
+                          <td>{ticket.sendingDate}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>User:</strong></td>
+                          <td>{ticket.user}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Status:</strong></td>
+                          <td>{ticket.status}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Last reply:</strong></td>
+                          <td>{ticket.lastReply}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </td>
                 </tr>
               )}
