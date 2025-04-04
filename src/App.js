@@ -62,23 +62,33 @@ import Colors from "./pages/products/Colors.jsx";
 import Review from "./pages/products/Review.jsx";
 import DelayedPrepaymentPreOrders from "./components/preorders/orders/delayedprepaymentorders.jsx";
 import DelayedFinalPreOrders from "./components/preorders/orders/delayedfinalorders.jsx";
-import Allwholesale from "./components/Wholesale/Allwholesale.jsx"
-import Addwholesale from "./components/Wholesale/Addwholesale.jsx"
+import Allwholesale from "./components/Wholesale/Allwholesale.jsx";
+import Addwholesale from "./components/Wholesale/Addwholesale.jsx";
 import AllProduct from "./pages/products/AllProduct.js";
 import InhouseProduct from "./pages/products/InhouseProduct.js";
 import Category from "./pages/products/Category.js";
 import Brandimport from "./pages/products/Brandimport.jsx";
-import Bulkimport from "./pages/products/Bulkimport.jsx"
-import Bulkexport from "./pages/products/Bulkexport.jsx"
+import Bulkimport from "./pages/products/Bulkimport.jsx";
+import Bulkexport from "./pages/products/Bulkexport.jsx";
 import Productbased from "./pages/products/productbased.js";
 import ReviewDetail from "./pages/products/ReviewDetail.js";
-
-
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
-import EmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/EmailTemplateEditor.js";
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
 import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
+import Sellerverification from "./components/Seller/Sellerverification.jsx";
+import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
+import Inhouse from "./components/Wholesale/Inhouse.jsx"
+import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx"
+import CreateNewCustomer from "./components/customers/allCustomers/CreateNewCustomer.jsx";
+import EmailTemplateSeller from "./components/marketing/EmailTemplate/Seller/EmailTemplateSeller.js";
+import EmailTemplateCustomer from "./components/marketing/EmailTemplate/Customer/EmailTemplateCustomer.js";
+import AdminEmailTemplateEditor from "./components/marketing/EmailTemplate/Admin/AdminEmailTemplateEditor.js";
+import SellerEmailTemplateEditor from "./components/marketing/EmailTemplate/Seller/SellerEmailTemplateEditor.js";
+import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Customer/CustomerEmailTemplateEditor.js";
+import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
+import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
+import NewsLetter from "./components/marketing/NewsLetter.js";
 import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
@@ -98,7 +108,7 @@ import EditInfo from "./pages/staffs/editInfo.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -147,10 +157,10 @@ function App() {
               <Route path="/products/Brandimport" element={<Brandimport />}/>
               <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
               <Route path="/products/bulk-export" element={<Bulkexport />}/>
-
-
-
-
+              <Route path="/sellers/verify" element={<Sellerverification />}/>
+              <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
+              <Route path="/wholesale/inhouse" element={<Inhouse />}/>
+              <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
 
 
               <Route path="/products">
@@ -169,9 +179,15 @@ function App() {
                 </Route>
                 <Route path="/products/all" element={<AllProduct />} />
                 <Route path="/products/Inhouse" element={<InhouseProduct />} />
-                <Route path="/products/category" element={<Category />}/>
-                <Route path="/products/category/create" element={<AddNewCategory />}/>
-                <Route path="/products/category/edit/:id" element={<CategoryEdit />}/>
+                <Route path="/products/category" element={<Category />} />
+                <Route
+                  path="/products/category/create"
+                  element={<AddNewCategory />}
+                />
+                <Route
+                  path="/products/category/edit/:id"
+                  element={<CategoryEdit />}
+                />
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
@@ -179,9 +195,14 @@ function App() {
                 <Route path="colour" element={<Colors />} />
                 <Route path="review" element={<Review />} />
                 <Route path="Addreview" element={<Addreview />} />
-                <Route path="/products/ReviewDetail" element={<ReviewDetail/>} />
-                <Route path="/products/product-discount" element={<Productbased/>} />
-
+                <Route
+                  path="/products/ReviewDetail"
+                  element={<ReviewDetail />}
+                />
+                <Route
+                  path="/products/product-discount"
+                  element={<Productbased />}
+                />
               </Route>
 
               <Route path="/login" element={<LoginPage />} />
@@ -212,7 +233,10 @@ function App() {
                 <Route path="top-brands" element={<TopBrands />} />
               </Route>
 
-              <Route path="/customers/all" element={<AllCustomers />} />
+              <Route path="/customers">
+                <Route path="all" element={<AllCustomers />} />
+                <Route path="create" element={<CreateNewCustomer />} />
+              </Route>
 
               <Route path="/preorder">
                 <Route path="product" element={<PreorderProducts />} />
@@ -256,14 +280,29 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
-                <Route
-                  path="email-templates/admin"
-                  element={<EmailTemplateAdmin />}
-                />
-                <Route
-                  path="email-templates/admin/edit"
-                  element={<EmailTemplateEditor />}
-                />
+                <Route path="email-templates">
+                  <Route path="admin" element={<EmailTemplateAdmin />} />
+                  <Route path="seller" element={<EmailTemplateSeller />} />
+                  <Route path="customer" element={<EmailTemplateCustomer />} />
+                  <Route path="common" element={<EmailTemplateCommon />} />
+                  <Route
+                    path="admin/edit"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="seller/edit"
+                    element={<SellerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="customer/edit"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="common/edit"
+                    element={<CommonEmailTemplateEditor />}
+                  />
+                </Route>
+                <Route path="news-letter" element={<NewsLetter />} />
               </Route>
 
 

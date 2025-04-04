@@ -160,35 +160,34 @@
     margin-top: 10px;
   }
   
-  /* Toggle Switch CSS Fix */
   .toggle-switch {
-    width: 34px;
-    height: 18px;
-    background-color: #ccc;
-    border-radius: 9px;
     position: relative;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
   }
   
+  .toggle-switch.active {
+    background-color: #4caf50; /* Green when active */
+  }
+  
+  /* Toggle Slider */
   .toggle-slider {
-    width: 14px;
-    height: 14px;
-    background-color: white;
-    border-radius: 50%;
     position: absolute;
     top: 2px;
     left: 2px;
-    transition: left 0.3s;
-  }
-  
-  /* Switch ON Position */
-  .toggle-switch.active {
-    background-color: #4caf50;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
   }
   
   .toggle-switch.active .toggle-slider {
-    left: 18px;
+    transform: translateX(20px); /* Move slider to the right when active */
   }
   .review-published .published-date{
     margin-left: 90px !important;

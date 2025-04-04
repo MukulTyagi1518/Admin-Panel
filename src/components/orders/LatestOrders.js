@@ -140,6 +140,21 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     { id: 6, code: "ORD006", products: 1, customer: "Eve White", seller: "Seller", amount: "$80.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes" },
   ]);
 
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20); // Number of items per page
+
+  // Apply custom filter if provided
+  const filteredOrders = customFilter
+    ? customFilter(orders)
+    : orders.filter(
+        (order) =>
+          order.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.deliveryStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          order.paymentStatus.toLowerCase().includes(searchTerm.toLowerCase())
+      );
   const isBelow1400 = useMediaQuery({ maxWidth: 1400 });
   const [expandedOrders, setExpandedOrders] = useState([]);
 
@@ -151,10 +166,6 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
-
-  const filteredOrders = customFilter ? customFilter(orders) : orders;
 
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;

@@ -32,27 +32,54 @@
             }
         }
 
-        .tabContainer {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+      
 
-            .tabItem {
-                padding: 10px 15px;
-                border-radius: 6px;
-                font-size: 14px;
-                background: #f0f0f0;
-                color: #999;
-                text-decoration: none;
-                cursor: not-allowed; // Greyed-out effect like the image
-            }
-
-            .tabItem.active {
-                background: #007bff;
-                color: #fff;
-                cursor: pointer;
-            }
-        }
+        //     .tabItem {
+        //         padding: 10px 15px;
+        //         border-radius: 6px;
+        //         font-size: 14px;
+        //         background: #f0f0f0;
+        //         color: #999;
+        //         text-decoration: none;
+        //         // cursor: not-allowed; // Greyed-out effect like the image
+        //     }
+        //      .tabItem.active {
+        //         background: #007bff;
+        //         color: #fff;
+        //         cursor: pointer;
+        //     }
+        // }
     }
+
+    .tabContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tabItem {
+        background-color: #f0f0f0; // Default color for inactive tabs
+        color: #888;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    
+    .tabItem.active {
+        background: #007bff;
+        color: #fff;
+    }
+    
+    .tabItem.completed {
+        background-color: white; // Completed tab color
+        color: black;
+        font-weight: bold;
+        border: 1px solid #ddd;
+    }
+    
+        
+    
+    
 }
