@@ -7,6 +7,7 @@ import { AdminProvider } from "./adminContext";
 import reportWebVitals from "./reportWebVitals";
 import ProductProvider from "./productContex";
 import CategoryProvider from "./categoryContext";
+import CustomerProvider from "./context/customerContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -15,11 +16,13 @@ root.render(
   <AdminProvider>
     <ProductProvider>
       <CategoryProvider>
-      <React.StrictMode>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </React.StrictMode>
+        <CustomerProvider>
+          <React.StrictMode>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </React.StrictMode>
+        </CustomerProvider>
       </CategoryProvider>
     </ProductProvider>
   </AdminProvider>

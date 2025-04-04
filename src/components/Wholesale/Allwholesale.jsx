@@ -107,8 +107,8 @@ export default function PreOrderReviews() {
          
       <select className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none">
         <option>Sort By</option>
-        <option>Rating (High>Low)</option>
-        <option>Rating (Low>High)</option>
+        <option>Rating (High - Low)</option>
+        <option>Rating (Low - High)</option>
         <option>Sort By</option>
         <option>Sort By</option>
       </select>

@@ -2,13 +2,17 @@ import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apiInstance from "../../../utils/axios";
+import { useCustomerContext } from "../../../context/customerContext";
 
-const CreateNewCustomer = ({ onCustomerAdded }) => {
+const CreateNewCustomer = () => {
   const navigate = useNavigate();
+  const { setFetchCustomers } = useCustomerContext()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
+    address: ""
   });
   const [contactMethod, setContactMethod] = useState("phone");
 
@@ -22,16 +26,18 @@ const CreateNewCustomer = ({ onCustomerAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5001/api/user1/", formData);
+      const response = await apiInstance.post("/user1/", formData);
       if (response.status === 201) {
         console.log("Customer added successfully:", response.data);
-        onCustomerAdded(); // Refresh customer list
+        setFetchCustomers(true)
+        alert("New customer added.")
+        navigate("/customers/all")
       }
     } catch (error) {
       console.error("Error adding customer:", error);
     }
   };
-  
+
 
   const toggleContactMethod = () => {
     setContactMethod((prev) => (prev === "phone" ? "email" : "phone"));
@@ -84,7 +90,7 @@ const CreateNewCustomer = ({ onCustomerAdded }) => {
                 />
               </div>
 
-                            {contactMethod === "email" ? (
+              {/* {contactMethod === "email" ? (
                 <div className="relative">
                   <label
                     htmlFor="email"
@@ -122,9 +128,68 @@ const CreateNewCustomer = ({ onCustomerAdded }) => {
                     required
                   />
                 </div>
-              )}
+              )} */}
+
+              <div className="relative">
+                <label
+                  htmlFor="email"
+                  className="absolute -top-2 left-3 bg-white px-1 text-sm font-medium text-gray-600"
+                >
+                  Email Address <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg "
+                  placeholder="john@example.com"
+                  required
+                />
+              </div>
+
+
+              <div className="relative">
+                <label
+                  htmlFor="phone"
+                  className="absolute -top-2 left-3 bg-white px-1 text-sm font-medium text-gray-600"
+                >
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg "
+                  placeholder="+91 987654321"
+                  required
+                />
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="email"
+                  className="absolute -top-2 left-3 bg-white px-1 text-sm font-medium text-gray-600"
+                >
+                  Address <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg "
+                  placeholder="john@example.com"
+                  required
+                />
+              </div>
+
+
               {/* Contact Method Toggle */}
-              <div className="flex justify-end">
+              {/* <div className="flex justify-end">
                 <button
                   type="button"
                   onClick={toggleContactMethod}
@@ -134,7 +199,7 @@ const CreateNewCustomer = ({ onCustomerAdded }) => {
                     ? "Use Phone Number Instead"
                     : "Use Email Instead"}
                 </button>
-              </div>
+              </div> */}
             </div>
 
             {/* Form Actions */}
