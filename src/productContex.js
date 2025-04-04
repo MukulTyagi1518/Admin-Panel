@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import api from "./utils/axios"
+import apiInstance from "./utils/axios"
 
 const ProductContext = createContext()
 
@@ -21,7 +21,7 @@ export default function ProductProvider({ children }) {
         featured: "",
         todaysDeal: "",
         flashDeal: {
-            addToFlash: "", 
+            addToFlash: "",
             discount: "0",
             discountType: ""
         },
@@ -82,27 +82,32 @@ export default function ProductProvider({ children }) {
     });
 
 
-    const [allProducts, setAllProducts] = useState([])
+    const [allProducts, setAllProducts] = useState([
+
+    ])
+
+    const [fetchProducts, setFetchProducts] = useState(false)
 
 
     useEffect(() => {
         const fetchAllProducts = async () => {
-            const response = await api.get('/products/');
+            const response = await apiInstance.get('/products/');
 
             setAllProducts(response.data.data)
+            setFetchProducts(false)
+
 
         }
-
         fetchAllProducts();
-    }, [])
+    }, [fetchProducts])
 
-    // console.log(allProducts)
+    console.log(allProducts)
 
 
 
 
     return (
-        <ProductContext.Provider value={{ productData, setProductData }}>
+        <ProductContext.Provider value={{ productData, setProductData, allProducts, setAllProducts, setFetchProducts }}>
             {children}
         </ProductContext.Provider>
     )

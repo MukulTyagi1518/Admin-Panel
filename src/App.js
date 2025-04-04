@@ -89,12 +89,28 @@ import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Cu
 import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
 import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
 import NewsLetter from "./components/marketing/NewsLetter.js";
+import Payout from "./pages/sellers/Payout.js";
+import Rating from "./pages/sellers/Rating.js";
+import AllSellers from "./pages/sellers/AllSellers.js";
+import Create from "./pages/sellers/Create.jsx";
 import Refundrequest from "./components/Refund/Refundrequest.jsx"
 import Approvedrefund from "./components/Refund/Approvedrefund.jsx"
 import Reject from "./components/Refund/Reject.jsx"
 import Physical from "./pages/products/Sellerproduct/Physical.jsx"
 import Digital from "./pages/products/Sellerproduct/Digital.jsx"
 import Commision from "./components/Seller/Commision.jsx"
+import Ticket from "./pages/support/Ticket.js";
+import ProductQuires from "./pages/support/ProductQuires.js";
+import Conversation from "./pages/support/ProductQuires.js";
+import Queries from "./pages/support/Queries.js";
+import Contact from "./pages/support/Contact.js";
+import AllStaff from "./pages/staffs/AllStaff.js";
+import StaffCreate from "./pages/staffs/StaffCreate.js";
+import Roles from "./pages/staffs/Roles.js";
+import RolesCreate from "./pages/staffs/RolesCreate.js";
+import Edit from "./pages/staffs/Edit.js";
+import Supports from "./pages/support/Supports.js";
+import EditInfo from "./pages/staffs/editInfo.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -303,6 +319,40 @@ function App() {
                   />
                 </Route>
                 <Route path="news-letter" element={<NewsLetter />} />
+              </Route>
+
+
+
+
+
+
+              <Route path="/sellers">
+                <Route path="all" element={<AllSellers/>} />
+                <Route path="rating" element={<Rating/>} />
+                <Route path="payout" element={<Payout/>} />
+                <Route path="" element={<UnpaidOrders />} />
+                <Route path="create" element={<Create />} />
+
+              </Route>
+
+
+              <Route path="/support">
+                <Route path="ticket" element={<Ticket/>} />
+                <Route path="conversations" element={<Conversation/>} />
+                <Route path="queries" element={<Queries/>} />
+                <Route path="contact" element={<Contact/>} />
+                <Route path="create" element={<Create />} />
+                <Route path="supports" element={< Supports/>} />
+              </Route>
+
+              <Route path="/staffs">
+                <Route path="all" element={<AllStaff/>} />
+                <Route path="create" element={<StaffCreate/>} />
+                <Route path="roles" element={<Roles/>} />
+                <Route path="rolecreate" element={<RolesCreate/>} />
+                <Route path="edit" element={<Edit/>} />
+                <Route path="editInfo" element={<EditInfo/>} />
+                
               </Route>
             </Routes>
           </div>

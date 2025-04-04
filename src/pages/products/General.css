@@ -1,9 +1,10 @@
-.container {
-    display: flex;
+.container2 {
+    display: flex !important;
     gap: 20px;
     padding: 20px;
-    align-items: flex-start;
+    align-items: flex-start ;
   }
+  
   
   /* Left Side Form */
   .form-container-general {
@@ -699,3 +700,80 @@
         transform: translateX(17px);
     }
 }
+
+/* ... (आपके मौजूदा CSS) ... */
+
+/* ... (आपके मौजूदा CSS) ... */
+
+.category-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 5px;
+    padding: 0;
+  }
+  
+  /* ... (अन्य CSS) ... */
+
+.category-container {
+    width: 330px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgb(213, 211, 211);
+    /* height: 900px; */
+    
+  }
+  
+  .category-list {
+    max-height: 350px;
+    overflow-y: auto;
+    /* border: 1px solid #ddd; */
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  .pro3{
+    margin-top: 100px !important;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  
+  .sub-category {
+    margin-left: 20px;
+  }
+  
+  .sub-sub-category {
+    margin-left: 40px;
+  }
+  
+  .expand-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .category-container {
+      width: 100%;
+    }
+  }
+  hr{
+    
+    color: #110f0f !important;
+   
+ }

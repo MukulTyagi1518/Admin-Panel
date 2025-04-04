@@ -77,17 +77,47 @@ const CategoryEdit = () => {
     setError(null);
 
     try {
+      const currentCategory = categoryData.find(c => c._id === id);
 
-      console.log(formData)
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("type", formData.type);
+      formDataToSend.append("parentCategory", formData.parentCategory);
+      formDataToSend.append("orderingNumber", formData.orderingNumber);
+      formDataToSend.append("metaTitle", formData.metaTitle);
+      formDataToSend.append("metaDescription", formData.metaDescription);
+
+      // Append filteringAttributes as JSON string if it's an array
+      formDataToSend.append(
+        "filteringAttributes",
+        JSON.stringify(formData.filteringAttributes || [])
+      );
+
+      // Append files if they exist
+      if (formData.banner) {
+        formDataToSend.append("banner", formData.banner);
+      }
+      if (formData.icon) {
+        formDataToSend.append("icon", formData.icon);
+      }
+      if (formData.coverImage) {
+        formDataToSend.append("coverImage", formData.coverImage);
+      }
+
+      // Now you can send formData via fetch or Axios
 
 
 
-      await api.put(`categories/Update-category/${id}`, formData);
+
+      await api.put(`categories/Update-category/${id}`, formDataToSend);
 
 
       alert("Category updated successfully!");
       setFetchData(true)
       navigate("/products/category");
+
+
     } catch (err) {
       console.error("Error updating category:", err);
       setError(err.response?.data?.error || "Failed to update category");
