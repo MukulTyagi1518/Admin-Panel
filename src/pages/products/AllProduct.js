@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import "./allProduct.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+<<<<<<< HEAD
 import { useProductContext } from "../../productContex";
+=======
+import Switch from "../../components/Switch";
+>>>>>>> da164dab9f1c53b5bb34982e5ce69198e6016e83
 
 const AllProduct = () => {
 
@@ -112,7 +116,7 @@ const AllProduct = () => {
   };
 
   return (
-    <div className="product-container">
+    <div className="product-container1">
       <div className="header">
         <div>All allProducts</div>
         <button className="add-btn">Add New product</button>
@@ -172,7 +176,7 @@ const AllProduct = () => {
           placeholder="Type & Enter"
         />
       </div>
-      <div className="product-table">
+      <div className="product-table1">
         <table>
           <thead>
             <tr>
@@ -189,6 +193,7 @@ const AllProduct = () => {
               <th>Options</th>
             </tr>
           </thead>
+<<<<<<< HEAD
           {/* <tbody>
                         {allProducts.map((product) => (
                             <tr key={product.id}>
@@ -253,6 +258,9 @@ const AllProduct = () => {
 
 
                     </tbody> */}
+=======
+         
+>>>>>>> da164dab9f1c53b5bb34982e5ce69198e6016e83
           <tbody>
             {allProducts && allProducts.map((product) => (
               <>
@@ -292,17 +300,18 @@ const AllProduct = () => {
                   </td>
                   <td className="hide-on-small">{product.stock}</td>
                   <td className="hide-on-small">
-                    <label className="switch">
+                    {/* <label className="switch">
                       <input
                         type="checkbox"
                         checked={product.deal}
                         onChange={() => handleToggleChange(product.id, "deal")}
                       />
                       <span className="slider"></span>
-                    </label>
+                    </label> */}
+                    <Switch/>
                   </td>
                   <td className="hide-on-small">
-                    <label className="switch">
+                    {/* <label className="switch">
                       <input
                         type="checkbox"
                         checked={product.published}
@@ -311,10 +320,11 @@ const AllProduct = () => {
                         }
                       />
                       <span className="slider"></span>
-                    </label>
+                    </label> */}
+                     <Switch/>
                   </td>
                   <td className="hide-on-small">
-                    <label className="switch">
+                    {/* <label className="switch">
                       <input
                         type="checkbox"
                         checked={product.featured}
@@ -323,16 +333,17 @@ const AllProduct = () => {
                         }
                       />
                       <span className="slider"></span>
-                    </label>
+                    </label> */}
+                     <Switch/>
                   </td>
                   <td className="hide-on-small ">
-                    <button className="btn view-btn">
+                    <button className="btn view-btn1">
                       <FaEye />
                     </button>
-                    <button className="btn edit-btn">
+                    <button className="btn edit-btn1">
                       <FaEdit />
                     </button>
-                    <button className="btn delete-btn">
+                    <button className="btn delete-btn1">
                       <FaTrash />
                     </button>
                   </td>
@@ -368,55 +379,61 @@ const AllProduct = () => {
 
                         <div>
                           Today's Deal:
-                          <label className="switch">
-                            <input
+                           <label className="switch">
+                            {/* <input
                               type="checkbox"
                               checked={product.deal}
                               onChange={() =>
                                 handleToggleChange(product.id, "deal")
                               }
                             />
-                            <span className="slider"></span>
-                          </label>
+                            <span className="slider"></span> */}
+                             <Switch/>
+                          </label> 
+                          
                         </div>
 
                         <div>
                           Published:
                           <label className="switch">
-                            <input
+                            {/* <input
                               type="checkbox"
                               checked={product.published}
                               onChange={() =>
                                 handleToggleChange(product.id, "published")
                               }
                             />
-                            <span className="slider"></span>
+                            <span className="slider"></span> */}
+                            <Switch/>
                           </label>
+                           
                         </div>
 
                         <div>
                           Featured:
                           <label className="switch">
-                            <input
+                            {/* <input
                               type="checkbox"
                               checked={product.featured}
                               onChange={() =>
                                 handleToggleChange(product.id, "featured")
                               }
                             />
-                            <span className="slider"></span>
+                            <span className="slider"></span> */}
+                            <Switch/>
                           </label>
+                          
                         </div>
 
                         <div>
                           Options:
-                          <button className="btn view-btn">
+                          <button className="btn1 view-btn1">
                             <FaEye />
                           </button>
-                          <button className="btn edit-btn">
+                          <button className="btn1 edit-btn1">
                             <FaEdit />
                           </button>
-                          <button className="btn delete-btn">
+                          <button className="btn1 delete-btn1">
                             <FaTrash />
                           </button>
                         </div>
@@ -428,34 +445,6 @@ const AllProduct = () => {
             ))}
           </tbody>
 
-          <div className="pagination ">
-            <button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="pagination-btn"
-            >
-              &lsaquo;
-            </button>
-
-            {getPageNumbers().map((page, index) => (
-              <button
-                key={index}
-                onClick={() => typeof page === "number" && paginate(page)}
-                className={`pagination-btn ${currentPage === page ? "active" : ""
-                  } ${page === "..." ? "dots" : ""}`}
-              >
-                {page}
-              </button>
-            ))}
-
-            <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="pagination-btn"
-            >
-              &rsaquo;
-            </button>
-          </div>
         </table>
       </div>
     </div>
@@ -463,6 +452,7 @@ const AllProduct = () => {
 };
 
 export default AllProduct;
+<<<<<<< HEAD
 
 // import React, { useState } from "react";
 // import "./allProduct.css";
@@ -686,3 +676,5 @@ export default AllProduct;
 // };
 
 // export default AllProduct;
+=======
+>>>>>>> da164dab9f1c53b5bb34982e5ce69198e6016e83
