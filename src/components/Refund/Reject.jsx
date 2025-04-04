@@ -166,7 +166,7 @@ const RejectedRequests = () => {
                 &times;
               </button>
             </div>
-            <p className="text-gray-700 mb-4">{selectedRequest.rejectReason}</p>
+            <p className="text-gray-700 mb-4">{selectedRequest.rejectReason}Your refund request has been denied as it does not meet our refund policy criteria. For questions, feel free to contact support.</p>
             <div className="text-right">
               <button 
                 className="bg-gray-300 px-4 py-2 rounded-md"

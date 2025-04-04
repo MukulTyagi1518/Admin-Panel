@@ -40,7 +40,7 @@ export default function AllBrands() {
 
     return (
         <div className="PreOrderFaq ma10">
-            <div className="preOrderFaqBox">
+            <div className="preOrderFaqBox-brand"> 
                 <div className="preOrderFaqLeft">
                     <div className="preOrderLeftUpper">
                         <p className="allFaq">All Brands</p>
