@@ -61,7 +61,7 @@ const Conversation = () => {
       <table className="conversation-table">
         <thead>
           <tr>
-            <th></th>
+           {/* <th className="hide-on-large"></th> */}
             <th className="hide-on-small">#</th>
             <th className="hide-on-small">Date</th>
             <th className="hide-on-small">Title</th>
@@ -77,24 +77,26 @@ const Conversation = () => {
                 <td className="hide-on-small">{conversation.id}</td>
                 <td className="hide-on-small">{conversation.date}</td>
                 <td className="hide-on-small">{conversation.title}</td>
-                <td>
+                {/* <td>
                 <button onClick={() => toggleRow(conversation.id)} className="expand-btn">
                     <FaPlus />
                   </button>
-                </td>
+                </td> */}
                 <td>
-                  {/* <button onClick={() => toggleRow(conversation.id)} className="expand-btn">
+                  <button onClick={() => toggleRow(conversation.id)} className="expand-btn mr-3">
                     <FaPlus />
-                  </button> */}
+                  </button>
+                  
                   {conversation.sender}
                   {conversation.isNew && <span className="new-badge">new</span>}
                 </td>
                 <td>{conversation.receiver}</td>
                 <td>
-                  <button className="icon-btn mr-2"><FaEye /></button>
-                  <button className="icon-btn delete-btn"><FaTrash /></button>
+                  <button className="icon-btn4 mr-2"><FaEye /></button>
+                  <button className="icon-btn4 delete-btn4"><FaTrash /></button>
                 </td>
               </tr>
+              
               {expandedRows[conversation.id] && (
                 <tr className="expanded-row">
                   <td colSpan="6">

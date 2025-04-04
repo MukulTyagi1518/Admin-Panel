@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Inhouse.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import Switch from "../Switch";
 
 const InhouseProduct = () => {
     const [products, setProducts] = useState([
@@ -212,7 +213,7 @@ const handleExpandRow = (id) => {
     };
 
     return (
-        <div className="product-container">
+        <div className="product-container4">
             <div className="header">
                 <div className="text-[20px]">All wholesale products</div>
                 <button className="add-btn">Add New wholesale product</button>
@@ -256,7 +257,7 @@ const handleExpandRow = (id) => {
                 </select>
                 <input type="text" className="filter-input" placeholder="Type & Enter" />
             </div>
-            <div className="product-table">
+            <div className="product-table4">
                 <table>
                     <thead>
                         <tr>
@@ -316,43 +317,46 @@ const handleExpandRow = (id) => {
         <td className="hide-on-small">{product.stock}</td>
         <td className="hide-on-small">
           <label className="switch">
-            <input
+            {/* <input
               type="checkbox"
               checked={product.deal}
               onChange={() => handleToggleChange(product.id, "deal")}
             />
-            <span className="slider"></span>
+            <span className="slider"></span> */}
+             <Switch/>
           </label>
         </td>
         <td className="hide-on-small">
           <label className="switch">
-            <input
+            {/* <input
               type="checkbox"
               checked={product.published}
               onChange={() => handleToggleChange(product.id, "published")}
             />
-            <span className="slider"></span>
+            <span className="slider"></span> */}
+            <Switch/>
           </label>
         </td>
         <td className="hide-on-small">
           <label className="switch">
 
-            <input
+            {/* <input
               type="checkbox"
               checked={product.featured}
               onChange={() => handleToggleChange(product.id, "featured")}
-            />
-            <span className="slider"></span>
+            /> */}
+            {/* <span className="slider"></span> */}
+              <Switch/>
           </label>
         </td>
         <td className="hide-on-small ">
-          <button className="btn view-btn">
+          <button className="btn4 view-btn4">
             <FaEye />
           </button>
-          <button className="btn edit-btn">
+          <button className="btn4 edit-btn4">
             <FaEdit />
           </button>
-          <button className="btn delete-btn">
+          <button className="btn4 delete-btn4">
             <FaTrash />
           </button>
         </td>
@@ -407,13 +411,13 @@ const handleExpandRow = (id) => {
 
         <div>
           Options:
-          <button className="btn view-btn">
+          <button className="btn4 view-btn4">
             <FaEye />
           </button>
-          <button className="btn edit-btn">
+          <button className="btn4 edit-btn4">
             <FaEdit />
           </button>
-          <button className="btn delete-btn">
+          <button className="btn4 delete-btn4">
             <FaTrash />
           </button>
         </div>
