@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { FaEye, FaEdit, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { HiOutlineDuplicate } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const ProductTable = () => {
+
+  const navigate = useNavigate();
+
+  const handleEdit = (id) => {
+    navigate(`/editinhouse`); 
+};
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -101,7 +109,7 @@ const ProductTable = () => {
                 ))}
                 <td className="p-3 flex border-none space-x-2">
                   <button className="bg-green-100 p-2 rounded-full"><FaEye className="text-green-500" /></button>
-                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit className="text-blue-500" /></button>
+                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
                   <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
                   <button className="bg-yellow-100 p-2 rounded-full"><HiOutlineDuplicate className="text-yellow-500" /></button>
                 </td>
@@ -144,7 +152,7 @@ const ProductTable = () => {
                   ))}
                   <div className="flex justify-left space-x-2 mt-3">
                     <button className="bg-green-100 p-2 rounded-full"><FaEye className="text-green-500" /></button>
-                    <button className="bg-blue-100 p-2 rounded-full"><FaEdit className="text-blue-500" /></button>
+                    <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
                     <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
                     <button className="bg-yellow-100 p-2 rounded-full"><HiOutlineDuplicate className="text-yellow-500" /></button>
                   </div>

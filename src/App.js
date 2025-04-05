@@ -111,6 +111,8 @@ import RolesCreate from "./pages/staffs/RolesCreate.js";
 import Edit from "./pages/staffs/Edit.js";
 import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
+import Editinhouse from "./components/Edit/Editinhoue.jsx"
+import Editattribute from "./components/Edit/Editattribute.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -169,6 +171,8 @@ function App() {
               <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
               <Route path="/products/seller" element={<Physical />}/>
               <Route path="/products/digital" element={<Digital />}/>
+
+             
 
 
               <Route path="/refunds/request" element={<Refundrequest />}/>
@@ -354,6 +358,9 @@ function App() {
                 <Route path="editInfo" element={<EditInfo/>} />
                 
               </Route>
+
+                 <Route path="editinhouse" element={<Editinhouse />}/>
+                 <Route path="editattribute" element={<Editattribute />}/>
             </Routes>
           </div>
         </div>
