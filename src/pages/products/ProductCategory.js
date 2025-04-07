@@ -6,24 +6,7 @@ import { Link } from "react-router-dom"
 
 const ProductCategory = () => {
 
-//   const [description, setDescription] = useState("");
-//   const [isRefundable, setIsRefundable] = useState(false);
-//   const [isFeatured, setIsFeatured] = useState(false);
-//   const [isTodaysDeal, setIsTodaysDeal] = useState(false);
-//   const [flashTitle, setFlashTitle] = useState("");
-//   const [discount, setDiscount] = useState(0);
-//   const [discountType, setDiscountType] = useState("");
-//   const [tax, setTax] = useState(0);
-//   const [taxType, setTaxType] = useState("flat");
-//   const [vat, setVat] = useState(0);
-//   const [vatType, setVatType] = useState("flat");
-//   const [content, setContent] = useState("");
-//   const [tagInput, setTagInput] = useState("");
-//   // const [showHotCategories, setShowHotCategories] = useState(false);
 
-//   // const toggleHotCategories = () => {
-//   //   setShowHotCategories(!showHotCategories);
-//   // };
 
 
   const [showWomenCategories, setShowWomenCategories] = useState(false);

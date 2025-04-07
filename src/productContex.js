@@ -21,7 +21,7 @@ export default function ProductProvider({ children }) {
         featured: "",
         todaysDeal: "",
         flashDeal: {
-            addToFlash: "", 
+            addToFlash: "",
             discount: "0",
             discountType: ""
         },
@@ -82,7 +82,11 @@ export default function ProductProvider({ children }) {
     });
 
 
-    const [allProducts, setAllProducts] = useState([])
+    const [allProducts, setAllProducts] = useState([
+
+    ])
+
+    const [fetchProducts, setFetchProducts] = useState(false)
 
 
     useEffect(() => {
@@ -90,19 +94,20 @@ export default function ProductProvider({ children }) {
             const response = await apiInstance.get('/products/');
 
             setAllProducts(response.data.data)
+            setFetchProducts(false)
+
 
         }
-
         fetchAllProducts();
-    }, [])
+    }, [fetchProducts])
 
-    // console.log(allProducts)
+    console.log(allProducts)
 
 
 
 
     return (
-        <ProductContext.Provider value={{ productData, setProductData }}>
+        <ProductContext.Provider value={{ productData, setProductData, allProducts, setAllProducts, setFetchProducts }}>
             {children}
         </ProductContext.Provider>
     )

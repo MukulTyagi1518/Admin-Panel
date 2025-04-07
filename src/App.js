@@ -93,6 +93,24 @@ import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
+import Refundrequest from "./components/Refund/Refundrequest.jsx"
+import Approvedrefund from "./components/Refund/Approvedrefund.jsx"
+import Reject from "./components/Refund/Reject.jsx"
+import Physical from "./pages/products/Sellerproduct/Physical.jsx"
+import Digital from "./pages/products/Sellerproduct/Digital.jsx"
+import Commision from "./components/Seller/Commision.jsx"
+import Ticket from "./pages/support/Ticket.js";
+import ProductQuires from "./pages/support/ProductQuires.js";
+import Conversation from "./pages/support/ProductQuires.js";
+import Queries from "./pages/support/Queries.js";
+import Contact from "./pages/support/Contact.js";
+import AllStaff from "./pages/staffs/AllStaff.js";
+import StaffCreate from "./pages/staffs/StaffCreate.js";
+import Roles from "./pages/staffs/Roles.js";
+import RolesCreate from "./pages/staffs/RolesCreate.js";
+import Edit from "./pages/staffs/Edit.js";
+import Supports from "./pages/support/Supports.js";
+import EditInfo from "./pages/staffs/editInfo.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -149,6 +167,16 @@ function App() {
               <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
               <Route path="/wholesale/inhouse" element={<Inhouse />}/>
               <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
+              <Route path="/products/seller" element={<Physical />}/>
+              <Route path="/products/digital" element={<Digital />}/>
+
+
+              <Route path="/refunds/request" element={<Refundrequest />}/>
+              <Route path="/refunds/approved" element={<Approvedrefund />}/>
+              <Route path="/refunds/reject" element={<Reject />}/>
+              <Route path="/sellers/commission" element={<Commision />}/>
+
+
 
 
               <Route path="/products">
@@ -304,6 +332,29 @@ function App() {
                 <Route path="payout" element={<Payout/>} />
                 <Route path="" element={<UnpaidOrders />} />
                 <Route path="create" element={<Create />} />
+
+              </Route>
+
+
+              <Route path="/support">
+                <Route path="ticket" element={<Ticket/>} />
+                <Route path="conversations" element={<Conversation/>} />
+                <Route path="queries" element={<Queries/>} />
+                <Route path="contact" element={<Contact/>} />
+                <Route path="create" element={<Create />} />
+                <Route path="supports" element={< Supports/>} />
+              </Route>
+
+              <Route path="/staffs">
+                <Route path="all" element={<AllStaff/>} />
+                <Route path="create" element={<StaffCreate/>} />
+                <Route path="roles" element={<Roles/>} />
+                <Route path="rolecreate" element={<RolesCreate/>} />
+                {/* <Route path="edit" element={<Edit/>} /> */}
+                <Route path="edit/:id" element={<Edit />} />
+
+                {/* <Route path="editInfo" element={<EditInfo/>} /> */}
+                <Route path="editInfo/:id" element={<EditInfo />} />
 
               </Route>
             </Routes>
