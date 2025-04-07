@@ -132,6 +132,8 @@ import { useState } from "react";
 export default function PreOrderReviews() {
   const navigate = useNavigate();
   const [expandedRows, setExpandedRows] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -141,6 +143,22 @@ export default function PreOrderReviews() {
   const handlereview = (e) => {
     e.preventDefault();
     navigate("/products/ReviewDetail");
+  };
+  const handleDeleteClick = (roleId) => {
+    setRoleToDelete(roleId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const confirmDelete = () => {
+    // Implement your delete logic here
+    console.log(`Deleting role with ID: ${roleToDelete}`);
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
   };
 
   const users = [
@@ -210,7 +228,7 @@ export default function PreOrderReviews() {
                           <Eye color="blue" size={18} onClick={handlereview}/>
                         </div>
                         <div className="action">
-                          <Trash color="blue" size={18} />
+                          <Trash color="blue" size={18} onClick={() => handleDeleteClick(user.id)} />
                         </div>
                       </div>
                     </td>
@@ -264,6 +282,32 @@ export default function PreOrderReviews() {
               ))}
             </tbody>
           </table>
+          {showDeleteConfirmation && (
+        <div className="delete-confirmation-overlay">
+          <div className="delete-confirmation-dialog">
+            <div className="dialog-header">
+              <h2>Delete Confirmation</h2>
+              <button
+                className="close-dialog-btn"
+                onClick={cancelDelete}
+              >
+                X
+              </button>
+            </div>
+            <div className="dialog-content">
+              <p>Are you sure to delete this?</p>
+            </div>
+            <div className="dialog-actions">
+              <button className="cancel-btn" onClick={cancelDelete}>
+                Cancel
+              </button>
+              <button className="delete-btn" onClick={confirmDelete}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
         </div>
       </div>
     </div>

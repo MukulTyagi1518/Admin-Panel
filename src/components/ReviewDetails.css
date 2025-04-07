@@ -14,6 +14,9 @@ a.review-detail-container {
     margin-bottom: 20px;
   }
   
+  .review-detail-container{
+    padding: 50px !important;
+  }
   .add-review-button {
     background-color: #008080;
     color: white;

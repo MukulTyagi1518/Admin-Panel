@@ -1,5 +1,6 @@
 import { Delete, Edit, Trash } from "lucide-react"
 import "./preOrderFaq.scss"
+import Switch from "../../Switch"
 
 export default function PreOrderFaq() {
 
@@ -82,14 +83,15 @@ export default function PreOrderFaq() {
                                             <td>{n.question}</td>
 
                                             <td >
-                                                <div className="toggle-item">
+                                                <div className="toggle-item flex flex-row gap-[.3cm]">
 
-                                                    <label className="switch">
+                                                    {/* <label className="switch">
                                                         <input
                                                             type="checkbox"
                                                         />
                                                         <span className="slider"></span>
-                                                    </label>
+                                                    </label> */}
+                                                    <Switch/>
                                                 </div>
                                             </td>
 
