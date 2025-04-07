@@ -118,6 +118,7 @@ import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRe
 import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
 import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
 import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
+import ReportsPage from "./components/delivery/ReportsPage.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -165,23 +166,23 @@ function App() {
 
 
 
-              <Route path="/wholesale/all" element={<Allwholesale />}/>
-              <Route path="/wholesale/add" element={<Addwholesale />}/>
-              <Route path="/products/Brandimport" element={<Brandimport />}/>
-              <Route  path= "/products/bulk-import" element={<Bulkimport />}/>
-              <Route path="/products/bulk-export" element={<Bulkexport />}/>
-              <Route path="/sellers/verify" element={<Sellerverification />}/>
-              <Route path="/sellers/payout-request" element={<Payoutrequest />}/>
-              <Route path="/wholesale/inhouse" element={<Inhouse />}/>
-              <Route path="/wholesale/seller" element={<Sellerwholesale />}/>
-              <Route path="/products/seller" element={<Physical />}/>
-              <Route path="/products/digital" element={<Digital />}/>
+              <Route path="/wholesale/all" element={<Allwholesale />} />
+              <Route path="/wholesale/add" element={<Addwholesale />} />
+              <Route path="/products/Brandimport" element={<Brandimport />} />
+              <Route path="/products/bulk-import" element={<Bulkimport />} />
+              <Route path="/products/bulk-export" element={<Bulkexport />} />
+              <Route path="/sellers/verify" element={<Sellerverification />} />
+              <Route path="/sellers/payout-request" element={<Payoutrequest />} />
+              <Route path="/wholesale/inhouse" element={<Inhouse />} />
+              <Route path="/wholesale/seller" element={<Sellerwholesale />} />
+              <Route path="/products/seller" element={<Physical />} />
+              <Route path="/products/digital" element={<Digital />} />
 
 
-              <Route path="/refunds/request" element={<Refundrequest />}/>
-              <Route path="/refunds/approved" element={<Approvedrefund />}/>
-              <Route path="/refunds/reject" element={<Reject />}/>
-              <Route path="/sellers/commission" element={<Commision />}/>
+              <Route path="/refunds/request" element={<Refundrequest />} />
+              <Route path="/refunds/approved" element={<Approvedrefund />} />
+              <Route path="/refunds/reject" element={<Reject />} />
+              <Route path="/sellers/commission" element={<Commision />} />
 
 
 
@@ -304,8 +305,14 @@ function App() {
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
                 <Route path="custom-alert-popup" element={<CustomAlerts />} />
-                <Route path="custom-alert-popup/create" element={<CreateCustomAlert />} />
-                <Route path="custom-alert-popup/edit/:id" element={<EditCustomAlert />} />
+                <Route
+                  path="custom-alert-popup/create"
+                  element={<CreateCustomAlert />}
+                />
+                <Route
+                  path="custom-alert-popup/edit/:id"
+                  element={<EditCustomAlert />}
+                />
                 <Route path="email-templates">
                   <Route path="admin" element={<EmailTemplateAdmin />} />
                   <Route
@@ -388,23 +395,25 @@ function App() {
 
 
               <Route path="/support">
-                <Route path="ticket" element={<Ticket/>} />
-                <Route path="conversations" element={<Conversation/>} />
-                <Route path="queries" element={<Queries/>} />
-                <Route path="contact" element={<Contact/>} />
+                <Route path="ticket" element={<Ticket />} />
+                <Route path="conversations" element={<Conversation />} />
+                <Route path="queries" element={<Queries />} />
+                <Route path="contact" element={<Contact />} />
                 <Route path="create" element={<Create />} />
-                <Route path="supports" element={< Supports/>} />
+                <Route path="supports" element={< Supports />} />
               </Route>
 
               <Route path="/staffs">
-                <Route path="all" element={<AllStaff/>} />
-                <Route path="create" element={<StaffCreate/>} />
-                <Route path="roles" element={<Roles/>} />
-                <Route path="rolecreate" element={<RolesCreate/>} />
-                <Route path="edit" element={<Edit/>} />
-                <Route path="editInfo" element={<EditInfo/>} />
+                <Route path="all" element={<AllStaff />} />
+                <Route path="create" element={<StaffCreate />} />
+                <Route path="roles" element={<Roles />} />
+                <Route path="rolecreate" element={<RolesCreate />} />
+                <Route path="edit" element={<Edit />} />
+                <Route path="editInfo" element={<EditInfo />} />
               </Route>
-              <Route path="editInhouse" element={<EditInhouse/>}/>
+              <Route path="editInhouse" element={<EditInhouse />} />
+
+
             </Routes>
           </div>
         </div>
