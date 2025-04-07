@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
-import { TrendingUp, Star, ShoppingCart, ArrowRight, ChevronDown } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { TrendingUp, Star } from 'lucide-react';
 import ProductTable from '../reports/ProductTable';
+import apiInstance from "../../utils/axios"
 
 const BestWeeklyProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [weeklyProducts, setWeeklyProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const itemsPerPage = 5;
 
-  const weeklyProducts = [
-    { id: '1', product: 'Wireless Earbuds Pro', category: 'Electronics', sales: 342, rating: 4.7, change: '+24%', price: '$89.99', status: 'trending' },
-    { id: '2', product: 'Organic Matcha Powder', category: 'Food', sales: 278, rating: 4.9, change: '+18%', price: '$19.99', status: 'trending' },
-    { id: '3', product: 'Yoga Mat (Premium)', category: 'Fitness', sales: 195, rating: 4.8, change: '+12%', price: '$49.99', status: 'popular' },
-    { id: '4', product: 'Stainless Steel Water Bottle', category: 'Accessories', sales: 421, rating: 4.6, change: '+32%', price: '$24.99', status: 'trending' },
-    { id: '5', product: 'LED Desk Lamp', category: 'Home', sales: 156, rating: 4.5, change: '+8%', price: '$39.99', status: 'popular' },
-  ];
+  useEffect(() => {
+    const fetchWeeklyProducts = async () => {
+      try {
+        const response = await apiInstance.get('/weekly-product');
+        const transformedData = response.data.map(product => ({
+          id: product._id,
+          product: product.productName,
+          category: product.category,
+          sales: product.sales,
+          rating: product.rating,
+          change: product.weeklyChange,
+          price: `${product.price.toFixed(2)}`,
+          status: product.status.toLowerCase()
+        }));
+        setWeeklyProducts(transformedData);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+        console.error('Error fetching weekly products:', err);
+      }
+    };
+
+    fetchWeeklyProducts();
+  }, []);
 
   const columns = [
     { header: 'Product', accessor: (item) => item.product },
@@ -24,6 +46,26 @@ const BestWeeklyProducts = () => {
     { header: 'Price', accessor: (item) => item.price },
    
   ];
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="flex justify-center items-center h-40">
+          <p>Loading weekly products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="flex justify-center items-center h-40">
+          <p className="text-red-500">Error: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
