@@ -1,27 +1,36 @@
 import { useState, useEffect } from 'react';
-import { StatusToggle } from '../marketing/EmailTemplate/MainPageComponents/StatusToggle';
 import { SearchBar } from '../marketing/EmailTemplate/MainPageComponents/SearchBar';
 import { DataTable } from '../marketing/EmailTemplate/MainPageComponents/DataTable';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MobileCard from './component/MobileCard';
 
 const InActiveDeliveryPartner = () => {
   const [deliveryPartners, setDeliveryPartners] = useState([]);
   const [filteredPartners, setFilteredPartners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [reportsDialog, setReportsDialog] = useState({
-    open: false,
-    partnerId: null,
-    reports: [],
-    partnerName: ''
-  });
-  const [confirmDialog, setConfirmDialog] = useState({
-    open: false,
-    partnerId: null,
-    action: '',
-    name: ''
-  });
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [expandedCard, setExpandedCard] = useState(null);
+
+  // const [reportsDialog, setReportsDialog] = useState({
+  //   open: false,
+  //   partnerId: null,
+  //   reports: [],
+  //   partnerName: ''
+  // });
+  // const [confirmDialog, setConfirmDialog] = useState({
+  //   open: false,
+  //   partnerId: null,
+  //   action: '',
+  //   name: ''
+  // });
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchDeliveryPartners = async () => {
@@ -33,27 +42,30 @@ const InActiveDeliveryPartner = () => {
             name: 'Alex Brown',
             phone: '+1 555-111-2222',
             rating: 4.0,
-            status: 'unbanned',
+            status: 'inactive',
             lastActive: '2023-06-15',
-            reports: [{ id: 1, reason: 'No shows', date: '2023-05-10' }]
+            reports: [{ id: 1, reason: 'No shows', date: '2023-05-10' }],
+            profilePhoto: 'https://randomuser.me/api/portraits/men/32.jpg',
           },
           {
             id: 2,
             name: 'Sarah Wilson',
             phone: '+1 555-333-4444',
             rating: 3.8,
-            status: 'unbanned',
+            status: 'inactive',
             lastActive: '2023-06-20',
-            reports: []
+            reports: [],
+            profilePhoto: 'https://randomuser.me/api/portraits/women/44.jpg'
           },
           {
             id: 3,
             name: 'David Lee',
             phone: '+1 555-555-6666',
             rating: 4.1,
-            status: 'banned',
+            status: 'inactive',
             lastActive: '2023-05-01',
-            reports: [{ id: 3, reason: 'Customer complaints', date: '2023-04-15' }]
+            reports: [{ id: 3, reason: 'Customer complaints', date: '2023-04-15' }],
+            profilePhoto: 'https://randomuser.me/api/portraits/men/75.jpg'
           }
         ];
         setDeliveryPartners(mockData);
@@ -79,57 +91,72 @@ const InActiveDeliveryPartner = () => {
     }
   }, [searchTerm, deliveryPartners]);
 
-  const handleStatusToggle = (partnerId) => {
-    const partner = deliveryPartners.find(p => p.id === partnerId);
-    setConfirmDialog({
-      open: true,
-      partnerId,
-      action: partner.status === 'unbanned' ? 'ban' : 'unban',
-      name: partner.name
-    });
+  const toggleCard = (id) => {
+    setExpandedCard(expandedCard === id ? null : id);
   };
 
-  const confirmToggleStatus = () => {
-    const { partnerId, action } = confirmDialog;
+  // const handleStatusToggle = (partnerId) => {
+  //   const partner = deliveryPartners.find(p => p.id === partnerId);
+  //   setConfirmDialog({
+  //     open: true,
+  //     partnerId,
+  //     action: partner.status === 'active' ? 'ban' : 'unban',
+  //     name: partner.name
+  //   });
+  // };
 
-    setDeliveryPartners(prev =>
-      prev.map(partner =>
-        partner.id === partnerId
-          ? { ...partner, status: action === 'ban' ? 'banned' : 'unbanned' }
-          : partner
-      )
-    );
+  // const confirmToggleStatus = () => {
+  //   const { partnerId, action } = confirmDialog;
 
-    toast.success(`Partner ${action === 'ban' ? 'banned' : 'unbanned'} successfully.`);
-    setConfirmDialog({ open: false, partnerId: null, action: '', name: '' });
-  };
+  //   setDeliveryPartners(prev =>
+  //     prev.map(partner =>
+  //       partner.id === partnerId
+  //         ? { ...partner, status: action === 'ban' ? 'inactive' : 'active' }
+  //         : partner
+  //     )
+  //   );
 
-  const handleViewReports = (partnerId) => {
-    const partner = deliveryPartners.find(p => p.id === partnerId);
-    setReportsDialog({
-      open: true,
-      partnerId,
-      reports: partner.reports,
-      partnerName: partner.name
-    });
-  };
+  //   toast.success(`Partner ${action === 'ban' ? 'inactive' : 'active'} successfully.`);
+  //   setConfirmDialog({ open: false, partnerId: null, action: '', name: '' });
+  // };
 
-  const closeReportsDialog = () => {
-    setReportsDialog(prev => ({ ...prev, open: false }));
-  };
+  // const handleViewReports = (partnerId) => {
+  //   const partner = deliveryPartners.find(p => p.id === partnerId);
+  //   setReportsDialog({
+  //     open: true,
+  //     partnerId,
+  //     reports: partner.reports,
+  //     partnerName: partner.name
+  //   });
+  // };
+
+  // const closeReportsDialog = () => {
+  //   setReportsDialog(prev => ({ ...prev, open: false }));
+  // };
 
   const columns = [
-    { key: 'name', title: 'Name' },
-    { key: 'phone', title: 'Phone Number' },
     {
-      key: 'rating',
-      title: 'Rating',
+      key: "name",
+      title: "Name",
       render: (partner) => (
         <div className="flex items-center">
-          <span className="text-yellow-500">★</span>
-          <span className="ml-1">{partner.rating}</span>
+          <img 
+            src={partner.profilePhoto} 
+            alt={partner.name}
+            className="w-8 h-8 rounded-full mr-3 object-cover"
+          />
+          <span>{partner.name}</span>
         </div>
-      )
+      ),
+    },
+    {
+      key: "phone",
+      title: "Phone",
+      render: (partner) => (
+        <a href={`tel:${partner.phone}`} className="hover:text-blue-600">
+          {partner.phone}
+        </a>
+      ),
     },
     {
       key: 'lastActive',
@@ -144,60 +171,81 @@ const InActiveDeliveryPartner = () => {
       key: 'status',
       title: 'Status',
       render: (partner) => (
-        <div className="flex items-center space-x-2">
-          <StatusToggle
-            status={partner.status === 'unbanned'}
-            onToggle={() => handleStatusToggle(partner.id)}
-          />
-          <span className={`px-2 py-1 rounded-full text-xs ${
-            partner.status === 'unbanned' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-          }`}>
-            {partner.status === 'unbanned' ? 'Unbanned' : 'Banned'}
-          </span>
-        </div>
+        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+          partner.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+        }`}>
+          {partner.status === 'active' ? 'Active' : 'Inactive'}
+        </span>
       )
     },
-    {
-      key: 'actions',
-      title: 'Actions',
-      render: (partner) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => handleViewReports(partner.id)}
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
-          >
-            Reports ({partner.reports.length})
-          </button>
-        </div>
-      )
-    }
+    // {
+    //   key: 'actions',
+    //   title: 'Actions',
+    //   render: (partner) => (
+    //     <div className="flex space-x-2">
+    //       <button
+    //         onClick={() => handleViewReports(partner.id)}
+    //         className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+    //       >
+    //         Reports ({partner.reports.length})
+    //       </button>
+    //     </div>
+    //   )
+    // }
   ];
 
+  
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Inactive Delivery Partners</h1>
-        <SearchBar
-          value={searchTerm}
-          onChange={setSearchTerm}
-          placeholder="Search partners..."
-        />
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+      <ToastContainer position="top-center" autoClose={3000} />
+      
+      {/* Header Section */}
+      <div className='mb-8'>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold">Inactive Delivery Partners</h1>
+            <p className="text-gray-600 mt-1">
+              Showing delivery partners who haven't worked for at least one month
+            </p>
+          </div>
+          <div className="w-full sm:w-64">
+            <SearchBar
+              value={searchTerm}
+              onChange={setSearchTerm}
+              placeholder="Search partners..."
+              className="w-full"
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="mb-4 text-gray-600">
-        <p>Showing delivery partners who haven't worked for at least one month</p>
-      </div>
-
-      <DataTable
-        columns={columns}
-        data={filteredPartners}
-        loading={loading}
-        emptyMessage="No inactive delivery partners found."
-      />
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      ) : windowWidth < 768 ? (
+        <div className="space-y-4">
+          {filteredPartners.map(partner =>  <MobileCard
+      key={partner.id}
+      partner={partner}
+      expandedCard={expandedCard}
+      toggleCard={toggleCard}
+    />)}
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <DataTable
+            columns={columns}
+            data={filteredPartners}
+            loading={loading}
+            emptyMessage="No inactive delivery partners found."
+          />
+        </div>
+      )}
 
       {/* Reports Dialog */}
-      {reportsDialog.open && (
+      {/* {reportsDialog.open && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
@@ -233,10 +281,10 @@ const InActiveDeliveryPartner = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Confirmation Dialog */}
-      {confirmDialog.open && (
+      {/* {confirmDialog.open && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
             <h2 className="text-lg font-bold mb-4">Confirm Action</h2>
@@ -259,7 +307,7 @@ const InActiveDeliveryPartner = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
