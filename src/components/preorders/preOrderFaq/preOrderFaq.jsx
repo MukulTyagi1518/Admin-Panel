@@ -1,6 +1,8 @@
 import { Delete, Edit, Trash } from "lucide-react"
 import "./preOrderFaq.scss"
 import Switch from "../../Switch"
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function PreOrderFaq() {
   const [faqs, setFaqs] = useState([]);
