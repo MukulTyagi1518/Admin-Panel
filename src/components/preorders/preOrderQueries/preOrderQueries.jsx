@@ -1,5 +1,6 @@
 import { Ban, ChevronDownIcon, Eye, Trash, Trash2 } from "lucide-react"
 import "./preOrderQueries.scss"
+import { useNavigate } from "react-router-dom";
 
 export default function PreOrderQueries() {
     const users = [
@@ -36,6 +37,11 @@ export default function PreOrderQueries() {
             status: "Not Replied"
         }
     ];
+    const navigate = useNavigate();
+    const handlereview = (e) => {
+        e.preventDefault();
+        navigate("/preorder/queries/queriesdetail");
+      }
 
     return (
         <div className="productQueriesBox ma10">
@@ -75,7 +81,7 @@ export default function PreOrderQueries() {
                                     <td>
                                         <div className="actions">
                                             <div className="action">
-                                                <Eye color="blue" size={18} />
+                                                <Eye color="blue" size={18}   onClick={handlereview}/>
                                             </div>
 
                                         </div>

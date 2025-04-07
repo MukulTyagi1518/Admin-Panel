@@ -21,7 +21,7 @@ function Supports() {
           </div>
         </div>
 
-        <div className="question">
+        <div className="question mt-4">
           <p>Can I change or cancel my order after it has been placed?</p>
         </div>
 

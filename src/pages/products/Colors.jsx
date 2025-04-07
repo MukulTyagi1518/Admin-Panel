@@ -1,76 +1,102 @@
-import "./Colors.css";
-import { useState, useEffect, useRef } from "react";
-import { Edit, Trash } from "lucide-react";
-import apiInstance from "../../utils/axios";
 
-// 🎨 Color Name Detection API (Optional)
-const getColorName = async (hexCode) => {
-    try {
-        const res = await fetch(`https://www.thecolorapi.com/id?hex=${hexCode.replace("#", "")}`);
-        const data = await res.json();
-        return data.name.value || "Unknown";
-    } catch (error) {
-        console.error("Error fetching color name:", error);
-        return "Unknown";
-    }
-};
+
+import { Delete, Edit, Trash } from "lucide-react";
+import "./Colors.css";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Switch from "../../components/Switch";
 
 export default function PreOrderFaq() {
-    const [formData, setFormData] = useState({
-        name: "",
-        colorCode: "",
-        colorFilterActivation: false
-    });
+    const [selectedColor, setSelectedColor] = useState("");
+    const [newColorName, setNewColorName] = useState("");
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [roleToDelete, setRoleToDelete] = useState(null);
 
-    const [colorsData, setColorsData] = useState([])
+    const navigate = useNavigate();
 
-
-    const fetchColorsData = async () => {
-        try {
-            const response = await apiInstance.get('colors/getall');
-            setColorsData(response.data)
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
+    const [faqs, setFaqs] = useState([
+        { id: 1, name: "MistyRose", code: "#FFE4E1" },
+        { id: 2, name: "Ivory", code: "#FFFFF0" },
+        { id: 3, name: "Silver", code: "#C0C0C0" },
+        { id: 4, name: "DarkGray", code: "#A9A9A9" },
+        { id: 5, name: "LightGrey", code: "#D3D3D3" },
+    ]);
 
     const colorPickerRef = useRef(null);
+
+    //   const handleColorChange = (e) => {
+    //     setSelectedColor(e.target.value);
+    //   };
+
+    const handleSaveColor = () => {
+        if (newColorName && selectedColor) {
+            const newColor = { id: faqs.length + 1, name: newColorName, code: selectedColor };
+            setFaqs([...faqs, newColor]);
+            setNewColorName("");
+            setSelectedColor("#000000");
+        }
+    };
+
+    const handleOpenColorPicker = () => {
+        if (colorInputRef.current && colorPickerRef.current) {
+            const inputRect = colorInputRef.current.getBoundingClientRect();
+            colorPickerRef.current.style.display = "block";
+            colorPickerRef.current.style.position = "absolute";
+            colorPickerRef.current.style.top = `${inputRect.bottom + window.scrollY}px`;
+            colorPickerRef.current.style.left = `${inputRect.left + window.scrollX}px`;
+        }
+    };
+    const [showColorPicker, setShowColorPicker] = useState(false);
+
+    const openColorPicker = () => {
+        setShowColorPicker(true);
+    };
+
+    const handleColorChange = (e) => {
+        setSelectedColor(e.target.value);
+        setShowColorPicker(false); // Hide color picker after selection
+    };
+
+
+    const handleCloseColorPicker = (event) => {
+        if (
+            colorPickerRef.current &&
+            !colorPickerRef.current.contains(event.target) &&
+            colorInputRef.current &&
+            !colorInputRef.current.contains(event.target)
+        ) {
+            colorPickerRef.current.style.display = "none";
+        }
+    };
+   
+    // const handleEdit = (id) => {
+    //     navigate(`/editcolor`); 
+    // };
+    const handlereview = (e) => {
+        e.preventDefault();
+        navigate("/products/editcolor");
+      };
 
     useEffect(() => {
         fetchColorsData();
     }, []);
 
-    // 🎨 Color Change Handler
-    const handleColorChange = async (e) => {
-        const newColor = e.target.value;
-        const colorName = await getColorName(newColor);
-        setFormData((prev) => ({ ...prev, colorCode: newColor, name: colorName }));
-    };
-
-    const handleToggleFilter = () => {
-        setFormData((prev) => ({
-            ...prev,
-            colorFilterActivation: !prev.colorFilterActivation
-        }));
-    };
-
-    const handleSubmit = async () => {
-        await apiInstance.post('/colors/create', formData)
-        alert("New color added")
-        setFormData({
-            name: "",
-            colorCode: "",
-            colorFilterActivation: false
-        })
-        fetchColorsData();
-    };
-
-    const deleteColor = async (id) => {
-        await apiInstance.delete(`colors/delete/${id}`)
-        alert("Color deleted.")
-        fetchColorsData();
-    }
+    const handleDeleteClick = (roleId) => {
+        setRoleToDelete(roleId);
+        setShowDeleteConfirmation(true);
+      };
+    
+      const confirmDelete = () => {
+        // Implement your delete logic here
+        console.log(`Deleting role with ID: ${roleToDelete}`);
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+      };
+    
+      const cancelDelete = () => {
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+      };
 
     return (
         <div className="PreOrderFaq ma10">
@@ -99,10 +125,10 @@ export default function PreOrderFaq() {
                                             <td>
                                                 <div className="flex flex-row gap-[.3cm]">
                                                     <div className="action">
-                                                        <Edit color="blue" size={18} />
+                                                        <Edit color="blue" size={18} onClick={handlereview}/>
                                                     </div>
                                                     <div className="action">
-                                                        <Trash onClick={() => { deleteColor(n._id) }} color="blue" size={18} />
+                                                        <Trash color="blue" size={18} onClick={() => handleDeleteClick(n.id)}/>
                                                     </div>
                                                 </div>
                                             </td>
@@ -110,6 +136,32 @@ export default function PreOrderFaq() {
                                     ))}
                                 </tbody>
                             </table>
+                            {showDeleteConfirmation && (
+        <div className="delete-confirmation-overlay">
+          <div className="delete-confirmation-dialog">
+            <div className="dialog-header">
+              <h2>Delete Confirmation</h2>
+              <button
+                className="close-dialog-btn"
+                onClick={cancelDelete}
+              >
+                X
+              </button>
+            </div>
+            <div className="dialog-content">
+              <p>Are you sure to delete this?</p>
+            </div>
+            <div className="dialog-actions">
+              <button className="cancel-btn" onClick={cancelDelete}>
+                Cancel
+              </button>
+              <button className="delete-btn" onClick={confirmDelete}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
                         </div>
                     </div>
                 </div>
@@ -177,7 +229,21 @@ export default function PreOrderFaq() {
                             </div>
 
                             <div className="inpSubBox">
-                                <input type="button" value="Save" className="inpSub" onClick={handleSubmit} />
+                                <input type="button" value="Save" className="inpSub" onClick={handleSaveColor} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="preOrderFaqRight-new">
+                        <div className="preOrderFaqRightHead">
+                            <p className="allFaq">Color filter activation</p>
+                        </div>
+                        <div className="faqForm">
+                            <div className="toggle-item">
+                                {/* <label className="switch">
+                                    <input type="checkbox" />
+                                    <span className="slider"></span>
+                                </label> */}
+                                <Switch/>
                             </div>
                         </div>
                     </div>

@@ -202,7 +202,33 @@ const menuItems = [
       { name: "Features Activation", path: "/admin-settings/features" },
       { name: "Vax And Tax or gst", path: "/admin-settings/tax" },
       { name: "Payment method", path: "/admin-settings/payment" },
-      { name: "Shipping", path: "/admin-settings/shipping" },
+      { 
+        name: "Shipping", path: "/admin-settings/shipping",
+        subItems: [
+          { name: "Shipping Configuration", 
+            path: "/admin-settings/shipping/configuration" 
+          },
+          { name: "Shipping Countries", 
+            path: "/admin-settings/shipping/countries" 
+          },
+          { name: "Shipping State", 
+            path: "/admin-settings/shipping/state" 
+          },
+          { name: "Shipping Cities", 
+            path: "/admin-settings/shipping/cities" 
+          },
+          { name: "Shipping Zones", 
+            path: "/admin-settings/shipping/zones" 
+          },
+          { name: "Shipping Carrier", 
+            path: "/admin-settings/shipping/carrier" 
+          },
+         
+          
+        ],
+       },
+
+
       { name: "Apearence", path: "/admin-settings/apearence" },
     ],
     path: "/admin-settings",

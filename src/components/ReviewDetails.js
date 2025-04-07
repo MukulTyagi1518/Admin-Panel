@@ -2,9 +2,9 @@
 
 
 import React, { useState } from "react";
-import "./ReviewDetail.css";
+import "./ReviewDetails.css";
 
-function ReviewDetail() {
+function ReviewDetails() {
   const [activeTab, setActiveTab] = useState("reviews");
   const [isPublished, setIsPublished] = useState(true); // Switch state
   const [selectedState, setSelectedState] = useState(""); // State filter
@@ -62,7 +62,7 @@ function ReviewDetail() {
     <div className="review-detail-container p-5">
       <div className="review-header">
         <h2>Detail Reviews</h2>
-        <button className="add-review-button">Add Custom Reviews</button>
+        {/* <button className="add-review-button">Add Custom Reviews</button> */}
       </div>
 
       <div className="product-review">
@@ -83,7 +83,7 @@ function ReviewDetail() {
         </div>
       </div>
 
-      <div className="review-tabs">
+      {/* <div className="review-tabs">
         <button
           className={`tab ${activeTab === "reviews" ? "active" : ""}`}
           onClick={() => handleTabClick("reviews")}
@@ -97,7 +97,6 @@ function ReviewDetail() {
           Custom Reviews (0)
         </button>
 
-        {/* Filter by State */}
         <select
           className="filter-dropdown"
           value={selectedState}
@@ -110,7 +109,7 @@ function ReviewDetail() {
           ))}
         </select>
 
-        {/* Filter by District */}
+        
         <select
           className="filter-dropdown"
           value={selectedDistrict}
@@ -125,7 +124,7 @@ function ReviewDetail() {
               </option>
             ))}
         </select>
-      </div>
+      </div> */}
 
       {activeTab === "reviews" && (
         <div className="review-list">
@@ -191,4 +190,4 @@ function ReviewDetail() {
   );
 }
 
-export default ReviewDetail;
+export default ReviewDetails;

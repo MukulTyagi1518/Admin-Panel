@@ -1,0 +1,120 @@
+// /* preOrderReviews.scss */
+// .productQueriesBox {
+//     padding: .5cm;
+
+//     .allCustomersLowerBox.productQueries {
+//         .allCustomersLowerHeader {
+//             padding: .5cm;
+//             border-bottom: 1px solid #eee;
+
+//             .customersText {
+//                 font-size: 1.2rem;
+//                 font-weight: bold;
+//                 color: #333;
+//             }
+//         }
+
+//         .table-container {
+//             width: 100%;
+//             overflow-x: auto;
+//         }
+
+//         table {
+//             width: 100%;
+//             border-collapse: collapse;
+
+//             thead {
+//                 tr {
+//                     th {
+//                         padding: 10px;
+//                         text-align: left;
+//                         background-color: #f4f4f4;
+//                         border-bottom: 1px solid #ddd;
+//                         font-size: 13px;
+//                         opacity: .7;
+
+//                         &.responsive-hidden {
+//                             @media (max-width: 1400px) {
+//                                 display: none;
+//                             }
+//                         }
+
+//                         &.responsive-visible {
+//                             display: none;
+
+//                             @media (max-width: 1400px) {
+//                                 display: table-cell;
+//                                 text-align: center;
+//                                 cursor: pointer;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+
+//             tbody {
+//                 tr {
+//                     td {
+//                         padding: 10px;
+//                         text-align: left;
+//                         border-bottom: 1px solid #ddd;
+//                         font-size: 14px;
+
+//                         &.responsive-hidden {
+//                             @media (max-width: 1400px) {
+//                                 display: none;
+//                             }
+//                         }
+
+//                         &.responsive-visible {
+//                             display: none;
+
+//                             @media (max-width: 1400px) {
+//                                 display: table-cell;
+//                                 text-align: center;
+//                                 cursor: pointer;
+//                             }
+//                         }
+
+//                         &.prodNameQuery {
+//                             // font-weight: bold;
+//                         }
+//                     }
+
+//                     &.expanded-row {
+//                         td {
+//                             padding: 10px;
+//                             background-color: #f9f9f9;
+
+//                             &.expanded-cell {
+//                                 display: table-cell !important; /* Display as a table cell */
+//                                 width: auto; /* Allow content to determine width */
+//                             }
+
+//                             &.responsive-hidden {
+//                                 display: table-cell !important;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         .actions {
+//             display: flex;
+//             gap: .5rem;
+
+//             .action {
+//                 background-color: #e0f7fa;
+//                 color: #00acc1;
+//                 border-radius: 5px;
+//                 padding: 5px;
+//                 cursor: pointer;
+
+//                 svg {
+//                     display: block;
+//                 }
+//             }
+//         }
+//     }
+// }

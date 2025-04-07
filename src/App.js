@@ -119,6 +119,25 @@ import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
 import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
 import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 import ReportsPage from "./components/delivery/ReportsPage.js";
+import ColorEdit from "./pages/products/ColorEdit.jsx";
+import BrandEdit from "./pages/products/BrandEdit.js";
+import ShippingConfiguration from "./components/admin-settings/shipping/ShippingConfiguration.js";
+import ShippingCountries from "./components/admin-settings/shipping/ShippingCountries.js";
+import ShippingState from "./components/admin-settings/shipping/ShippingState.js";
+import StateEdit from "./components/admin-settings/shipping/StateEdit.js";
+import ShippingCities from "./components/admin-settings/shipping/ShippingCities.js";
+import CitiesEdit from "./components/admin-settings/shipping/CitiesEdit.js";
+import ShippingZone from "./components/admin-settings/shipping/ShippingZone.js";
+import CreateZone from "./components/admin-settings/shipping/CreateZone.js";
+import ZoneEdit from "./components/admin-settings/shipping/ZoneEdit.js";
+import ShippingCarrier from "./components/admin-settings/shipping/ShippingCarrier.js";
+import PaymentMethod from "./components/admin-settings/PaymentMethod.js";
+import CarrierEdit from "./components/admin-settings/shipping/CarrierEdit.js";
+import CarrierCreate from "./components/admin-settings/shipping/CarrierCreate.js";
+import ReviewDetails from "./components/ReviewDetails.js";
+import QueriesDetail from "./components/QueriesDetail.js";
+
+
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -195,6 +214,8 @@ function App() {
                   <Route path="seo" element={<Seo />} />
                   <Route path="shipping" element={<Shipping />} />
                   <Route path="warranty" element={<Warrenty />} />
+
+
                   <Route
                     path="frequently-bought"
                     element={<FrequentlyBought />}
@@ -212,6 +233,8 @@ function App() {
                   path="/products/category/edit/:id"
                   element={<CategoryEdit />}
                 />
+                <Route path="/products/editcolor" element={<ColorEdit />} />
+                <Route path="/products/editBrand" element={<BrandEdit />} />
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
@@ -265,7 +288,18 @@ function App() {
               <Route path="/preorder">
                 <Route path="product" element={<PreorderProducts />} />
                 <Route path="queries" element={<PreOrderQueries />} />
+                <Route path="queries">
+                  <Route path="queriesdetail" element={<QueriesDetail/>} />
+                  
+                 
+                  </Route>
                 <Route path="reviews" element={<PreOrderReviews />} />
+                <Route path="reviews" element={<PreOrderReviews />} />
+                <Route path="reviews">
+                  <Route path="ReviewDetails" element={<ReviewDetails/>} />
+                  
+                 
+                  </Route>
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
@@ -273,6 +307,7 @@ function App() {
                 <Route path="all-orders" element={<AllOrders />} />
                 <Route path="inhouse-orders" element={<InHouseOrders />} />
                 <Route path="seller-orders" element={<SellerOrders />} />
+
                 <Route
                   path="delayed-prepayment-orders"
                   element={<DelayedPrepaymentPreOrders />}
@@ -379,6 +414,47 @@ function App() {
                 </Route>
               </Route>
 
+
+
+
+
+              {/* </Route> */}
+              <Route path="/admin-settings">
+                <Route path="shipping" >
+                  <Route path="configuration" element={<ShippingConfiguration />} />
+                  <Route path="countries" element={<ShippingCountries />} />
+                  <Route path="state" element={<ShippingState />} />
+                  <Route path="state">
+                    <Route index element={<ShippingState />} />
+                    <Route path="edit/:id" element={<StateEdit />} />
+                  </Route>
+                  <Route path="cities" element={<ShippingCities />} />
+                  <Route path="cities">
+                  <Route index element={<ShippingCities/>} />
+                  <Route path="edit/:id" element={<CitiesEdit/>} />
+                  </Route>
+                  <Route path="zones" element={<ShippingZone/>} />
+                  <Route path="zones">
+                  <Route path="create" element={<CreateZone/>} />
+                  <Route index element={<ShippingZone/>} />
+                  <Route path="edit/:id" element={<ZoneEdit/>} />
+                  </Route>
+                  <Route path="carrier" element={<ShippingCarrier/>} />
+                  <Route path="carrier">
+                  <Route path="create" element={<CarrierCreate/>} />
+                  <Route index element={<ShippingCarrier/>} />
+                  <Route path="edit/:id" element={<CarrierEdit/>} />
+                  </Route>
+                  
+                </Route>
+                <Route path="payment" element={<PaymentMethod />} />
+              </Route>
+
+
+
+
+
+
               <Route path="/sellers">
                 <Route path="all" element={<AllSellers />} />
                 <Route path="rating" element={<Rating />} />
@@ -414,10 +490,11 @@ function App() {
               <Route path="editInhouse" element={<EditInhouse />} />
 
 
+              <Route path="editInhouse" element={<EditInhouse />} />
             </Routes>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 }

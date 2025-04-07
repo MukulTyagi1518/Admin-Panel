@@ -1,5 +1,6 @@
 import { Edit } from "lucide-react"
 import "./preOrderNotification.scss"
+import Switch from "../../Switch"
 
 export default function PreOrderNotification() {
 
@@ -54,10 +55,10 @@ export default function PreOrderNotification() {
                                     </th>
                                     <th>Image</th>
 
-                                    <th className="pstatH">Type</th>
-                                    <th className="ehead">Default Text</th>
+                                    <th className="pstat">Type</th>
+                                    <th className="ehea">Default Text</th>
 
-                                    <th className="vstath">Status</th>
+                                    <th className="vstat">Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -73,14 +74,16 @@ export default function PreOrderNotification() {
                                         <td>{n.type}</td>
                                         <td >{n.defaultText}</td>
                                         <td >
-                                            <div className="toggle-item">
+                                            <div className="toggle-item flex flex-row gap-[.3cm]">
 
-                                                <label className="switch">
+                                                {/* <label className="switch">
                                                     <input
                                                         type="checkbox"
                                                     />
                                                     <span className="slider"></span>
-                                                </label>
+                                                   
+                                                </label> */}
+                                                 <Switch/>
                                             </div>
                                         </td>
 

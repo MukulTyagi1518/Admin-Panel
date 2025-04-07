@@ -244,6 +244,7 @@ const handleExpandRow = (id) => {
                             <th>
                                 <input type="checkbox" className="check25" />
                             </th>
+                            
                             <th>Name</th>
                             <th>Added By</th>
                             <th>Info</th>
