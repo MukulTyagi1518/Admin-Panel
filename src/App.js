@@ -20,8 +20,6 @@ import Classified from "./components/settings/Classified.js";
 import NewestPreorderProducts from "./components/settings/NewestPreorderProducts.js";
 import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
-import LatestOrders from "./components/orders/LatestOrders.js";
-import Preorders from "./components/preorders/PreOrders.js";
 import Productadd from "./pages/products/Productadd.jsx";
 import Seo from "./pages/products/Seo.jsx";
 import Shipping from "./pages/products/Shipping.jsx";
@@ -51,8 +49,9 @@ import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
 import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
 import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
-import FlashDeals from "./components/marketing/FlashDeals.js";
-import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
+import FlashDeals from "./components/marketing/FlashDeals/FlashDeals.js";
+import FlashDealEdit from "./components/marketing/FlashDeals/FlashDealsEdit.js";
+import CreateFlashDeal from "./components/marketing/FlashDeals/CreateFlashDeal.js";
 import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
 import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
 import AllBrands from "./pages/products/Allbrand.jsx";
@@ -75,11 +74,10 @@ import ReviewDetail from "./pages/products/ReviewDetail.js";
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
-import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
 import Sellerverification from "./components/Seller/Sellerverification.jsx";
 import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
-import Inhouse from "./components/Wholesale/Inhouse.jsx"
-import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx"
+import Inhouse from "./components/Wholesale/Inhouse.jsx";
+import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx";
 import CreateNewCustomer from "./components/customers/allCustomers/CreateNewCustomer.jsx";
 import EmailTemplateSeller from "./components/marketing/EmailTemplate/Seller/EmailTemplateSeller.js";
 import EmailTemplateCustomer from "./components/marketing/EmailTemplate/Customer/EmailTemplateCustomer.js";
@@ -88,7 +86,8 @@ import SellerEmailTemplateEditor from "./components/marketing/EmailTemplate/Sell
 import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Customer/CustomerEmailTemplateEditor.js";
 import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
 import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
-import NewsLetter from "./components/marketing/NewsLetter.js";
+import NewsLetter from "./components/marketing/NewsLetter/NewsLetter.js";
+import AllNewslettersPage from "./components/marketing/NewsLetter/AllNewsLetterPage.js";
 import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
@@ -111,6 +110,13 @@ import RolesCreate from "./pages/staffs/RolesCreate.js";
 import Edit from "./pages/staffs/Edit.js";
 import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
+import ActiveDeliveryPartner from "./components/delivery/AcitveDeliveryPartner.js";
+import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartner.js";
+import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
+import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRegistration.js";
+import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
+import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
+import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -178,6 +184,18 @@ function App() {
 
 
 
+              <Route path="/wholesale/all" element={<Allwholesale />} />
+              <Route path="/wholesale/add" element={<Addwholesale />} />
+              <Route path="/products/Brandimport" element={<Brandimport />} />
+              <Route path="/products/bulk-import" element={<Bulkimport />} />
+              <Route path="/products/bulk-export" element={<Bulkexport />} />
+              <Route path="/sellers/verify" element={<Sellerverification />} />
+              <Route
+                path="/sellers/payout-request"
+                element={<Payoutrequest />}
+              />
+              <Route path="/wholesale/inhouse" element={<Inhouse />} />
+              <Route path="/wholesale/seller" element={<Sellerwholesale />} />
 
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>
@@ -296,11 +314,47 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
+                <Route path="custom-alert-popup" element={<CustomAlerts />} />
+                <Route path="custom-alert-popup/create" element={<CreateCustomAlert />} />
+                <Route path="custom-alert-popup/edit/:id" element={<EditCustomAlert />} />
                 <Route path="email-templates">
                   <Route path="admin" element={<EmailTemplateAdmin />} />
+                  <Route
+                    path="/marketing/email-templates/admin/new"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/admin/:id"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+
                   <Route path="seller" element={<EmailTemplateSeller />} />
+                  <Route
+                    path="/marketing/email-templates/seller/new"
+                    element={<SellerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/seller/:id"
+                    element={<SellerEmailTemplateEditor />}
+                  />
                   <Route path="customer" element={<EmailTemplateCustomer />} />
+                  <Route
+                    path="/marketing/email-templates/customer/new"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/customer/:id"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
                   <Route path="common" element={<EmailTemplateCommon />} />
+                  <Route
+                    path="/marketing/email-templates/common/new"
+                    element={<CommonEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/common/:id"
+                    element={<CommonEmailTemplateEditor />}
+                  />
                   <Route
                     path="admin/edit"
                     element={<AdminEmailTemplateEditor />}
@@ -318,21 +372,29 @@ function App() {
                     element={<CommonEmailTemplateEditor />}
                   />
                 </Route>
-                <Route path="news-letter" element={<NewsLetter />} />
+
+                <Route
+                  path="all-news-letters"
+                  element={<AllNewslettersPage />}
+                />
+                <Route path="news-letter" element={<NewsLetter />}>
+                  <Route path="edit/:id" element={<NewsLetter />} />
+                  <Route path="view/:id" element={<NewsLetter />} />
+                </Route>
               </Route>
 
-
-
-
-
-
               <Route path="/sellers">
-                <Route path="all" element={<AllSellers/>} />
-                <Route path="rating" element={<Rating/>} />
-                <Route path="payout" element={<Payout/>} />
+                <Route path="all" element={<AllSellers />} />
+                <Route path="rating" element={<Rating />} />
+                <Route path="payout" element={<Payout />} />
                 <Route path="" element={<UnpaidOrders />} />
                 <Route path="create" element={<Create />} />
-
+              </Route>
+              <Route path="/delivery">
+                <Route path="registration" element={<DeliveryPartnerRegistration />} />
+                <Route path="active" element={<ActiveDeliveryPartner />} />
+                <Route path="inactive" element={<InActiveDeliveryPartner />} />
+                <Route path="pending" element={<PendingDeliveryPartner />} />
               </Route>
 
 
