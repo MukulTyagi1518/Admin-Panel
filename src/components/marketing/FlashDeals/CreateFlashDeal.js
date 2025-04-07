@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Image as ImageIcon, Plus, X, Clock, Star, Link as LinkIcon } from 'lucide-react';
-import apiInstance from '../../utils/axios';
+import apiInstance from '../../../utils/axios';
 
 const FlashDealCreate = () => {
   const navigate = useNavigate();

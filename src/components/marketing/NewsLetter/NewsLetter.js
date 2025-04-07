@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ChevronLeft, Mail, Send, Users, UserCheck, X, ChevronDown } from "lucide-react";
-import { TextEditor } from "../marketing/EmailTemplate/EditorComponents/TextEditor";
-import { newsletterService } from "../../services/newsLetterService";
+import { TextEditor } from "../EmailTemplate/EditorComponents/TextEditor";
+import { newsletterService } from "../../../services/newsLetterService";
 import { useNavigate } from "react-router-dom";
-import { useCustomerContext } from "../../context/customerContext";
+import { useCustomerContext } from "../../../context/customerContext";
 
 
 const NewsLetter = () => {
@@ -79,7 +79,7 @@ const NewsLetter = () => {
   const removeUser = (userId) => {
     setFormData((prev) => ({
       ...prev,
-      selectedUsers: prev.selectedUsers.filter((u) => u.id !== userId),
+      selectedUsers: prev.selectedUsers.filter((u) => u._id !== userId),
     }));
   };
 
@@ -370,12 +370,12 @@ const NewsLetter = () => {
                           <ul className="divide-y divide-gray-200">
                             {filteredUsers("subscribers").length > 0 ? (
                               filteredUsers("subscribers").map((user) => (
-                                <li key={user.id} className="hover:bg-gray-50">
+                                <li key={user._id} className="hover:bg-gray-50">
                                   <button
                                     type="button"
                                     className={`w-full text-left px-3 py-3 flex items-center ${
                                       formData.selectedUsers.some(
-                                        (u) => u.id === user.id
+                                        (u) => u._id === user._id
                                       )
                                         ? "bg-blue-50"
                                         : ""
@@ -385,7 +385,7 @@ const NewsLetter = () => {
                                     <div
                                       className={`flex items-center h-5 mr-3 ${
                                         formData.selectedUsers.some(
-                                          (u) => u.id === user.id
+                                          (u) => u._id === user._id
                                         )
                                           ? "text-blue-600"
                                           : "text-gray-400"
@@ -394,7 +394,7 @@ const NewsLetter = () => {
                                       <input
                                         type="checkbox"
                                         checked={formData.selectedUsers.some(
-                                          (u) => u.id === user.id
+                                          (u) => u._id === user._id
                                         )}
                                         readOnly
                                         className="h-4 w-4 rounded border-gray-300 focus:ring-blue-500"
@@ -432,14 +432,14 @@ const NewsLetter = () => {
                         <div className="flex flex-wrap gap-2">
                           {formData.selectedUsers.map((user) => (
                             <div
-                              key={user.id}
+                              key={user._id}
                               className="bg-blue-100 text-blue-800 px-2 py-1 rounded flex items-center"
                             >
                               {user.email}
                               <button
                                 type="button"
                                 className="ml-2 text-blue-600 hover:text-blue-800"
-                                onClick={() => removeUser(user.id)}
+                                onClick={() => removeUser(user._id)}
                               >
                                 <X className="w-4 h-4" />
                               </button>

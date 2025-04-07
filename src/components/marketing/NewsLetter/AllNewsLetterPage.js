@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { newsletterService } from '../../services/newsLetterService';
+import { newsletterService } from '../../../services/newsLetterService';
 import { TrashIcon, PlusIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { DataTable } from './EmailTemplate/MainPageComponents/DataTable';
+import { DataTable } from '../EmailTemplate/MainPageComponents/DataTable';
 // import { StatusToggle } from './EmailTemplate/MainPageComponents/StatusToggle';
 
 const AllNewslettersPage = () => {

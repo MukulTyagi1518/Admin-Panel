@@ -20,8 +20,6 @@ import Classified from "./components/settings/Classified.js";
 import NewestPreorderProducts from "./components/settings/NewestPreorderProducts.js";
 import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
-import LatestOrders from "./components/orders/LatestOrders.js";
-import Preorders from "./components/preorders/PreOrders.js";
 import Productadd from "./pages/products/Productadd.jsx";
 import Seo from "./pages/products/Seo.jsx";
 import Shipping from "./pages/products/Shipping.jsx";
@@ -51,8 +49,9 @@ import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
 import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
 import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
-import FlashDeals from "./components/marketing/FlashDeals.js";
-import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
+import FlashDeals from "./components/marketing/FlashDeals/FlashDeals.js";
+import FlashDealEdit from "./components/marketing/FlashDeals/FlashDealsEdit.js";
+import CreateFlashDeal from "./components/marketing/FlashDeals/CreateFlashDeal.js";
 import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
 import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
 import AllBrands from "./pages/products/Allbrand.jsx";
@@ -75,7 +74,6 @@ import ReviewDetail from "./pages/products/ReviewDetail.js";
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
-import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
 import Sellerverification from "./components/Seller/Sellerverification.jsx";
 import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
 import Inhouse from "./components/Wholesale/Inhouse.jsx";
@@ -88,12 +86,19 @@ import SellerEmailTemplateEditor from "./components/marketing/EmailTemplate/Sell
 import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Customer/CustomerEmailTemplateEditor.js";
 import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
 import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
-import NewsLetter from "./components/marketing/NewsLetter.js";
+import NewsLetter from "./components/marketing/NewsLetter/NewsLetter.js";
+import AllNewslettersPage from "./components/marketing/NewsLetter/AllNewsLetterPage.js";
 import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
-import AllNewslettersPage from "./components/marketing/AllNewsLetterPage.js";
+import ActiveDeliveryPartner from "./components/delivery/AcitveDeliveryPartner.js";
+import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartner.js";
+import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
+import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRegistration.js";
+import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
+import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
+import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -269,6 +274,9 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
+                <Route path="custom-alert-popup" element={<CustomAlerts />} />
+                <Route path="custom-alert-popup/create" element={<CreateCustomAlert />} />
+                <Route path="custom-alert-popup/edit/:id" element={<EditCustomAlert />} />
                 <Route path="email-templates">
                   <Route path="admin" element={<EmailTemplateAdmin />} />
                   <Route
@@ -341,6 +349,12 @@ function App() {
                 <Route path="payout" element={<Payout />} />
                 <Route path="" element={<UnpaidOrders />} />
                 <Route path="create" element={<Create />} />
+              </Route>
+              <Route path="/delivery">
+                <Route path="registration" element={<DeliveryPartnerRegistration />} />
+                <Route path="active" element={<ActiveDeliveryPartner />} />
+                <Route path="inactive" element={<InActiveDeliveryPartner />} />
+                <Route path="pending" element={<PendingDeliveryPartner />} />
               </Route>
             </Routes>
           </div>

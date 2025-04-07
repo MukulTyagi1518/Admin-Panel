@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Save, Upload, X } from 'lucide-react';
-import apiInstance from '../../utils/axios';
+import apiInstance from '../../../utils/axios';
 
 const FlashDealEdit = () => {
   const { id } = useParams();
