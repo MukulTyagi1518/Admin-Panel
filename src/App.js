@@ -110,7 +110,6 @@ import RolesCreate from "./pages/staffs/RolesCreate.js";
 import Edit from "./pages/staffs/Edit.js";
 import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
-import EditInhouse from "./components/Edit/EditInhouse.js";
 import ActiveDeliveryPartner from "./components/delivery/AcitveDeliveryPartner.js";
 import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartner.js";
 import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
@@ -138,6 +137,12 @@ import ReviewDetails from "./components/ReviewDetails.js";
 import QueriesDetail from "./components/QueriesDetail.js";
 
 
+import Editinhouse from "./components/Edit/Editinhoue.jsx"
+import Editattribute from "./components/Edit/Editattribute.jsx"
+import Adminsetting from "./components/Adminsetting/Adminsetting.jsx" 
+import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
+import Edittax from "./components/Adminsetting/Edittax.jsx"
+import Apperence from "./components/Adminsetting/Apperence.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -196,6 +201,8 @@ function App() {
               <Route path="/wholesale/seller" element={<Sellerwholesale />} />
               <Route path="/products/seller" element={<Physical />} />
               <Route path="/products/digital" element={<Digital />} />
+
+             
 
 
               <Route path="/refunds/request" element={<Refundrequest />} />
@@ -487,10 +494,14 @@ function App() {
                 <Route path="edit" element={<Edit />} />
                 <Route path="editInfo" element={<EditInfo />} />
               </Route>
-              <Route path="editInhouse" element={<EditInhouse />} />
 
+                 <Route path="/admin-settings/features" element={<Adminsetting />}/>
+                 <Route path="/admin-settings/tax" element={<Vaxtax />}/>
+                 <Route path="/admin-settings/apearence" element={<Apperence />}/>
+                 <Route path="edittax" element={<Edittax />}/>
 
-              <Route path="editInhouse" element={<EditInhouse />} />
+                 <Route path="editinhouse" element={<Editinhouse />}/>
+                 <Route path="editattribute" element={<Editattribute />}/>
             </Routes>
           </div>
         </div >
