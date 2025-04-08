@@ -121,7 +121,7 @@
     box-sizing: border-box;
 }
 
-/* ✅ Upper Section */
+/* Upper Section */
 .preOrderLeftUpper {
     display: flex;
     justify-content: space-between;
@@ -129,13 +129,13 @@
     gap: 0.3cm;
 }
 
-/* ✅ Search Box */
+/* Search Box */
 .searchFaq {
     width: 100%;
     max-width: 300px;
 }
 
-/* ✅ Form & Inputs */
+/*  Form & Inputs */
 .faqForm-at {
     display: flex;
     flex-direction: column;
@@ -143,7 +143,7 @@
     padding: 0.5cm;
 }
 
-/* ✅ Form Input Width */
+/*  Form Input Width */
 .faqInp, .faqTxt {
     width: 100%;
     padding: 0.3cm;
@@ -159,7 +159,7 @@
     margin-top: 0.2cm;
 }
 
-/* ✅ Full Width Button on Mobile */
+/*  Full Width Button on Mobile */
 .inpSub-at {
    
     background-color: royalblue;
@@ -169,24 +169,24 @@
     cursor: pointer;
 }
 
-/* ✅ Table Fix */
+/*  Table Fix */
 .faqTable {
     width: 100%;
     border: 1px solid rgb(206, 206, 206);
     border-radius: 10px;
-    overflow-x: auto; /* 🎯 For Small Screens */
+    overflow-x: auto; 
 }
 
-/* ✅ Logo and Actions */
+/*  Logo and Actions */
 .actions {
     display: flex;
     justify-content: center;
     gap: 5px;
 }
 
-/* 📱✅ Final Media Queries */
+/* Final Media Queries */
 
-/* ✅ Tablets and Medium Screens */
+/*Tablets and Medium Screens */
 @media (max-width: 1024px) {
     .preOrderFaqBox-attribute {
         flex-wrap: wrap;
@@ -205,7 +205,7 @@
 /*  Small Devices (768px and below) */
 @media (max-width: 768px) {
     .preOrderFaqBox-attribute {
-        flex-direction: column; /* 🎯 Stacked layout for small screens */
+        flex-direction: column; /*Stacked layout for small screens */
     }
 
     .preOrderFaqLeft,

@@ -16,7 +16,13 @@ export default function PreOrderFaq() {
     { id: 3, name: "Sleeve", values: "Bell sleeves,Cap sleeves,Raglan sleeves,Flutter sleeves" },
     { id: 4, name: "Fabric", values: "Chenille,Cotton,Georgette,Crêpe,Canvas" },
     { id: 5, name: "Size", values: "M  L XL XXL S 64GB 128GB 512GB 1TB 3/32 GB 4/64 GB 4/128 GB 8/256 GB 6/128 GB" },
-  ];
+  ]; 
+  
+  const handlsetting = (e) => {
+    e.preventDefault();
+    navigate("/products/settings");
+};
+
 
   return (
     <div className="PreOrderFaq ma10">
@@ -45,7 +51,7 @@ export default function PreOrderFaq() {
                       <td>
                         <div className="flex flex-row gap-[.3cm]">
                           <div className="action">
-                            <MdOutlineSettings color="blue" size={18} />
+                            <MdOutlineSettings color="blue" size={18} onClick={handlsetting}/>
                           </div>
                           <div className="action" onClick={() => handleEdit(n.id)}>
                             <Edit color="blue" size={18} />

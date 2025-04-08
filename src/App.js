@@ -135,6 +135,8 @@ import CarrierEdit from "./components/admin-settings/shipping/CarrierEdit.js";
 import CarrierCreate from "./components/admin-settings/shipping/CarrierCreate.js";
 import ReviewDetails from "./components/ReviewDetails.js";
 import QueriesDetail from "./components/QueriesDetail.js";
+import AddNewBrand from "./pages/products/AddNewBrand.js";
+import AddNewColor from "./pages/products/AddNewColor.js";
 
 
 import Editinhouse from "./components/Edit/Editinhoue.jsx"
@@ -144,6 +146,8 @@ import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
 import Edittax from "./components/Adminsetting/Edittax.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
+import Apperence from "./components/Adminsetting/Apperence.jsx"
+import AttributeDetail from "./pages/products/AttributeDetail.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -243,6 +247,10 @@ function App() {
                 />
                 <Route path="/products/editcolor" element={<ColorEdit />} />
                 <Route path="/products/editBrand" element={<BrandEdit />} />
+                <Route path="/products/addnewbrand" element={<AddNewBrand />} />
+                <Route path="/products/addnewcolor" element={<AddNewColor />} />
+                <Route path="/products/settings" element={<AttributeDetail />} />
+
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />

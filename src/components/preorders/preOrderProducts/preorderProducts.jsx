@@ -1,6 +1,3 @@
-
-
-
 import { Eye, Edit, EyeIcon, Edit2, ChevronDownIcon, Plus } from "lucide-react";
 import { useState } from "react";
 import "./preOrderProducts.scss";
@@ -100,15 +97,26 @@ export default function PreorderProducts() {
                                 <p className="poph1menuitem popActive">All (10)</p>
                                 <p className="poph1menuitem">Inhouse (7)</p>
                                 <p className="poph1menuitem">Sellers (3)</p>
-                            </div>
-                            <div className="poph1menuright">
                                 <p className="poph1menuitem">Published (7)</p>
                                 <p className="poph1menuitem">Unpublished (3)</p>
                                 <p className="poph1menuitem">Discounted (5)</p>
                             </div>
+                            {/* <div className="poph1menuright">
+                                <p className="poph1menuitem">Published (7)</p>
+                                <p className="poph1menuitem">Unpublished (3)</p>
+                                <p className="poph1menuitem">Discounted (5)</p>
+                            </div> */}
                         </div>
                         <div className="poplh2">
                             <div className="lower-menu">
+                            <select className="filter-dropdown responsive-select">
+                                    <option value="">Bulk Action</option>
+                                    {/* ... (विकल्प) ... */}
+                                </select>
+                                <select className="filter-dropdown responsive-select">
+                                    <option value="">Filter By Verification status</option>
+                                    {/* ... (विकल्प) ... */}
+                                </select>
                                 <input type="text" placeholder="Type email to search" className="searchInput" />
                             </div>
                         </div>
@@ -118,11 +126,11 @@ export default function PreorderProducts() {
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <th className="responsive-visible"></th>
                                     <th>
                                         <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                     </th>
                                     <th>Image</th>
-
                                     <th className="responsive-hidden">Product Details</th>
                                     <th className="responsive-hidden">Product Details</th>
                                     <th className="responsive-hidden">Price</th>
@@ -203,7 +211,7 @@ export default function PreorderProducts() {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className="preOrderActions">
+                                                <div className="preOrderActions ">
                                                     <div className="action">
                                                         <EyeIcon size={18} color="blue" />
                                                     </div>
@@ -217,22 +225,39 @@ export default function PreorderProducts() {
                                             <tr className="responsive-expanded">
                                                 <td colSpan="10">
                                                     <div className="expanded-details">
-                                                        <p>Product Details: {product.name}, {product.category}, {product.type}, {product.productCreated}</p>
-                                                        {/* <p>Product Details: {product.MinPurchaseQty}, {product.refund}</p> */}
-                                                        <p>Price: {product.price} /pc, Pre Payment Needed: {product.prePaymentNeeded ? "Yes" : "No"}</p>
-                                                        <p>Discount: {product.discount}</p>
-                                                        <p>Availability: {product.availability}</p>
-                                                        <p>Orders: Preorder: {product.preorder}, Final Order: {product.finalOrder}</p>
-                                                        <div className="toggle-buttons">
-                                                            <div className="toggle-item">
-                                                                <span>Publish</span>
-                                                                <Switch />
-                                                            </div>
-                                                            <div className="toggle-item">
-                                                                <span>Feature</span>
-                                                                <Switch />
-                                                            </div>
-                                                        </div>
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Product Details</th>
+                                                                    <th>Price</th>
+                                                                    <th>Discount</th>
+                                                                    <th>Availability</th>
+                                                                    <th>Orders</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{product.name}, {product.category}, {product.type}, {product.productCreated}</td>
+                                                                    <td>{product.price} /pc, Pre Payment Needed: {product.prePaymentNeeded ? "Yes" : "No"}</td>
+                                                                    <td>{product.discount}</td>
+                                                                    <td>{product.availability}</td>
+                                                                    <td>Preorder: {product.preorder}, Final Order: {product.finalOrder}</td>
+                                                                    <td>
+                                                                        <div className="toggle-buttons">
+                                                                            <div className="toggle-item">
+                                                                                <span>Publish</span>
+                                                                                <Switch />
+                                                                            </div>
+                                                                            <div className="toggle-item">
+                                                                                <span>Feature</span>
+                                                                                <Switch />
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </td>
                                             </tr>

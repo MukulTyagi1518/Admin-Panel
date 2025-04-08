@@ -1,8 +1,9 @@
 import "./Colors.css";
 import { useState, useEffect, useRef } from "react";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Trash ,Plus} from "lucide-react";
 import apiInstance from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import AddNewColor from "./AddNewColor";
 
 // 🎨 Color Name Detection API (Optional)
 const getColorName = async (hexCode) => {
@@ -53,29 +54,34 @@ export default function PreOrderFaq() {
     };
 
     // 🎨 Color Change Handler
-    const handleColorChange = async (e) => {
-        const newColor = e.target.value;
-        const colorName = await getColorName(newColor);
-        setFormData((prev) => ({ ...prev, colorCode: newColor, name: colorName }));
-    };
+    // const handleColorChange = async (e) => {
+    //     const newColor = e.target.value;
+    //     const colorName = await getColorName(newColor);
+    //     setFormData((prev) => ({ ...prev, colorCode: newColor, name: colorName }));
+    // };
 
-    const handleToggleFilter = () => {
-        setFormData((prev) => ({
-            ...prev,
-            colorFilterActivation: !prev.colorFilterActivation
-        }));
-    };
+    // const handleToggleFilter = () => {
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         colorFilterActivation: !prev.colorFilterActivation
+    //     }));
+    // };
 
-    const handleSubmit = async () => {
-        await apiInstance.post('/colors/create', formData)
-        alert("New color added")
-        setFormData({
-            name: "",
-            colorCode: "",
-            colorFilterActivation: false
-        })
+    // const handleSubmit = async () => {
+    //     await apiInstance.post('/colors/create', formData)
+    //     alert("New color added")
+    //     setFormData({
+    //         name: "",
+    //         colorCode: "",
+    //         colorFilterActivation: false
+    //     })
+    //     fetchColorsData();
+    // };
+    
+    useEffect(() => {
         fetchColorsData();
-    };
+    }, []);
+
 
     const deleteColor = async (id) => {
         await apiInstance.delete(`colors/delete/${id}`)
@@ -95,14 +101,25 @@ export default function PreOrderFaq() {
         setRoleToDelete(null);
     };
 
+      const handleForm = (e) => {
+        e.preventDefault();
+        navigate("/products/addnewcolor");
+      };
+
     return (
         <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox">
                 {/* Left Side - Color List */}
                 <div className="preOrderFaqLeft">
+                <div className="addbtn">
+                <button className="add-brand-btn"  onClick={handleForm} >
+                            <Plus size={16} /> Add New Color
+                        </button>
+                </div>
                     <div className="preOrderLeftUpper">
+                        
                         <p className="allFaq">All Colors</p>
-                        <input type="text" placeholder="Type to search...." className="searchFaq" />
+                        <input type="text" placeholder="Type to search...." className="searchFaq"  />
                     </div>
                     <div className="preOrderLeftLower">
                         <div className="table-container faqTable">
@@ -165,7 +182,7 @@ export default function PreOrderFaq() {
                 </div >
 
                 {/* Right Side - Add Color Form */}
-                < div className="prerow" >
+                {/* < div className="prerow" >
                     <div className="preOrderFaqRight-new">
                         <div className="preOrderFaqRightHead">
                             <p className="allFaq">Add new Color</p>
@@ -231,7 +248,12 @@ export default function PreOrderFaq() {
                             </div >
                         </div >
                     </div >
-                </div >
+                </div > */}
+
+
+{/* <div className="prerow">
+                    <AddNewColor onColorAdded={fetchColorsData} />
+                </div> */}
             </div >
         </div >
     );

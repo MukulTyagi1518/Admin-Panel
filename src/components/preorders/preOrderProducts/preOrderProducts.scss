@@ -282,6 +282,9 @@
     align-items: center;
     gap: .3cm;
 }
+.filter-dropdown{
+    width: 60px !important;
+}
 
 
 
@@ -404,6 +407,7 @@
                 font-size: 13px;
                 padding: .12cm .4cm;
             }
+            
         }
     }
 }

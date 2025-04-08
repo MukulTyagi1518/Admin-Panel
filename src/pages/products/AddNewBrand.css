@@ -1,0 +1,102 @@
+/* Allbrand.css (or your AddNewBrand.css) */
+
+/* Existing styles... */
+
+/* AddNewBrand.js specific styles */
+
+.preOrderFaqRight {
+    width: 20cm; /* Default width */
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 5px;
+    /* margin-left: 30%;
+    margin-top: 6%;  */
+}
+
+.preOrderFaqRightHead {
+    padding: 0.5cm;
+    border-bottom: 1px solid rgb(206, 206, 206);
+}
+
+.faqForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3cm;
+    padding: 0.5cm;
+}
+
+.faqInp,
+.faqTxt {
+    padding: 0.3cm;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid rgb(206, 206, 206);
+}
+
+.faqTxt {
+    min-height: 4cm;
+}
+
+.inpSub {
+    background-color: royalblue;
+    color: white;
+    padding: 0.2cm 0.5cm;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inpSubBox {
+    display: flex;
+    margin-top: 0.2cm;
+    justify-content: flex-end;
+}
+
+/* Responsive Styles */
+
+/* For screens smaller than 1024px (tablets) */
+@media (max-width: 1024px) {
+    .preOrderFaqRight {
+        width: 100%; /* Make it full width */
+        margin-left: 0; /* Remove left margin */
+        margin-top: 20px; /* Adjust top margin if needed */
+    }
+}
+
+/* For screens smaller than 768px (mobile) */
+@media (max-width: 768px) {
+    .preOrderFaqRight {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 10px; 
+    }
+
+    .faqForm {
+        padding: 0.3cm; /* Reduce padding for smaller screens */
+    }
+
+    .faqInp,
+    .faqTxt {
+        padding: 0.2cm; /* Reduce padding for input/textarea */
+    }
+}
+
+/* For even smaller screens (e.g., 480px or less) */
+@media (max-width: 480px) {
+    .faqInp,
+    .faqTxt {
+        font-size: 14px; /* Reduce font size */
+    }
+    .preOrderFaqRight {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 10px; 
+    }
+
+    .inpSub {
+        font-size: 14px; /* Reduce button font size */
+        padding: 0.15cm 0.4cm; /* Reduce button padding */
+    }
+
+    .file-upload-info {
+        font-size: 12px;
+    }
+}
