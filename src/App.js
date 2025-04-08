@@ -97,9 +97,10 @@ import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartn
 import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
 import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRegistration.js";
 import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
-import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
-import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
+import CreateCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
+import EditCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 import ReportsPage from "./components/delivery/ReportsPage.js";
+import Settings from "./components/marketing/Notification/Settings.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -275,13 +276,13 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
-                <Route path="custom-alert-popup" element={<CustomAlerts />} />
+                <Route path="custom-alert" element={<CustomAlerts />} />
                 <Route
-                  path="custom-alert-popup/create"
+                  path="custom-alert/create"
                   element={<CreateCustomAlert />}
                 />
                 <Route
-                  path="custom-alert-popup/edit/:id"
+                  path="custom-alert/edit/:id"
                   element={<EditCustomAlert />}
                 />
                 <Route path="email-templates">
@@ -348,6 +349,9 @@ function App() {
                   <Route path="edit/:id" element={<NewsLetter />} />
                   <Route path="view/:id" element={<NewsLetter />} />
                 </Route>
+                <Route path="notification">
+                  <Route path="settings" element={<Settings />} />
+                </Route>
               </Route>
 
               <Route path="/sellers">
@@ -358,12 +362,15 @@ function App() {
                 <Route path="create" element={<Create />} />
               </Route>
               <Route path="/delivery">
-  <Route path="registration" element={<DeliveryPartnerRegistration />} />
-  <Route path="active" element={<ActiveDeliveryPartner />} />
-  <Route path="active/reports" element={<ReportsPage />} />
-  <Route path="inactive" element={<InActiveDeliveryPartner />} />
-  <Route path="pending" element={<PendingDeliveryPartner />} />
-</Route>
+                <Route
+                  path="registration"
+                  element={<DeliveryPartnerRegistration />}
+                />
+                <Route path="active" element={<ActiveDeliveryPartner />} />
+                <Route path="active/reports" element={<ReportsPage />} />
+                <Route path="inactive" element={<InActiveDeliveryPartner />} />
+                <Route path="pending" element={<PendingDeliveryPartner />} />
+              </Route>
             </Routes>
           </div>
         </div>

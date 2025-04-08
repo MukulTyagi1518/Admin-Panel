@@ -67,7 +67,7 @@ const handleDelete = async (id) => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Custom Alerts</h1>
         <Link 
-          to="/marketing/custom-alert-popup/create" 
+          to="/marketing/custom-alert/create" 
           className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           <Plus size={18} />
@@ -116,7 +116,7 @@ const handleDelete = async (id) => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex gap-2">
                       <Link
-                        to={`/marketing/custom-alert-popup/edit/${alert._id}`}
+                        to={`/marketing/custom-alert/edit/${alert._id}`}
                         className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
                       >
                         <Edit size={16} />

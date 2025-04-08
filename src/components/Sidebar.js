@@ -159,7 +159,7 @@ const menuItems = [
       },
       {
         name:"Custom Alert popup",
-        path:"/marketing/custom-alert-popup"
+        path:"/marketing/custom-alert"
       },
       {
         name:"News Letter",
@@ -167,7 +167,10 @@ const menuItems = [
       },
       {
         name:"Notification",
-        path:"/marketing/notification"
+        path:"/marketing/notification",
+        subItems:[
+          {name:"Settings" , path:"/marketing/notification/settings"}
+        ]
       }
     ],
     path: "/marketing",
