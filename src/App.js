@@ -139,7 +139,7 @@ import QueriesDetail from "./components/QueriesDetail.js";
 
 import Editinhouse from "./components/Edit/Editinhoue.jsx"
 import Editattribute from "./components/Edit/Editattribute.jsx"
-import Adminsetting from "./components/Adminsetting/Adminsetting.jsx" 
+import Adminsetting from "./components/Adminsetting/Adminsetting.jsx"
 import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
 import Edittax from "./components/Adminsetting/Edittax.jsx"
 import Apperence from "./components/Adminsetting/Apperence.jsx"
@@ -202,7 +202,7 @@ function App() {
               <Route path="/products/seller" element={<Physical />} />
               <Route path="/products/digital" element={<Digital />} />
 
-             
+
 
 
               <Route path="/refunds/request" element={<Refundrequest />} />
@@ -296,17 +296,17 @@ function App() {
                 <Route path="product" element={<PreorderProducts />} />
                 <Route path="queries" element={<PreOrderQueries />} />
                 <Route path="queries">
-                  <Route path="queriesdetail" element={<QueriesDetail/>} />
-                  
-                 
-                  </Route>
+                  <Route path="queriesdetail" element={<QueriesDetail />} />
+
+
+                </Route>
                 <Route path="reviews" element={<PreOrderReviews />} />
                 <Route path="reviews" element={<PreOrderReviews />} />
                 <Route path="reviews">
-                  <Route path="ReviewDetails" element={<ReviewDetails/>} />
-                  
-                 
-                  </Route>
+                  <Route path="ReviewDetails" element={<ReviewDetails />} />
+
+
+                </Route>
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
@@ -437,22 +437,22 @@ function App() {
                   </Route>
                   <Route path="cities" element={<ShippingCities />} />
                   <Route path="cities">
-                  <Route index element={<ShippingCities/>} />
-                  <Route path="edit/:id" element={<CitiesEdit/>} />
+                    <Route index element={<ShippingCities />} />
+                    <Route path="edit/:id" element={<CitiesEdit />} />
                   </Route>
-                  <Route path="zones" element={<ShippingZone/>} />
+                  <Route path="zones" element={<ShippingZone />} />
                   <Route path="zones">
-                  <Route path="create" element={<CreateZone/>} />
-                  <Route index element={<ShippingZone/>} />
-                  <Route path="edit/:id" element={<ZoneEdit/>} />
+                    <Route path="create" element={<CreateZone />} />
+                    <Route index element={<ShippingZone />} />
+                    <Route path="edit/:id" element={<ZoneEdit />} />
                   </Route>
-                  <Route path="carrier" element={<ShippingCarrier/>} />
+                  <Route path="carrier" element={<ShippingCarrier />} />
                   <Route path="carrier">
-                  <Route path="create" element={<CarrierCreate/>} />
-                  <Route index element={<ShippingCarrier/>} />
-                  <Route path="edit/:id" element={<CarrierEdit/>} />
+                    <Route path="create" element={<CarrierCreate />} />
+                    <Route index element={<ShippingCarrier />} />
+                    <Route path="edit/:id" element={<CarrierEdit />} />
                   </Route>
-                  
+
                 </Route>
                 <Route path="payment" element={<PaymentMethod />} />
               </Route>
@@ -491,17 +491,18 @@ function App() {
                 <Route path="create" element={<StaffCreate />} />
                 <Route path="roles" element={<Roles />} />
                 <Route path="rolecreate" element={<RolesCreate />} />
-                <Route path="edit" element={<Edit />} />
-                <Route path="editInfo" element={<EditInfo />} />
+                <Route path="edit/:id" element={<Edit />} />
+                {/* <Route path="editInfo" element={<EditInfo/>} /> */}
+                <Route path="editInfo/:id" element={<EditInfo />} />
               </Route>
 
-                 <Route path="/admin-settings/features" element={<Adminsetting />}/>
-                 <Route path="/admin-settings/tax" element={<Vaxtax />}/>
-                 <Route path="/admin-settings/apearence" element={<Apperence />}/>
-                 <Route path="edittax" element={<Edittax />}/>
+              <Route path="/admin-settings/features" element={<Adminsetting />} />
+              <Route path="/admin-settings/tax" element={<Vaxtax />} />
+              <Route path="/admin-settings/apearence" element={<Apperence />} />
+              <Route path="edittax" element={<Edittax />} />
 
-                 <Route path="editinhouse" element={<Editinhouse />}/>
-                 <Route path="editattribute" element={<Editattribute />}/>
+              <Route path="editinhouse" element={<Editinhouse />} />
+              <Route path="editattribute" element={<Editattribute />} />
             </Routes>
           </div>
         </div >

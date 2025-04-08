@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import "./AllStaff.css";
 import { FaPlus, FaEdit, FaTrash, FaMinus } from "react-icons/fa";
@@ -109,92 +107,38 @@ const AllStaff = () => {
                   <div className="options-container">
                     <FaEdit className="edit-icon" onClick={() => handleEditStaff(staff._id)} />
                     <FaTrash className="delete-icon" onClick={() => handleDeleteStaff(staff._id)} />
-                  </div >
-                </td >
-              </tr >
+                  </div>
+                </td>
+              </tr>
 
               {/* Responsive row */}
-              {
-                expandedRows[staff._id || index] && (
-                  <tr className="expanded-row">
-                    <td colSpan="7">
-                      <table className="expanded-table">
-                        <tbody>
-                          <tr>
-                            <th>Email</th>
-                            <td>{staff.email}</td>
-                          </tr>
-                          <tr>
-                            <th>Phone</th>
-                            <td>{staff.phone}</td>
-                          </tr>
-                          <tr>
-                            <th>Role</th>
-                            <td>{staff.role}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )
-              }
-              {
-                expandedRows[staff.id] && (
-                  <tr className="expanded-row">
-                    <td colSpan="7">
-                      <table className="expanded-table">
-                        <tbody>
-                          <tr>
-                            <th>Email</th>
-                            <td>{staff.email}</td>
-                          </tr>
-                          <tr>
-                            <th>Phone</th>
-                            <td>{staff.phone}</td>
-                          </tr>
-                          <tr>
-                            <th>Role</th>
-                            <td>{staff.role}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )
-              }
-
-            </React.Fragment >
+              {expandedRows[staff._id || index] && (
+                <tr className="expanded-row">
+                  <td colSpan="7">
+                    <table className="expanded-table">
+                      <tbody>
+                        <tr>
+                          <th>Email</th>
+                          <td>{staff.email}</td>
+                        </tr>
+                        <tr>
+                          <th>Phone</th>
+                          <td>{staff.phone}</td>
+                        </tr>
+                        <tr>
+                          <th>Role</th>
+                          <td>{staff.role}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
-        </tbody >
-      </table >
-
-      {showDeleteConfirmation && (
-        <div className="delete-confirmation-overlay">
-          <div className="delete-confirmation-dialog">
-            <div className="dialog-header">
-              <h2>Delete Confirmation</h2>
-              <button
-                className="close-dialog-btn"
-                onClick={cancelDelete}
-              >
-                X
-              </button>
-            </div>
-            <div className="dialog-content">
-              <p>Are you sure to delete this?</p>
-            </div>
-            <div className="dialog-actions">
-              <button className="cancel-btn" onClick={cancelDelete}>
-                Cancel
-              </button>
-              <button className="delete-btn" onClick={confirmDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div >
+        </tbody>
+      </table>
+    </div>
   );
 };
 
