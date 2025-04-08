@@ -405,14 +405,14 @@
 }
 
 
-.searchFaq {
+/* .searchFaq {
     background-color: transparent;
     padding: 0.15cm 0.3cm;
     border: 1px solid rgb(201, 201, 201);
     border-radius: 5px;
     width: 100%;
     max-width: 6cm;
-}
+} */
 
 
 .preOrderFaqRight-new {
@@ -436,6 +436,7 @@
     flex-direction: column; 
     gap: 1cm;
     width: 100%;
+  
 }
 
 
@@ -444,6 +445,16 @@
     border-bottom: 1px solid rgb(206, 206, 206);
 }
 
+/* Colors.css */
+.searchFaq {
+    /* Existing styles */
+    background-color: transparent;
+    padding: 0.15cm 0.3cm;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 5px;
+    max-width: 1cm; 
+    width: 100%;
+  }
 
 .faqForm {
     display: flex;

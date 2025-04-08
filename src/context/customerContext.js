@@ -11,6 +11,7 @@ export default function CustomerProvider({ children }) {
 
     useEffect(() => {
         fetchUsers();
+        
     }, [fetchCustomers]);
 
     const fetchUsers = async () => {

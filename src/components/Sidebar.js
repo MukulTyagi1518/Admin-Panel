@@ -11,6 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   Grid,
+  PackageOpen,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -162,7 +163,7 @@ const menuItems = [
       },
       {
         name:"News Letter",
-        path:"/marketing/news-letter"
+        path:"/marketing/all-news-letters"
       },
       {
         name:"Notification",
@@ -190,10 +191,6 @@ const menuItems = [
       { name: "Header setting", path: "/web-settings/header" },
       { name: "Footer setting", path: "/web-settings/footer" },
       { name: "Page", path: "/web-settings/page" },
-      { name: "Email templates", path: "/web-settings/email" },
-      { name: "Custom alert popup", path: "/web-settings/alert" },
-      { name: "News letter", path: "/web-settings/newsletter" },
-      { name: "Notification", path: "/web-settings/notification" },
       { name: "Subscribers", path: "/web-settings/subscribers" },
     ],
     path: "/web-settings",
@@ -244,6 +241,17 @@ const menuItems = [
       { name: "Staffs role and permission", path: "/staffs/roles" },
     ],
     path: "/staffs",
+  },
+  {
+    name: "Delivery Partners",
+    icon: <PackageOpen size={20} />,
+    subItems: [
+      { name: "Registration Form", path: "/delivery/registration" },
+      { name: "Active Delivery Partners", path: "/delivery/active" },
+      { name: "Inactive Delivery Partners", path: "/delivery/inactive" },
+      { name: "Pending Delivery Partners", path: "/delivery/pending" },
+    ],
+    path: "/delivery",
   },
 ];
 

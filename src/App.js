@@ -20,8 +20,6 @@ import Classified from "./components/settings/Classified.js";
 import NewestPreorderProducts from "./components/settings/NewestPreorderProducts.js";
 import SettingsLayout from "./components/settings/SettingsLayout.js";
 import TopBrands from "./components/settings/TopBrands.js";
-import LatestOrders from "./components/orders/LatestOrders.js";
-import Preorders from "./components/preorders/PreOrders.js";
 import Productadd from "./pages/products/Productadd.jsx";
 import Seo from "./pages/products/Seo.jsx";
 import Shipping from "./pages/products/Shipping.jsx";
@@ -51,8 +49,9 @@ import PreOrderFaq from "./components/preorders/preOrderFaq/preOrderFaq.jsx";
 import AddNewProductMain from "./components/addNewProduct/addNewProduct.jsx";
 import BestSellerProducts from "./components/marketing/BestSellerProducts.js";
 import BestWeeklyProducts from "./components/marketing/BestWeeklyProducts.js";
-import FlashDeals from "./components/marketing/FlashDeals.js";
-import FlashDealEdit from "./components/marketing/FlashDealsEdit.js";
+import FlashDeals from "./components/marketing/FlashDeals/FlashDeals.js";
+import FlashDealEdit from "./components/marketing/FlashDeals/FlashDealsEdit.js";
+import CreateFlashDeal from "./components/marketing/FlashDeals/CreateFlashDeal.js";
 import SellerAdsMarketing from "./components/marketing/SellerAdsMarketing.js";
 import PreOrderDashboard from "./components/preorders/dashboard/dashboards.jsx";
 import AllBrands from "./pages/products/Allbrand.jsx";
@@ -75,11 +74,10 @@ import ReviewDetail from "./pages/products/ReviewDetail.js";
 import EmailTemplateAdmin from "./components/marketing/EmailTemplate/Admin/EmailTemplateAdmin.js";
 import AddNewCategory from "./pages/products/AddNewCategory.jsx";
 import CategoryEdit from "./pages/products/CategoryEdit.jsx";
-import CreateFlashDeal from "./components/marketing/CreateFlashDeal.js";
 import Sellerverification from "./components/Seller/Sellerverification.jsx";
 import Payoutrequest from "./components/Seller/Payoutrequest.jsx";
-import Inhouse from "./components/Wholesale/Inhouse.jsx"
-import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx"
+import Inhouse from "./components/Wholesale/Inhouse.jsx";
+import Sellerwholesale from "./components/Wholesale/Sellerwholesale.jsx";
 import CreateNewCustomer from "./components/customers/allCustomers/CreateNewCustomer.jsx";
 import EmailTemplateSeller from "./components/marketing/EmailTemplate/Seller/EmailTemplateSeller.js";
 import EmailTemplateCustomer from "./components/marketing/EmailTemplate/Customer/EmailTemplateCustomer.js";
@@ -88,11 +86,18 @@ import SellerEmailTemplateEditor from "./components/marketing/EmailTemplate/Sell
 import CustomerEmailTemplateEditor from "./components/marketing/EmailTemplate/Customer/CustomerEmailTemplateEditor.js";
 import CommonEmailTemplateEditor from "./components/marketing/EmailTemplate/Common/CommonEmailTemplateEditor.js";
 import EmailTemplateCommon from "./components/marketing/EmailTemplate/Common/EmailTemplateCommon.js";
-import NewsLetter from "./components/marketing/NewsLetter.js";
+import NewsLetter from "./components/marketing/NewsLetter/NewsLetter.js";
+import AllNewslettersPage from "./components/marketing/NewsLetter/AllNewsLetterPage.js";
 import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
+import Refundrequest from "./components/Refund/Refundrequest.jsx"
+import Approvedrefund from "./components/Refund/Approvedrefund.jsx"
+import Reject from "./components/Refund/Reject.jsx"
+import Physical from "./pages/products/Sellerproduct/Physical.jsx"
+import Digital from "./pages/products/Sellerproduct/Digital.jsx"
+import Commision from "./components/Seller/Commision.jsx"
 import Ticket from "./pages/support/Ticket.js";
 import ProductQuires from "./pages/support/ProductQuires.js";
 import Conversation from "./pages/support/ProductQuires.js";
@@ -105,7 +110,14 @@ import RolesCreate from "./pages/staffs/RolesCreate.js";
 import Edit from "./pages/staffs/Edit.js";
 import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
-import EditInhouse from "./components/Edit/EditInhouse.js";
+import ActiveDeliveryPartner from "./components/delivery/AcitveDeliveryPartner.js";
+import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartner.js";
+import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
+import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRegistration.js";
+import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
+import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
+import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
+import ReportsPage from "./components/delivery/ReportsPage.js";
 import ColorEdit from "./pages/products/ColorEdit.jsx";
 import BrandEdit from "./pages/products/BrandEdit.js";
 import ShippingConfiguration from "./components/admin-settings/shipping/ShippingConfiguration.js";
@@ -127,6 +139,13 @@ import AddNewBrand from "./pages/products/AddNewBrand.js";
 import AddNewColor from "./pages/products/AddNewColor.js";
 
 
+import Editinhouse from "./components/Edit/Editinhoue.jsx"
+import Editattribute from "./components/Edit/Editattribute.jsx"
+import Adminsetting from "./components/Adminsetting/Adminsetting.jsx"
+import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
+import Edittax from "./components/Adminsetting/Edittax.jsx"
+import Apperence from "./components/Adminsetting/Apperence.jsx"
+import AttributeDetail from "./pages/products/AttributeDetail.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -183,6 +202,18 @@ function App() {
               <Route path="/sellers/payout-request" element={<Payoutrequest />} />
               <Route path="/wholesale/inhouse" element={<Inhouse />} />
               <Route path="/wholesale/seller" element={<Sellerwholesale />} />
+              <Route path="/products/seller" element={<Physical />} />
+              <Route path="/products/digital" element={<Digital />} />
+
+
+
+
+              <Route path="/refunds/request" element={<Refundrequest />} />
+              <Route path="/refunds/approved" element={<Approvedrefund />} />
+              <Route path="/refunds/reject" element={<Reject />} />
+              <Route path="/sellers/commission" element={<Commision />} />
+
+
 
 
               <Route path="/products">
@@ -216,6 +247,8 @@ function App() {
                 <Route path="/products/editBrand" element={<BrandEdit />} />
                 <Route path="/products/addnewbrand" element={<AddNewBrand />} />
                 <Route path="/products/addnewcolor" element={<AddNewColor />} />
+                <Route path="/products/settings" element={<AttributeDetail />} />
+
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
@@ -270,17 +303,17 @@ function App() {
                 <Route path="product" element={<PreorderProducts />} />
                 <Route path="queries" element={<PreOrderQueries />} />
                 <Route path="queries">
-                  <Route path="queriesdetail" element={<QueriesDetail/>} />
-                  
-                 
-                  </Route>
+                  <Route path="queriesdetail" element={<QueriesDetail />} />
+
+
+                </Route>
                 <Route path="reviews" element={<PreOrderReviews />} />
                 <Route path="reviews" element={<PreOrderReviews />} />
                 <Route path="reviews">
-                  <Route path="ReviewDetails" element={<ReviewDetails/>} />
-                  
-                 
-                  </Route>
+                  <Route path="ReviewDetails" element={<ReviewDetails />} />
+
+
+                </Route>
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
@@ -320,11 +353,53 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
+                <Route path="custom-alert-popup" element={<CustomAlerts />} />
+                <Route
+                  path="custom-alert-popup/create"
+                  element={<CreateCustomAlert />}
+                />
+                <Route
+                  path="custom-alert-popup/edit/:id"
+                  element={<EditCustomAlert />}
+                />
                 <Route path="email-templates">
                   <Route path="admin" element={<EmailTemplateAdmin />} />
+                  <Route
+                    path="/marketing/email-templates/admin/new"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/admin/:id"
+                    element={<AdminEmailTemplateEditor />}
+                  />
+
                   <Route path="seller" element={<EmailTemplateSeller />} />
+                  <Route
+                    path="/marketing/email-templates/seller/new"
+                    element={<SellerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/seller/:id"
+                    element={<SellerEmailTemplateEditor />}
+                  />
                   <Route path="customer" element={<EmailTemplateCustomer />} />
+                  <Route
+                    path="/marketing/email-templates/customer/new"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/customer/:id"
+                    element={<CustomerEmailTemplateEditor />}
+                  />
                   <Route path="common" element={<EmailTemplateCommon />} />
+                  <Route
+                    path="/marketing/email-templates/common/new"
+                    element={<CommonEmailTemplateEditor />}
+                  />
+                  <Route
+                    path="/marketing/email-templates/common/:id"
+                    element={<CommonEmailTemplateEditor />}
+                  />
                   <Route
                     path="admin/edit"
                     element={<AdminEmailTemplateEditor />}
@@ -342,7 +417,15 @@ function App() {
                     element={<CommonEmailTemplateEditor />}
                   />
                 </Route>
-                <Route path="news-letter" element={<NewsLetter />} />
+
+                <Route
+                  path="all-news-letters"
+                  element={<AllNewslettersPage />}
+                />
+                <Route path="news-letter" element={<NewsLetter />}>
+                  <Route path="edit/:id" element={<NewsLetter />} />
+                  <Route path="view/:id" element={<NewsLetter />} />
+                </Route>
               </Route>
 
 
@@ -361,22 +444,22 @@ function App() {
                   </Route>
                   <Route path="cities" element={<ShippingCities />} />
                   <Route path="cities">
-                  <Route index element={<ShippingCities/>} />
-                  <Route path="edit/:id" element={<CitiesEdit/>} />
+                    <Route index element={<ShippingCities />} />
+                    <Route path="edit/:id" element={<CitiesEdit />} />
                   </Route>
-                  <Route path="zones" element={<ShippingZone/>} />
+                  <Route path="zones" element={<ShippingZone />} />
                   <Route path="zones">
-                  <Route path="create" element={<CreateZone/>} />
-                  <Route index element={<ShippingZone/>} />
-                  <Route path="edit/:id" element={<ZoneEdit/>} />
+                    <Route path="create" element={<CreateZone />} />
+                    <Route index element={<ShippingZone />} />
+                    <Route path="edit/:id" element={<ZoneEdit />} />
                   </Route>
-                  <Route path="carrier" element={<ShippingCarrier/>} />
+                  <Route path="carrier" element={<ShippingCarrier />} />
                   <Route path="carrier">
-                  <Route path="create" element={<CarrierCreate/>} />
-                  <Route index element={<ShippingCarrier/>} />
-                  <Route path="edit/:id" element={<CarrierEdit/>} />
+                    <Route path="create" element={<CarrierCreate />} />
+                    <Route index element={<ShippingCarrier />} />
+                    <Route path="edit/:id" element={<CarrierEdit />} />
                   </Route>
-                  
+
                 </Route>
                 <Route path="payment" element={<PaymentMethod />} />
               </Route>
@@ -392,7 +475,12 @@ function App() {
                 <Route path="payout" element={<Payout />} />
                 <Route path="" element={<UnpaidOrders />} />
                 <Route path="create" element={<Create />} />
-
+              </Route>
+              <Route path="/delivery">
+                <Route path="registration" element={<DeliveryPartnerRegistration />} />
+                <Route path="active" element={<ActiveDeliveryPartner />} />
+                <Route path="inactive" element={<InActiveDeliveryPartner />} />
+                <Route path="pending" element={<PendingDeliveryPartner />} />
               </Route>
 
 
@@ -410,13 +498,18 @@ function App() {
                 <Route path="create" element={<StaffCreate />} />
                 <Route path="roles" element={<Roles />} />
                 <Route path="rolecreate" element={<RolesCreate />} />
-                <Route path="edit" element={<Edit />} />
-                <Route path="editInfo" element={<EditInfo />} />
-
+                <Route path="edit/:id" element={<Edit />} />
+                {/* <Route path="editInfo" element={<EditInfo/>} /> */}
+                <Route path="editInfo/:id" element={<EditInfo />} />
               </Route>
 
+              <Route path="/admin-settings/features" element={<Adminsetting />} />
+              <Route path="/admin-settings/tax" element={<Vaxtax />} />
+              <Route path="/admin-settings/apearence" element={<Apperence />} />
+              <Route path="edittax" element={<Edittax />} />
 
-              <Route path="editInhouse" element={<EditInhouse />} />
+              <Route path="editinhouse" element={<Editinhouse />} />
+              <Route path="editattribute" element={<Editattribute />} />
             </Routes>
           </div>
         </div >

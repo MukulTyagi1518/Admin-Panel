@@ -151,26 +151,8 @@ const ProductMediaForm = () => {
         <Link to='/products/create/price-stock' >
           <button className="btn-btn-green" onClick={async () => {
 
-            const data = new FormData();
 
-            galleryImgs.forEach((file) => {
-              data.append("galleryImages", file);
-            });
 
-            if (thumbnailImage) {
-              data.append("thumbnailImage", thumbnailImage);
-            }
-
-            if (pdfSpecification) {
-              data.append("pdfSpecification", pdfSpecification);
-            }
-
-            console.log("FormData Entries:", [...data.entries()]);
-            await api.post("/products/store", data, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            })
 
 
 
@@ -178,8 +160,8 @@ const ProductMediaForm = () => {
             setProductData((prev) => ({
               ...prev,
               galleryImages: galleryImgs,
-              thumbnailImage: data.get("thumbnailImage"),
-              pdfSpecification: data.get("pdfSpecification")
+              thumbnailImage: thumbnailImage,
+              pdfSpecification: pdfSpecification
             }));
           }} >Save & Publish</button>
         </Link>

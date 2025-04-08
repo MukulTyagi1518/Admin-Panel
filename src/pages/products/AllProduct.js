@@ -1,103 +1,16 @@
 import React, { useState } from "react";
 import "./allProduct.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { useProductContext } from "../../productContex";
 import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
 
 const AllProduct = () => {
-  const [products, setProducts] = useState([
 
-    {
-      id: 1,
-      name: "Acer Nitro 50 N50-620 - UA91 Gaming Desktop",
-      image:
-        "https://m.media-amazon.com/images/I/71dJ4XcNWWL._AC_CR0%2C0%2C0%2C0_SX352_SY330_.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 16, price: "$559.990", rating: 5 },
-      stock: "Low",
-      deal: "true",
-      published: true,
-      featured: false,
-    },
-    {
-      id: 2,
-      name: "Lenovo V30a Business All-in-One Desktop",
-      image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 9, price: "$579.000", rating: 5 },
-      stock: "Low",
-      deal: false,
-      published: true,
-      featured: true,
-    },
-    {
-      id: 3,
-      name: "Acer Chromebook Spin 314 Convertible Laptop",
-      image:
-        "https://m.media-amazon.com/images/I/71dJ4XcNWWL._AC_CR0%2C0%2C0%2C0_SX352_SY330_.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 10, price: "$309.990", rating: 5 },
-      stock: "0 Low",
-      deal: true,
-      published: true,
-      featured: false,
-    },
-    {
-      id: 4,
-      name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
-      image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 1, price: "$53.810", rating: 0 },
-      stock: "99",
-      deal: false,
-      published: true,
-      featured: true,
-    },
-    {
-      id: 5,
-      name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
-      image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 1, price: "$53.810", rating: 0 },
-      stock: "99",
-      deal: false,
-      published: true,
-      featured: true,
-    },
-    {
-      id: 6,
-      name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
-      image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 1, price: "$53.810", rating: 0 },
-      stock: "99",
-      deal: false,
-      published: true,
-      featured: true,
-    },
-    {
-      id: 7,
-      name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
-      image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 1, price: "$53.810", rating: 0 },
-      stock: "99",
-      deal: false,
-      published: true,
-      featured: true,
-    },
-    {
-      id: 8,
-      name: "StarTech.com USB 3.0 to Dual HDMI Adapter",
-      image: "https://m.media-amazon.com/images/I/61RfxRks6HL.jpg",
-      addedBy: "Filon Asset Store",
-      info: { sale: 1, price: "$53.810", rating: 0 },
-      stock: "99",
-      deal: false,
-      published: true,
-      featured: true,
-    },
-  ]);
+
+  const { allProducts, setAllProducts } = useProductContext();
+
+
   const [sellers] = useState([
     "Mostafizar Rahman",
     "Thanh Quoc Phu ...",
@@ -116,17 +29,17 @@ const AllProduct = () => {
   const [isSellerDropdownOpen, setIsSellerDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-    const handleEdit = (id) => {
-      navigate(`/editinhouse`); 
+  const handleEdit = (id) => {
+    navigate(`/editinhouse`);
   };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Adjust as needed
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const totalPages = Math.ceil(allProducts.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = allProducts.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -166,7 +79,7 @@ const AllProduct = () => {
   };
 
   const handleToggleChange = (id, field) => {
-    setProducts((prevProducts) =>
+    setAllProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.id === id ? { ...product, [field]: !product[field] } : product
       )
@@ -174,7 +87,7 @@ const AllProduct = () => {
   };
 
   const handleSortChange = (sortType) => {
-    const sortedProducts = [...products];
+    const sortedProducts = [...allProducts];
 
     switch (sortType) {
       case "rating-high":
@@ -193,7 +106,7 @@ const AllProduct = () => {
         return;
     }
 
-    setProducts(sortedProducts);
+    setAllProducts(sortedProducts);
   };
 
   const toggleSellerDropdown = () => {
@@ -208,7 +121,7 @@ const AllProduct = () => {
   return (
     <div className="product-container1">
       <div className="header">
-        <div>All Products</div>
+        <div>All allProducts</div>
         <button className="add-btn">Add New product</button>
       </div>
       <div className="filter-options">
@@ -284,9 +197,9 @@ const AllProduct = () => {
               <th>Options</th>
             </tr>
           </thead>
-         
+
           <tbody>
-            {products.map((product) => (
+            {allProducts && allProducts.map((product) => (
               <>
                 {/* Main Row with Plus Icon */}
                 <tr key={product.id}>
@@ -295,7 +208,7 @@ const AllProduct = () => {
                       className={`plus-icon ${product.expanded ? "rotate" : ""
                         }`}
                       onClick={() =>
-                        setProducts((prevProducts) =>
+                        setAllProducts((prevProducts) =>
                           prevProducts.map((p) =>
                             p.id === product.id
                               ? { ...p, expanded: !p.expanded }
@@ -318,9 +231,9 @@ const AllProduct = () => {
                   </td>
                   <td className="hide-on-small">{product.addedBy}</td>
                   <td className="hide-on-small">
-                    <div>Num of Sale: {product.info.sale} times</div>
-                    <div>Base Price: {product.info.price}</div>
-                    <div>Rating: {product.info.rating}</div>
+                    <div>Num of Sale:  times</div>
+                    <div>Base Price:</div>
+                    <div>Rating: </div>
                   </td>
                   <td className="hide-on-small">{product.stock}</td>
                   <td className="hide-on-small">
@@ -332,7 +245,7 @@ const AllProduct = () => {
                       />
                       <span className="slider"></span>
                     </label> */}
-                    <Switch/>
+                    <Switch />
                   </td>
                   <td className="hide-on-small">
                     {/* <label className="switch">
@@ -345,7 +258,7 @@ const AllProduct = () => {
                       />
                       <span className="slider"></span>
                     </label> */}
-                     <Switch/>
+                    <Switch />
                   </td>
                   <td className="hide-on-small">
                     {/* <label className="switch">
@@ -358,14 +271,14 @@ const AllProduct = () => {
                       />
                       <span className="slider"></span>
                     </label> */}
-                     <Switch/>
+                    <Switch />
                   </td>
                   <td className="hide-on-small ">
                     <button className="btn view-btn1">
                       <FaEye />
                     </button>
                     <button className="btn edit-btn1">
-                      <FaEdit onClick={() => handleEdit(product.id)}/>
+                      <FaEdit onClick={() => handleEdit(product.id)} />
                     </button>
                     <button className="btn delete-btn1">
                       <FaTrash />
@@ -387,7 +300,7 @@ const AllProduct = () => {
 
                         <div>
                           Today's Deal:
-                           <label className="switch">
+                          <label className="switch">
                             {/* <input
                               type="checkbox"
                               checked={product.deal}
@@ -396,9 +309,9 @@ const AllProduct = () => {
                               }
                             />
                             <span className="slider"></span> */}
-                             <Switch/>
-                          </label> 
-                          
+                            <Switch />
+                          </label>
+
                         </div>
 
                         <div>
@@ -412,9 +325,9 @@ const AllProduct = () => {
                               }
                             />
                             <span className="slider"></span> */}
-                            <Switch/>
+                            <Switch />
                           </label>
-                           
+
                         </div>
 
                         <div>
@@ -428,9 +341,9 @@ const AllProduct = () => {
                               }
                             />
                             <span className="slider"></span> */}
-                            <Switch/>
+                            <Switch />
                           </label>
-                          
+
                         </div>
 
                         <div>

@@ -3,8 +3,17 @@ import React, { useState } from "react";
 import "./InhouseProduct.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../../components/Switch";
+import { useNavigate } from "react-router-dom";
 
 const InhouseProduct = () => {
+      
+
+    const navigate = useNavigate();
+
+    const handleEdit = (id) => {
+      navigate(`/editinhouse`); 
+  };
+  
     const [products, setProducts] = useState([
        
         {
@@ -335,7 +344,7 @@ const handleExpandRow = (id) => {
             <FaEye />
           </button>
           <button className="btn3 edit-btn3">
-            <FaEdit />
+            <FaEdit onClick={() => handleEdit(product.id)}/>
           </button>
           <button className="btn3 delete-btn3">
             <FaTrash />
@@ -399,7 +408,7 @@ const handleExpandRow = (id) => {
             <FaEye />
           </button>
           <button className="btn3 edit-btn3">
-            <FaEdit />
+            <FaEdit onClick={() => handleEdit(product.id)}/>
           </button>
           <button className="btn3 delete-btn3">
             <FaTrash />

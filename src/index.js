@@ -8,6 +8,7 @@ import reportWebVitals from "./reportWebVitals";
 import ProductProvider from "./productContex";
 import CategoryProvider from "./categoryContext";
 import CustomerProvider from "./context/customerContext";
+import { EmailTemplateProvider } from "./context/EmailTemplateContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -16,6 +17,7 @@ root.render(
   <AdminProvider>
     <ProductProvider>
       <CategoryProvider>
+        <EmailTemplateProvider>
         <CustomerProvider>
           <React.StrictMode>
             <BrowserRouter>
@@ -23,6 +25,7 @@ root.render(
             </BrowserRouter>
           </React.StrictMode>
         </CustomerProvider>
+        </EmailTemplateProvider>
       </CategoryProvider>
     </ProductProvider>
   </AdminProvider>

@@ -49,9 +49,8 @@ const WarrantyConfig = () => {
       <div className="config-option">
         <span className="option-label">Warranty</span>
         <Switch
-          checked={warrantyEnabled}
-          onClick={handleToggleWarranty }
-          inputProps={{ "aria-label": "controlled" }}
+          enabled={warrantyEnabled}
+          handleClick={handleToggleWarranty}
         />
       </div>
 

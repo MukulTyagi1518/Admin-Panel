@@ -44,7 +44,7 @@ export default function Switch({ onToggle }) {
             <div
                 className={`w-6 h-5 bg-white rounded-full shadow-md transform transition-all ${enabled ? "translate-x-6" : "translate-x-0"
                     } flex items-center justify-center`}
-            >
+            > 
                 {enabled && <div className="w-3 h-3 bg-green-700 rounded-full"></div>}
             </div>
         </div>

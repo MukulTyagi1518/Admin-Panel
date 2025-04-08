@@ -24,6 +24,12 @@ const AddNewCategory = () => {
     coverImage: null
   });
 
+  const [files, setFiles] = useState({
+    banner: null,
+    icon: null,
+    coverImage: null
+  });
+
   const categoryTypes = ['Main Category', 'Sub Category'];
   const parentCategories = ['Electronics', 'Clothing', 'Home & Garden', 'None'];
   const attributeOptions = ['Size', 'Fabric', 'Sleeve', 'Wheel', 'Liter'];
@@ -75,26 +81,24 @@ const AddNewCategory = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = new FormData();
+      const formDataToSend = new FormData();
 
-      // Append all form fields
-      Object.keys(formData).forEach((key) => {
-        if (formData[key] instanceof File) {
-          data.append(key, formData[key]); // Append files
-        } else if (Array.isArray(formData[key])) {
-          formData[key].forEach((item) => data.append(`${key}[]`, item)); // Append arrays properly
+      // Append form data
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'filteringAttributes' && Array.isArray(value)) {
+          formDataToSend.append(key, JSON.stringify(value));
         } else {
-          data.append(key, formData[key]); // Append other fields
+          formDataToSend.append(key, value);
         }
       });
 
-      // Debugging: Log the FormData contents
-      for (let [key, value] of data.entries()) {
-        console.log(key, value);
-      }
+      // Append files
+      Object.entries(files).forEach(([key, file]) => {
+        if (file) formDataToSend.append(key, file);
+      });
 
       // API Call
-      await api.post('/categories/Create-new-category', data, {
+      await api.post('/categories/Create-new-category', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -105,6 +109,13 @@ const AddNewCategory = () => {
     } catch (err) {
       console.error("Error adding category:", err);
     }
+  };
+
+  const handleFilesChange = (e) => {
+    setFiles({
+      ...files,
+      [e.target.name]: e.target.files[0]
+    });
   };
 
 
@@ -193,7 +204,7 @@ const AddNewCategory = () => {
             id="banner"
             name="banner"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleFilesChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {preview.banner && (
@@ -213,7 +224,7 @@ const AddNewCategory = () => {
             id="icon"
             name="icon"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleFilesChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {preview.icon && (
@@ -233,7 +244,7 @@ const AddNewCategory = () => {
             id="coverImage"
             name="coverImage"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleFilesChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {preview.coverImage && (

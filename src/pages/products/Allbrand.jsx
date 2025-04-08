@@ -1,32 +1,40 @@
 // import { Delete, Edit, Trash,plus } from "lucide-react"
 import { Delete, Edit, Trash, Plus } from "lucide-react"
 import "./Allbrand.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import apiInstance from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 export default function AllBrands() {
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [roleToDelete, setRoleToDelete] = useState(null);
     const [fileName, setFileName] = useState("Choose file");
+    const [formData, setFormData] = useState({
+        name: "",
+        metaTitle: "",
+        metaDescription: ""
+    })
+
+    const [logo, setLogo] = useState(null)
     const navigate = useNavigate();
 
 
     const handleDeleteClick = (roleId) => {
         setRoleToDelete(roleId);
         setShowDeleteConfirmation(true);
-      };
-    
-      const confirmDelete = () => {
+    };
+
+    const confirmDelete = () => {
         // Implement your delete logic here
         console.log(`Deleting role with ID: ${roleToDelete}`);
         setShowDeleteConfirmation(false);
         setRoleToDelete(null);
-      };
-    
-      const cancelDelete = () => {
+    };
+
+    const cancelDelete = () => {
         setShowDeleteConfirmation(false);
         setRoleToDelete(null);
-      };
+    };
 
 
 
@@ -34,45 +42,95 @@ export default function AllBrands() {
     const handleFileChange = (event) => {
         if (event.target.files.length > 0) {
             setFileName(event.target.files[0].name);
+            setLogo(event.target.files[0])
         } else {
             setFileName("Choose file");
+            setLogo(null)
         }
     }
 
-    const faqs = [
-        {
-            id: 1,
-            name: "Acer"
-        },
-        {
-            id: 2,
-            name: "Addidas"
-        },
-        {
-            id: 3,
-            name: "Aigner"
-        },
-        {
-            id: 4,
-            name: "Alosa"
-        },
-        {
-            id: 5,
-            name: "Apato"
+    const handleDataChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    const [brands, setBrands] = useState([])
+
+    const fetchBrands = async () => {
+        const response = await apiInstance.get('/brands/getall')
+        console.log(response.data.data)
+        setBrands(response.data.data || [])
+    }
+
+    useEffect(() => {
+        fetchBrands()
+    }, [])
+
+    
+
+    const handleCreateBrand = async (e) => {
+        e.preventDefault();
+
+        const formDataToSend = new FormData();
+
+        // Ensure all form fields are appended correctly
+        formDataToSend.append("name", formData.name.trim());  // Ensure no leading/trailing spaces
+        formDataToSend.append("metaTitle", formData.metaTitle.trim());
+        formDataToSend.append("metaDescription", formData.metaDescription.trim());
+
+        if (logo) {
+            formDataToSend.append("logo", logo);
         }
-    ]
+
+        try {
+            for (let [key, value] of formDataToSend.entries()) {
+                console.log(key, value);
+            }
+
+
+            await apiInstance.post("/brands/create", formDataToSend, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            alert("New Brand added");
+            fetchBrands();
+        } catch (error) {
+            console.error("Error creating brand:", error.response?.data || error);
+            alert("Failed to add brand. Check console for details.");
+        }
+    };
+
+
+    const DeleteBrand = async (id) => {
+        try {
+            await apiInstance.delete(`/brands/delete/${id}`);
+            fetchBrands();
+            alert("Brand deleted!!")
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+
     const handlereview = (e) => {
         e.preventDefault();
         navigate("/products/editBrand");
-      };
-      const handleForm = (e) => {
+    };
+
+    const handleForm = (e) => {
         e.preventDefault();
         navigate("/products/addnewbrand");
       };
 
     return (
         <div className="PreOrderFaq ma10">
-            <div className="preOrderFaqBox">
+            <div className="preOrderFaqBox-brand">
                 <div className="preOrderFaqLeft">
                 <div className="addbtn">
                 <button className="add-brand-btn"  onClick={handleForm} >
@@ -104,16 +162,16 @@ export default function AllBrands() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {faqs.map((n) => (
-                                        <tr key={n.id}>
+                                    {brands && brands.map((n, i) => (
+                                        <tr key={i + 1}>
                                             <td>
-                                                {n.id}
+                                                {i + 1}
                                             </td>
 
                                             <td>{n.name}</td>
 
                                             <td>
-
+                                                <img src={n.logo} alt="" className=" w-[2cm] " />
                                             </td>
 
                                             <td>
@@ -122,7 +180,7 @@ export default function AllBrands() {
                                                         <Edit color="blue" size={18} onClick={handlereview} />
                                                     </div>
                                                     <div className="action">
-                                                        <Trash color="blue" size={18} onClick={() => handleDeleteClick(n.id)}  />
+                                                        <Trash color="blue" size={18} onClick={() => handleDeleteClick(n.id)} />
                                                     </div>
 
                                                 </div>
@@ -132,42 +190,42 @@ export default function AllBrands() {
                                 </tbody>
                             </table>
                             {showDeleteConfirmation && (
-        <div className="delete-confirmation-overlay">
-          <div className="delete-confirmation-dialog">
-            <div className="dialog-header">
-              <h2>Delete Confirmation</h2>
-              <button
-                className="close-dialog-btn"
-                onClick={cancelDelete}
-              >
-                X
-              </button>
-            </div>
-            <div className="dialog-content">
-              <p>Are you sure to delete this?</p>
-            </div>
-            <div className="dialog-actions">
-              <button className="cancel-btn" onClick={cancelDelete}>
-                Cancel
-              </button>
-              <button className="delete-btn" onClick={confirmDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                                <div className="delete-confirmation-overlay">
+                                    <div className="delete-confirmation-dialog">
+                                        <div className="dialog-header">
+                                            <h2>Delete Confirmation</h2>
+                                            <button
+                                                className="close-dialog-btn"
+                                                onClick={cancelDelete}
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                        <div className="dialog-content">
+                                            <p>Are you sure to delete this?</p>
+                                        </div>
+                                        <div className="dialog-actions">
+                                            <button className="cancel-btn" onClick={cancelDelete}>
+                                                Cancel
+                                            </button>
+                                            <button className="delete-btn" onClick={confirmDelete}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-                <div className="preOrderFaqRight">
+                {/* <div className="preOrderFaqRight">
                     <div className="preOrderFaqRightHead">
-                        <p className="allFaq">Add new FAQ</p>
+                        <p className="allFaq">Add new Brand</p>
                     </div>
 
                     <div className="faqForm">
                         <label>Name</label>
-                        <input type="text" placeholder="Enter question" className="faqInp" />
+                        <input type="text" placeholder="Enter brand name" name="name" value={formData.name} onChange={handleDataChange} className="faqInp" />
                         <div className="faqForm-warranty">
 
                             <label>Logo</label>
@@ -181,14 +239,14 @@ export default function AllBrands() {
                             </div>
                         </div>
                         <label>Meta Name</label>
-                        <input type="text" placeholder="Enter question" className="faqInp" />
+                        <input type="text" placeholder="Enter meta title" name="metaTitle" value={formData.metaTitle} onChange={handleDataChange} className="faqInp" />
                         <label>Meta Description</label>
-                        <textarea type="text" placeholder="Enter answer" className="faqTxt" />
+                        <textarea type="text" placeholder="Enter meta description" name="metaDescription" value={formData.metaDescription} onChange={handleDataChange} className="faqTxt" />
                         <div className="inpSubBox">
-                            <input type="submit" value="Save" className="inpSub" />
+                            <input onClick={handleCreateBrand} type="submit" value="Save" className="inpSub" />
                         </div>
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </div>

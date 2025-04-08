@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Image as ImageIcon, Plus, X, Clock, Star, Link as LinkIcon } from 'lucide-react';
-import axios from 'axios';
+import apiInstance from '../../../utils/axios';
 
 const FlashDealCreate = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const FlashDealCreate = () => {
     banner: null,
     startDate: '',
     endDate: '',
-    products: [],
+    products: ["aaa"],
     status: true,
     featured: false,
     pageLink: ''
@@ -24,7 +24,7 @@ const FlashDealCreate = () => {
   // useEffect(() => {
   //   const fetchProducts = async () => {
   //     try {
-  //       const response = await axios.get('http://localhost:5001/api/products');
+  //       const response = await apiInstance.get('/products');
   //       setProducts(response.data);
   //     } catch (err) {
   //       console.error('Error fetching products:', err);
@@ -78,12 +78,12 @@ const FlashDealCreate = () => {
       if (formData.banner) data.append('banner', formData.banner);
       data.append('startDate', new Date(formData.startDate).toISOString());
       data.append('endDate', new Date(formData.endDate).toISOString());
-    //   data.append('status', formData.status);
-    //   data.append('featured', formData.featured);
-    //   data.append('pageLink', formData.pageLink);
+      data.append('status', formData.status);
+      data.append('featured', formData.featured);
+      data.append('pageLink', formData.pageLink);
       formData.products.forEach(product => data.append('products[]', product));
 
-       const response=await axios.post('http://localhost:5001/api/flash-deals', data);
+       const response=await apiInstance.post('/flash-deals', data);
 
       if (response.status === 201) {
         navigate('marketing/flash-deal');
@@ -126,6 +126,7 @@ const FlashDealCreate = () => {
         <form onSubmit={handleSubmit} className="p-6">
           {/* Flash Deal Information Section */}
           <div className="mb-8">
+          </div>
             <div className="flex items-center mb-6">
               <div className="w-1.5 h-8 bg-blue-600 rounded-full mr-3"></div>
               <h3 className="text-xl font-semibold text-gray-800">Flash Deal Information</h3>
@@ -295,7 +296,7 @@ const FlashDealCreate = () => {
               </div>
 
               {/* Status and Featured */}
-              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex items-center">
                   <div className="flex items-center h-5">
                     <input
@@ -328,10 +329,10 @@ const FlashDealCreate = () => {
                     <p className="text-xs text-gray-500">Highlight this deal on homepage</p>
                   </label>
                 </div>
-              </div> */}
+              </div>
 
               {/* Page Link */}
-              {/* <div>
+              <div>
                 <label htmlFor="pageLink" className="block text-sm font-medium text-gray-700 mb-2">
                   Page Link
                 </label>
@@ -348,7 +349,7 @@ const FlashDealCreate = () => {
                     placeholder="https://example.com/flash-sale"
                     className="block w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
-                </div> */}
+                </div>
               </div>
             </div>
 

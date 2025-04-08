@@ -97,15 +97,26 @@ export default function PreorderProducts() {
                                 <p className="poph1menuitem popActive">All (10)</p>
                                 <p className="poph1menuitem">Inhouse (7)</p>
                                 <p className="poph1menuitem">Sellers (3)</p>
-                            </div>
-                            <div className="poph1menuright">
                                 <p className="poph1menuitem">Published (7)</p>
                                 <p className="poph1menuitem">Unpublished (3)</p>
                                 <p className="poph1menuitem">Discounted (5)</p>
                             </div>
+                            {/* <div className="poph1menuright">
+                                <p className="poph1menuitem">Published (7)</p>
+                                <p className="poph1menuitem">Unpublished (3)</p>
+                                <p className="poph1menuitem">Discounted (5)</p>
+                            </div> */}
                         </div>
                         <div className="poplh2">
                             <div className="lower-menu">
+                            <select className="filter-dropdown">
+          <option value="">Bulk Action</option>
+          {/* ... (विकल्प) ... */}
+        </select>
+        <select className="filter-dropdown">
+          <option value="">Filter By Verification status</option>
+          {/* ... (विकल्प) ... */}
+        </select>
                                 <input type="text" placeholder="Type email to search" className="searchInput" />
                             </div>
                         </div>
