@@ -109,14 +109,14 @@ export default function PreorderProducts() {
                         </div>
                         <div className="poplh2">
                             <div className="lower-menu">
-                            <select className="filter-dropdown">
-          <option value="">Bulk Action</option>
-          {/* ... (विकल्प) ... */}
-        </select>
-        <select className="filter-dropdown">
-          <option value="">Filter By Verification status</option>
-          {/* ... (विकल्प) ... */}
-        </select>
+                            <select className="filter-dropdown responsive-select">
+                                    <option value="">Bulk Action</option>
+                                    {/* ... (विकल्प) ... */}
+                                </select>
+                                <select className="filter-dropdown responsive-select">
+                                    <option value="">Filter By Verification status</option>
+                                    {/* ... (विकल्प) ... */}
+                                </select>
                                 <input type="text" placeholder="Type email to search" className="searchInput" />
                             </div>
                         </div>
