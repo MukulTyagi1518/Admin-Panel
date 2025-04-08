@@ -1,6 +1,7 @@
 
 
-import { Delete, Edit, Trash } from "lucide-react";
+// import { Delete, Edit, Trash } from "lucide-react";
+import { Delete, Edit, Trash, Plus } from "lucide-react"
 import "./Colors.css";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -102,11 +103,22 @@ export default function PreOrderFaq() {
         setRoleToDelete(null);
       };
 
+      const handleForm = (e) => {
+        e.preventDefault();
+        navigate("/products/addnewcolor");
+      };
+
     return (
         <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox">
                 <div className="preOrderFaqLeft">
+                <div className="addbtn">
+                <button className="add-brand-btn"  onClick={handleForm} >
+                            <Plus size={16} /> Add New Color
+                        </button>
+                </div>
                     <div className="preOrderLeftUpper">
+                        
                         <p className="allFaq">All Colors</p>
                         <input type="text" placeholder="Type to search...." className="searchFaq" />
                     </div>

@@ -1,4 +1,5 @@
-import { Delete, Edit, Trash } from "lucide-react"
+// import { Delete, Edit, Trash,plus } from "lucide-react"
+import { Delete, Edit, Trash, Plus } from "lucide-react"
 import "./Allbrand.css"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -64,14 +65,26 @@ export default function AllBrands() {
         e.preventDefault();
         navigate("/products/editBrand");
       };
+      const handleForm = (e) => {
+        e.preventDefault();
+        navigate("/products/addnewbrand");
+      };
 
     return (
         <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox">
                 <div className="preOrderFaqLeft">
+                <div className="addbtn">
+                <button className="add-brand-btn"  onClick={handleForm} >
+                            <Plus size={16} /> Add New Brand
+                        </button>
+                </div>
                     <div className="preOrderLeftUpper">
+                        
                         <p className="allFaq">All Brands</p>
+                        
                         <input type="text" placeholder="Type to search...." className="searchFaq" />
+                        
                     </div>
                     <div className="preOrderLeftLower">
                         <div className="table-container faqTable">

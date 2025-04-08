@@ -123,6 +123,8 @@ import CarrierEdit from "./components/admin-settings/shipping/CarrierEdit.js";
 import CarrierCreate from "./components/admin-settings/shipping/CarrierCreate.js";
 import ReviewDetails from "./components/ReviewDetails.js";
 import QueriesDetail from "./components/QueriesDetail.js";
+import AddNewBrand from "./pages/products/AddNewBrand.js";
+import AddNewColor from "./pages/products/AddNewColor.js";
 
 
 
@@ -212,6 +214,8 @@ function App() {
                 />
                 <Route path="/products/editcolor" element={<ColorEdit />} />
                 <Route path="/products/editBrand" element={<BrandEdit />} />
+                <Route path="/products/addnewbrand" element={<AddNewBrand />} />
+                <Route path="/products/addnewcolor" element={<AddNewColor />} />
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
