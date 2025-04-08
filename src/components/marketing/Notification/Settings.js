@@ -13,11 +13,14 @@ const NotificationSettings = () => {
   });
 
   const handleChange = (e) => {
-    const { name, checked } = e.target;
-    setSettings(prev => ({
-      ...prev,
-      [name]: checked
-    }));
+    const { name } = e.target;
+    setSettings({
+        onlytext: false,
+        design1: false,
+        design2: false,
+        design3: false,
+        [name]: true,
+      });
   };
 
   const handleSubmit = (e) => {
@@ -60,10 +63,10 @@ const NotificationSettings = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-sm p-6">
         <div className="border-b border-gray-200 pb-4 mb-6">
-          <h1 className="text-2xl font-semibold text-gray-800">Notification Template Settings</h1>
-          <p className="text-gray-600 mt-1">Choose your preferred notification template style</p>
+          <h1 className="text-xl font-semibold text-gray-800">Notification Settings</h1>
+          <p className="text-sm text-gray-600 mt-1">You can add new types & upload image for every type. If you do not upload image or edit images from default types then default image will be shown.</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -73,7 +76,7 @@ const NotificationSettings = () => {
                 {group.map((item) => (
                   <div 
                     key={item.name}
-                    className="flex items-start justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-start justify-between p-4 border border-gray-200 rounded-lg shadow-md hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-start">
                       {item.image && (
@@ -81,13 +84,13 @@ const NotificationSettings = () => {
                           <img 
                             src={item.image} 
                             alt={item.title} 
-                            className="w-16 h-16 object-contain border border-gray-200 rounded"
+                            className="w-10 h-10 object-contain border border-gray-200 rounded"
                           />
                         </div>
                       )}
                       <div>
                         <h3 className="font-medium text-gray-800">{item.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+                        <p className="text-xs text-gray-500 mt-1">{item.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center h-5">

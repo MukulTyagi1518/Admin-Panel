@@ -101,6 +101,7 @@ import CreateCustomAlert from "./components/marketing/CustomAlert/CreateCustomAl
 import EditCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 import ReportsPage from "./components/delivery/ReportsPage.js";
 import Settings from "./components/marketing/Notification/Settings.js";
+import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -351,6 +352,7 @@ function App() {
                 </Route>
                 <Route path="notification">
                   <Route path="settings" element={<Settings />} />
+                  <Route path="types" element={<NotificationTypes />} />
                 </Route>
               </Route>
 
