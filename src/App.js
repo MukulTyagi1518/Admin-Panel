@@ -113,6 +113,10 @@ import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
 import Editinhouse from "./components/Edit/Editinhoue.jsx"
 import Editattribute from "./components/Edit/Editattribute.jsx"
+import Adminsetting from "./components/Adminsetting/Adminsetting.jsx" 
+import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
+import Edittax from "./components/Adminsetting/Edittax.jsx"
+import Apperence from "./components/Adminsetting/Apperence.jsx"
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -358,6 +362,11 @@ function App() {
                 <Route path="editInfo" element={<EditInfo/>} />
                 
               </Route>
+
+                 <Route path="/admin-settings/features" element={<Adminsetting />}/>
+                 <Route path="/admin-settings/tax" element={<Vaxtax />}/>
+                 <Route path="/admin-settings/apearence" element={<Apperence />}/>
+                 <Route path="edittax" element={<Edittax />}/>
 
                  <Route path="editinhouse" element={<Editinhouse />}/>
                  <Route path="editattribute" element={<Editattribute />}/>
