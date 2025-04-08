@@ -318,9 +318,7 @@
 
 
   
-
-
-  /* preOrderProducts.scss */
+/* preOrderProducts.scss */
 .preOrderProductsLowerHead {
     padding: .5cm;
     display: flex;
@@ -332,82 +330,196 @@
         display: flex;
         gap: .5cm;
         align-items: center;
-        flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-        justify-content: space-between; /* Distribute space between left and right menus */
+        flex-wrap: wrap;
+        justify-content: space-between;
 
         .poph1menuleft,
         .poph1menuright {
             display: flex;
             align-items: center;
-            gap: .2cm; /* Reduce gap for smaller screens */
-            flex-wrap: wrap; /* Allow menu items to wrap */
-            justify-content: flex-start; /* Align items to the start */
+            gap: .3cm; /* Slightly increased gap */
+            flex-wrap: wrap;
+            justify-content: flex-start;
         }
 
         .poph1menuitem {
-            padding: .1cm .3cm; /* Reduce padding */
+            padding: .15cm .4cm; /* Slightly increased padding */
             border: 1px solid grey;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 12px; /* Reduce font size */
+            font-size: 13px; /* Slightly increased font size */
             font-weight: 600;
-            margin-bottom: .2cm; /* Add some margin below each item when wrapped */
+            margin-bottom: .3cm; /* Slightly increased margin */
         }
     }
 
     .poplh2 {
         .lower-menu {
-            width: 100%; /* Make search input full width on smaller screens */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5cm;
+            align-items: center;
+            width: 100%;
+        }
 
-            .searchInput {
-                width: calc(100% - .2cm); /* Adjust width for padding/border */
-                padding: .3cm .5cm;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                font-size: 14px;
-            }
+        .responsive-select {
+            flex: 1 1 auto; /* Distribute space more evenly */
+            min-width: 150px; /* Ensure a minimum width */
+            max-width: 250px; /* Set a reasonable maximum width */
+            padding: .3cm .5cm;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position-x: 95%;
+            background-position-y: center;
+        }
+
+        .searchInput {
+            flex-grow: 2; /* Allow search to take more space */
+            min-width: 200px;
+            padding: .3cm .5cm;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
         }
     }
 
-    /* Media query for screens smaller than 768px (typical mobile) */
-    @media (max-width: 768px) {
-        padding: .3cm;
+    /* Media query for screens smaller than 600px (more aggressive mobile) */
+    @media (max-width: 600px) {
+        padding: .2cm;
 
         .poplh1 {
-            flex-direction: column; /* Stack left and right menus */
+            flex-direction: column;
             align-items: flex-start;
 
             .poph1menuleft,
             .poph1menuright {
                 width: 100%;
-                justify-content: flex-start;
+                gap: 0.2cm;
+            }
+
+            .poph1menuitem {
+                font-size: 12px;
+                padding: .1cm .3cm;
+                margin-bottom: .2cm;
             }
         }
 
         .poplh2 {
             .lower-menu {
-                .searchInput {
-                    font-size: 12px;
-                }
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3cm;
+            }
+
+            .responsive-select,
+            .searchInput {
+                width: 100%;
+                min-width: auto;
+                max-width: none;
+                font-size: 13px;
             }
         }
     }
 
-    /* Media query for screens between 769px and 1400px (tablets/smaller desktops) */
-    @media (min-width: 769px) and (max-width: 1400px) {
+    /* Media query for screens between 601px and 900px (smaller tablets) */
+    @media (min-width: 601px) and (max-width: 900px) {
+        padding: .3cm;
+
+        .poplh1 {
+            gap: 0.3cm;
+
+            .poph1menuleft,
+            .poph1menuright {
+                gap: 0.2cm;
+            }
+
+            .poph1menuitem {
+                font-size: 12px;
+                padding: .12cm .35cm;
+                margin-bottom: .25cm;
+            }
+        }
+
+        .poplh2 {
+            .lower-menu {
+                gap: 0.3cm;
+            }
+
+            .responsive-select,
+            .searchInput {
+                font-size: 13px;
+            }
+        }
+    }
+
+    /* Media query for screens between 901px and 1200px (larger tablets/small laptops) */
+    @media (min-width: 901px) and (max-width: 1200px) {
         padding: .4cm;
 
         .poplh1 {
+            gap: 0.4cm;
+
             .poph1menuleft,
             .poph1menuright {
-                gap: .3cm;
+                gap: 0.25cm;
             }
 
             .poph1menuitem {
                 font-size: 13px;
-                padding: .12cm .4cm;
+                padding: .14cm .38cm;
+                margin-bottom: .3cm;
             }
-            
+        }
+
+        .poplh2 {
+            .lower-menu {
+                gap: 0.4cm;
+            }
+
+            .responsive-select,
+            .searchInput {
+                font-size: 14px;
+            }
+        }
+    }
+
+    /* Default styles for larger screens (implied by no media query) */
+    padding: .5cm; /* Reset default padding */
+
+    .poplh1 {
+        gap: .5cm; /* Reset default gap */
+
+        .poph1menuleft,
+        .poph1menuright {
+            gap: .3cm; /* Reset default gap */
+        }
+
+        .poph1menuitem {
+            font-size: 13px; /* Reset default font size */
+            padding: .15cm .4cm; /* Reset default padding */
+            margin-bottom: .3cm; /* Reset default margin */
+        }
+    }
+
+    .poplh2 {
+        .lower-menu {
+            gap: 0.5cm; /* Reset default gap */
+            align-items: center; /* Ensure alignment on larger screens */
+        }
+
+        .responsive-select {
+            flex: 1 1 auto;
+            min-width: 150px;
+            max-width: 250px;
+            font-size: 14px; /* Reset default font size */
+        }
+
+        .searchInput {
+            font-size: 14px; /* Reset default font size */
         }
     }
 }

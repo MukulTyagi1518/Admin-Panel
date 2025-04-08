@@ -148,6 +148,7 @@ import Edittax from "./components/Adminsetting/Edittax.jsx"
 import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
 import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
+import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -228,6 +229,7 @@ function App() {
                   <Route path="warranty" element={<Warrenty />} />
 
 
+
                   <Route
                     path="frequently-bought"
                     element={<FrequentlyBought />}
@@ -254,6 +256,9 @@ function App() {
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
+               
+
+
                 <Route path="warranty" element={<Warrenty />} />
                 <Route path="colour" element={<Colors />} />
                 <Route path="review" element={<Review />} />
@@ -268,6 +273,7 @@ function App() {
                 />
               </Route>
 
+              <Route path="attribute-value-info/:id" element={<AttributeValueInfo />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
               <Route path="/" element={<Dashboard />} />
