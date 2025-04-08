@@ -147,6 +147,7 @@ import Edittax from "./components/Adminsetting/Edittax.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
+import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -429,6 +430,7 @@ function App() {
                 </Route>
                 <Route path="notification">
                   <Route path="settings" element={<Settings />} />
+                  <Route path="types" element={<NotificationTypes />} />
                 </Route>
               </Route>
 

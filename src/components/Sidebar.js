@@ -169,7 +169,8 @@ const menuItems = [
         name:"Notification",
         path:"/marketing/notification",
         subItems:[
-          {name:"Settings" , path:"/marketing/notification/settings"}
+          {name:"Settings" , path:"/marketing/notification/settings"},
+          {name:"Notification Types" , path:"/marketing/notification/types"}
         ]
       }
     ],
