@@ -1,42 +1,100 @@
-import React from 'react'
-import ImagePreview from './ImagePreview'
+// import React from 'react'
+// import ImagePreview from './ImagePreview'
 
-const useImageUploadGroup = ({ group, groupIndex, onImageUpload, onRemoveImage, onRemoveGroup }) => (
-  <div className="mb-6 relative">
-    {groupIndex > 0 && (
-      <button
-        onClick={() => onRemoveGroup(groupIndex)}
-        className="absolute top-0 right-0 text-white bg-red-500 hover:bg-red-600 rounded-full p-1.5 transition-colors"
-      >
-        ✕
-      </button>
-    )}
-    <label className="block w-full">
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        onChange={(e) => onImageUpload(e, groupIndex)}
-        className="block w-full text-sm text-gray-500 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer transition-all"
-      />
-    </label>
+// const useImageUploadGroup = ({ group, groupIndex, onImageUpload, onRemoveImage, onRemoveGroup }) => (
+//   <div className="mb-6 relative">
+//     {groupIndex > 0 && (
+//       <button
+//         onClick={() => onRemoveGroup(groupIndex)}
+//         className="absolute top-0 right-0 text-white bg-red-500 hover:bg-red-600 rounded-full p-1.5 transition-colors"
+//       >
+//         ✕
+//       </button>
+//     )}
+//     <label className="block w-full">
+//       <input
+//         type="file"
+//         multiple
+//         accept="image/*"
+//         onChange={(e) => onImageUpload(e, groupIndex)}
+//         className="block w-full text-sm text-gray-500 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer transition-all"
+//       />
+//     </label>
 
-    <div className="mt-3 space-y-3">
-      {group.images.length > 0 ? (
-        group.images.map((image, imageIndex) => (
-          <ImagePreview
-            key={imageIndex}
-            image={image}
-            onRemove={() => onRemoveImage(groupIndex, imageIndex)}
-          />
-        ))
-      ) : (
-        <div className="text-center text-gray-400 text-sm py-3 bg-white rounded-lg border border-gray-150">
-          No images uploaded yet.
-        </div>
-      )}
-    </div>
-  </div>
-);
+//     <div className="mt-3 space-y-3">
+//       {group.images.length > 0 ? (
+//         group.images.map((image, imageIndex) => (
+//           <ImagePreview
+//             key={imageIndex}
+//             image={image}
+//             onRemove={() => onRemoveImage(groupIndex, imageIndex)}
+//           />
+//         ))
+//       ) : (
+//         <div className="text-center text-gray-400 text-sm py-3 bg-white rounded-lg border border-gray-150">
+//           No images uploaded yet.
+//         </div>
+//       )}
+//     </div>
+//   </div>
+// );
 
-export default useImageUploadGroup
+// export default useImageUploadGroup
+
+
+
+// src/components/settings/useImageUpload.js
+import { useState } from "react";
+
+function useImageUpload(initialGroups = [{ images: [] }], maxGroups = 3) {
+  const [imageGroups, setImageGroups] = useState(initialGroups);
+
+  const handleImageUpload = (event, groupIndex) => {
+    const files = Array.from(event.target.files);
+    const newImages = files.map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+    }));
+    setImageGroups((prev) => {
+      const newGroups = [...prev];
+      newGroups[groupIndex] = {
+        ...newGroups[groupIndex],
+        images: [...newGroups[groupIndex].images, ...newImages],
+      };
+      return newGroups;
+    });
+  };
+
+  const removeImage = (groupIndex, imageIndex) => {
+    setImageGroups((prev) => {
+      const newGroups = [...prev];
+      newGroups[groupIndex] = {
+        ...newGroups[groupIndex],
+        images: newGroups[groupIndex].images.filter((_, i) => i !== imageIndex),
+      };
+      return newGroups;
+    });
+  };
+
+  const addNewGroup = () => {
+    if (imageGroups.length < maxGroups) {
+      setImageGroups((prev) => [...prev, { images: [] }]);
+    } else {
+      alert(`Maximum of ${maxGroups} groups allowed.`);
+    }
+  };
+
+  const removeGroup = (groupIndex) => {
+    setImageGroups((prev) => prev.filter((_, i) => i !== groupIndex));
+  };
+
+  return {
+    imageGroups,
+    handleImageUpload,
+    removeImage,
+    addNewGroup,
+    removeGroup,
+  };
+}
+
+export default useImageUpload;
