@@ -1,86 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AllStaff.css";
 import { FaPlus, FaEdit, FaTrash, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AllStaff = () => {
   const [expandedRows, setExpandedRows] = useState({});
+  const [staffsData, setStaffsData] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
   const navigate = useNavigate();
 
-  const staffsData = [
-    {
-      id: 1,
-      name: "George M. Winters",
-      email: "staff@example.com",
-      phone: "662-817-4374",
-      role: "Product manager",
-    },
-    {
-      id: 2,
-      name: "Donna B. Cantrell",
-      email: "staff2@example.com",
-      phone: "+1 (586) 899-1627",
-      role: "Customer Service Representatives",
-    },
-    {
-      id: 3,
-      name: "Christian E. Guerra",
-      email: "staff3@example.com",
-      phone: "-1 (814) 387-2818",
-      role: "PPC Manager",
-    },
-    {
-      id: 4,
-      name: "Karen E. Towles",
-      email: "staff4@example.com",
-      phone: "-1540851-2369",
-      role: "Category Manager",
-    },
-    {
-      id: 5,
-      name: "Lindsay S Engel",
-      email: "staff5@example.com",
-      phone: "678-417-4134",
-      role: "Order clerks",
-    },
-    {
-        id:6,
-        name: "Lindsay S Engel",
-        email: "staff5@example.com",
-        phone: "678-417-4134",
-        role: "Order clerks",
-      },
-      {
-        id: 7,
-        name: "Lindsay S Engel",
-        email: "staff5@example.com",
-        phone: "678-417-4134",
-        role: "Order clerks",
-      },
-      {
-        id: 8,
-        name: "Lindsay S Engel",
-        email: "staff5@example.com",
-        phone: "678-417-4134",
-        role: "Order clerks",
-      },
-  ];
 
+  // ✅ GET API - Fetch staff data
+  useEffect(() => {
+    const fetchStaffs = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/staff/staff");
+        setStaffsData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch staff data:", error);
+      }
+    };
+
+    fetchStaffs();
+  }, []);
+
+  // ✅ Toggle row expansion for mobile view
   const toggleRow = (id) => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-  const handlereview = (e) => {
-    e.preventDefault();
+
+  // ✅ Navigate to Add Staff page
+  const handleAddStaff = () => {
     navigate("/staffs/create");
   };
-  const handleStaff = (e) => {
-    e.preventDefault();
-    navigate("/staffs/editInfo");
+
+  // ✅ Navigate to Edit Staff page
+  const handleEditStaff = (staffId) => {
+    if (staffId) {
+      navigate(`/staffs/editInfo/${staffId}`);
+    } else {
+      console.warn("Missing staff ID for edit.");
+    }
   };
+
+  // ✅ Delete staff and update UI
+  const handleDeleteStaff = async (staffId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this staff?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/staff/${staffId}`);
+      setStaffsData((prev) => prev.filter((staff) => staff._id !== staffId));
+    } catch (error) {
+      console.error("Failed to delete staff:", error);
+      alert("Delete failed. Please try again.");
+    }
+  };
+  const confirmDelete = () => {
+    // Implement your delete logic here
+    console.log(`Deleting role with ID: ${roleToDelete}`);
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
   return (
     <div className="all-staffs-container">
       <h1 className="staff">All Staffs</h1>
-      <button className="add-new-staffs-button mb-5"   onClick={handlereview}>Add New Staffs</button>
+      <button className="add-new-staffs-button mb-5" onClick={handleAddStaff}>
+        Add New Staffs
+      </button>
+
       <table className="staffs-table">
         <thead>
           <tr>
@@ -94,65 +90,50 @@ const AllStaff = () => {
           </tr>
         </thead>
         <tbody>
-          {staffsData.map((staff) => (
-            <React.Fragment key={staff.id}>
+          {staffsData.map((staff, index) => (
+            <React.Fragment key={staff._id || index}>
               <tr>
-                <td> <button className="responsive-expand-button" onClick={() => toggleRow(staff.id)}>
-                      {expandedRows[staff.id] ? <FaMinus /> : <FaPlus />  }
-                    </button></td>
-                <td className="hide-on-responsive">{staff.id}</td>
+                <td>
+                  <button className="responsive-expand-button" onClick={() => toggleRow(staff._id || index)}>
+                    {expandedRows[staff._id || index] ? <FaMinus /> : <FaPlus />}
+                  </button>
+                </td>
+                <td className="hide-on-responsive">{index + 1}</td>
                 <td>{staff.name}</td>
                 <td className="hide-on-responsive">{staff.email}</td>
                 <td className="hide-on-responsive">{staff.phone}</td>
                 <td className="hide-on-responsive">{staff.role}</td>
                 <td>
                   <div className="options-container">
-                   
-                    <FaEdit className="edit-icon"  onClick={handleStaff}/>
-                    <FaTrash className="delete-icon" />
+                    <FaEdit className="edit-icon" onClick={() => handleEditStaff(staff._id)} />
+                    <FaTrash className="delete-icon" onClick={() => handleDeleteStaff(staff._id)} />
                   </div>
                 </td>
               </tr>
-              {/* {expandedRows[staff.id] && (
+
+              {/* Responsive row */}
+              {expandedRows[staff._id || index] && (
                 <tr className="expanded-row">
-                  <td colSpan="6">
-                    <div className="expanded-details">
-                      <p>
-                        <strong>Email:</strong> {staff.email}
-                      </p>
-                      <p>
-                        <strong>Phone:</strong> {staff.phone}
-                      </p>
-                      <p>
-                        <strong>Role:</strong> {staff.role}
-                      </p>
-                    </div>
+                  <td colSpan="7">
+                    <table className="expanded-table">
+                      <tbody>
+                        <tr>
+                          <th>Email</th>
+                          <td>{staff.email}</td>
+                        </tr>
+                        <tr>
+                          <th>Phone</th>
+                          <td>{staff.phone}</td>
+                        </tr>
+                        <tr>
+                          <th>Role</th>
+                          <td>{staff.role}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </td>
                 </tr>
-              )} */}
-              {expandedRows[staff.id] && (
-  <tr className="expanded-row">
-    <td colSpan="7">
-      <table className="expanded-table">
-        <tbody>
-          <tr>
-            <th>Email</th>
-            <td>{staff.email}</td>
-          </tr>
-          <tr>
-            <th>Phone</th>
-            <td>{staff.phone}</td>
-          </tr>
-          <tr>
-            <th>Role</th>
-            <td>{staff.role}</td>
-          </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-)}
-
+              )}
             </React.Fragment>
           ))}
         </tbody>

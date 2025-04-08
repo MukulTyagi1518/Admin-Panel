@@ -2,9 +2,11 @@ import { Delete, Edit, Trash } from "lucide-react"
 import "./Allbrand.css"
 import { useEffect, useState } from "react";
 import apiInstance from "../../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AllBrands() {
-
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [roleToDelete, setRoleToDelete] = useState(null);
     const [fileName, setFileName] = useState("Choose file");
     const [formData, setFormData] = useState({
         name: "",
@@ -13,6 +15,28 @@ export default function AllBrands() {
     })
 
     const [logo, setLogo] = useState(null)
+    const navigate = useNavigate();
+
+
+    const handleDeleteClick = (roleId) => {
+        setRoleToDelete(roleId);
+        setShowDeleteConfirmation(true);
+    };
+
+    const confirmDelete = () => {
+        // Implement your delete logic here
+        console.log(`Deleting role with ID: ${roleToDelete}`);
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+    };
+
+
+
 
     const handleFileChange = (event) => {
         if (event.target.files.length > 0) {
@@ -37,7 +61,8 @@ export default function AllBrands() {
 
     const fetchBrands = async () => {
         const response = await apiInstance.get('/brands/getall')
-        setBrands(response.data)
+        console.log(response.data.data)
+        setBrands(response.data.data || [])
     }
 
     useEffect(() => {
@@ -90,9 +115,14 @@ export default function AllBrands() {
     }
 
 
+    const handlereview = (e) => {
+        e.preventDefault();
+        navigate("/products/editBrand");
+    };
+
     return (
         <div className="PreOrderFaq ma10">
-            <div className="preOrderFaqBox-brand"> 
+            <div className="preOrderFaqBox-brand">
                 <div className="preOrderFaqLeft">
                     <div className="preOrderLeftUpper">
                         <p className="allFaq">All Brands</p>
@@ -131,10 +161,10 @@ export default function AllBrands() {
                                             <td>
                                                 <div className="flex flex-row gap-[.3cm] ">
                                                     <div className="action">
-                                                        <Edit color="blue" size={18} />
+                                                        <Edit color="blue" size={18} onClick={handlereview} />
                                                     </div>
                                                     <div className="action">
-                                                        <Trash color="blue" size={18} onClick={() => { DeleteBrand(n._id) }} />
+                                                        <Trash color="blue" size={18} onClick={() => handleDeleteClick(n.id)} />
                                                     </div>
 
                                                 </div>
@@ -143,6 +173,32 @@ export default function AllBrands() {
                                     ))}
                                 </tbody>
                             </table>
+                            {showDeleteConfirmation && (
+                                <div className="delete-confirmation-overlay">
+                                    <div className="delete-confirmation-dialog">
+                                        <div className="dialog-header">
+                                            <h2>Delete Confirmation</h2>
+                                            <button
+                                                className="close-dialog-btn"
+                                                onClick={cancelDelete}
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                        <div className="dialog-content">
+                                            <p>Are you sure to delete this?</p>
+                                        </div>
+                                        <div className="dialog-actions">
+                                            <button className="cancel-btn" onClick={cancelDelete}>
+                                                Cancel
+                                            </button>
+                                            <button className="delete-btn" onClick={confirmDelete}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

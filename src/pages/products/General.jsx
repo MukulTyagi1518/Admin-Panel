@@ -4,6 +4,7 @@ import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
 import { Link } from "react-router-dom"
 import ProductCategory from "../../components/ProductCategory";
+import Switch from "../../components/Switch";
 
 const General = () => {
 
@@ -80,7 +81,7 @@ const General = () => {
       {/* Left Side - Form */}
       <div className="form-container-general">
         <h2>Product Information</h2>
-        
+
         <br />
         <div className="divider"></div>
         <form>
@@ -207,7 +208,7 @@ const General = () => {
               <label>Refundable?</label>
             </div>
             <div className="refund">
-              <input
+              {/* <input
                 type="checkbox"
                 id="refundToggle"
                 className="custom-toggle"
@@ -219,8 +220,18 @@ const General = () => {
                     refundable: !isRefundable ? true : false
                   }))
                 }}
-              />
-              <label htmlFor="refundToggle" className="toggle-label"></label>
+              /> */}
+              {/* <label htmlFor="refundToggle" className="toggle-label"></label> */}
+              <Switch id="refundToggle"
+                className="custom-toggle"
+                checked={isRefundable}
+                onChange={() => {
+                  setIsRefundable(!isRefundable)
+                  setProductData((prev) => ({
+                    ...prev,
+                    refundable: !isRefundable ? true : false
+                  }))
+                }}/>
             </div>
           </div>
 
@@ -242,7 +253,7 @@ const General = () => {
           <div className="divider"></div>
           <div className="toggle-group">
             <label>Featured</label>
-            <input
+            {/* <input
               type="checkbox"
               id="featuredToggle"
               className="custom-toggle"
@@ -254,13 +265,22 @@ const General = () => {
                   featured: !isFeatured ? true : false
                 }))
               }}
-            />
-            <label htmlFor="featuredToggle" className="toggle-label"></label>
+            /> */}
+            <Switch  className="custom-toggle"
+              checked={isFeatured}
+              onChange={() => {
+                setIsFeatured(!isFeatured)
+                setProductData((prev) => ({
+                  ...prev,
+                  featured: !isFeatured ? true : false
+                }))
+              }}/>
+            {/* <label htmlFor="featuredToggle" className="toggle-label"></label> */}
             <p>If you enable this, this product will be granted as a featured product.</p>
           </div>
           <div className="toggle-group">
             <label>Today's Deal</label>
-            <input
+            {/* <input
               type="checkbox"
               id="dealToggle"
               className="custom-toggle"
@@ -273,7 +293,17 @@ const General = () => {
                 }))
               }}
             />
-            <label htmlFor="dealToggle" className="toggle-label"></label>
+            <label htmlFor="dealToggle" className="toggle-label"></label> */}
+            <Switch id="dealToggle"
+              className="custom-toggle"
+              checked={isTodaysDeal}
+              onChange={() => {
+                setIsTodaysDeal(!isTodaysDeal)
+                setProductData((prev) => ({
+                  ...prev,
+                  todaysDeal: !isTodaysDeal ? true : false
+                }))
+              }}/>
             <p>If you enable this, this product will be granted as a today's deal product.</p>
           </div>
 
@@ -423,9 +453,9 @@ const General = () => {
 
 
 
-<div className="pro3">
-<ProductCategory/>
-</div>
+      <div className="pro3">
+        <ProductCategory />
+      </div>
 
 
     </div>

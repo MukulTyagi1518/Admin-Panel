@@ -59,7 +59,7 @@
     color: gold;
   }
   
-  .date-selection {
+  .date-selection-new {
     display: flex;
     gap: 15px;
     margin-bottom: 10px;
@@ -80,6 +80,7 @@
     background: #0056b3;
   }
   
+
   
   @media (max-width: 768px) {
     .custom-review-container {

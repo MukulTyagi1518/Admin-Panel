@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Addreview.css";
+import Switch from "../Switch";
 
 const CustomReviewForm = () => {
   const [category, setCategory] = useState("");
@@ -82,7 +83,7 @@ const handleToggleContent = () => {
 
         {/* Date Selection */}
         <label className="form-label">Date *</label>
-        <div className="date-selection">
+        <div className="date-selection-new">
           <label>
             <input
               type="radio"

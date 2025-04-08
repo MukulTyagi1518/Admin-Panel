@@ -249,35 +249,301 @@
 
 
 
-import React, { useState } from "react";
-import "./rating.css"; // Custom CSS
-import { FaStar, FaRegStar } from "react-icons/fa"; // FontAwesome Icons for Rating
+// import React, { useState } from "react";
+// import "./rating.css"; // Custom CSS
+// import { FaStar, FaRegStar } from "react-icons/fa"; // FontAwesome Icons for Rating
 
-const sellers = [
-  { id: 1, name: "LOUIS VUITTON", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/qf8pEDFmjfjIDYYGXaKtJ90ilKQMC7F1rXk2vQJr.webp", phone: "", email: "seller11@example.com", rating: 5, followers: 0, customFollowers: 0 },
-  { id: 2, name: "Adidas", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/AcQrue0Rc4krp9i0LsDXW8FcZ6z4YYWXOdcJL908.webp", phone: "", email: "seller8@example.com", rating: 4, followers: 0, customFollowers: 0 },
-  { id: 3, name: "Lavish Look", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/1RutGcPmMYvLHiatsxAVq9l8XMM3IiuuvGUq20yh.webp", phone: "", email: "seller7@example.com", rating: 3, followers: 1, customFollowers: 0 },
-  { id: 4, name: "Jhonson", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/py3XlBVjI3SEBiQPcyfs3vSlrqHCbBlPMNaDcoUR.webp", phone: "734-604-6681", email: "seller6@example.com", rating: 0, followers: 0, customFollowers: 0 },
-  { id: 3, name: "Apple Store", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/py3XlBVjI3SEBiQPcyfs3vSlrqHCbBlPMNaDcoUR.webp", phone: "", email: "seller7@example.com", rating: 3, followers: 1, customFollowers: 0 },
-  { id: 4, name: "Electroware", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/NMwkxm5oVRDoj2Mh8i4bP1DSDGneTkKMhAWYyBfc.webp", phone: "734-604-6681", email: "seller6@example.com", rating: 0, followers: 0, customFollowers: 0 },
-];
+// const sellers = [
+//   { id: 1, name: "LOUIS VUITTON", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/qf8pEDFmjfjIDYYGXaKtJ90ilKQMC7F1rXk2vQJr.webp", phone: "", email: "seller11@example.com", rating: 5, followers: 0, customFollowers: 0 },
+//   { id: 2, name: "Adidas", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/AcQrue0Rc4krp9i0LsDXW8FcZ6z4YYWXOdcJL908.webp", phone: "", email: "seller8@example.com", rating: 4, followers: 0, customFollowers: 0 },
+//   { id: 3, name: "Lavish Look", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/1RutGcPmMYvLHiatsxAVq9l8XMM3IiuuvGUq20yh.webp", phone: "", email: "seller7@example.com", rating: 3, followers: 1, customFollowers: 0 },
+//   { id: 4, name: "Jhonson", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/py3XlBVjI3SEBiQPcyfs3vSlrqHCbBlPMNaDcoUR.webp", phone: "734-604-6681", email: "seller6@example.com", rating: 0, followers: 0, customFollowers: 0 },
+//   { id: 3, name: "Apple Store", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/py3XlBVjI3SEBiQPcyfs3vSlrqHCbBlPMNaDcoUR.webp", phone: "", email: "seller7@example.com", rating: 3, followers: 1, customFollowers: 0 },
+//   { id: 4, name: "Electroware", image: "https://demo.activeitzone.com/ecommerce_repo/public/uploads/all/NMwkxm5oVRDoj2Mh8i4bP1DSDGneTkKMhAWYyBfc.webp", phone: "734-604-6681", email: "seller6@example.com", rating: 0, followers: 0, customFollowers: 0 },
+// ];
 
-const renderStars = (rating) => {
-  const totalStars = 5;
-  return (
-    <>
-      {[...Array(totalStars)].map((_, index) =>
-        index < rating ? <FaStar key={index} className="star filled" /> : <FaRegStar key={index} className="star" />
-      )}
-    </>
-  );
-};
+// const renderStars = (rating) => {
+//   const totalStars = 5;
+//   return (
+//     <>
+//       {[...Array(totalStars)].map((_, index) =>
+//         index < rating ? <FaStar key={index} className="star filled" /> : <FaRegStar key={index} className="star" />
+//       )}
+//     </>
+//   );
+// };
+
+// const Rating = () => {
+//   const [expandedRows, setExpandedRows] = useState({});
+//   const [showModal, setShowModal] = useState(false);
+//   const [modalSeller, setModalSeller] = useState(null);
+//   const [customFollowers, setCustomFollowers] = useState(0);
+
+//   const toggleRow = (id) => {
+//     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
+//   };
+
+//   const openModal = (seller) => {
+//     setModalSeller(seller);
+//     setCustomFollowers(seller.customFollowers);
+//     setShowModal(true);
+//   };
+
+//   const closeModal = () => {
+//     setShowModal(false);
+//     setModalSeller(null);
+//   };
+
+//   const handleSave = () => {
+//     // Implement save logic here
+//     console.log("Saving followers:", customFollowers, "for seller:", modalSeller);
+//     closeModal();
+//   };
+
+//   return (
+//     <div className="container">
+//       <h3 className="table-title">Sellers Review & Followers</h3>
+//       <table className="seller-table">
+//         <thead>
+//           <tr>
+//             <th className="toggle-col hide-on-large">+</th>
+//             <th>#</th>
+//             <th>Name</th>
+//             <th className="hide-on-small">Phone</th>
+//             <th className="hide-on-small">Email Address</th>
+//             <th className="hide-on-small">Rating</th>
+//             <th className="hide-on-small">Followers</th>
+//             <th className="hide-on-small">Custom Followers</th>
+//             <th>Options</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {sellers.map((seller) => (
+//             <React.Fragment key={seller.id}>
+//               <tr>
+//                 <td className="toggle-col hide-on-large">
+//                   <button className="toggle-btn" onClick={() => toggleRow(seller.id)}>
+//                     {expandedRows[seller.id] ? "−" : "+"}
+//                   </button>
+//                 </td>
+//                 <td>{seller.id}</td>
+//                 <td>
+//                   <div className="seller-info">
+//                     <img src={seller.image} alt={seller.name} className="seller-img" />
+//                     {seller.name}
+//                   </div>
+//                 </td>
+//                 <td className="hide-on-small">{seller.phone || "N/A"}</td>
+//                 <td className="hide-on-small">{seller.email}</td>
+//                 <td className="hide-on-small">{renderStars(seller.rating)}</td>
+//                 <td className="hide-on-small">{seller.followers}</td>
+//                 <td className="hide-on-small">{seller.customFollowers}</td>
+//                 <td>
+//                   <button className="btn btn-primary btn-sm" onClick={() => openModal(seller)}>Edit Custom Follower</button>
+//                 </td>
+//               </tr>
+//               {expandedRows[seller.id] && (
+//                 <tr className="expanded-row">
+//                   <td colSpan="9">
+//                     <table className="inner-table">
+//                       <tbody>
+//                         <tr>
+//                           <td>Phone</td>
+//                           <td>{seller.phone || "N/A"}</td>
+//                         </tr>
+//                         <tr>
+//                           <td>Email</td>
+//                           <td>{seller.email}</td>
+//                         </tr>
+//                         <tr>
+//                           <td>Rating</td>
+//                           <td>{renderStars(seller.rating)}</td>
+//                         </tr>
+//                         <tr>
+//                           <td>Followers</td>
+//                           <td>{seller.followers}</td>
+//                         </tr>
+//                         <tr>
+//                           <td>Custom Followers</td>
+//                           <td>{seller.customFollowers}</td>
+//                         </tr>
+//                       </tbody>
+//                     </table>
+//                   </td>
+//                 </tr>
+//               )}
+//             </React.Fragment>
+//           ))}
+//         </tbody>
+//       </table>
+
+//       {showModal && modalSeller && (
+//         <div className="modal">
+//           <div className="modal-content">
+//             <div className="modal-header">
+//               <h2>Edit Custom Followers for {modalSeller.name}</h2>
+//               <span className="close" onClick={closeModal}>&times;</span>
+//             </div>
+//             <div className="modal-body">
+//               <label htmlFor="customFollowers">Custom Followers:</label>
+//               <input
+//                 type="number"
+//                 id="customFollowers"
+//                 value={customFollowers}
+//                 onChange={(e) => setCustomFollowers(e.target.value)}
+//               />
+//             </div>
+//             <div className="modal-footer">
+//               <button className="save-btn" onClick={handleSave}>Save</button>
+//               <button className="cancel-btn" onClick={closeModal}>Cancel</button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Rating;
+
+// import React, { useState, useEffect } from "react";
+// import "./rating.css";
+// import { FaStar, FaRegStar } from "react-icons/fa";
+// import axios from "axios";
+
+// const Rating = () => {
+//   const [sellers, setSellers] = useState([]);
+//   const [expandedRows, setExpandedRows] = useState({});
+//   const [showModal, setShowModal] = useState(false);
+//   const [modalSeller, setModalSeller] = useState(null);
+//   const [customFollowers, setCustomFollowers] = useState(0);
+
+//   useEffect(() => {
+//     axios.get("http://localhost:5000/api/seller-reviews")
+//       .then((response) => setSellers(response.data))
+//       .catch((error) => console.error("Error fetching sellers:", error));
+//   }, []);
+
+//   const toggleRow = (id) => {
+//     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
+//   };
+
+//   const openModal = (seller) => {
+//     setModalSeller(seller);
+//     setCustomFollowers(seller.customFollowers);
+//     setShowModal(true);
+//   };
+
+//   const closeModal = () => {
+//     setShowModal(false);
+//     setModalSeller(null);
+//   };
+
+//   const handleSave = async () => {
+//     if (!modalSeller) return;
+    
+//     try {
+//       const response = await axios.put(`http://localhost:5000/api/seller-reviews/update-custom-followers/${modalSeller.id}`, {
+//         customFollowers,
+//       });
+
+//       setSellers((prevSellers) =>
+//         prevSellers.map((seller) =>
+//           seller.id === modalSeller.id ? { ...seller, customFollowers } : seller
+//         )
+//       );
+//       console.log("Update successful:", response.data);
+//       closeModal();
+//     } catch (error) {
+//       console.error("Error updating followers:", error);
+//     }
+//   };
+
+//   return (
+//     <div className="container">
+//       <h3 className="table-title">Sellers Review & Followers</h3>
+//       <table className="seller-table">
+//         <thead>
+//           <tr>
+//             <th>#</th>
+//             <th>Name</th>
+//             <th>Phone</th>
+//             <th>Email</th>
+//             <th>Rating</th>
+//             <th>Followers</th>
+//             <th>Custom Followers</th>
+//             <th>Options</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {sellers.map((seller) => (
+//             <tr key={seller.id}>
+//               <td>{seller.id}</td>
+//               <td>
+//                 <div className="seller-info">
+//                   <img src={seller.image} alt={seller.name} className="seller-img" />
+//                   {seller.name}
+//                 </div>
+//               </td>
+//               <td>{seller.phone || "N/A"}</td>
+//               <td>{seller.email}</td>
+//               <td>{[...Array(5)].map((_, index) => index < seller.rating ? <FaStar key={index} className="star filled" /> : <FaRegStar key={index} className="star" />)}</td>
+//               <td>{seller.followers}</td>
+//               <td>{seller.customFollowers}</td>
+//               <td>
+//                 <button className="btn btn-primary btn-sm" onClick={() => openModal(seller)}>Edit Custom Followers</button>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+      
+//       {showModal && modalSeller && (
+//         <div className="modal">
+//           <div className="modal-content">
+//             <div className="modal-header">
+//               <h2>Edit Custom Followers for {modalSeller.name}</h2>
+//               <span className="close" onClick={closeModal}>&times;</span>
+//             </div>
+//             <div className="modal-body">
+//               <label htmlFor="customFollowers">Custom Followers:</label>
+//               <input
+//                 type="number"
+//                 id="customFollowers"
+//                 value={customFollowers}
+//                 onChange={(e) => setCustomFollowers(parseInt(e.target.value) || 0)}
+//               />
+//             </div>
+//             <div className="modal-footer">
+//               <button className="save-btn" onClick={handleSave}>Save</button>
+//               <button className="cancel-btn" onClick={closeModal}>Cancel</button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Rating;
+import React, { useState, useEffect } from "react";
+import "./rating.css";
+import { FaStar, FaRegStar } from "react-icons/fa";
+import axios from "axios";
 
 const Rating = () => {
+  const [sellers, setSellers] = useState([]);
   const [expandedRows, setExpandedRows] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [modalSeller, setModalSeller] = useState(null);
   const [customFollowers, setCustomFollowers] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/seller-reviews")
+      .then((response) => setSellers(response.data))
+      .catch((error) => console.error("Error fetching sellers:", error));
+  }, []);
 
   const toggleRow = (id) => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -285,7 +551,7 @@ const Rating = () => {
 
   const openModal = (seller) => {
     setModalSeller(seller);
-    setCustomFollowers(seller.customFollowers);
+    setCustomFollowers(seller.customFollowers || 0);
     setShowModal(true);
   };
 
@@ -294,10 +560,26 @@ const Rating = () => {
     setModalSeller(null);
   };
 
-  const handleSave = () => {
-    // Implement save logic here
-    console.log("Saving followers:", customFollowers, "for seller:", modalSeller);
-    closeModal();
+  const handleSave = async () => {
+    if (!modalSeller) return;
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/seller-reviews/update-custom-followers/${modalSeller._id}`, // Use _id
+        { customFollowers: Number(customFollowers) } // Ensure it's a number
+      );
+
+      setSellers((prevSellers) =>
+        prevSellers.map((seller) =>
+          seller._id === modalSeller._id ? { ...seller, customFollowers: Number(customFollowers) } : seller
+        )
+      );
+
+      console.log("Update successful:", response.data);
+      closeModal();
+    } catch (error) {
+      console.error("Error updating followers:", error);
+    }
   };
 
   return (
@@ -306,73 +588,41 @@ const Rating = () => {
       <table className="seller-table">
         <thead>
           <tr>
-            <th className="toggle-col hide-on-large">+</th>
             <th>#</th>
             <th>Name</th>
-            <th className="hide-on-small">Phone</th>
-            <th className="hide-on-small">Email Address</th>
-            <th className="hide-on-small">Rating</th>
-            <th className="hide-on-small">Followers</th>
-            <th className="hide-on-small">Custom Followers</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Rating</th>
+            <th>Followers</th>
+            <th>Custom Followers</th>
             <th>Options</th>
           </tr>
         </thead>
         <tbody>
           {sellers.map((seller) => (
-            <React.Fragment key={seller.id}>
-              <tr>
-                <td className="toggle-col hide-on-large">
-                  <button className="toggle-btn" onClick={() => toggleRow(seller.id)}>
-                    {expandedRows[seller.id] ? "−" : "+"}
-                  </button>
-                </td>
-                <td>{seller.id}</td>
-                <td>
-                  <div className="seller-info">
-                    <img src={seller.image} alt={seller.name} className="seller-img" />
-                    {seller.name}
-                  </div>
-                </td>
-                <td className="hide-on-small">{seller.phone || "N/A"}</td>
-                <td className="hide-on-small">{seller.email}</td>
-                <td className="hide-on-small">{renderStars(seller.rating)}</td>
-                <td className="hide-on-small">{seller.followers}</td>
-                <td className="hide-on-small">{seller.customFollowers}</td>
-                <td>
-                  <button className="btn btn-primary btn-sm" onClick={() => openModal(seller)}>Edit Custom Follower</button>
-                </td>
-              </tr>
-              {expandedRows[seller.id] && (
-                <tr className="expanded-row">
-                  <td colSpan="9">
-                    <table className="inner-table">
-                      <tbody>
-                        <tr>
-                          <td>Phone</td>
-                          <td>{seller.phone || "N/A"}</td>
-                        </tr>
-                        <tr>
-                          <td>Email</td>
-                          <td>{seller.email}</td>
-                        </tr>
-                        <tr>
-                          <td>Rating</td>
-                          <td>{renderStars(seller.rating)}</td>
-                        </tr>
-                        <tr>
-                          <td>Followers</td>
-                          <td>{seller.followers}</td>
-                        </tr>
-                        <tr>
-                          <td>Custom Followers</td>
-                          <td>{seller.customFollowers}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              )}
-            </React.Fragment>
+            <tr key={seller._id}>
+              <td>{seller._id}</td>
+              <td>
+                <div className="seller-info">
+                  <img src={seller.image} alt={seller.name} className="seller-img" />
+                  {seller.name}
+                </div>
+              </td>
+              <td>{seller.phone || "N/A"}</td>
+              <td>{seller.email}</td>
+              <td>
+                {[...Array(5)].map((_, index) =>
+                  index < seller.rating ? <FaStar key={index} className="star filled" /> : <FaRegStar key={index} className="star" />
+                )}
+              </td>
+              <td>{seller.followers}</td>
+              <td>{seller.customFollowers}</td>
+              <td>
+                <button className="btn btn-primary btn-sm" onClick={() => openModal(seller)}>
+                  Edit Custom Followers
+                </button>
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
@@ -382,7 +632,9 @@ const Rating = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h2>Edit Custom Followers for {modalSeller.name}</h2>
-              <span className="close" onClick={closeModal}>&times;</span>
+              <span className="close" onClick={closeModal}>
+                &times;
+              </span>
             </div>
             <div className="modal-body">
               <label htmlFor="customFollowers">Custom Followers:</label>
@@ -390,7 +642,7 @@ const Rating = () => {
                 type="number"
                 id="customFollowers"
                 value={customFollowers}
-                onChange={(e) => setCustomFollowers(e.target.value)}
+                onChange={(e) => setCustomFollowers(Number(e.target.value) || 0)}
               />
             </div>
             <div className="modal-footer">

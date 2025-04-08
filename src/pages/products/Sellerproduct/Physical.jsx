@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEdit, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { HiOutlineDuplicate } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import Switch from "../../../components/Switch";
 
 const ProductTable = () => {
 
@@ -101,10 +102,11 @@ const ProductTable = () => {
                 </td>
                 {["todayDeal", "published", "approved", "featured"].map((field) => (
                   <td className="p-3" key={field}>
-                    <label className="switch">
+                    {/* <label className="switch">
                       <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
                       <span className="slider"></span>
-                    </label>
+                    </label> */}
+                    <Switch/>
                   </td>
                 ))}
                 <td className="p-3 flex border-none space-x-2">

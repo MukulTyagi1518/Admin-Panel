@@ -2,6 +2,7 @@ import "./Colors.css";
 import { useState, useEffect, useRef } from "react";
 import { Edit, Trash } from "lucide-react";
 import apiInstance from "../../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 // 🎨 Color Name Detection API (Optional)
 const getColorName = async (hexCode) => {
@@ -21,6 +22,11 @@ export default function PreOrderFaq() {
         colorCode: "",
         colorFilterActivation: false
     });
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [roleToDelete, setRoleToDelete] = useState(null);
+
+    const navigate = useNavigate();
+
 
     const [colorsData, setColorsData] = useState([])
 
@@ -40,6 +46,11 @@ export default function PreOrderFaq() {
     useEffect(() => {
         fetchColorsData();
     }, []);
+
+    const handlereview = (e) => {
+        e.preventDefault();
+        navigate("/products/editcolor");
+    };
 
     // 🎨 Color Change Handler
     const handleColorChange = async (e) => {
@@ -72,6 +83,18 @@ export default function PreOrderFaq() {
         fetchColorsData();
     }
 
+    const confirmDelete = () => {
+        // Implement your delete logic here
+        console.log(`Deleting role with ID: ${roleToDelete}`);
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+    };
+
     return (
         <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox">
@@ -99,23 +122,50 @@ export default function PreOrderFaq() {
                                             <td>
                                                 <div className="flex flex-row gap-[.3cm]">
                                                     <div className="action">
-                                                        <Edit color="blue" size={18} />
+                                                        <Edit color="blue" size={18} onClick={handlereview} />
                                                     </div>
                                                     <div className="action">
                                                         <Trash onClick={() => { deleteColor(n._id) }} color="blue" size={18} />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                                    </div >
+                                                </div >
+                                            </td >
+                                        </tr >
+                                    ))
+                                    }
+                                </tbody >
+                            </table >
+                            {showDeleteConfirmation && (
+                                <div className="delete-confirmation-overlay">
+                                    <div className="delete-confirmation-dialog">
+                                        <div className="dialog-header">
+                                            <h2>Delete Confirmation</h2>
+                                            <button
+                                                className="close-dialog-btn"
+                                                onClick={cancelDelete}
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                        <div className="dialog-content">
+                                            <p>Are you sure to delete this?</p>
+                                        </div>
+                                        <div className="dialog-actions">
+                                            <button className="cancel-btn" onClick={cancelDelete}>
+                                                Cancel
+                                            </button>
+                                            <button className="delete-btn" onClick={confirmDelete}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div >
+                    </div >
+                </div >
 
                 {/* Right Side - Add Color Form */}
-                <div className="prerow">
+                < div className="prerow" >
                     <div className="preOrderFaqRight-new">
                         <div className="preOrderFaqRightHead">
                             <p className="allFaq">Add new Color</p>
@@ -178,11 +228,11 @@ export default function PreOrderFaq() {
 
                             <div className="inpSubBox">
                                 <input type="button" value="Save" className="inpSub" onClick={handleSubmit} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            </div >
+                        </div >
+                    </div >
+                </div >
+            </div >
+        </div >
     );
 }

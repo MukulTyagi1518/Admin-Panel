@@ -227,7 +227,7 @@ const handleExpandRow = (id) => {
         <div className="product-container2">
             <div className="header">
                 <div>All Products</div>
-                <button className="add-btn">Add New product</button>
+                <button className="add-btn" onClick={() => navigate("/products/create")}>Add New product</button>
             </div>
             <div className="filter-options">
                 <select className="filter-dropdown">
@@ -253,6 +253,7 @@ const handleExpandRow = (id) => {
                             <th>
                                 <input type="checkbox" className="check25" />
                             </th>
+                            
                             <th>Name</th>
                             <th>Added By</th>
                             <th>Info</th>

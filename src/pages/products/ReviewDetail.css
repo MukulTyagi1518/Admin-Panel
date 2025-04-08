@@ -1,11 +1,112 @@
-.review-detail-container {
-  width: 90%;
-  margin: 20px auto;
-  border: 1px solid #ddd;
-  padding: 30px;
-  font-family: sans-serif;
-}
-
+a.review-detail-container {
+    width: 90%;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    padding: 30px;
+    font-family: sans-serif;
+  }
+  
+  /* Header Section */
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-review-button {
+    background-color: #008080;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Product Info Section */
+  .product-review {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .product-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-image {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  /* Rating Section */
+  .rating {
+    text-align: right;
+    display: block;
+  }
+  
+  .rating-label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .star-rating {
+    color: gold;
+  }
+  
+  /* Review Tabs Section */
+  .review-tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    background-color: #e0e0e0;
+  }
+  
+  /* Review Table Header */
+  .review-header-row {
+    display: grid;
+    grid-template-columns: 5% 20% 5% 50% 20%;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    /* font-weight: bold; */
+    background-color: #f9f9f9;
+    text-align: left;
+    color: #949494;
+  }
+  .review-header-row .header-cell.pub{
+    text-align: right !important;
+  }
+  /* Review Item */
+  .review-item {
+    display: grid;
+    grid-template-columns: 5% 20% 5% 50% 20%;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Review Number */
+  .reviewer-info {
+    text-align: center;
+  }
+  
+  .review-item .review-number {
+    /* font-weight: bold; */
+  }
 /* Header Section */
 .review-header {
   display: flex;

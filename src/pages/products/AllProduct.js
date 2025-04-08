@@ -3,6 +3,7 @@ import "./allProduct.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { useProductContext } from "../../productContex";
 import Switch from "../../components/Switch";
+import { useNavigate } from "react-router-dom";
 
 const AllProduct = () => {
 
@@ -26,6 +27,11 @@ const AllProduct = () => {
 
   const [selectedSeller, setSelectedSeller] = useState("All Sellers");
   const [isSellerDropdownOpen, setIsSellerDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleEdit = (id) => {
+    navigate(`/editinhouse`);
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Adjust as needed
@@ -180,6 +186,7 @@ const AllProduct = () => {
               <th>
                 <input type="checkbox" className="check25" />
               </th>
+              {/* <th class="d-table-cell d-lg-none"></th> */}
               <th>Name</th>
               <th>Added By</th>
               <th>Info</th>
@@ -190,7 +197,7 @@ const AllProduct = () => {
               <th>Options</th>
             </tr>
           </thead>
-         
+
           <tbody>
             {allProducts && allProducts.map((product) => (
               <>
@@ -238,7 +245,7 @@ const AllProduct = () => {
                       />
                       <span className="slider"></span>
                     </label> */}
-                    <Switch/>
+                    <Switch />
                   </td>
                   <td className="hide-on-small">
                     {/* <label className="switch">
@@ -251,7 +258,7 @@ const AllProduct = () => {
                       />
                       <span className="slider"></span>
                     </label> */}
-                     <Switch/>
+                    <Switch />
                   </td>
                   <td className="hide-on-small">
                     {/* <label className="switch">
@@ -264,14 +271,14 @@ const AllProduct = () => {
                       />
                       <span className="slider"></span>
                     </label> */}
-                     <Switch/>
+                    <Switch />
                   </td>
                   <td className="hide-on-small ">
                     <button className="btn view-btn1">
                       <FaEye />
                     </button>
                     <button className="btn edit-btn1">
-                      <FaEdit />
+                      <FaEdit onClick={() => handleEdit(product.id)} />
                     </button>
                     <button className="btn delete-btn1">
                       <FaTrash />
@@ -279,23 +286,7 @@ const AllProduct = () => {
                   </td>
                 </tr>
 
-                {/* Expanded Row for Small Screens */}
-                {/* {product.expanded && (
-        <tr className="row-details">
-          <td colSpan="9">
-            <div className="details-container">
-              <div>Added By: {product.addedBy}</div>
-              <div>
-                Info: Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}
-              </div>
-              <div>Total Stock: {product.stock}</div>
-              <div>Today's Deal: {product.deal }</div>
-              <div>Published: {product.published}</div>
-              <div>Featured: {product.featured}</div>
-            </div>
-          </td>
-        </tr>
-      )} */}
+              
                 {product.expanded && (
                   <tr className="row-details mt-0">
                     <td colSpan="9">
@@ -309,7 +300,7 @@ const AllProduct = () => {
 
                         <div>
                           Today's Deal:
-                           <label className="switch">
+                          <label className="switch">
                             {/* <input
                               type="checkbox"
                               checked={product.deal}
@@ -318,9 +309,9 @@ const AllProduct = () => {
                               }
                             />
                             <span className="slider"></span> */}
-                             <Switch/>
-                          </label> 
-                          
+                            <Switch />
+                          </label>
+
                         </div>
 
                         <div>
@@ -334,9 +325,9 @@ const AllProduct = () => {
                               }
                             />
                             <span className="slider"></span> */}
-                            <Switch/>
+                            <Switch />
                           </label>
-                           
+
                         </div>
 
                         <div>
@@ -350,9 +341,9 @@ const AllProduct = () => {
                               }
                             />
                             <span className="slider"></span> */}
-                            <Switch/>
+                            <Switch />
                           </label>
-                          
+
                         </div>
 
                         <div>

@@ -3,6 +3,7 @@ import "./Allwholesale.css";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineSettings } from "react-icons/md";
 import { useState } from "react";
+import Switch from "../Switch";
 
 export default function PreOrderReviews() {
     const navigate = useNavigate();
@@ -107,22 +108,22 @@ export default function PreOrderReviews() {
                                 </td>
                                 <td>{user.totalstock}</td>
                                 <td>
-                                    <label className="switch">
-                                        <input type="checkbox" checked={user.todaysdeal} onChange={() => handleToggleChange(user.id, "todaysdeal")} />
-                                        <span className="slider"></span>
-                                    </label>
+                                    {/* <label className="switch"> */}
+                                        {/* <input type="checkbox" checked={user.todaysdeal} onChange={() => handleToggleChange(user.id, "todaysdeal")} /> */}<Switch/>
+                                        {/* <span className="slider"></span>
+                                    </label> */}
                                 </td>
                                 <td>
-                                    <label className="switch">
-                                        <input type="checkbox" checked={user.published} onChange={() => handleToggleChange(user.id, "published")} />
-                                        <span className="slider"></span>
-                                    </label>
+                                    {/* <label className="switch"> */}
+                                        {/* <input type="checkbox" checked={user.published} onChange={() => handleToggleChange(user.id, "published")} /> */}<Switch/> 
+                                        {/* <span className="slider"></span>
+                                    </label> */}
                                 </td>
                                 <td>
-                                    <label className="switch">
+                                    {/* <label className="switch">
                                         <input type="checkbox" checked={user.featured} onChange={() => handleToggleChange(user.id, "featured")} />
                                         <span className="slider"></span>
-                                    </label>
+                                    </label> */}<Switch/> 
                                 </td>
                                 <td>
                                     <div className="actions">
@@ -187,46 +188,52 @@ export default function PreOrderReviews() {
           {/* Toggle Switches */}
           <div className="flex items-center">
             <span className="font-medium text-gray-600">Today's Deal:</span>
+           
             <label className="inline-flex items-center cursor-pointer ml-auto">
-              <input
+              {/* <input
                 type="checkbox"
                 className="sr-only peer"
                 checked={user.todaysdeal}
                 onChange={() => handleToggleChange(user.id, "todaysdeal")}
               />
+             
               <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
                 <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
-              </div>
+              </div> */}
+               <Switch/>
             </label>
           </div>
 
           <div className="flex items-center">
             <span className="font-medium text-gray-600">Published:</span>
             <label className="inline-flex items-center cursor-pointer ml-auto">
-              <input
+              {/* <input
                 type="checkbox"
                 className="sr-only peer"
                 checked={user.published}
                 onChange={() => handleToggleChange(user.id, "published")}
               />
+               
               <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
                 <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
-              </div>
+              </div> */}
+              <Switch/>
             </label>
           </div>
 
           <div className="flex items-center">
             <span className="font-medium text-gray-600">Featured:</span>
             <label className="inline-flex items-center cursor-pointer ml-auto">
-              <input
+              {/* <input
                 type="checkbox"
                 className="sr-only peer"
                 checked={user.featured}
                 onChange={() => handleToggleChange(user.id, "featured")}
-              />
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
+              /> */}
+              <Switch/>
+              {/* <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
                 <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
-              </div>
+              </div> */}
             </label>
           </div>
         </div>
