@@ -2,8 +2,12 @@ import { Delete, Edit, Trash } from "lucide-react";
 import "./Attribute.css";
 import { MdOutlineSettings } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 export default function PreOrderFaq() {
+   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+      const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
@@ -23,6 +27,22 @@ export default function PreOrderFaq() {
     navigate("/products/settings");
 };
 
+const openDeleteConfirmation = (id) => {
+  setAttributeToDeleteId(id);
+  setShowDeleteConfirmation(true);
+};
+
+const closeDeleteConfirmation = () => {
+  setAttributeToDeleteId(null);
+  setShowDeleteConfirmation(false);
+};
+
+const handleDelete = (id) => {
+  // In a real application, you would make an API call here to delete the attribute
+  console.log(`Deleting attribute with ID: ${id}`);
+  // After successful deletion, you would likely update the 'attributes' state
+  closeDeleteConfirmation();
+};
 
   return (
     <div className="PreOrderFaq ma10">
@@ -57,7 +77,7 @@ export default function PreOrderFaq() {
                             <Edit color="blue" size={18} />
                           </div>
                           <div className="action">
-                            <Trash color="blue" size={18} />
+                            <Trash color="blue" size={18}      onClick={() => openDeleteConfirmation(n.id)}/>
                           </div>
                         </div>
                       </td>
@@ -82,6 +102,16 @@ export default function PreOrderFaq() {
             </div>
           </div>
         </div>
+        
+            {/* Render the Delete Confirmation Modal */}
+            {showDeleteConfirmation && (
+                <DeleteConfirmation
+                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
       </div>
     </div>
   );
