@@ -76,7 +76,7 @@ const AdminEmailTemplateEditor = () => {
        <div className="max-w-7xl mx-auto">
          <EditorPageHeader
            title={id ? "Edit Email Template" : "Create Email Template"}
-           backLink="/marketing/email-templates/common"
+           backLink="/marketing/email-templates/admin"
          />
  
          <div className="bg-white rounded-lg shadow p-6">

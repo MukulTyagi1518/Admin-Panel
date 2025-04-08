@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./EditInhouse.css";
+import "./Editinhouse.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
 import { Link, useParams } from "react-router-dom"
