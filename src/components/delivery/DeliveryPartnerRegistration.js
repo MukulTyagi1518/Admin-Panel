@@ -7,7 +7,8 @@ const DeliveryPartnerRegistration = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     personalInfo: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       phone: "",
       address: "",
@@ -31,7 +32,6 @@ const DeliveryPartnerRegistration = () => {
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [password, setPassword] = useState("");
-  const [useEmail, setUseEmail] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,8 +81,11 @@ const DeliveryPartnerRegistration = () => {
     const newErrors = {};
 
     // Personal Info Validation
-    if (!formData.personalInfo.fullName.trim()) {
-      newErrors.fullName = "Full name is required";
+    if (!formData.personalInfo.firstName.trim()) {
+      newErrors.firstName = "Full name is required";
+    }
+    if (!formData.personalInfo.lastName.trim()) {
+      newErrors.lastName = "Full name is required";
     }
 
     // At least one of phone or email is required
@@ -103,37 +106,37 @@ const DeliveryPartnerRegistration = () => {
       newErrors.password = "Password is required";
     }
 
- // Bank Details Validation
- if (!formData.bankDetails.accountName.trim()) {
-    newErrors.accountName = "Account name is required";
-  }
-  if (!formData.bankDetails.accountNumber.trim()) {
-    newErrors.accountNumber = "Account number is required";
-  }
-  if (!formData.bankDetails.bankName.trim()) {
-    newErrors.bankName = "Bank name is required";
-  }
-  if (!formData.bankDetails.ifscCode.trim()) {
-    newErrors.ifscCode = "IFSC code is required";
-  }
+    // Bank Details Validation
+    if (!formData.bankDetails.accountName.trim()) {
+      newErrors.accountName = "Account name is required";
+    }
+    if (!formData.bankDetails.accountNumber.trim()) {
+      newErrors.accountNumber = "Account number is required";
+    }
+    if (!formData.bankDetails.bankName.trim()) {
+      newErrors.bankName = "Bank name is required";
+    }
+    if (!formData.bankDetails.ifscCode.trim()) {
+      newErrors.ifscCode = "IFSC code is required";
+    }
 
-  // Documents Validation
-  if (!formData.documents.profilePhoto) {
-    newErrors.profilePhoto = "Profile photo is required";
-  }
-  if (!formData.documents.drivinglicense) {
-    newErrors.drivinglicense = "Driving license is required";
-  }
-  if (!formData.documents.aadharcard) {
-    newErrors.aadharcard = "Aadhar card is required";
-  }
+    // Documents Validation
+    if (!formData.documents.profilePhoto) {
+      newErrors.profilePhoto = "Profile photo is required";
+    }
+    if (!formData.documents.drivinglicense) {
+      newErrors.drivinglicense = "Driving license is required";
+    }
+    if (!formData.documents.aadharcard) {
+      newErrors.aadharcard = "Aadhar card is required";
+    }
 
-  setErrors(newErrors);
-      // Show toast for each error
-      if (Object.keys(newErrors).length > 0) {
-        Object.values(newErrors).forEach((error) => toast.error(error));
-      }
-  
+    setErrors(newErrors);
+    // Show toast for each error
+    if (Object.keys(newErrors).length > 0) {
+      Object.values(newErrors).forEach((error) => toast.error(error));
+    }
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -164,10 +167,9 @@ const DeliveryPartnerRegistration = () => {
     }
   };
 
-
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-              <ToastContainer />
+      <ToastContainer />
 
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
@@ -189,150 +191,154 @@ const DeliveryPartnerRegistration = () => {
                     Personal Information
                   </h2>
                   <div className="grid grid-cols-1 gap-y-4 gap-x-6 sm:grid-cols-6">
-                    <div className="sm:col-span-6">
+                    <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-gray-700">
-                        Full Name*
+                        First Name*
                       </label>
                       <input
                         type="text"
-                        name="personalInfo.fullName"
-                        value={formData.personalInfo.fullName}
+                        name="personalInfo.firstName"
+                        value={formData.personalInfo.firstName}
                         onChange={handleChange}
                         className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.fullName
+                          errors.firstName
                             ? "border-red-500 focus:ring-red-500 focus:border-red-500"
                             : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         } border p-2`}
                       />
-                      {errors.fullName && (
+                      {errors.firstName && (
                         <p className="mt-1 text-sm text-red-600">
-                          {errors.fullName}
+                          {errors.firstName}
+                        </p>
+                      )}
+                    </div>
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Last Name*
+                      </label>
+                      <input
+                        type="text"
+                        name="personalInfo.lastName"
+                        value={formData.personalInfo.lastName}
+                        onChange={handleChange}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
+                          errors.lastName
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        } border p-2`}
+                      />
+                      {errors.lastName && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.lastName}
                         </p>
                       )}
                     </div>
 
                     {/* Toggle between phone and email registration */}
-                      {!useEmail ? (
-                        <>
-                          <div className="sm:col-span-3">
-                            <label className="block text-sm font-medium text-gray-700">
-                              Phone Number
-                            </label>
-                            <div className="mt-1 flex rounded-md shadow-sm">
-                              <input
-                                type="tel"
-                                name="personalInfo.phone"
-                                value={formData.personalInfo.phone}
-                                onChange={handleChange}
-                                className={`flex-1 min-w-0 block w-full rounded-none rounded-l-md sm:text-sm ${
-                                  errors.contact || errors.otp
-                                    ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                                    : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                } border p-2`}
-                              />
-                              <button
-                                type="button"
-                                onClick={generateOtp}
-                                disabled={!formData.personalInfo.phone.trim()}
-                                className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                              >
-                                Send OTP
-                              </button>
-                            </div>
-                          </div>
-
-                          <div className="sm:col-span-3">
-                            <label className="block text-sm font-medium text-gray-700">
-                              OTP Verification*
-                            </label>
-                            <div className="flex gap-2">
-                              <input
-                                type="text"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                className={`flex-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                                  errors.otp
-                                    ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                                    : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                } border p-2`}
-                                placeholder="Enter OTP"
-                              />
-                              <button
-                                type="button"
-                                onClick={verifyOtp}
-                                disabled={!otp}
-                                className="inline-flex items-center px-3 rounded-md border border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                              >
-                                Verify
-                              </button>
-                            </div>
-                            {errors.otp && (
-                              <p className="mt-1 text-sm text-red-600">
-                                {errors.otp}
-                              </p>
-                            )}
-                            {otpVerified && (
-                              <p className="mt-1 text-sm text-green-600">
-                                ✓ Phone number verified
-                              </p>
-                            )}
-                          </div>
-
-                          <p
-                            className="text-sm text-blue-600 cursor-pointer hover:underline"
-                            onClick={() => setUseEmail(true)}
+                    <>
+                      <div className="sm:col-span-3">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Phone Number
+                        </label>
+                        <div className="mt-1 flex rounded-md shadow-sm">
+                          <input
+                            type="tel"
+                            name="personalInfo.phone"
+                            value={formData.personalInfo.phone}
+                            onChange={handleChange}
+                            className={`flex-1 min-w-0 block w-full rounded-none rounded-l-md sm:text-sm ${
+                              errors.contact || errors.otp
+                                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                                : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                            } border p-2`}
+                          />
+                          <button
+                            type="button"
+                            onClick={generateOtp}
+                            disabled={!formData.personalInfo.phone.trim()}
+                            className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            Register using email
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <div className="sm:col-span-3">
-                            <label className="block text-sm font-medium text-gray-700">
-                              Email
-                            </label>
-                            <input
-                              type="email"
-                              name="personalInfo.email"
-                              value={formData.personalInfo.email}
-                              onChange={handleChange}
-                              className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                                errors.contact || errors.password
-                                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                                  : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                              } border p-2`}
-                            />
-                          </div>
+                            Send OTP
+                          </button>
+                        </div>
+                      </div>
 
-                          <div className="sm:col-span-3">
-                            <label className="block text-sm font-medium text-gray-700">
-                              Password*
-                            </label>
-                            <input
-                              type="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                                errors.password
-                                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                                  : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                              } border p-2`}
-                            />
-                            {errors.password && (
-                              <p className="mt-1 text-sm text-red-600">
-                                {errors.password}
-                              </p>
-                            )}
-                          </div>
-
-                          <p
-                            className="text-sm text-blue-600 cursor-pointer hover:underline"
-                            onClick={() => setUseEmail(false)}
+                      <div className="sm:col-span-3">
+                        <label className="block text-sm font-medium text-gray-700">
+                          OTP Verification*
+                        </label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                            className={`flex-1 block w-full rounded-md shadow-sm sm:text-sm ${
+                              errors.otp
+                                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                                : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                            } border p-2`}
+                            placeholder="Enter OTP"
+                          />
+                          <button
+                            type="button"
+                            onClick={verifyOtp}
+                            disabled={!otp}
+                            className="inline-flex items-center px-3 rounded-md border border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            Register using phone number
+                            Verify
+                          </button>
+                        </div>
+                        {errors.otp && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.otp}
                           </p>
-                        </>
-                      )}
+                        )}
+                        {otpVerified && (
+                          <p className="mt-1 text-sm text-green-600">
+                            ✓ Phone number verified
+                          </p>
+                        )}
+                      </div>
+                    </>
+                    <>
+                      <div className="sm:col-span-3">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          name="personalInfo.email"
+                          value={formData.personalInfo.email}
+                          onChange={handleChange}
+                          className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
+                            errors.contact || errors.password
+                              ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
+                        />
+                      </div>
+
+                      <div className="sm:col-span-3">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Password*
+                        </label>
+                        <input
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
+                            errors.password
+                              ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
+                        />
+                        {errors.password && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.password}
+                          </p>
+                        )}
+                      </div>
+                    </>
 
                     {errors.contact && (
                       <div className="sm:col-span-6">
