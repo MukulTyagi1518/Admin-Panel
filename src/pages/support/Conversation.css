@@ -122,17 +122,16 @@ tr:last-child td {
     margin-left: 6px;
   }
   
-  .icon-btn {
-    /* background: #dbeafe; */
+  .icon-btn4 {
+    background: #dbeafe;
     border: none;
     border-radius: 50%;
     padding: 5px 10px;
     cursor: pointer;
   }
   
-  .delete-btn {
+  .delete-btn4 {
     background: #ffccd5;
- 
     margin-top: 5px;
   }
   
@@ -155,6 +154,7 @@ tr:last-child td {
   .expanded-row {
     background: #f0f0f0;
   }
+  
   
   .expanded-content {
     padding: 10px;

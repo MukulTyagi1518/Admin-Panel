@@ -110,6 +110,7 @@ import RolesCreate from "./pages/staffs/RolesCreate.js";
 import Edit from "./pages/staffs/Edit.js";
 import Supports from "./pages/support/Supports.js";
 import EditInfo from "./pages/staffs/editInfo.js";
+import EditInhouse from "./components/Edit/EditInhouse.js";
 import ActiveDeliveryPartner from "./components/delivery/AcitveDeliveryPartner.js";
 import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartner.js";
 import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
@@ -184,18 +185,6 @@ function App() {
 
 
 
-              <Route path="/wholesale/all" element={<Allwholesale />} />
-              <Route path="/wholesale/add" element={<Addwholesale />} />
-              <Route path="/products/Brandimport" element={<Brandimport />} />
-              <Route path="/products/bulk-import" element={<Bulkimport />} />
-              <Route path="/products/bulk-export" element={<Bulkexport />} />
-              <Route path="/sellers/verify" element={<Sellerverification />} />
-              <Route
-                path="/sellers/payout-request"
-                element={<Payoutrequest />}
-              />
-              <Route path="/wholesale/inhouse" element={<Inhouse />} />
-              <Route path="/wholesale/seller" element={<Sellerwholesale />} />
 
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>

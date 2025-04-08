@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import "./General.css";
+import "./EditInhouse.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
 import { Link } from "react-router-dom"
 import ProductCategory from "../../components/ProductCategory";
+import { useParams } from "react-router-dom";
 
-const General = () => {
+const EditInhouse = () => {
+
+    const { id } = useParams(); // Get the product ID from URL
 
   const [description, setDescription] = useState("");
   const [isRefundable, setIsRefundable] = useState(false);
@@ -432,4 +435,4 @@ const General = () => {
   );
 };
 
-export default General;
+export default EditInhouse;

@@ -1,0 +1,94 @@
+.category-container {
+    width: 330px; /* Default width for larger screens */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgb(213, 211, 211);
+}
+
+.category-list {
+    max-height: 350px;
+    overflow-y: auto;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.pro3 {
+    margin-top: 100px !important;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.sub-category {
+    margin-left: 20px;
+}
+
+.sub-sub-category {
+    margin-left: 40px;
+}
+
+.expand-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+hr {
+    color: #110f0f !important;
+}
+
+.category-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 5px;
+    padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .category-container {
+        width: 300px; /* Slightly smaller for medium screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .category-container {
+        width: 100%; /* Full width on smaller screens */
+        max-width: 400px; /* Limit max width for better readability */
+        margin: 0 auto; /* Center the container */
+    }
+    .pro3 {
+        margin-top: 20px !important; /* Adjust margin for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .category-container {
+        width: 100%; /* Full width on smaller screens */
+        max-width: none; /* Remove max width constraint */
+        margin: 10px 0;
+    }
+
+    .pro3 {
+        margin-top: 10px !important; /* Adjust margin for smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .sub-category, .sub-sub-category{
+        margin-left: 10px;
+    }
+}
