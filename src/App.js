@@ -146,7 +146,6 @@ import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
 import Edittax from "./components/Adminsetting/Edittax.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
-import Apperence from "./components/Adminsetting/Apperence.jsx"
 import AttributeDetail from "./pages/products/AttributeDetail.js";
 
 function App() {
