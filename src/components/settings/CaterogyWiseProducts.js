@@ -240,22 +240,7 @@ const CategoryItem = ({
 };
 
 const Categories = () => {
-  const [categories, setCategories] = useState([
-    {
-      name: "Women Clothing & Fashion",
-      subitems: ["Dresses", "Tops", "Bottoms"],
-    },
-    {
-      name: "Men Clothing & Fashion",
-      subitems: ["Shirts", "Trousers", "Accessories"],
-    },
-    { name: "Kids & Toy", subitems: ["Toys", "Games", "Clothing"] },
-    {
-      name: "Cellphones & Tabs",
-      subitems: ["Smartphones", "Tablets", "Accessories"],
-    },
-  ]);
-
+  const [categories, setCategories] = useState([]);
   const [openIndex, setOpenIndex] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -296,48 +281,43 @@ const Categories = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  // const handleSave = async () => {
-  //   setLoading(true);
-  //   try {
-  //     for (const cat of categories) {
-  //       const trimmedName = cat.name.trim();
-  //       if (!trimmedName) continue; // Skip categories without a valid name
-  
-  //       const validSubcategories = cat.subitems
-  //         .map((s) => s.trim())
-  //         .filter((s) => s.length > 0);
-  
-  //       await axios.post("http://localhost:5000/api/categorywiseproductt", {
-  //         category: trimmedName,
-  //         subcategories: validSubcategories,
-  //       });
-  //     }
-  //     alert("Categories saved successfully!");
-  //   } catch (error) {
-  //     console.error("Save Error:", error.response?.data || error.message);
-  //     alert("Failed to save categories.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleSave = async () => {
     setLoading(true);
     try {
-      const filtered = categories.filter(cat => cat.name.trim());
-  
+      const filtered = categories.filter((cat) => cat.name.trim());
+
       for (const cat of filtered) {
         const trimmedName = cat.name.trim();
-  
+
         const validSubcategories = cat.subitems
           .map((s) => s.trim())
           .filter((s) => s.length > 0);
-  
-        await axios.post("http://localhost:5000/api/categorywiseproductt", {
-          category: trimmedName,
-          subcategories: validSubcategories,
-        });
+
+        try {
+          const res = await axios.post(
+            "http://localhost:5000/api/categorywiseproductt",
+            {
+              category: trimmedName,
+              subcategories: validSubcategories,
+            }
+          );
+
+          console.log(res.data.message || `Category "${trimmedName}" added.`);
+        } catch (innerErr) {
+          const errorMsg = innerErr.response?.data?.error || innerErr.message;
+          console.error(`Error adding category "${trimmedName}":`, errorMsg);
+
+          if (
+            errorMsg.includes("duplicate key") ||
+            errorMsg.includes("Category already exists")
+          ) {
+            console.warn(`Duplicate category skipped: "${trimmedName}"`);
+          } else {
+            throw innerErr;
+          }
+        }
       }
-  
+
       alert("Categories saved successfully!");
     } catch (error) {
       console.error("Save Error:", error.response?.data || error.message);
@@ -346,7 +326,7 @@ const Categories = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="p-6 bg-gray-50 rounded-lg shadow-sm">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Categories</h2>
