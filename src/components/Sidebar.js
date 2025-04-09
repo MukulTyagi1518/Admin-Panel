@@ -302,11 +302,11 @@ function Sidebar({ isSidebarVisible }) {
                   )}
                 </div>
                 {openItems[subItem.name] && (
-                  <ul className="flex flex-col">{renderSubItems(subItem.subItems)}</ul>
+                  <ul className="flex flex-col  ">{renderSubItems(subItem.subItems)}</ul>
                 )}
               </>
             ) : (
-              <span onClick={() => handleSubItemClick(subItem.path)}>
+              <span className=" w-full " onClick={() => handleSubItemClick(subItem.path)}>
                 {subItem.name}
               </span>
             )}
@@ -354,16 +354,17 @@ function Sidebar({ isSidebarVisible }) {
             <div
               className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${openItems[index]
                 ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
-                : "text-white"
+                : "text-white "
                 }`}
               onClick={() => {
                 if (item.subItems && item.subItems.length > 0) {
                   toggleItem(index);
                 } else {
+
                   navigate(item.path);
                 }
               }}            >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2  ">
                 {item.icon}
                 {isSidebarVisible && <span>{item.name}</span>}
               </div>
@@ -380,7 +381,7 @@ function Sidebar({ isSidebarVisible }) {
               item.subItems &&
               item.subItems.length > 0 &&
               isSidebarVisible && (
-                <div className="pl-5">{renderSubItems(item.subItems)}</div>
+                <div className="pl-5 " >{renderSubItems(item.subItems)}</div>
               )}
           </div>
         ))}
