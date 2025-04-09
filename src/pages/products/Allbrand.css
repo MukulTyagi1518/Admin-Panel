@@ -36,14 +36,16 @@
     width: 20cm;
     border: 1px solid rgb(206, 206, 206);
     border-radius: 5px;
+    margin-left: 30%;
+    margin-top: 6%;
 }
 
-/* .preOrderFaqBox {
+.preOrderFaqBox-brand {
     display: flex;
     align-items: flex-start;
     gap: 0.3cm;
     padding: 0.5cm;
-} */
+}
 
 /* Form Heading */
 .preOrderFaqRightHead {
@@ -113,7 +115,7 @@
 
 
 @media (max-width: 768px) {
-    .preOrderFaqBox {
+    .preOrderFaqBox-brand {
         flex-direction: column;
         align-items: stretch;
         gap: 0.5cm;
@@ -124,6 +126,7 @@
         width: 100%;
     }
 
+    
     .preOrderFaqLeft {
         order: 1;
     }
@@ -195,4 +198,37 @@
 }
 
 
+.addbtn {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
 
+.add-brand-btn {
+    background-color: royalblue;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+/* Tablet and below */
+@media (max-width: 1024px) {
+    .addbtn {
+        justify-content: center;
+    }
+}
+
+/* Small devices like phones */
+@media (max-width: 480px) {
+    .add-brand-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}

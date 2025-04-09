@@ -1,6 +1,7 @@
-// 
+import { Ban, ChevronDownIcon, Eye, Trash, Trash2 } from "lucide-react"
+import "./preOrderQueries.scss"
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { Eye } from "lucide-react";
 import axios from "axios";
 import "./preOrderQueries.scss";
 

@@ -93,7 +93,7 @@
 
 
 /* ✅ Main Box Flex Fix */
-.preOrderFaqBox {
+.preOrderFaqBox-attribute {
     display: flex;
     flex-wrap: nowrap; 
     gap: 0.3cm;
@@ -111,16 +111,17 @@
 }
 
 /* ✅ Right Section */
-.preOrderFaqRight {
+.preOrderFaqRight-at {
     flex: 1; /* Right section ko 1 part dena */
-    min-width: 50%;
+    width: 50%;
+    height: 50%;
     border: 1px solid rgb(206, 206, 206);
     border-radius: 5px;
     padding: 0.5cm;
     box-sizing: border-box;
 }
 
-/* ✅ Upper Section */
+/* Upper Section */
 .preOrderLeftUpper {
     display: flex;
     justify-content: space-between;
@@ -128,21 +129,21 @@
     gap: 0.3cm;
 }
 
-/* ✅ Search Box */
+/* Search Box */
 .searchFaq {
     width: 100%;
     max-width: 300px;
 }
 
-/* ✅ Form & Inputs */
-.faqForm {
+/*  Form & Inputs */
+.faqForm-at {
     display: flex;
     flex-direction: column;
     gap: 0.3cm;
     padding: 0.5cm;
 }
 
-/* ✅ Form Input Width */
+/*  Form Input Width */
 .faqInp, .faqTxt {
     width: 100%;
     padding: 0.3cm;
@@ -151,16 +152,16 @@
     border: 1px solid rgb(206, 206, 206);
 }
 
-/* ✅ Submit Button */
-.inpSubBox {
+/*  Submit Button */
+.inpSubBox-at {
     display: flex;
     justify-content: flex-end;
     margin-top: 0.2cm;
 }
 
-/* ✅ Full Width Button on Mobile */
-.inpSub {
-    width: 100%;
+/*  Full Width Button on Mobile */
+.inpSub-at {
+   
     background-color: royalblue;
     color: white;
     padding: 0.2cm 0.5cm;
@@ -168,61 +169,65 @@
     cursor: pointer;
 }
 
-/* ✅ Table Fix */
+/*  Table Fix */
 .faqTable {
     width: 100%;
     border: 1px solid rgb(206, 206, 206);
     border-radius: 10px;
-    overflow-x: auto; /* 🎯 For Small Screens */
+    overflow-x: auto; 
 }
 
-/* ✅ Logo and Actions */
+/*  Logo and Actions */
 .actions {
     display: flex;
     justify-content: center;
     gap: 5px;
 }
 
-/* 📱✅ Final Media Queries */
+/* Final Media Queries */
 
-/* ✅ Tablets and Medium Screens */
+/*Tablets and Medium Screens */
 @media (max-width: 1024px) {
-    .preOrderFaqBox {
+    .preOrderFaqBox-attribute {
         flex-wrap: wrap;
     }
 
-    .preOrderFaqLeft,
-    .preOrderFaqRight {
+    .preOrderFaqLeft
+     {
         width: 100%;
+    }
+
+    .preOrderFaqRight-at {
+        width: 50%;
     }
 }
 
-/* ✅ Small Devices (768px and below) */
+/*  Small Devices (768px and below) */
 @media (max-width: 768px) {
-    .preOrderFaqBox {
-        flex-direction: column; /* 🎯 Stacked layout for small screens */
+    .preOrderFaqBox-attribute {
+        flex-direction: column; /*Stacked layout for small screens */
     }
 
     .preOrderFaqLeft,
-    .preOrderFaqRight {
+    .preOrderFaqRight-at {
         width: 100%;
     }
 }
 
-/* ✅ Extra Small Devices (480px and below) */
+/*  Extra Small Devices (480px and below) */
 @media (max-width: 480px) {
-    .faqForm {
+    .faqForm-at {
         padding: 0.2cm;
         gap: 0.2cm;
     }
 
     .faqInp,
     .faqTxt,
-    .inpSub {
-        width: 100%;
+    .inpSub-at {
+        width: 50%;
     }
 
-    .inpSubBox {
+    .inpSubBox-at {
         justify-content: center;
     }
 
@@ -233,7 +238,7 @@
     }
 }
 
-/* ✅ 390px and Smaller Screens */
+/*  390px and Smaller Screens */
 @media (max-width: 390px) {
     .allFaq {
         font-size: 16px;
@@ -245,7 +250,7 @@
         padding: 4px;
     }
 
-    .faqForm {
+    .faqForm-at {
         padding: 0.2cm;
         gap: 0.2cm;
     }
@@ -255,7 +260,7 @@
         width: 100%;
     }
 
-    .inpSub {
-        width: 100%;
+    .inpSub-at {
+        width: 50%;
     }
 }

@@ -141,7 +141,7 @@ input[type="checkbox"] {
 
 .btn4 {
     border: none;
-    background-color: transparent;
+    /* background-color: transparent; */
     cursor: pointer;
     font-size: 14px;
     margin: 0 4px;

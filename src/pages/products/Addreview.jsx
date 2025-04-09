@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Addreview.css";
+
 import { DataTable } from "../../components/marketing/EmailTemplate/MainPageComponents/DataTable";
 
 const CustomReviewForm = () => {
@@ -151,7 +152,7 @@ const CustomReviewForm = () => {
         </div>
 
         <label className="form-label">Date *</label>
-        <div className="date-selection">
+        <div className="date-selection-new">
           <label>
             <input
               type="radio"

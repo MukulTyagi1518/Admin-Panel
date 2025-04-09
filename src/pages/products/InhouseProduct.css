@@ -245,7 +245,7 @@ input[type="checkbox"] {
     }
 
    
-    .product-table2 th:nth-child(2) {
+    /* .product-table2 th:nth-child(2) {
         display: block !important;
         text-align: center !important;
         width: 100%;
@@ -255,7 +255,7 @@ input[type="checkbox"] {
         font-weight: bold;
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
-    }
+    } */
 
 
 

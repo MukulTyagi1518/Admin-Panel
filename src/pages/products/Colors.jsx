@@ -1,7 +1,9 @@
 import "./Colors.css";
 import { useState, useEffect, useRef } from "react";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Trash ,Plus} from "lucide-react";
 import apiInstance from "../../utils/axios";
+import { useNavigate } from "react-router-dom";
+import AddNewColor from "./AddNewColor";
 
 // 🎨 Color Name Detection API (Optional)
 const getColorName = async (hexCode) => {
@@ -21,6 +23,11 @@ export default function PreOrderFaq() {
         colorCode: "",
         colorFilterActivation: false
     });
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [roleToDelete, setRoleToDelete] = useState(null);
+
+    const navigate = useNavigate();
+
 
     const [colorsData, setColorsData] = useState([])
 
@@ -41,30 +48,40 @@ export default function PreOrderFaq() {
         fetchColorsData();
     }, []);
 
+    const handlereview = (e) => {
+        e.preventDefault();
+        navigate("/products/editcolor");
+    };
+
     // 🎨 Color Change Handler
-    const handleColorChange = async (e) => {
-        const newColor = e.target.value;
-        const colorName = await getColorName(newColor);
-        setFormData((prev) => ({ ...prev, colorCode: newColor, name: colorName }));
-    };
+    // const handleColorChange = async (e) => {
+    //     const newColor = e.target.value;
+    //     const colorName = await getColorName(newColor);
+    //     setFormData((prev) => ({ ...prev, colorCode: newColor, name: colorName }));
+    // };
 
-    const handleToggleFilter = () => {
-        setFormData((prev) => ({
-            ...prev,
-            colorFilterActivation: !prev.colorFilterActivation
-        }));
-    };
+    // const handleToggleFilter = () => {
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         colorFilterActivation: !prev.colorFilterActivation
+    //     }));
+    // };
 
-    const handleSubmit = async () => {
-        await apiInstance.post('/colors/create', formData)
-        alert("New color added")
-        setFormData({
-            name: "",
-            colorCode: "",
-            colorFilterActivation: false
-        })
+    // const handleSubmit = async () => {
+    //     await apiInstance.post('/colors/create', formData)
+    //     alert("New color added")
+    //     setFormData({
+    //         name: "",
+    //         colorCode: "",
+    //         colorFilterActivation: false
+    //     })
+    //     fetchColorsData();
+    // };
+    
+    useEffect(() => {
         fetchColorsData();
-    };
+    }, []);
+
 
     const deleteColor = async (id) => {
         await apiInstance.delete(`colors/delete/${id}`)
@@ -72,14 +89,37 @@ export default function PreOrderFaq() {
         fetchColorsData();
     }
 
+    const confirmDelete = () => {
+        // Implement your delete logic here
+        console.log(`Deleting role with ID: ${roleToDelete}`);
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteConfirmation(false);
+        setRoleToDelete(null);
+    };
+
+      const handleForm = (e) => {
+        e.preventDefault();
+        navigate("/products/addnewcolor");
+      };
+
     return (
         <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox">
                 {/* Left Side - Color List */}
                 <div className="preOrderFaqLeft">
+                <div className="addbtn">
+                <button className="add-brand-btn"  onClick={handleForm} >
+                            <Plus size={16} /> Add New Color
+                        </button>
+                </div>
                     <div className="preOrderLeftUpper">
+                        
                         <p className="allFaq">All Colors</p>
-                        <input type="text" placeholder="Type to search...." className="searchFaq" />
+                        <input type="text" placeholder="Type to search...." className="searchFaq"  />
                     </div>
                     <div className="preOrderLeftLower">
                         <div className="table-container faqTable">
@@ -99,23 +139,50 @@ export default function PreOrderFaq() {
                                             <td>
                                                 <div className="flex flex-row gap-[.3cm]">
                                                     <div className="action">
-                                                        <Edit color="blue" size={18} />
+                                                        <Edit color="blue" size={18} onClick={handlereview} />
                                                     </div>
                                                     <div className="action">
                                                         <Trash onClick={() => { deleteColor(n._id) }} color="blue" size={18} />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                                    </div >
+                                                </div >
+                                            </td >
+                                        </tr >
+                                    ))
+                                    }
+                                </tbody >
+                            </table >
+                            {showDeleteConfirmation && (
+                                <div className="delete-confirmation-overlay">
+                                    <div className="delete-confirmation-dialog">
+                                        <div className="dialog-header">
+                                            <h2>Delete Confirmation</h2>
+                                            <button
+                                                className="close-dialog-btn"
+                                                onClick={cancelDelete}
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                        <div className="dialog-content">
+                                            <p>Are you sure to delete this?</p>
+                                        </div>
+                                        <div className="dialog-actions">
+                                            <button className="cancel-btn" onClick={cancelDelete}>
+                                                Cancel
+                                            </button>
+                                            <button className="delete-btn" onClick={confirmDelete}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div >
+                    </div >
+                </div >
 
                 {/* Right Side - Add Color Form */}
-                <div className="prerow">
+                {/* < div className="prerow" >
                     <div className="preOrderFaqRight-new">
                         <div className="preOrderFaqRightHead">
                             <p className="allFaq">Add new Color</p>
@@ -178,11 +245,16 @@ export default function PreOrderFaq() {
 
                             <div className="inpSubBox">
                                 <input type="button" value="Save" className="inpSub" onClick={handleSubmit} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            </div >
+                        </div >
+                    </div >
+                </div > */}
+
+
+{/* <div className="prerow">
+                    <AddNewColor onColorAdded={fetchColorsData} />
+                </div> */}
+            </div >
+        </div >
     );
 }

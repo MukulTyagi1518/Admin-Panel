@@ -187,7 +187,7 @@
 //     const handleApproveReject = async (id) => {
 //         const action = window.confirm("Approve this refund request? Click Cancel to Reject.");
 //         const status = action ? "approve" : "reject";
-    
+
 //         try {
 //             const res = await fetch(`http://localhost:5000/api/refund/${status}/${id}`, {
 //                 method: "PUT",
@@ -195,7 +195,7 @@
 //                     "Content-Type": "application/json",
 //                 },
 //             });
-    
+
 //             const result = await res.json();
 //             if (res.ok) {
 //                 alert(`Request ${status}d successfully!`);
@@ -208,7 +208,7 @@
 //             alert("Failed to update status.");
 //         }
 //     };
-    
+
 
 //     return (
 //         <div className="container mx-auto p-4">
@@ -330,10 +330,15 @@
 
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaEye, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
+import { RiRefund2Fill } from "react-icons/ri";
 
 const RefundRequestTable = () => {
     const [refundRequests, setRefundRequests] = useState([]);
     const [expandedRows, setExpandedRows] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [refundAmount, setRefundAmount] = useState("");
+    const [refundReason, setRefundReason] = useState("");
 
     const fetchRefundRequests = async () => {
         try {
@@ -356,6 +361,27 @@ const RefundRequestTable = () => {
         }));
     };
 
+    const openModal = (request) => {
+        setSelectedRequest(request);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedRequest(null);
+        setRefundAmount("");
+        setRefundReason("");
+    };
+
+    const handleRefundApproval = () => {
+        console.log("Refund Approved:", {
+            orderId: selectedRequest.id,
+            amount: refundAmount,
+            reason: refundReason,
+        });
+        closeModal();
+
+    }
     const handleApprove = async (id) => {
         try {
             const res = await fetch(`http://localhost:5000/api/refund/approve/${id}`, {
@@ -456,8 +482,8 @@ const RefundRequestTable = () => {
                                         </span>
                                     </td>
                                     <td className="px-4 py-3 border-none flex space-x-2">
-                                        <button className="bg-green-100 p-2 rounded-full">
-                                            <FaEye className="text-green-500" />
+                                        <button onClick={() => openModal(request)} className="bg-green-100 p-2 rounded-full">
+                                            <RiRefund2Fill className="text-green-500" />
                                         </button>
                                         <button className="bg-red-100 p-2 rounded-full" onClick={() => handleApprove(request._id)}>
                                             <FaEdit className="text-red-500" />
@@ -522,8 +548,8 @@ const RefundRequestTable = () => {
                                     </div>
 
                                     <div className="flex space-x-3 mt-4">
-                                        <button className="bg-green-100 p-2 rounded-full">
-                                            <FaEye className="text-green-500" />
+                                        <button onClick={() => openModal(request)} className="bg-green-100 p-2 rounded-full">
+                                            <RiRefund2Fill className="text-green-500" />
                                         </button>
                                         <button className="bg-red-100 p-2 rounded-full" onClick={() => handleApprove(request._id)}>
                                             <FaEdit className="text-red-500" />
@@ -537,6 +563,52 @@ const RefundRequestTable = () => {
                         </div>
                     ))}
                 </div>
+
+                {isModalOpen && selectedRequest && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                            <h3 className="text-lg font-semibold">Approve Refund Request</h3>
+                            <p className="mt-2 text-gray-600">Order Code: {selectedRequest.orderCode}</p>
+
+                            {/* <div className="mt-4">
+                                <label className="block text-sm font-medium text-gray-700">Refund Amount</label>
+                                <input
+                                    type="text"
+                                    className="w-full mt-1 p-2 border rounded-md"
+                                    value={refundAmount}
+                                    onChange={(e) => setRefundAmount(e.target.value)}
+                                />
+                            </div> */}
+
+                            <div className="mt-4">
+                                <label className="block text-sm font-medium text-gray-700">Reason</label>
+                                <textarea
+                                    className="w-full mt-1 p-2 border rounded-md"
+                                    rows="3"
+                                    value={refundReason}
+                                    onChange={(e) => setRefundReason(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="flex justify-end space-x-4 mt-4">
+                                <button
+                                    onClick={closeModal}
+                                    className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleRefundApproval}
+                                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                >
+                                    Approve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+
             </div>
         </div>
     );

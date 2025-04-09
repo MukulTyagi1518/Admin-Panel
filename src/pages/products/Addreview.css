@@ -59,7 +59,7 @@
     color: gold;
   }
   
-  .date-selection {
+  .date-selection-new {
     display: flex;
     gap: 15px;
     margin-bottom: 10px;
@@ -80,6 +80,7 @@
     background: #0056b3;
   }
   
+
   
   @media (max-width: 768px) {
     .custom-review-container {
@@ -97,6 +98,20 @@
   }
 
 
+/* Radio button */
+.date-selection-new input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+  accent-color: #007bff; }
+
+.date-selection-new label {
+  font-size: 14px;
+  margin-right: 20px;
+  display: inline-flex;
+  align-items: center;
+}
 
 
  

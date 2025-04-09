@@ -186,6 +186,7 @@ const AllProduct = () => {
               <th>
                 <input type="checkbox" className="check25" />
               </th>
+              {/* <th class="d-table-cell d-lg-none"></th> */}
               <th>Name</th>
               <th>Added By</th>
               <th>Info</th>
@@ -285,23 +286,7 @@ const AllProduct = () => {
                   </td>
                 </tr>
 
-                {/* Expanded Row for Small Screens */}
-                {/* {product.expanded && (
-        <tr className="row-details">
-          <td colSpan="9">
-            <div className="details-container">
-              <div>Added By: {product.addedBy}</div>
-              <div>
-                Info: Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}
-              </div>
-              <div>Total Stock: {product.stock}</div>
-              <div>Today's Deal: {product.deal }</div>
-              <div>Published: {product.published}</div>
-              <div>Featured: {product.featured}</div>
-            </div>
-          </td>
-        </tr>
-      )} */}
+              
                 {product.expanded && (
                   <tr className="row-details mt-0">
                     <td colSpan="9">

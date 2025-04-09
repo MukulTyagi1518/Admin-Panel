@@ -12,6 +12,8 @@ import axios from "axios";
 const Roles = () => {
   const navigate = useNavigate();
   const [roles, setRoles] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
 
   useEffect(() => {
     fetchRoles();
@@ -20,7 +22,7 @@ const Roles = () => {
   const fetchRoles = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/role");
-      
+
       if (Array.isArray(response.data)) {
         setRoles(response.data);
       } else if (Array.isArray(response.data.roles)) {
@@ -55,6 +57,18 @@ const Roles = () => {
     }
   };
 
+  const confirmDelete = () => {
+    // Implement your delete logic here
+    console.log(`Deleting role with ID: ${roleToDelete}`);
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  }
+
   return (
     <div className="role-container">
       <div className="header">
@@ -86,12 +100,39 @@ const Roles = () => {
                   className="delete-icon"
                   onClick={() => handleDeleteRole(role._id)}
                 />
-              </td>
-            </tr>
+              </td >
+            </tr >
           ))}
-        </tbody>
-      </table>
+        </tbody >
+      </table >
+
+  { showDeleteConfirmation && (
+    <div className="delete-confirmation-overlay">
+      <div className="delete-confirmation-dialog">
+        <div className="dialog-header">
+          <h2>Delete Confirmation</h2>
+          <button
+            className="close-dialog-btn"
+            onClick={cancelDelete}
+          >
+            X
+          </button>
+        </div>
+        <div className="dialog-content">
+          <p>Are you sure to delete this?</p>
+        </div>
+        <div className="dialog-actions">
+          <button className="cancel-btn" onClick={cancelDelete}>
+            Cancel
+          </button>
+          <button className="delete-btn" onClick={confirmDelete}>
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
+  )}
+    </div >
   );
 };
 

@@ -376,36 +376,39 @@ const handleExpandRow = (id) => {
         <div>
           Today's Deal:
           <label className="switch">
-            <input
+            {/* <input
               type="checkbox"
               checked={product.deal}
               onChange={() => handleToggleChange(product.id, "deal")}
             />
-            <span className="slider"></span>
+            <span className="slider"></span> */}
+             <Switch />
           </label>
         </div>
 
         <div>
           Published:
           <label className="switch">
-            <input
+            {/* <input
               type="checkbox"
               checked={product.published}
               onChange={() => handleToggleChange(product.id, "published")}
             />
-            <span className="slider"></span>
+            <span className="slider"></span> */}
+             <Switch/>
           </label>
         </div>
 
         <div>
           Featured:
           <label className="switch">
-            <input
+            {/* <input
               type="checkbox"
               checked={product.featured}
               onChange={() => handleToggleChange(product.id, "featured")}
             />
-            <span className="slider"></span>
+            <span className="slider"></span> */}
+             <Switch/>
           </label>
         </div>
 

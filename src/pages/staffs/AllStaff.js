@@ -7,7 +7,10 @@ import axios from "axios";
 const AllStaff = () => {
   const [expandedRows, setExpandedRows] = useState({});
   const [staffsData, setStaffsData] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
   const navigate = useNavigate();
+
 
   // ✅ GET API - Fetch staff data
   useEffect(() => {
@@ -54,6 +57,17 @@ const AllStaff = () => {
       console.error("Failed to delete staff:", error);
       alert("Delete failed. Please try again.");
     }
+  };
+  const confirmDelete = () => {
+    // Implement your delete logic here
+    console.log(`Deleting role with ID: ${roleToDelete}`);
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setRoleToDelete(null);
   };
 
   return (
