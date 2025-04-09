@@ -149,6 +149,9 @@ import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
 import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
 import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
+import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
+import Footer from "./components/webSettings/footerSettings/Footer.js";
+import Pages from "./components/webSettings/page/Pages.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -256,7 +259,7 @@ function App() {
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
-               
+
 
 
                 <Route path="warranty" element={<Warrenty />} />
@@ -526,6 +529,16 @@ function App() {
 
               <Route path="editinhouse" element={<Editinhouse />} />
               <Route path="editattribute" element={<Editattribute />} />
+
+
+              <Route path='/web-settings' >
+                <Route path='header' element={<HeaderDetails />} />
+                <Route path='footer' element={<Footer />} />
+                <Route path='page' element={<Pages />} />
+
+              </Route>
+
+
             </Routes>
           </div>
         </div >
