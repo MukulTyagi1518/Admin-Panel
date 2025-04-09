@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Inhouse.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../Switch";
+import DeleteConfirmation from "../DeleteConfirmation";
 
 const InhouseProduct = () => {
     const [products, setProducts] = useState([
@@ -114,6 +115,8 @@ const InhouseProduct = () => {
 
     const [expandedRow, setExpandedRow] = useState(null);
     
+     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+     const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
 const handleExpandRow = (id) => {
     setExpandedRow(expandedRow === id ? null : id);
@@ -170,6 +173,22 @@ const handleExpandRow = (id) => {
         return pages;
     };
 
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+  };
+
+  const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+  };
 
     const handleToggleChange = (id, field) => {
         setProducts((prevProducts) =>
@@ -227,21 +246,7 @@ const handleExpandRow = (id) => {
                     <option value="">All Sellers</option>
                     
                 </select> */}
-                {/* <div className="seller-dropdown">
-                    <div className="seller-dropdown-header" onClick={toggleSellerDropdown}>
-                        {selectedSeller}
-                        <span className={`arrow ${isSellerDropdownOpen ? "up" : "down"}`}></span>
-                    </div>
-                    {isSellerDropdownOpen && (
-                        <div className="seller-dropdown-list">
-                            {sellers.map((seller) => (
-                                <div key={seller} className="seller-dropdown-item" onClick={() => selectSeller(seller)}>
-                                    {seller}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div> */}
+                
                 {/* <select className="filter-dropdown">
                     <option value="">Sort By</option>
                     
@@ -357,7 +362,7 @@ const handleExpandRow = (id) => {
             <FaEdit />
           </button>
           <button className="btn4 delete-btn4">
-            <FaTrash />
+            <FaTrash  onClick={() => openDeleteConfirmation(product.id)}/>
           </button>
         </td>
       </tr>
@@ -418,7 +423,7 @@ const handleExpandRow = (id) => {
             <FaEdit />
           </button>
           <button className="btn4 delete-btn4">
-            <FaTrash />
+            <FaTrash  onClick={() => openDeleteConfirmation(product.id)} />
           </button>
         </div>
 
@@ -468,6 +473,14 @@ const handleExpandRow = (id) => {
               
 
             </div>
+            {showDeleteConfirmation && (
+                            <DeleteConfirmation
+                                isOpen={showDeleteConfirmation}
+                                onConfirm={() => handleDelete(attributeToDeleteId)}
+                                onCancel={closeDeleteConfirmation}
+                                
+                            />
+                        )}
         </div>
     );
 };

@@ -3,6 +3,7 @@ import "./Allwholesale.css";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineSettings } from "react-icons/md";
 import { useState } from "react";
+import DeleteConfirmation from "../DeleteConfirmation";
 
 export default function PreOrderReviews() {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function PreOrderReviews() {
 
     const [expandedId, setExpandedId] = useState(null);
     const [editingUser, setEditingUser] = useState(null);
+     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+     const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
     const [userData, setUserData] = useState([
         {
             id: 1,
@@ -69,6 +72,22 @@ export default function PreOrderReviews() {
         setExpandedId(expandedId === id ? null : id);
     };
 
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+  };
+
+  const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+  }
     return (
         <div className="productQueriesBox ma10">
             <div className="product-table">
@@ -133,7 +152,7 @@ export default function PreOrderReviews() {
                                             <Edit color="blue" size={18} />
                                         </div>
                                         <div className="action">
-                                            <Trash color="blue" size={18} />
+                                            <Trash color="blue" size={18}   onClick={() => openDeleteConfirmation(user.id)} />
                                         </div>
                                     </div>
                                 </td>
@@ -275,6 +294,14 @@ export default function PreOrderReviews() {
                     </form>
                 </div>
             )}
+             {showDeleteConfirmation && (
+                            <DeleteConfirmation
+                                isOpen={showDeleteConfirmation}
+                                onConfirm={() => handleDelete(attributeToDeleteId)}
+                                onCancel={closeDeleteConfirmation}
+                                
+                            />
+                        )}
         </div>
     );
 }

@@ -4,9 +4,11 @@ import "./InhouseProduct.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 const InhouseProduct = () => {
-      
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
     const navigate = useNavigate();
 
@@ -181,6 +183,22 @@ const handleExpandRow = (id) => {
         return pages;
     };
 
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+  };
+
+  const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+  };
 
     const handleToggleChange = (id, field) => {
         setProducts((prevProducts) =>
@@ -347,7 +365,7 @@ const handleExpandRow = (id) => {
             <FaEdit onClick={() => handleEdit(product.id)}/>
           </button>
           <button className="btn3 delete-btn3">
-            <FaTrash />
+            <FaTrash onClick={() => openDeleteConfirmation(product.id)} />
           </button>
         </td>
       </tr>
@@ -411,7 +429,7 @@ const handleExpandRow = (id) => {
             <FaEdit onClick={() => handleEdit(product.id)}/>
           </button>
           <button className="btn3 delete-btn3">
-            <FaTrash />
+            <FaTrash onClick={() => openDeleteConfirmation(product.id)}/>
           </button>
         </div>
 
@@ -432,9 +450,17 @@ const handleExpandRow = (id) => {
 
                 </table>
 
-              
+                {showDeleteConfirmation && (
+                                  <DeleteConfirmation
+                                      isOpen={showDeleteConfirmation}
+                                      onConfirm={() => handleDelete(attributeToDeleteId)}
+                                      onCancel={closeDeleteConfirmation}
+                                     
+                                  />
+                              )}
 
             </div>
+            
         </div>
     );
 };

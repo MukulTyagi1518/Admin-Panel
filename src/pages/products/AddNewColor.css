@@ -35,6 +35,13 @@
 
 }
 
+.nam{
+    margin-left: 22px;
+}
+.nameLabel{
+    margin-left: 22px;
+}
+
 .faqInp,
 .faqTxt {
     padding: 0.3cm;
@@ -42,6 +49,7 @@
     border-radius: 5px;
     border: 1px solid rgb(206, 206, 206);
     width: 100%;
+
 }
 
 .faqTxt {
@@ -82,6 +90,12 @@
         margin-top: 0px;
         margin-left: 0px;
     }
+    .nam{
+        margin-left: 16px;
+    }
+    .nameLabel{
+        margin-left: 16px;
+    }
     
 
 }
@@ -105,6 +119,12 @@
          
         margin-left: 0px;
         margin-top: 0px;
+    }
+    .nam{
+        margin-left: 16px;
+    }
+    .nameLabel{
+        margin-left: 16px;
     }
     
 }

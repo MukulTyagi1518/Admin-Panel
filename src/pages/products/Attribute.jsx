@@ -7,7 +7,7 @@ import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 export default function PreOrderFaq() {
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-      const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+   const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
@@ -77,7 +77,7 @@ const handleDelete = (id) => {
                             <Edit color="blue" size={18} />
                           </div>
                           <div className="action">
-                            <Trash color="blue" size={18}      onClick={() => openDeleteConfirmation(n.id)}/>
+                            <Trash color="blue" size={18}   onClick={() => openDeleteConfirmation(n.id)}/>
                           </div>
                         </div>
                       </td>
