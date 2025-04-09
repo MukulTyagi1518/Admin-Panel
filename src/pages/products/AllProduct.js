@@ -122,7 +122,7 @@ const AllProduct = () => {
     <div className="product-container1">
       <div className="header">
         <div>All allProducts</div>
-        <button className="add-btn">Add New product</button>
+        <button className="add-btn" onClick={() => navigate("/products/create")}>Add New product</button>
       </div>
       <div className="filter-options">
         <select className="filter-dropdown">
