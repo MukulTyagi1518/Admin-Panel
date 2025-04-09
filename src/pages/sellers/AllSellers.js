@@ -135,17 +135,17 @@
 //       const toggleDropdown = (id) => {
 //         setDropdownOpen(dropdownOpen === id ? null : id); // Toggle dropdown
 //       };
-    
+
 //     return (
 //         <div className="container4">
 //             {/* <div>
-               
+
 //                 <div className="header-container">
 //                     <h2 className="header-title">All Sellers</h2>
 //                     <button className="add-seller-btn">Add New Seller</button>
 //                 </div>
 
-                
+
 //                 <div className="filters-container">
 //                     <select className="filter-dropdown">
 //                         <option>Bulk Action</option>
@@ -318,9 +318,9 @@ import { FaPlus, FaMinus, FaEllipsisV } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const AllSellers = () => {
-    const [sellers, setSellers] = useState([]); 
+    const [sellers, setSellers] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(null);
-    const [expandedRows, setExpandedRows] = useState({}); 
+    const [expandedRows, setExpandedRows] = useState({});
     const [approvals, setApprovals] = useState({});
     const navigate = useNavigate();
 
