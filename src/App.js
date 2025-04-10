@@ -146,6 +146,8 @@ import Pages from "./components/websetting/pages.jsx"
 import Addpage from "./components/websetting/Addpage.jsx"
 import Editpage from "./components/websetting/Editpage.jsx"
 import Headerpage from "./components/websetting/Headerpage.jsx"
+import Footerpage from "./components/websetting/Footerpage.jsx"
+import Appeareance from "./components/websetting/Appearence.jsx"
 
 
 function App() {
@@ -512,6 +514,9 @@ function App() {
               <Route path="/web-settings/header" element={<Headerpage />}/>
               <Route path="addpage" element={<Addpage />} />
               <Route path="editaddpage" element={<Editpage />} />
+
+              <Route path="/web-settings/footer" element={<Footerpage />} />
+              <Route path="/admin-settings/apearence" element={<Appeareance />} />
 
             </Routes>
           </div>
