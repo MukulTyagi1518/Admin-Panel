@@ -146,7 +146,7 @@ import Pages from "./components/websetting/pages.jsx"
 import Addpage from "./components/websetting/Addpage.jsx"
 import Editpage from "./components/websetting/Editpage.jsx"
 import Headerpage from "./components/websetting/Headerpage.jsx"
-import Footerpage from "./components/websetting/Footerpage.jsx"
+import FooterWidget from "./components/websetting/footerpage.jsx";
 import Appeareance from "./components/websetting/Appearence.jsx"
 
 
@@ -227,7 +227,6 @@ function App() {
                   <Route path="seo" element={<Seo />} />
                   <Route path="shipping" element={<Shipping />} />
                   <Route path="warranty" element={<Warrenty />} />
-
 
                   <Route
                     path="frequently-bought"
@@ -515,7 +514,7 @@ function App() {
               <Route path="addpage" element={<Addpage />} />
               <Route path="editaddpage" element={<Editpage />} />
 
-              <Route path="/web-settings/footer" element={<Footerpage />} />
+              <Route path="/web-settings/footer" element={<FooterWidget />} />
               <Route path="/admin-settings/apearence" element={<Appeareance />} />
 
             </Routes>

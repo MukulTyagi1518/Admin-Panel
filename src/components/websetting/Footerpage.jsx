@@ -105,27 +105,7 @@ const FooterWidget = () => {
 
             {/* Language Tabs */}
             <div className="bg-white rounded-lg shadow border border-gray-200 mb-8">
-                <div className="border-b border-gray-200 px-4 sm:px-6 pt-4">
-                    <div className="flex flex-wrap gap-3">
-                        {languages.map((lang) => (
-                            <button
-                                key={lang}
-                                onClick={() => setActiveLang(lang)}
-                                className={`px-4 py-2 text-sm font-medium border-b-2 transition ${lang === activeLang
-                                    ? "border-green-500 text-green-600"
-                                    : "border-transparent text-gray-600 hover:text-green-600"
-                                    }`}
-                            >
-                                {lang === "English" && "🇺🇸 "}
-                                {lang === "Bangla" && "🇧🇩 "}
-                                {lang === "Arabic" && "🇸🇦 "}
-                                {lang === "French" && "🇫🇷 "}
-                                {lang}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
+                
                 {/* Footer Info Widget */}
                 <div className="p-4 sm:p-6">
                     <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 sm:p-6">
