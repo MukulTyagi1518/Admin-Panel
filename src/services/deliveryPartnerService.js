@@ -15,7 +15,7 @@ const DeliveryPartnerService = {
   },
 
   // Get all delivery partners
-  getAll: async () => {
+  getAll: async () => { 
     try {
       const response = await apiInstance.get("/delivery-partner/");
       return response.data;
@@ -43,7 +43,7 @@ const DeliveryPartnerService = {
       throw error.response?.data || error.message;
     }
   },
-
+ 
   // Update a delivery partner
   update: async (id, updates) => {
     try {
