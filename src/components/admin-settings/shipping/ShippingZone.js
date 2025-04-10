@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Switch from '../../Switch'; // Assuming you have a Switch component
 import { useNavigate } from 'react-router-dom';
+import DeleteConfirmation from '../../DeleteConfirmation';
 
 const zonesData = [
   { id: 1, name: 'Costa Rica Area', status: true },
@@ -17,6 +18,8 @@ const zonesData = [
 
 const ShippingZone = () => {
   const [zones, setZones] = useState(zonesData);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
   const navigate = useNavigate();
 
   const handleStatusChange = (id) => {
@@ -34,12 +37,24 @@ const ShippingZone = () => {
     // Implement your edit logic here
   };
 
-  const handleDelete = (id) => {
-    console.log(`Delete zone with ID: ${id}`);
-    // Implement your delete logic here
-    setZones(zones.filter(zone => zone.id !== id));
-  };
+  
 
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+  
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+  
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+  };
   return (
     <div className="bg-gray-100 min-h-screen p-4 md:p-8">
       <div className="bg-white rounded-md shadow-md overflow-hidden">
@@ -98,7 +113,7 @@ const ShippingZone = () => {
                                           <FiEdit  onClick={() => handleEdit(zone.id)}/>
                                         </button>
                                         <button className="text-red-500">
-                                          <FiTrash2  />
+                                          <FiTrash2  onClick={() => openDeleteConfirmation(zone.id)} />
                                         </button>
                                       </td>
                 </tr>
@@ -106,7 +121,17 @@ const ShippingZone = () => {
             </tbody>
           </table>
         </div>
+
       </div>
+       {/* Render the Delete Confirmation Modal */}
+                  {showDeleteConfirmation && (
+                      <DeleteConfirmation
+                          isOpen={showDeleteConfirmation}
+                          onConfirm={() => handleDelete(attributeToDeleteId)}
+                          onCancel={closeDeleteConfirmation}
+                         
+                      />
+                  )}
     </div>
   );
 };

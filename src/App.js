@@ -152,6 +152,7 @@ import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
 import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
 import Footer from "./components/webSettings/footerSettings/Footer.js";
 import Pages from "./components/webSettings/page/Pages.js";
+import AddNewFaq from "./pages/products/AddNewFaq.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -255,6 +256,8 @@ function App() {
                 <Route path="/products/addnewbrand" element={<AddNewBrand />} />
                 <Route path="/products/addnewcolor" element={<AddNewColor />} />
                 <Route path="/products/settings" element={<AttributeDetail />} />
+                <Route path="/products/addnewfaq" element={<AddNewFaq/>} />
+                
 
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />

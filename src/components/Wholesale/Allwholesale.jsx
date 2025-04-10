@@ -3,7 +3,7 @@ import "./Allwholesale.css";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineSettings } from "react-icons/md";
 import { useState } from "react";
-import Switch from "../Switch";
+import DeleteConfirmation from "../DeleteConfirmation";
 
 export default function PreOrderReviews() {
     const navigate = useNavigate();
@@ -14,6 +14,8 @@ export default function PreOrderReviews() {
 
     const [expandedId, setExpandedId] = useState(null);
     const [editingUser, setEditingUser] = useState(null);
+     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+     const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
     const [userData, setUserData] = useState([
         {
             id: 1,
@@ -70,6 +72,22 @@ export default function PreOrderReviews() {
         setExpandedId(expandedId === id ? null : id);
     };
 
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+  };
+
+  const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+  }
     return (
         <div className="productQueriesBox ma10">
             <div className="product-table">
@@ -134,7 +152,7 @@ export default function PreOrderReviews() {
                                             <Edit color="blue" size={18} />
                                         </div>
                                         <div className="action">
-                                            <Trash color="blue" size={18} />
+                                            <Trash color="blue" size={18}   onClick={() => openDeleteConfirmation(user.id)} />
                                         </div>
                                     </div>
                                 </td>
@@ -156,31 +174,31 @@ export default function PreOrderReviews() {
           >
             {expandedId === user.id ? "−" : "+"}
           </button>
-          <span className="font-semibold text-sm">#{user.id}</span>
+          <span className="font-semibold text-sm">{user.id}</span>
           <span className="font-medium text-gray-800 text-sm">{user.prodName}</span>
         </div>
       </div>
 
       {/* Expanded Details */}
       {expandedId === user.id && (
-        <div className="mt-4 space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Added By:</span>
+        <div className="mt-4 space-y-2 text-sm  w-full">
+          <div className="flex">
+            <span className="font-medium text-gray-600 mr-2">Added By:</span>
             <span>{user.productOwner}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Num of Sale:</span>
+          <div className="flex ">
+            <span className="font-medium text-gray-600 mr-2">Num of Sale:</span>
             <span>{user.info.NumofSale}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Base Price:</span>
+          <div className="flex ">
+            <span className="font-medium text-gray-600 mr-2">Base Price:</span>
             <span>{user.info.BasePrice}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Rating:</span>
+          <div className="flex ">
+            <span className="font-medium text-gray-600 mr-2">Rating:</span>
             <span>{user.info.Rating}</span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex ">
             <span className="font-medium text-gray-600">Total Stock:</span>
             <span>{user.totalstock}</span>
           </div>
@@ -282,6 +300,14 @@ export default function PreOrderReviews() {
                     </form>
                 </div>
             )}
+             {showDeleteConfirmation && (
+                            <DeleteConfirmation
+                                isOpen={showDeleteConfirmation}
+                                onConfirm={() => handleDelete(attributeToDeleteId)}
+                                onCancel={closeDeleteConfirmation}
+                                
+                            />
+                        )}
         </div>
     );
 }

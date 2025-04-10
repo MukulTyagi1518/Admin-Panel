@@ -211,7 +211,7 @@ export default function PreorderProducts() {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className="preOrderActions ">
+                                                <div className="flex flex-row gap-[.3cm] ">
                                                     <div className="action">
                                                         <EyeIcon size={18} color="blue" />
                                                     </div>
@@ -222,46 +222,57 @@ export default function PreorderProducts() {
                                             </td>
                                         </tr>
                                         {expandedRows.includes(product.id) && (
-                                            <tr className="responsive-expanded">
-                                                <td colSpan="10">
-                                                    <div className="expanded-details">
-                                                        <table>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Product Details</th>
-                                                                    <th>Price</th>
-                                                                    <th>Discount</th>
-                                                                    <th>Availability</th>
-                                                                    <th>Orders</th>
-                                                                    <th>Status</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>{product.name}, {product.category}, {product.type}, {product.productCreated}</td>
-                                                                    <td>{product.price} /pc, Pre Payment Needed: {product.prePaymentNeeded ? "Yes" : "No"}</td>
-                                                                    <td>{product.discount}</td>
-                                                                    <td>{product.availability}</td>
-                                                                    <td>Preorder: {product.preorder}, Final Order: {product.finalOrder}</td>
-                                                                    <td>
-                                                                        <div className="toggle-buttons">
-                                                                            <div className="toggle-item">
-                                                                                <span>Publish</span>
-                                                                                <Switch />
-                                                                            </div>
-                                                                            <div className="toggle-item">
-                                                                                <span>Feature</span>
-                                                                                <Switch />
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )}
+  <tr className="max-[1400px]:table-row hidden">
+    <td colSpan="10">
+      <div className="p-2 bg-gray-100 rounded-md text-sm">
+        <table className="w-full">
+          <tbody>
+            <tr>
+              <td className="font-semibold pr-2">Product Details:</td>
+              <td>{product.name}, {product.category}, {product.type}, {product.productCreated}</td>
+            </tr>
+            <tr>
+              <td className="font-semibold pr-2">Price:</td>
+              <td>{product.price} /pc</td>
+            </tr>
+            <tr>
+              <td className="font-semibold pr-2">Pre Payment Needed:</td>
+              <td>{product.prePaymentNeeded ? "Yes" : "No"}</td>
+            </tr>
+            <tr>
+              <td className="font-semibold pr-2">Discount:</td>
+              <td>{product.discount}</td>
+            </tr>
+            <tr>
+              <td className="font-semibold pr-2">Availability:</td>
+              <td>{product.availability}</td>
+            </tr>
+            <tr>
+              <td className="font-semibold pr-2">Orders:</td>
+              <td>Preorder: {product.preorder}, Final Order: {product.finalOrder}</td>
+            </tr>
+            <tr>
+              <td className="font-semibold pr-2">Status:</td>
+              <td>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1">
+                    <span>Publish</span>
+                    <Switch />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span>Feature</span>
+                    <Switch />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </td>
+  </tr>
+)}
+
                                     </React.Fragment>
                                 ))}
                             </tbody>

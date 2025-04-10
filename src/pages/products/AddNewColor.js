@@ -58,8 +58,8 @@ export default function AddNewColor({ onColorAdded }) {
             <div className="preOrderFaqRightHead">
                 <p className="allFaq">Add new Color</p>
             </div>
-            <div className="faqForm">
-                <label>Name</label>
+            <label className="nameLabel mt-5">Name</label>
+                <div className="nam">
                 <input
                     type="text"
                     value={formData.name}
@@ -67,6 +67,19 @@ export default function AddNewColor({ onColorAdded }) {
                     className="faqInp"
                     placeholder="Enter color name"
                 />
+                </div>
+                
+            <div className="faqForm">
+                {/* <label>Name</label>
+                <div>
+                <input
+                    type="text"
+                    value={formData.name}
+
+                    className="faqInp"
+                    placeholder="Enter color name"
+                />
+                </div> */}
 
                 <label>Color</label>
                 <div className="color-picker-wrapper" style={{ position: "relative" }}>

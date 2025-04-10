@@ -1,86 +1,90 @@
 .table-container {
-    padding: 20px;
+  padding: 20px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 30px;
+  text-align: left;
+}
+
+.status {
+  background-color: gold;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.view-btn {
+  background-color: lightblue;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.icon-btn {
+  background: #dbeafe;
+  border: none;
+  border-radius: 50%;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* 🔵 Plus icon - Hidden by default */
+.expand-btn {
+  display: none;
+  background-color: #9dc3ec;
+  color: white;
+  border: none;
+  padding: 0px 6px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 🟡 Expand row style */
+.expand-row {
+  background-color: #f9f9f9;
+}
+
+.expand-row td {
+  padding: 20px;
+  font-size: 14px;
+}
+
+/* 🟢 Responsive rules */
+@media (max-width: 1400px) {
+  /* Hide some columns */
+  .hide-on-small {
+    display: none;
   }
-  
-  .styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    
+
+  /* Show expand button */
+  .expand-btn {
+    display: inline-block;
   }
-  
+
+  /* Compact padding for small screens */
   .styled-table th,
   .styled-table td {
-    /* border: 1px solid #ddd; */
-    padding: 30px;
-    text-align: left;
+    padding: 12px;
   }
-  
-  .styled-table th {
-    /* background-color: #f8f9fa; */
-  }
-  
-  .status {
-    background-color: gold;
-    padding: 5px;
-    border-radius: 5px;
-  }
-  
-  .view-btn {
-    background-color: lightblue;
-    border: none;
-    padding: 5px;
-    border-radius: 5px;
-  }
-  
-  .expand-btn {
-    display: none;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  @media (max-width: 1400px) {
-    .hide-on-small {
-      display: none;
-    }
-  
-    .expand-btn {
-      display: inline-block;
-    }
-  }
-  
-  .expand-row {
-    background-color: #f1f1f1;
-  }
-  
 
-  .icon-btn {
-    background: #dbeafe;
-    border: none;
-    border-radius: 50%;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  .expanded-content {
+  /* Expanded content layout */
+  .expand-row td {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 10px;
-    background: #f8f9fa;
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .expanded-column {
-    width: 50%;
+
+  .expand-row strong {
+    display: inline-block;
+    width: auto;
+    font-weight: 600;
+    margin-right: 10px;
   }
-  
-  .expanded-column p {
-    margin: 5px 0;
-    padding: 10px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
+}

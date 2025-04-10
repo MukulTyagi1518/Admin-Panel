@@ -363,7 +363,7 @@
         }
 
         .responsive-select {
-            flex: 1 1 auto; /* Distribute space more evenly */
+            flex: 1 1 auto; 
             min-width: 150px; /* Ensure a minimum width */
             max-width: 250px; /* Set a reasonable maximum width */
             padding: .3cm .5cm;
@@ -522,4 +522,23 @@
             font-size: 14px; /* Reset default font size */
         }
     }
+}
+
+.lower-menu .responsive-select {
+    /* Existing styles */
+    flex: 1 1 auto;
+    min-width: 150px;
+    max-width: 250px;
+    padding: .3cm .5cm;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+
+    /* Dropdown arrow styles */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .5rem center; /* More concise */
+    background-size: 1rem; /* Adjust size as needed */
+    padding-right: 2rem; /* Make space for the arrow */
 }

@@ -4,6 +4,8 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { useProductContext } from "../../productContex";
 import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 const AllProduct = () => {
 
@@ -40,6 +42,8 @@ const AllProduct = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = allProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -118,6 +122,23 @@ const AllProduct = () => {
     setIsSellerDropdownOpen(false);
   };
 
+  
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+};
+
+const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+};
+
+const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+};
   return (
     <div className="product-container1">
       <div className="header">
@@ -355,7 +376,7 @@ const AllProduct = () => {
                             <FaEdit />
                           </button>
                           <button className="btn1 delete-btn1">
-                            <FaTrash />
+                            <FaTrash onClick={() => openDeleteConfirmation(product.id)} />
                           </button>
                         </div>
                       </div>
@@ -368,6 +389,15 @@ const AllProduct = () => {
 
         </table>
       </div>
+
+      {showDeleteConfirmation && (
+                      <DeleteConfirmation
+                          isOpen={showDeleteConfirmation}
+                          onConfirm={() => handleDelete(attributeToDeleteId)}
+                          onCancel={closeDeleteConfirmation}
+                         
+                      />
+                  )}
     </div>
   );
 };

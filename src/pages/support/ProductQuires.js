@@ -4,9 +4,12 @@
 import React, { useState } from "react";
 import "./Conversation.css";
 import { FaPlus, FaEye, FaTrash } from "react-icons/fa";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 const Conversation = () => {
   const [expandedRows, setExpandedRows] = useState({});
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
   const conversationsData = [
     {
@@ -55,6 +58,23 @@ const Conversation = () => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+  
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+  
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+  };
+
   return (
     <div className="container">
       <h2 className="heading">Conversations</h2>
@@ -93,7 +113,7 @@ const Conversation = () => {
                 <td>{conversation.receiver}</td>
                 <td>
                   <button className="icon-btn4 mr-2"><FaEye /></button>
-                  <button className="icon-btn4 delete-btn4"><FaTrash /></button>
+                  <button className="icon-btn4 delete-btn4"><FaTrash onClick={() => openDeleteConfirmation(conversation.id)}/></button>
                 </td>
               </tr>
               
@@ -123,6 +143,15 @@ const Conversation = () => {
           ))}
         </tbody>
       </table>
+      {/* Render the Delete Confirmation Modal */}
+      {showDeleteConfirmation && (
+                <DeleteConfirmation
+                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
     </div>
   );
 };
