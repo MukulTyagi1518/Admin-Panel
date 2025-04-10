@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Download, Plus, Star } from "lucide-react";
 import ProductTable from "./ProductTable";
-
+import apiInstance from "../../utils/axios"
 const BestSellerProducts = () => {
  const [currentPage, setCurrentPage] = useState(1);
   const [sellerProducts, setSellerProducts] = useState([]);

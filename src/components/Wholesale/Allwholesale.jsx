@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineSettings } from "react-icons/md";
 import { useState } from "react";
 import DeleteConfirmation from "../DeleteConfirmation";
+import Switch from "../Switch";
 
 export default function PreOrderReviews() {
     const navigate = useNavigate();

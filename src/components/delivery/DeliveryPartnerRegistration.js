@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../../firebase";
+import DeliveryPartnerService from "../../services/deliveryPartnerService"
 
 const DeliveryPartnerRegistration = () => {
   const navigate = useNavigate();
@@ -30,7 +31,11 @@ const DeliveryPartnerRegistration = () => {
       aadharcard: null,
     },
   });
-
+  const [files, setFiles] = useState({
+    profilePhoto: null,
+    drivingLicense: null,
+    aadharCard: null
+  });
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [password, setPassword] = useState("");
@@ -135,9 +140,13 @@ const DeliveryPartnerRegistration = () => {
 
       console.log("Delivery partner", user)
       toast.success("OTP verified successfully!");
+      setOtpVerified(true);
+
     } catch (err) {
       console.error("OTP Verification Failed:", err);
       toast.error("Invalid OTP. Please try again.");
+      setOtpVerified(false); // Ensure it remains false if verification fails
+
     }
   };
 
@@ -211,24 +220,70 @@ const DeliveryPartnerRegistration = () => {
       setIsSubmitting(true);
 
       try {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        toast.success("Form submitted successfully!");
-        console.log("Form submitted:", {
-          ...formData,
-          otpVerified,
-          password,
-        });
-
-        navigate("/registration-success");
+        // Prepare FormData for multipart upload
+        const formDataToSend = new FormData();
+        
+        // Append personal info
+        formDataToSend.append('firstName', formData.personalInfo.firstName);
+        formDataToSend.append('lastName', formData.personalInfo.lastName);
+        formDataToSend.append('phone', formData.personalInfo.phone);
+        formDataToSend.append('email', formData.personalInfo.email);
+        formDataToSend.append('address', formData.personalInfo.address);
+        formDataToSend.append('city', formData.personalInfo.city);
+        formDataToSend.append('zipCode', formData.personalInfo.zipCode);
+        
+        // Append bank details
+        formDataToSend.append('accountHolder', formData.bankDetails.accountName);
+        formDataToSend.append('accountNumber', formData.bankDetails.accountNumber);
+        formDataToSend.append('bankName', formData.bankDetails.bankName);
+        formDataToSend.append('ifscCode', formData.bankDetails.ifscCode);
+        formDataToSend.append('upiId', formData.bankDetails.upiId || '');
+        
+        // Append files
+        if (formData.documents.profilePhoto) {
+          formDataToSend.append('profilePhoto', formData.documents.profilePhoto);
+        }
+        if (formData.documents.drivinglicense) {
+          formDataToSend.append('drivingLicense', formData.documents.drivinglicense);
+        }
+        if (formData.documents.aadharcard) {
+          formDataToSend.append('aadharCard', formData.documents.aadharcard);
+        }
+    
+        // Call the API service
+        const response = await DeliveryPartnerService.register(formDataToSend);
+        
+        toast.success("Registration successful!");
+        console.log("API Response:", response);
+        
+        // Redirect to success page or do other post-registration actions
+        navigate("/delivery/registration");
+        setFormData([""])
       } catch (error) {
         console.error("Registration error:", error);
-        toast.error("An error occurred during registration.");
+        
+        // Handle different types of errors
+        if (error.response) {
+          // Server responded with an error status
+          if (error.response.status === 400) {
+            toast.error("Validation error: Please check your inputs");
+          } else if (error.response.status === 409) {
+            toast.error("This phone number is already registered");
+          } else {
+            toast.error("Registration failed. Please try again later.");
+          }
+        } else if (error.request) {
+          // Request was made but no response received
+          toast.error("Network error. Please check your connection.");
+        } else {
+          // Something else happened
+          toast.error("An unexpected error occurred");
+        }
       } finally {
         setIsSubmitting(false);
       }
-    }
+    };
+    
   };
 
   return (
@@ -568,7 +623,7 @@ const DeliveryPartnerRegistration = () => {
                         name="documents.profilePhoto"
                         accept="image/*"
                         onChange={handleChange}
-                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.profilePhoto ? "border-red-500" : ""
+                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.profilePhoto ? "border-red-500" : ""
                           }`}
                       />
                       {errors.profilePhoto && (
@@ -594,7 +649,7 @@ const DeliveryPartnerRegistration = () => {
                         name="documents.drivinglicense"
                         accept="image/*,.pdf"
                         onChange={handleChange}
-                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.drivinglicense ? "border-red-500" : ""
+                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.drivinglicense ? "border-red-500" : ""
                           }`}
                       />
                       {errors.drivinglicense && (
@@ -620,7 +675,7 @@ const DeliveryPartnerRegistration = () => {
                         name="documents.aadharcard"
                         accept="image/*,.pdf"
                         onChange={handleChange}
-                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.aadharcard ? "border-red-500" : ""
+                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.aadharcard ? "border-red-500" : ""
                           }`}
                       />
                       {errors.aadharcard && (

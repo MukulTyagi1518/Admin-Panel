@@ -1,38 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import apiInstance from '../../../utils/axios';
 import { Plus, Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
 import design1Image from './images/notification.png';
 
 const NotificationTypes = () => {
   const [activeTab, setActiveTab] = useState('customer');
-  const [notificationTypes, setNotificationTypes] = useState([
-    { id: 1, userType: 'customer', type: 'Order Placed', defaultText: 'Your Order: [[order_code]] has been Placed', image: design1Image, status: true, isDefault: true },
-    { id: 2, userType: 'customer', type: 'Order Confirmed', defaultText: 'Your Order: [[order_code]] has been Confirmed', image: '', status: true, isDefault: true },
-    { id: 3, userType: 'customer', type: 'Order Picked Up', defaultText: 'Your Order: [[order_code]] has been picked up', image: '', status: true, isDefault: true },
-    { id: 4, userType: 'customer', type: 'Order On the Way', defaultText: 'Your Order: [[order_code]] is on the way', image: '', status: true, isDefault: true },
-    { id: 5, userType: 'customer', type: 'Order Delivered', defaultText: 'Your Order: [[order_code]] has been delivered', image: '', status: true, isDefault: true },
-    { id: 6, userType: 'customer', type: 'Order Cancelled', defaultText: 'Your Order: [[order_code]] has been cancelled', image: '', status: true, isDefault: true },
-    { id: 7, userType: 'customer', type: 'Successful Payment', defaultText: 'Your payment for order: [[order_code]] is successful', image: '', status: true, isDefault: true },
-    { id: 8, userType: 'customer', type: 'Complete Unpaid Order Payment', defaultText: 'Your order: [[order_code]] is still not paid for. Kindly complete your payment.', image: '', status: true, isDefault: true },
-    { id: 9, userType: 'customer', type: 'SALE', defaultText: 'Sale Offer', image: '', status: true, isDefault: false },
-    { id: 10, userType: 'customer', type: 'Coupon Sale', defaultText: 'A Big Coupon Offer', image: '', status: true, isDefault: false },
-    // Seller notifications
-    { id: 11, userType: 'seller', type: 'New Order', defaultText: 'You have a new order: [[order_code]]', image: '', status: true, isDefault: true },
-    { id: 12, userType: 'seller', type: 'Order Cancelled', defaultText: 'Order [[order_code]] has been cancelled', image: '', status: true, isDefault: true },
-    { id: 13, userType: 'seller', type: 'Payment Received', defaultText: 'Payment received for order: [[order_code]]', image: '', status: true, isDefault: true },
-    // Admin notifications
-    { id: 14, userType: 'admin', type: 'New User Registered', defaultText: 'A new user has registered: [[user_name]]', image: '', status: true, isDefault: true },
-    { id: 15, userType: 'admin', type: 'New Seller Applied', defaultText: 'A new seller has applied: [[seller_name]]', image: '', status: true, isDefault: true },
-  ]);
-
+  const [notificationTypes, setNotificationTypes] = useState([]);
   const [newNotification, setNewNotification] = useState({
-    userType: 'customer',
     type: '',
     defaultText: '',
     image: null,
     status: true
   });
-
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await apiInstance.get("/notification");
+        console.log(response.data)
+        setNotificationTypes(response.data);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+    fetchNotifications();
+  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -53,43 +46,53 @@ const NotificationTypes = () => {
     }));
   };
 
-  const handleAddNotification = (e) => {
+  const handleAddNotification = async (e) => {
     e.preventDefault();
-    const newId = Math.max(...notificationTypes.map(item => item.id), 0) + 1;
-    const newItem = {
-      id: newId,
-      userType: newNotification.userType,
-      type: newNotification.type,
-      defaultText: newNotification.defaultText,
-      image: newNotification.image ? URL.createObjectURL(newNotification.image) : '',
-      status: newNotification.status,
-      isDefault: false
-    };
-    setNotificationTypes([...notificationTypes, newItem]);
-    setNewNotification({
-      userType: newNotification.userType,
-      type: '',
-      defaultText: '',
-      image: null,
-      status: true
-    });
+    const formData = new FormData();
+    formData.append('type', newNotification.type);
+    formData.append('defaultText', newNotification.defaultText);
+    formData.append('status', newNotification.status ? 'active' : 'inactive');
+    if (newNotification.image) formData.append('image', newNotification.image);
+
+    try {
+      const response = await apiInstance.post('/notification', formData);
+      setNotificationTypes([...notificationTypes, response.data.notification]);
+      setNewNotification({
+        type: '',
+        defaultText: '',
+        image: null,
+        status: true
+      });
+    } catch (error) {
+      console.error('Error adding notification:', error);
+    }
   };
 
-  const toggleStatus = (id) => {
-    setNotificationTypes(notificationTypes.map(item => 
-      item.id === id ? { ...item, status: !item.status } : item
-    ));
+  const toggleStatus = async (id) => {
+    const notification = notificationTypes.find(item => item.id === id);
+    const updatedStatus = notification.status === 'active' ? 'inactive' : 'active';
+
+    try {
+      const response = await apiInstance.put(`/notification/${id}`, { status: updatedStatus });
+      setNotificationTypes(notificationTypes.map(item =>
+        item.id === id ? response.data.notification : item
+      ));
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
   };
 
-  const deleteNotification = (id) => {
-    setNotificationTypes(notificationTypes.filter(item => 
-      !item.isDefault && item.id !== id
-    ));
+  const deleteNotification = async (id) => {
+    try {
+      await apiInstance.delete(`/notification/${id}`);
+      setNotificationTypes(notificationTypes.filter(item => item.id !== id));
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+    }
   };
 
-  const filteredNotifications = notificationTypes.filter(item => 
-    item.userType === activeTab && 
-    item.type.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredNotifications = notificationTypes.filter(item =>
+    item.type?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -202,9 +205,9 @@ const NotificationTypes = () => {
                       <td className="px-4 py-4 whitespace-nowrap sm:px-6">
                         <button
                           onClick={() => toggleStatus(item.id)}
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${item.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${item.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
                         >
-                          {item.status ? 'Active' : 'Inactive'}
+                          {item.status === 'active' ? 'Active' : 'Inactive'}
                         </button>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium sm:px-6">

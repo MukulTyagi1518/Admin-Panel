@@ -3,6 +3,7 @@ import { SearchBar } from "../marketing/EmailTemplate/MainPageComponents/SearchB
 import { DataTable } from "../marketing/EmailTemplate/MainPageComponents/DataTable";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DeliveryPartnerService from "../../services/deliveryPartnerService"; // Import the service
 
 const PendingDeliveryPartner = () => {
   const [pendingPartners, setPendingPartners] = useState([]);
@@ -25,67 +26,45 @@ const PendingDeliveryPartner = () => {
   useEffect(() => {
     const fetchPendingPartners = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setLoading(true);
+        // Fetch all partners and filter for pending status
+        const response = await DeliveryPartnerService.getPending();
 
-        const mockData = [
-          {
-            id: 1,
-            name: "Raj Patel",
-            phone: "+1 555-111-2233",
-            email: "raj.patel@example.com",
+        const pendingPartners = response
+          .filter((partner) => partner.status === "pending")
+          .map((partner) => ({
+            id: partner._id,
+            name: `${partner.firstName} ${partner.lastName}`,
+            phone: partner.phone,
+            email: partner.email || "N/A",
             documents: [
               {
                 type: "Profile Photo",
-                verified: true,
-                url: "https://example.com/Profile.pdf",
+                verified: partner.documentsVerified >= 1,
+                url: partner.profilePhoto || "#",
               },
               {
                 type: "Aadhar Card",
-                verified: true,
-                url: "https://example.com/aadharcard.pdf",
+                verified: partner.documentsVerified >= 2,
+                url: partner.aadharCard || "#",
               },
               {
                 type: "Driving License",
-                verified: false,
-                url: "https://example.com/dl.pdf",
+                verified: partner.documentsVerified >= 3,
+                url: partner.drivingLicense || "#",
               },
             ],
-            applicationDate: "2023-07-15",
-            status: "pending",
-            profilePhoto: "https://randomuser.me/api/portraits/men/32.jpg",
-          },
-          {
-            id: 2,
-            name: "Priya Sharma",
-            phone: "+1 555-222-3344",
-            email: "priya.sharma@example.com",
-            documents: [
-              {
-                type: "Profile Photo",
-                verified: true,
-                url: "https://example.com/Profile.pdf",
-              },
-              {
-                type: "Aadhar Card",
-                verified: true,
-                url: "https://example.com/aadharcard.pdf",
-              },
-              {
-                type: "Driving License",
-                verified: true,
-                url: "https://example.com/dl.pdf",
-              },
-            ],
-            applicationDate: "2023-07-18",
-            status: "pending",
-            profilePhoto: "https://randomuser.me/api/portraits/women/44.jpg",
-          },
-        ];
+            applicationDate: partner.createdAt || new Date().toISOString(),
+            status: partner.status,
+            profilePhoto: partner.profilePhoto,
+            originalData: partner, // Keep original data for reference
+          }));
 
-        setPendingPartners(mockData);
-        setFilteredPartners(mockData);
+        setPendingPartners(pendingPartners);
+        setFilteredPartners(pendingPartners);
       } catch (error) {
         console.error("Error fetching pending partners:", error);
+        toast.error("Failed to load pending applications");
       } finally {
         setLoading(false);
       }
@@ -122,16 +101,41 @@ const PendingDeliveryPartner = () => {
   const toggleCard = (id) => {
     setExpandedCard(expandedCard === id ? null : id);
   };
-  const handleStatusUpdate = (partnerId, newStatus) => {
-    // Remove the partner from the pending list
-    const updatedList = pendingPartners.filter(
-      (partner) => partner.id !== partnerId
-    );
 
-    setPendingPartners(updatedList);
-    setFilteredPartners(updatedList);
+  const handleStatusUpdate = async (partnerId, newStatus) => {
+    try {
+      console.log(`Updating status for partner: ${partnerId} to ${newStatus}`);
+
+      // Call the appropriate API based on the new status
+      if (newStatus === "approved") {
+        await DeliveryPartnerService.approve(partnerId);
+      } else if (newStatus === "rejected") {
+        await DeliveryPartnerService.reject(partnerId);
+      }
+
+      // Update the frontend state
+      const updatedList = pendingPartners.filter(
+        (partner) => partner.id !== partnerId
+      );
+      setPendingPartners(updatedList);
+      setFilteredPartners(updatedList);
+
+      toast.success(
+        `Application ${
+          newStatus === "approved" ? "approved" : "rejected"
+        } successfully`
+      );
+    } catch (error) {
+      console.error("Error updating status:", error);
+
+      // Handle errors
+      toast.error(
+        `Failed to ${
+          newStatus === "approved" ? "approve" : "reject"
+        } application: ${error.message || "An error occurred"}`
+      );
+    }
   };
-
   const columns = [
     {
       key: "name",
@@ -301,7 +305,7 @@ const PendingDeliveryPartner = () => {
               </h1>
               <p className="text-gray-600 mt-1">
                 Showing {filteredPartners.length} application
-                {filteredPartners.length !== 1 ? "s" : ""} awaiting approval
+                {filteredPartners.length !== 1 ? "s" : ""} awaiting approval 
               </p>
             </div>
 
@@ -449,9 +453,6 @@ const PendingDeliveryPartner = () => {
                   <button
                     onClick={() => {
                       handleStatusUpdate(detailsDialog.partner.id, "approved");
-                      toast.success(
-                        `Application for ${detailsDialog.partner.name} approved`
-                      );
                       closeDetailsDialog();
                     }}
                     className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
@@ -462,9 +463,6 @@ const PendingDeliveryPartner = () => {
                   <button
                     onClick={() => {
                       handleStatusUpdate(detailsDialog.partner.id, "rejected");
-                      toast.error(
-                        `Application for ${detailsDialog.partner.name} rejected`
-                      );
                       closeDetailsDialog();
                     }}
                     className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
