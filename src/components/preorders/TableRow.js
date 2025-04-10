@@ -85,9 +85,9 @@ function TableRow({ order }) {
     <>
       {/* Main visible row */}
       <tr className="hover:bg-gray-50">
-      <td className="px-2 py-3 md:hidden">
+        <td className="px-2 py-3 md:hidden">
           <button onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? <EyeIcon size={18} color="blue" />: <EyeIcon size={18} color="blue" />}
+            {isExpanded ? <EyeIcon size={18} color="blue" /> : <EyeIcon size={18} color="blue" />}
           </button>
         </td>
         <td className="px-2 py-3">
@@ -146,28 +146,28 @@ function TableRow({ order }) {
         <td className="px-6 py-3 hidden md:table-cell">{order.status}</td>
         <td className="px-2 py-3">
           <span
-            className={`px-2 py-1 text-xs rounded-full ${
-              order.refundable ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-            }`}
+            className={`px-2 py-1 text-xs rounded-full ${order.refundable ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+              }`}
           >
             {order.refundable ? "Refundable" : "Non-Refundable"}
           </span>
         </td>
-        
+
         <td className="px-6 py-3 hidden md:table-cell">
-        
+
           <div className="flex gap-2">
-           
-                                <button className="btn8 view-btn8">
-                                  <FaEye />
-                                </button>
-                                <button className="btn8 edit-btn8">
-                                  <FaEdit/>
-                                </button>
-                                <button className="btn8 delete-btn8">
-                                  <FaTrash />
-                                </button>
-                            
+
+            <button className="btn8 text-green-500 pl-1">
+              <FaEye />
+            </button>
+            <button className="btn8 text-yellow-400 pl-1">
+              <Download />
+            </button>
+            <button className="btn8 text-pink-400 pl-1">
+              <FaTrash />
+            </button>
+
+
           </div>
         </td>
       </tr>
@@ -188,7 +188,7 @@ function TableRow({ order }) {
               <div><strong>Customer:</strong> {order.customer.name} ({order.customer.email})</div>
               <div><strong>Status:</strong> {order.status}</div>
               <div className="flex gap-2 mt-2">
-              <strong>Options:</strong> 
+                <strong>Options:</strong>
                 <button className="p-1 hover:bg-gray-100 rounded">
                   <EyeIcon className="w-4 h-4" />
                 </button>

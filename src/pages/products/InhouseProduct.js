@@ -275,6 +275,7 @@ const InhouseProduct = () => {
         <table>
           <thead>
             <tr>
+              <th className="lg:hidden"></th>
               <th>
                 <input
                   type="checkbox"
@@ -303,13 +304,8 @@ const InhouseProduct = () => {
               <>
                 {/* Main Row with Plus Icon */}
                 <tr key={product.id}>
-                  <td> 
-                    <input
-                      type="checkbox"
-                      checked={selectedProducts.includes(product.id)}
-                      onChange={() => handleSelectProduct(product.id)}
-                    />
-                    <div
+                  <td>
+                  <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""
                         }`}
                       onClick={() =>
@@ -326,6 +322,32 @@ const InhouseProduct = () => {
                       +
                      
                     </div>
+
+                  </td>
+                  <td> 
+
+                    <input
+                      type="checkbox"
+                      checked={selectedProducts.includes(product.id)}
+                      onChange={() => handleSelectProduct(product.id)}
+                    />
+                    {/* <div
+                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                        }`}
+                      onClick={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, expanded: !p.expanded }
+                              : p
+                          )
+                        )
+                      }
+                    >
+                      
+                      +
+                     
+                    </div> */}
                   </td>
 
                   

@@ -266,6 +266,7 @@ const InhouseProduct = () => {
         <table>
           <thead>
             <tr>
+            <th className="lg:hidden"></th>
               <th>
                 <input type="checkbox" />
               </th>
@@ -284,12 +285,32 @@ const InhouseProduct = () => {
             {products.map((product) => (
               <>
                 <tr key={product.id}>
+                <td>
+                  <div
+                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                        }`}
+                      onClick={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, expanded: !p.expanded }
+                              : p
+                          )
+                        )
+                      }
+                    >
+                      
+                      +
+                     
+                    </div>
+
+                  </td>
                   <td>
                     <input
                       type="checkbox"
 
                     />
-                    <div
+                    {/* <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""}`}
                       onClick={() =>
                         setProducts((prevProducts) =>
@@ -300,9 +321,9 @@ const InhouseProduct = () => {
                       }
 
                     >
-                      {/* <FaPlus className="plus" /> */}
+                     
                       +
-                    </div>
+                    </div> */}
                   </td>
                   <td className="product-name">
                     <img src={product.image} alt={product.name} className="product-img" />
