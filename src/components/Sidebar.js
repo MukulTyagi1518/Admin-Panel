@@ -30,7 +30,12 @@ const menuItems = [
       { name: "Inhouse product", path: "/products/inhouse" },
       { name: "Bulk import", path: "/products/bulk-import" },
       { name: "Bulk export", path: "/products/bulk-export" },
-      { name: "Seller product", path: "/products/seller" },
+      { name: "Seller product", path: "/products/seller",
+        subItems:[
+          {name:"Digital", path:"/products/seller/digital"},
+          {name:"Physical", path:"/products/seller/physical"}
+        ]
+       },
       { name: "Category", path: "/products/category" },
       { name: "Category based discount", path: "/products/category-discount" },
       { name: "Brand", path: "/products/brand" },

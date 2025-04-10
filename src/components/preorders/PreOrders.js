@@ -6,12 +6,12 @@ import Pagination from "../Pagination"; // Import the Pagination component
 
 const STATUSES = [
   { name: "All", count: 48, active: true },
-  { name: "Requests", count: 15 },
-  { name: "Accepted Requests", count: 5 },
+  { name: "Requested", count: 15 },
+  { name: "Preorder Confirmed", count: 5 },
   { name: "Prepayment Requests", count: 4 },
   { name: "Confirmed Prepayments", count: 1 },
   { name: "Final Preorders", count: 3 },
-  { name: "In Shipping", count: 0 },
+  { name: "Preorder Shipped", count: 0 },
   { name: "Delivered", count: 24 },
   { name: "Refund", count: 6 },
 ];
@@ -129,21 +129,26 @@ function Preorders() {
 
   const filteredOrders = useMemo(() => {
     return PREORDERS.filter((order) => {
+      // Filter by status
       const matchesStatus =
-        selectedStatus === "All" || order.status.includes(selectedStatus);
-        const matchesSearch =
+        selectedStatus === "All" || order.status.toLowerCase() === selectedStatus.toLowerCase();
+  
+      // Filter by search term
+      const matchesSearch =
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.status.toLowerCase().includes(searchTerm.toLowerCase());
-
+  
+      // Filter by date range
       const orderDate = new Date(order.createdAt);
-      const matchesDate = dateFilter.start && dateFilter.end
-        ? orderDate >= dateFilter.start && orderDate <= dateFilter.end
-        : true;
-
+      const matchesDate =
+        dateFilter.start && dateFilter.end
+          ? orderDate >= dateFilter.start && orderDate <= dateFilter.end
+          : true;
+  
       return matchesStatus && matchesSearch && matchesDate;
     });
   }, [selectedStatus, searchTerm, dateFilter]);
@@ -191,7 +196,7 @@ function Preorders() {
 
       {/* Orders Table */}
       <div className="bg-white rounded-lg shadow overflow-x-auto">
-        <table className="">
+        <table className="min-w-full">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
