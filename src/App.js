@@ -209,8 +209,8 @@ function App() {
               <Route path="/sellers/payout-request" element={<Payoutrequest />} />
               <Route path="/wholesale/inhouse" element={<Inhouse />} />
               <Route path="/wholesale/seller" element={<Sellerwholesale />} />
-              <Route path="/products/seller" element={<Physical />} />
-              <Route path="/products/digital" element={<Digital />} />
+              <Route path="/products/seller/physical" element={<Physical />} />
+              <Route path="/products/seller/digital" element={<Digital />} />
 
 
 
