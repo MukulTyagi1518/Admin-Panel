@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useProductContext } from "../../productContex";
+import Switch from "../Switch";
 
 
 export default function PreOrderFaq() {
@@ -83,7 +84,7 @@ export default function PreOrderFaq() {
 
         },
     ]
-    return ( 
+    return (
         <div className="PreOrderFaq ">
             <div className="product-table">
                 <p className="customersText">
@@ -364,20 +365,18 @@ export default function PreOrderFaq() {
                         <div className="seo-divider"></div>
                         <div className="refund-option">
                             <span>Refundable?</span>
-                            <label className="toggle-switch">
-                                <input
-                                    type="checkbox"
-                                    checked={isRefundable}
-                                    onChange={() => setIsRefundable(!isRefundable)}
-                                />
-                                <span className="slider"></span>
-                            </label>
+                            <Switch
+                                value={isRefundable}
+                                onChangeFunc={() => setIsRefundable(!isRefundable)}
+                            />
                         </div>
 
                         {isRefundable && (
-                            <div className="refund-note">
-                                <label className="note-label">Refund Note</label>
-                                <div className="note-box">+ Select Refund Note</div>
+                            <div className="refund-note mt-4">
+                                <label className="note-label block mb-1 font-medium">Refund Note</label>
+                                <div className="note-box p-2 border border-gray-300 rounded-md cursor-pointer">
+                                    + Select Refund Note
+                                </div>
                             </div>
                         )}
                     </div>
@@ -387,14 +386,11 @@ export default function PreOrderFaq() {
                         <div className="seo-divider"></div>
                         <div className="warranty-option">
                             <span>Warranty</span>
-                            <label className="toggle-switch">
-                                <input
-                                    type="checkbox"
-                                    checked={isWarranty}
-                                    onChange={() => setIsWarranty(!isWarranty)}
-                                />
-                                <span className="slider"></span>
-                            </label>
+                            <Switch
+                                value={isWarranty}
+                                onChangeFunc={() => setIsWarranty(!isWarranty)}
+                            />
+
                         </div>
 
                         {isWarranty && (

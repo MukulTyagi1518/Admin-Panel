@@ -19,7 +19,8 @@ const statesData = [
 const ShippingState = () => {
   const [states, setStates] = useState(statesData);
   const [newState, setNewState] = useState({ name: '', country: 'Afghanistan' });
- const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handleToggle = (id) => {
     setStates(states.map(state =>
       state.id === id ? { ...state, showHide: !state.showHide } : state
@@ -30,16 +31,16 @@ const ShippingState = () => {
     setStates([...states, { ...newState, id: states.length + 1, showHide: true }]);
     setNewState({ name: '', country: 'Afghanistan' });
   };
+
   const handlereview = (id) => {
     navigate(`/admin-settings/shipping/state/edit/${id}`);
   };
-  
- 
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">All States</h1>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        {/* Table Section */}
         <div className="flex-1">
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4 ">
             <input type="text" placeholder="Type state name" className="border p-2 rounded" />
@@ -65,11 +66,15 @@ const ShippingState = () => {
                   <td className="p-2">{state.name}</td>
                   <td className="p-2">{state.country}</td>
                   <td className="p-2">
-                    <Switch />
-                  </td>
+  <Switch
+    value={state.showHide}
+    onChangeFunc={() => handleToggle(state.id)}
+  />
+</td>
+
                   <td className="p-2">
                     <button className="text-blue-500">
-                      <FiEdit  onClick={() => handlereview(state.id)}/>
+                      <FiEdit onClick={() => handlereview(state.id)} />
                     </button>
                   </td>
                 </tr>
@@ -77,10 +82,12 @@ const ShippingState = () => {
             </tbody>
           </table>
         </div>
-        <div className="w-full md:w-1/3 p-4 bg-gray-100 rounded">
+
+        {/* Add New State Section (Responsive: Positioned below the table on smaller screens) */}
+        <div className="w-full md:w-1/3 p-4 bg-gray-100 rounded mt-6 md:mt-0">
           <h2 className="text-xl font-bold mb-4">Add New State</h2>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="name">Name</label> {/* Add label for Name */}
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               id="name"
@@ -89,7 +96,7 @@ const ShippingState = () => {
               value={newState.name}
               onChange={(e) => setNewState({ ...newState, name: e.target.value })}
             />
-            <label htmlFor="country">Country</label> {/* Add label for Country */}
+            <label htmlFor="country">Country</label>
             <select
               id="country"
               className="border p-2 rounded w-full"

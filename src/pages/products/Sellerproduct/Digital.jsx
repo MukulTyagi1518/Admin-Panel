@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FaEdit, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import Switch from "../../../components/Switch";
+import DeleteConfirmation from "../../../components/DeleteConfirmation";
 
 const ProductTable = () => {
 
@@ -33,6 +35,29 @@ const ProductTable = () => {
       expanded: false,
     },
   ]);
+
+   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+   const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+    const [roleToDelete, setRoleToDelete] = useState(null);
+
+
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+    };
+    
+    const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+    };
+    
+    const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+    };
+
 
   const toggleSwitch = (id, field) => {
     setProducts((prev) =>
@@ -85,16 +110,19 @@ const ProductTable = () => {
                 {['todayDeal', 'published', 'featured'].map((field) => (
                   <td className="p-3" key={field}>
                     <label className="switch">
-                      <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                      <span className="slider round"></span>
+                    <Switch
+  value={product[field]}
+  onChangeFunc={() => toggleSwitch(product.id, field)}
+/>
+
                     </label>
                   </td>
                 ))}
-                <td className="p-3 flex space-x-2">
+                <div className="p-3 flex space-x-2">
                   <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
                   <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
-                </td>
+                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} /></button>
+                </div>
               </tr>
             ))}
           </tbody>
@@ -128,7 +156,7 @@ const ProductTable = () => {
                   <div className="flex justify-left space-x-2 mt-3">
                     <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
                     <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
+                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)}  /></button>
                   </div>
                 </div>
               )}
@@ -136,6 +164,14 @@ const ProductTable = () => {
           ))}
         </div>
       </div>
+      {showDeleteConfirmation && (
+                <DeleteConfirmation
+                                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
     </div>
   );
 };

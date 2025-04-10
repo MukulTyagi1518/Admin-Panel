@@ -14,6 +14,9 @@ const countries = [
   ];
 const  ShippingCountries= () => {
   const [expandedRows, setExpandedRows] = useState([]);
+  const [countryList, setCountryList] = useState(
+    countries.map((country) => ({ ...country, showHide: true }))
+  );
 
   const toggleRow = (index) => {
     if (expandedRows.includes(index)) {
@@ -23,6 +26,11 @@ const  ShippingCountries= () => {
     }
   };
  
+  const handleToggle = (index) => {
+    const updatedList = [...countryList];
+    updatedList[index].showHide = !updatedList[index].showHide;
+    setCountryList(updatedList);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -62,7 +70,7 @@ const  ShippingCountries= () => {
           </tr>
         </thead>
         <tbody>
-          {countries.map((country, index) => (
+          {countryList.map((country, index) => (
             <React.Fragment key={index}>
               <tr>
               <td className="border p-2 sm:hidden">
@@ -75,13 +83,14 @@ const  ShippingCountries= () => {
                 <td className="border p-2 hidden sm:table-cell">{country.code}</td>
                 <td className="border p-2">
                   <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                    {/* <input
-                      type="checkbox"
-                      name="toggle"
-                      id={`toggle-${index}`}
-                      className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                    /> */}
-                    <Switch/>
+                  
+ 
+    <Switch
+      value={country.showHide}
+      onChangeFunc={() => handleToggle(index)}
+    />
+
+
                     {/* <label
                       htmlFor={`toggle-${index}`}
                       className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"

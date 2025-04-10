@@ -104,7 +104,7 @@ const Conversation = () => {
                 </td> */}
                 <td>
                   <button onClick={() => toggleRow(conversation.id)} className="expand-btn mr-3">
-                    <FaPlus />
+                    +
                   </button>
                   
                   {conversation.sender}

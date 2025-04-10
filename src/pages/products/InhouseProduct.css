@@ -312,27 +312,26 @@ input[type="checkbox"] {
         align-items: center;
     }
     .product-name {
-        display: inline-block !important;
-        
+        display: flex;
+        align-items: center;
         gap: 10px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
+        margin-top: 25px !important;
     }
-
+    
     .product-img {
         width: 40px;
         height: 40px;
         border-radius: 8px;
         object-fit: cover;
-        flex-shrink: 0;
     }
-
+    
+    /* Add these styles to handle long product names */
     .product-name span {
         flex-grow: 1;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        display: inline-block;
+        display: inline-block; /* Ensure span behaves as a block element */
     }
 }
 

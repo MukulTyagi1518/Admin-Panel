@@ -162,10 +162,10 @@ function ReviewDetail() {
             <div className="review-published">
               <span className="published-date">10 November, 2024</span>
               <div
-                className={`toggle-switch ${isPublished ? "active" : ""}`}
+                className={`toggle-switch-review ${isPublished ? "active" : ""}`}
                 onClick={togglePublished}
               >
-                <div className="toggle-slider"></div>
+                <div className="toggle-slider-review"></div>
               </div>
             </div>
           </div>

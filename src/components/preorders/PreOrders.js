@@ -3,15 +3,16 @@ import OrderStatusCard from "./OrderStatusCard";
 import TableRow from "./TableRow";
 import SearchAndFilter from "./SearchAndFilter";
 import Pagination from "../Pagination"; // Import the Pagination component
+import { EyeIcon } from "lucide-react";
 
 const STATUSES = [
   { name: "All", count: 48, active: true },
-  { name: "Requests", count: 15 },
-  { name: "Accepted Requests", count: 5 },
+  { name: "Requested", count: 15 },
+  { name: "Preorder Confirmed", count: 5 },
   { name: "Prepayment Requests", count: 4 },
   { name: "Confirmed Prepayments", count: 1 },
   { name: "Final Preorders", count: 3 },
-  { name: "In Shipping", count: 0 },
+  { name: "Preorder Shipped", count: 0 },
   { name: "Delivered", count: 24 },
   { name: "Refund", count: 6 },
 ];
@@ -129,21 +130,26 @@ function Preorders() {
 
   const filteredOrders = useMemo(() => {
     return PREORDERS.filter((order) => {
+      // Filter by status
       const matchesStatus =
-        selectedStatus === "All" || order.status.includes(selectedStatus);
-        const matchesSearch =
+        selectedStatus === "All" || order.status.toLowerCase() === selectedStatus.toLowerCase();
+  
+      // Filter by search term
+      const matchesSearch =
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.status.toLowerCase().includes(searchTerm.toLowerCase());
-
+  
+      // Filter by date range
       const orderDate = new Date(order.createdAt);
-      const matchesDate = dateFilter.start && dateFilter.end
-        ? orderDate >= dateFilter.start && orderDate <= dateFilter.end
-        : true;
-
+      const matchesDate =
+        dateFilter.start && dateFilter.end
+          ? orderDate >= dateFilter.start && orderDate <= dateFilter.end
+          : true;
+  
       return matchesStatus && matchesSearch && matchesDate;
     });
   }, [selectedStatus, searchTerm, dateFilter]);
@@ -191,8 +197,8 @@ function Preorders() {
 
       {/* Orders Table */}
       <div className="bg-white rounded-lg shadow overflow-x-auto">
-        <table className="">
-          <thead className="bg-gray-50">
+        <table className="min-w-full">
+          {/* <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 <input type="checkbox" className="rounded" />
@@ -222,7 +228,43 @@ function Preorders() {
                 Options
               </th>
             </tr>
-          </thead>
+          </thead> */}
+
+
+
+
+          <thead className="bg-gray-100 text-xs text-gray-600 uppercase">
+  <tr>
+    {/* <th className="lg:hidden md:table-cell"></th> */}
+    <th className="px-2 py-3  lg:hidden">
+         
+        </th>
+    <th className="px-2 py-3"> 
+      <input type="checkbox" className="rounded" />
+    </th>
+
+    {/* Product & Quantity - always visible */}
+    <th className="px-2 py-3">Product/Quantity</th>
+
+    {/* Refund column - always visible */}
+    
+
+    {/* Expand button placeholder - only visible on small screens */}
+    <th className="px-2 py-3 md:hidden"></th>
+
+    {/* Hidden columns on small screens */}
+    <th className="px-6 py-3 hidden md:table-cell">Preorder Code/Created</th>
+    <th className="px-6 py-3 hidden md:table-cell">Price/Prepayment</th>
+    <th className="px-6 py-3 hidden md:table-cell">Seller</th>
+    <th className="px-6 py-3 hidden md:table-cell">Customer</th>
+    <th className="px-6 py-3 hidden md:table-cell">Status</th>
+    <th className="px-2 py-3 ">Refund</th>
+    <th className="px-6 py-3 hidden md:table-cell">Options</th>
+  </tr>
+</thead>
+
+
+
           <tbody className="bg-white divide-y divide-gray-200">
             {currentOrders.map((order) => (
               <TableRow key={order.id} order={order} />

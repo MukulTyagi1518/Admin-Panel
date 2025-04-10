@@ -17,9 +17,9 @@ import { useNavigate } from "react-router-dom";
 
 const menuItems = [
   {
-    name:"DashBoard",
-    path:"/",
-    icon:<Grid size={20}/>,
+    name: "DashBoard",
+    path: "/",
+    icon: <Grid size={20} />,
   },
   {
     name: "Products",
@@ -30,7 +30,12 @@ const menuItems = [
       { name: "Inhouse product", path: "/products/inhouse" },
       { name: "Bulk import", path: "/products/bulk-import" },
       { name: "Bulk export", path: "/products/bulk-export" },
-      { name: "Seller product", path: "/products/seller" },
+      { name: "Seller product", path: "/products/seller",
+        subItems:[
+          {name:"Digital", path:"/products/seller/digital"},
+          {name:"Physical", path:"/products/seller/physical"}
+        ]
+       },
       { name: "Category", path: "/products/category" },
       { name: "Category based discount", path: "/products/category-discount" },
       { name: "Brand", path: "/products/brand" },
@@ -38,7 +43,7 @@ const menuItems = [
       { name: "Colour", path: "/products/colour" },
       { name: "Warrenty", path: "/products/warranty" },
       { name: "Product review", path: "/products/review" },
-      { name: "Product based discount", path: "/products/product-discount"}
+      { name: "Product based discount", path: "/products/product-discount" }
     ],
     path: "/products",
   },
@@ -113,7 +118,7 @@ const menuItems = [
       { name: "Payout request", path: "/sellers/payout-request" },
       { name: "Seller verify account", path: "/sellers/verify" },
       { name: "Seller commission", path: "/sellers/commission" },
-      
+
     ],
     path: "/sellers",
   },
@@ -158,16 +163,20 @@ const menuItems = [
         ],
       },
       {
-        name:"Custom Alert popup",
-        path:"/marketing/custom-alert-popup"
+        name: "Custom Alert popup",
+        path: "/marketing/custom-alert"
       },
       {
-        name:"News Letter",
-        path:"/marketing/all-news-letters"
+        name: "News Letter",
+        path: "/marketing/all-news-letters"
       },
       {
-        name:"Notification",
-        path:"/marketing/notification"
+        name: "Notification",
+        path: "/marketing/notification",
+        subItems: [
+          { name: "Settings", path: "/marketing/notification/settings" },
+          { name: "Notification Types", path: "/marketing/notification/types" }
+        ]
       }
     ],
     path: "/marketing",
@@ -202,31 +211,37 @@ const menuItems = [
       { name: "Features Activation", path: "/admin-settings/features" },
       { name: "Vax And Tax or gst", path: "/admin-settings/tax" },
       { name: "Payment method", path: "/admin-settings/payment" },
-      { 
+      {
         name: "Shipping", path: "/admin-settings/shipping",
         subItems: [
-          { name: "Shipping Configuration", 
-            path: "/admin-settings/shipping/configuration" 
+          {
+            name: "Shipping Configuration",
+            path: "/admin-settings/shipping/configuration"
           },
-          { name: "Shipping Countries", 
-            path: "/admin-settings/shipping/countries" 
+          {
+            name: "Shipping Countries",
+            path: "/admin-settings/shipping/countries"
           },
-          { name: "Shipping State", 
-            path: "/admin-settings/shipping/state" 
+          {
+            name: "Shipping State",
+            path: "/admin-settings/shipping/state"
           },
-          { name: "Shipping Cities", 
-            path: "/admin-settings/shipping/cities" 
+          {
+            name: "Shipping Cities",
+            path: "/admin-settings/shipping/cities"
           },
-          { name: "Shipping Zones", 
-            path: "/admin-settings/shipping/zones" 
+          {
+            name: "Shipping Zones",
+            path: "/admin-settings/shipping/zones"
           },
-          { name: "Shipping Carrier", 
-            path: "/admin-settings/shipping/carrier" 
+          {
+            name: "Shipping Carrier",
+            path: "/admin-settings/shipping/carrier"
           },
-         
-          
+
+
         ],
-       },
+      },
 
 
       { name: "Apearence", path: "/admin-settings/apearence" },
@@ -262,7 +277,7 @@ function Sidebar({ isSidebarVisible }) {
   const toggleItem = (key) => {
     setOpenItems((prev) => ({
       ...prev,
-      [key]: !prev[key], 
+      [key]: !prev[key],
     }));
   };
 
@@ -272,11 +287,11 @@ function Sidebar({ isSidebarVisible }) {
   const renderSubItems = (subItems) => {
     return (
 
-<ul className=" pl-5 py-2 space-y-1">
+      <ul className=" pl-5 py-2 space-y-1">
         {subItems.map((subItem, subIndex) => (
           <li
             key={subIndex}
-            className= "flex flex-col items-start py-1 cursor-pointer text-white hover:text-sky-500"
+            className="flex flex-col items-start py-1 cursor-pointer text-white hover:text-sky-500"
           >
             {subItem.subItems ? (
               <>
@@ -292,11 +307,11 @@ function Sidebar({ isSidebarVisible }) {
                   )}
                 </div>
                 {openItems[subItem.name] && (
-                  <ul className="flex flex-col">{renderSubItems(subItem.subItems)}</ul>
+                  <ul className="flex flex-col  ">{renderSubItems(subItem.subItems)}</ul>
                 )}
               </>
             ) : (
-              <span onClick={() => handleSubItemClick(subItem.path)}>
+              <span className=" w-full " onClick={() => handleSubItemClick(subItem.path)}>
                 {subItem.name}
               </span>
             )}
@@ -342,37 +357,37 @@ function Sidebar({ isSidebarVisible }) {
         {menuItems.map((item, index) => (
           <div key={index} className="flex flex-col">
             <div
-              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${
-                openItems[index]
-                  ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
-                  : "text-white"
-              }`}
+              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${openItems[index]
+                ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
+                : "text-white "
+                }`}
               onClick={() => {
                 if (item.subItems && item.subItems.length > 0) {
                   toggleItem(index);
                 } else {
+
                   navigate(item.path);
                 }
               }}            >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2  ">
                 {item.icon}
                 {isSidebarVisible && <span>{item.name}</span>}
               </div>
               {isSidebarVisible &&
-    item.subItems &&
-    item.subItems.length > 0 &&
-    (openItems[index] ? (
-      <ChevronUp size={20} />
-    ) : (
-      <ChevronDown size={20} />
-    ))}
+                item.subItems &&
+                item.subItems.length > 0 &&
+                (openItems[index] ? (
+                  <ChevronUp size={20} />
+                ) : (
+                  <ChevronDown size={20} />
+                ))}
             </div>
             {openItems[index] &&
-  item.subItems &&
-  item.subItems.length > 0 &&
-  isSidebarVisible && (
-    <div className="pl-5">{renderSubItems(item.subItems)}</div>
-  )}
+              item.subItems &&
+              item.subItems.length > 0 &&
+              isSidebarVisible && (
+                <div className="pl-5 " >{renderSubItems(item.subItems)}</div>
+              )}
           </div>
         ))}
       </div>

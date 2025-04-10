@@ -25,7 +25,6 @@ const ShippingCities = () => {
   const [expandedRows, setExpandedRows] = useState({});
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
-    
 
   const handleToggle = (id) => {
     setStates(states.map(state =>
@@ -44,7 +43,6 @@ const ShippingCities = () => {
     navigate(`/admin-settings/shipping/cities/edit/${id}`);
   };
 
-  
   const toggleStateDropdown = () => {
     setIsStateDropdownOpen(!isStateDropdownOpen);
   };
@@ -58,25 +56,18 @@ const ShippingCities = () => {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // const handleDeleteClick = (roleId) => {
-  //   setRoleToDelete(roleId);
-  //   setShowDeleteConfirmation(true);
-  // };
-
   const openDeleteConfirmation = (id) => {
     setAttributeToDeleteId(id);
     setShowDeleteConfirmation(true);
   };
-  
+
   const closeDeleteConfirmation = () => {
     setAttributeToDeleteId(null);
     setShowDeleteConfirmation(false);
   };
-  
+
   const handleDelete = (id) => {
-    // In a real application, you would make an API call here to delete the attribute
     console.log(`Deleting attribute with ID: ${id}`);
-    // After successful deletion, you would likely update the 'attributes' state
     closeDeleteConfirmation();
   };
 
@@ -85,7 +76,7 @@ const ShippingCities = () => {
       <h1 className="text-xl font-bold mb-3 md:text-2xl md:mb-4">All Cities</h1>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <div className="flex-1 overflow-x-auto">
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-3 md:mb-4 ">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-3 md:mb-4">
             <input type="text" placeholder="Type city name & Enter" className="border p-2 rounded w-full sm:w-auto" />
             <select className="border p-2 rounded w-full sm:w-auto">
               <option>Select State</option>
@@ -98,11 +89,11 @@ const ShippingCities = () => {
           <table className="min-w-full bg-white border-collapse">
             <thead>
               <tr>
-                <th className="p-2 text-left md:hidden w-8"></th> {/* Plus Icon Column */}
+                <th className="p-2 text-left md:hidden w-8"></th>
                 <th className="p-2 text-left hidden md:table-cell">#</th>
                 <th className="p-2 text-left">Name</th>
                 <th className="p-2 text-left">State</th>
-                <th className="p-2 text-left sm:table-cell hidden">Area Wise Shipping Cost</th> {/* Hide on very small screens */}
+                <th className="p-2 text-left hidden md:table-cell">Area Wise Shipping Cost</th> 
                 <th className="p-2 text-left">Show/Hide</th>
                 <th className="p-2 text-left hidden md:table-cell">Options</th>
               </tr>
@@ -119,9 +110,9 @@ const ShippingCities = () => {
                     <td className="p-2 hidden md:table-cell">{state.id}</td>
                     <td className="p-2">{state.name}</td>
                     <td className="p-2">{state.name}</td>
-                    <td className="p-2 sm:table-cell hidden">{state.areaWiseCost}</td> {/* Hide on very small screens */}
+                    <td className="p-2 hidden md:table-cell">{state.areaWiseCost}</td>
                     <td className="p-2">
-                      <Switch isChecked={state.showHide} onToggle={() => handleToggle(state.id)} />
+                      <Switch value={state.showHide} onChangeFunc={() => handleToggle(state.id)} />
                     </td>
                     <td className="p-2 hidden md:table-cell">
                       <button className="text-blue-500 mr-2">
@@ -131,36 +122,33 @@ const ShippingCities = () => {
                         <FiTrash2 onClick={() => openDeleteConfirmation(state.id)} />
                       </button>
                     </td>
-                    
                   </tr>
-                  
                   {expandedRows[state.id] && (
                     <tr className="md:hidden">
                       <td colSpan="6" className="p-2 bg-gray-50">
                         <table className="w-full border-collapse">
                           <tbody>
                             <tr>
-                              <td className="font-semibold p-2 border-b">#</td>
-                              <td className="p-2 border-b">{state.id}</td>
+                              <td className="font-semibold border-b">#</td>
+                              <td className="border-b">{state.id}</td>
                             </tr>
                             <tr className="sm:table-row">
-                              <td className="font-semibold p-2 border-b">Area Wise Shipping Cost</td>
-                              <td className="p-2 border-b">{state.areaWiseCost}</td>
+                              <td className="font-semibold border-b">Area Wise Shipping Cost</td>
+                              <td className="border-b">{state.areaWiseCost}</td>
                             </tr>
                             <tr>
-                              <td className="font-semibold p-2">Options</td>
-                              <td className="p-2">
+                              <td className="font-semibold">Options</td>
+                              <td className="">
                                 <button className="text-blue-500 mr-2">
                                   <FiEdit onClick={() => handlereview(state.id)} />
                                 </button>
                                 <button className="text-red-500">
-                                  <FiTrash2  onClick={() => openDeleteConfirmation(state.id)} />
+                                  <FiTrash2 onClick={() => openDeleteConfirmation(state.id)} />
                                 </button>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-
                       </td>
                     </tr>
                   )}
@@ -169,8 +157,10 @@ const ShippingCities = () => {
             </tbody>
           </table>
         </div>
-        <div className="w-full md:w-1/3 p-4 bg-gray-100 rounded">
-          <h2 className="text-xl font-bold mb-4">Add New city</h2>
+
+        {/* Add New City Section - Moves below on smaller screens */}
+        <div className="w-full md:w-1/3 p-4 bg-gray-100 rounded mt-6 md:mt-0">
+          <h2 className="text-xl font-bold mb-4">Add New City</h2>
           <div className="flex flex-col space-y-2">
             <label htmlFor="name">Name</label>
             <input
@@ -212,11 +202,11 @@ const ShippingCities = () => {
                 </div>
               )}
             </div>
-            <label htmlFor="cost">cost</label>
+            <label htmlFor="cost">Cost</label>
             <input
               type="text"
               id="cost"
-              placeholder="cost"
+              placeholder="Cost"
               className="border p-2 rounded w-full"
               value={newState.cost}
               onChange={(e) => setNewState({ ...newState, cost: e.target.value })}
@@ -231,17 +221,15 @@ const ShippingCities = () => {
             </div>
           </div>
         </div>
-
-
       </div>
-       {showDeleteConfirmation && (
-                      <DeleteConfirmation
-                          isOpen={showDeleteConfirmation}
-                          onConfirm={() => handleDelete(attributeToDeleteId)}
-                          onCancel={closeDeleteConfirmation}
-                         
-                      />
-                  )}
+
+      {showDeleteConfirmation && (
+        <DeleteConfirmation
+          isOpen={showDeleteConfirmation}
+          onConfirm={() => handleDelete(attributeToDeleteId)}
+          onCancel={closeDeleteConfirmation}
+        />
+      )}
     </div>
   );
 };

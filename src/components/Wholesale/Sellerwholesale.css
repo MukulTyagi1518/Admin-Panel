@@ -226,27 +226,20 @@ input[type="checkbox"] {
     }
 
     .product-table5 th {
-        display: none !important; 
+        display: none !important;
     }
 
-   
-    .product-table5 th:nth-child(2) {
-        display: block !important;
-        text-align: center !important;
-        width: 100%;
-        padding: 10px 0;
-        
-        background-color: #f5f5f5;
-        font-weight: bold;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+    .product-table5 th:first-child,
+    .product-table5 th:nth-child(2)
+         {
+        display: table-cell !important;
     }
 
-
-
+    /* Agar chaho to checkbox dikhana ho */
     .product-table5 input[type="checkbox"] {
-        display: none;
+        display: inline-block !important;
     }
+   
 
     .row-details {
         background-color: #f9f9f9;

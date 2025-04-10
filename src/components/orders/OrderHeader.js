@@ -2,9 +2,9 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import Dropdown from "../Dropdown";
 
-const OrderHeader = ({ onSearch }) => {
+const OrderHeader = ({ onFilterChange, onSearch, currentFilters }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search input
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
@@ -13,25 +13,34 @@ const OrderHeader = ({ onSearch }) => {
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    onSearch(value); // Pass the search term to the parent component
+    onSearch(value);
+  };
+
+  const handleFilterSelect = (filterType, value) => {
+    onFilterChange(filterType, value);
+    setOpenDropdown(null);
   };
 
   const dropdowns = {
     bulk: {
       label: "Bulk Action",
       options: ["Mark as Delivered", "Mark as Pending", "Delete Selected"],
+      currentValue: currentFilters.bulk || "Bulk Action"
     },
     delivery: {
       label: "Filter by Delivery",
-      options: ["All", "Pending", "Processing", "Delivered", "Cancelled"],
+      options: ["All", "Pending", "Shipping", "Completed"],
+      currentValue: currentFilters.delivery
     },
     payment: {
       label: "Filter by Payment",
       options: ["All", "Paid", "Unpaid", "Refunded"],
+      currentValue: currentFilters.payment
     },
     date: {
       label: "Filter by Date",
-      options: ["Today", "Last 7 Days", "This Month", "Last Month", "Custom Range"],
+      options: ["All", "Today", "Last 7 Days", "This Month"],
+      currentValue: currentFilters.date
     },
   };
 
@@ -41,17 +50,18 @@ const OrderHeader = ({ onSearch }) => {
         <h1 className="text-xl font-bold text-gray-800">All Orders</h1>
 
         <div className="flex flex-wrap gap-4 items-center">
-          {Object.entries(dropdowns).map(([key, { label, options }]) => (
+          {Object.entries(dropdowns).map(([key, { label, options, currentValue }]) => (
             <Dropdown
               key={key}
               label={label}
               options={options}
+              currentValue={currentValue}
               isOpen={openDropdown === key}
               onToggle={() => toggleDropdown(key)}
+              onSelect={(value) => handleFilterSelect(key, value)}
             />
           ))}
 
-          {/* Search Input */}
           <div className="relative">
             <input
               type="text"

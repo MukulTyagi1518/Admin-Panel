@@ -12,7 +12,7 @@ const AllStaff = () => {
   const navigate = useNavigate();
 
 
-  // ✅ GET API - Fetch staff data
+  //  GET API - Fetch staff data
   useEffect(() => {
     const fetchStaffs = async () => {
       try {
@@ -26,17 +26,17 @@ const AllStaff = () => {
     fetchStaffs();
   }, []);
 
-  // ✅ Toggle row expansion for mobile view
+  //  Toggle row expansion for mobile view
   const toggleRow = (id) => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // ✅ Navigate to Add Staff page
+  // Navigate to Add Staff page
   const handleAddStaff = () => {
     navigate("/staffs/create");
   };
 
-  // ✅ Navigate to Edit Staff page
+  // Navigate to Edit Staff page
   const handleEditStaff = (staffId) => {
     if (staffId) {
       navigate(`/staffs/editInfo/${staffId}`);
@@ -45,7 +45,7 @@ const AllStaff = () => {
     }
   };
 
-  // ✅ Delete staff and update UI
+  // Delete staff and update UI
   const handleDeleteStaff = async (staffId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this staff?");
     if (!confirmDelete) return;
