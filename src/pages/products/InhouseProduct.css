@@ -179,12 +179,12 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
-@media (max-width: 1400px) {
+/* @media (max-width: 1400px) {
     th.hide-on-small,
     td.hide-on-small {
         display: none;
     }
-}
+} */
 
 
 .plus-icon {
@@ -218,6 +218,10 @@ input[type="checkbox"] {
 
 
 @media (max-width: 1400px) {
+    th.hide-on-small,
+    td.hide-on-small {
+        display: none;
+    }
     .plus-icon {
         display: flex;
     }
@@ -230,19 +234,19 @@ input[type="checkbox"] {
     .product-table thead {
         display: none;
     } */
-    .hide-on-small
+    /* .hide-on-small
      {
         display: none;
-    }
+    } */
     
   
     .product-table2 thead {
         display: table-header-group !important;
     }
 
-    .product-table2 th {
+    /* .product-table2 th {
         display: none !important; 
-    }
+    } */
 
    
     /* .product-table2 th:nth-child(2) {
@@ -257,11 +261,25 @@ input[type="checkbox"] {
         border-top-right-radius: 12px;
     } */
 
-
-
-    .product-table2 input[type="checkbox"] {
-        display: none;
+    .product-table2 th {
+        display: none !important;
     }
+
+    .product-table2 th:first-child,
+    .product-table2 th:nth-child(2)
+         {
+        display: table-cell !important;
+    }
+
+    /* Agar chaho to checkbox dikhana ho */
+    .product-table2 input[type="checkbox"] {
+        display: inline-block !important;
+    }
+
+
+    /* .product-table2 input[type="checkbox"] {
+        display: none;
+    } */
 
     .row-details {
         background-color: #f9f9f9;

@@ -266,7 +266,7 @@ const handleExpandRow = (id) => {
             </div>
             <div className="product-table2">
                 <table>
-                    <thead>
+                    {/* <thead>
                         <tr>
                             <th>
                                 <input type="checkbox" className="check25" />
@@ -281,7 +281,23 @@ const handleExpandRow = (id) => {
                             <th>Featured</th>
                             <th>Options</th>
                         </tr>
-                    </thead>
+                    </thead> */}
+                    <thead>
+  <tr>
+    <th className="col-checkbox"> 
+      <input type="checkbox" className="check25" />
+    </th>
+    <th className="col-name">Name</th>
+    <th className="hide-on-small">Added By</th>
+    <th className="hide-on-small">Info</th>
+    <th className="hide-on-small">Total Stock</th>
+    <th className="hide-on-small">Today's Deal</th>
+    <th className="hide-on-small">Published</th>
+    <th className="hide-on-small">Featured</th>
+    <th className="hide-on-small">Options</th>
+  </tr>
+</thead>
+
                   
                    <tbody>
   {products.map((product) => (

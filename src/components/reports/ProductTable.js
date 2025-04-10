@@ -50,7 +50,7 @@ const ProductTable = ({
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto mt-5">
       <table className="min-w-full bg-white">
         <thead>
           <tr className="w-full border-b">
