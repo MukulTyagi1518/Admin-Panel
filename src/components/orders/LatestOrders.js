@@ -1,5 +1,5 @@
 
-import { Download, EyeIcon, Trash } from "lucide-react";
+import { Download, Eye, EyeIcon, Trash } from "lucide-react";
 import React, { useState } from "react";
 import OrderHeader from "./OrderHeader";
 import Pagination from "../Pagination";
@@ -150,11 +150,23 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                   )}
                   <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td>
                   <td className="py-3 px-4">
-                    <div className="flex space-x-1">
+                    {/* <div className="flex space-x-1">
                       <Download className="text-green-400 hover:text-gray-500 cursor-pointer" />
                       <Trash className="text-red-400 hover:text-gray-500 cursor-pointer" onClick={() => handleDeleteClick(order.id)} />
                       <EyeIcon className="text-cyan-400 hover:text-gray-600 cursor-pointer" />
-                    </div>
+                    </div> */}
+                    <div className="flex items-center gap-[.2cm]">
+                                        <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Eye size={15} color="blue" />
+                                        </div>
+                                        <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+                                            <Download size={15} color="blueviolet" />
+                                        </div>
+
+                                        <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Trash size={15} color="red" onClick={() => handleDeleteClick(order.id)} />
+                                        </div>
+                                    </div>
                   </td>
                 </tr>
                 {expandedOrders.includes(order.id) && isBelow1400 && (

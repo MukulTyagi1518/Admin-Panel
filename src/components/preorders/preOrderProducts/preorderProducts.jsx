@@ -118,6 +118,8 @@ export default function PreorderProducts() {
                             <thead>
                                 <tr>
                                     <th></th>
+                                    
+                                    
                                     <th>
                                         <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                     </th>

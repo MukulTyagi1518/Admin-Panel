@@ -142,6 +142,10 @@ import Editattribute from "./components/Edit/Editattribute.jsx"
 import Adminsetting from "./components/Adminsetting/Adminsetting.jsx"
 import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
 import Edittax from "./components/Adminsetting/Edittax.jsx"
+import Pages from "./components/websetting/pages.jsx"
+import Addpage from "./components/websetting/Addpage.jsx"
+import Editpage from "./components/websetting/Editpage.jsx"
+import Headerpage from "./components/websetting/Headerpage.jsx"
 
 
 function App() {
@@ -503,6 +507,12 @@ function App() {
 
               <Route path="editinhouse" element={<Editinhouse />} />
               <Route path="editattribute" element={<Editattribute />} />
+
+              <Route path="/web-settings/page" element={<Pages />} />
+              <Route path="/web-settings/header" element={<Headerpage />}/>
+              <Route path="addpage" element={<Addpage />} />
+              <Route path="editaddpage" element={<Editpage />} />
+
             </Routes>
           </div>
         </div >

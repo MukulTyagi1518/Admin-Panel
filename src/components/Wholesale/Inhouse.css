@@ -317,6 +317,9 @@ input[type="checkbox"] {
         display: inline-block;
     }
 }
+.btn4-delete-btn4{
+  background-color: none;
+}
 
 
 

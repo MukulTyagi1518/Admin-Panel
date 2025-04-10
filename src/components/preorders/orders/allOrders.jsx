@@ -1,6 +1,15 @@
 import { Download, Eye, Trash } from "lucide-react"
+import { useState } from "react";
 
 export default function AllOrdersPreOrders() {
+
+     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+      const [roleToDelete, setRoleToDelete] = useState(null);
+
+    const handleDeleteClick = (roleId) => {
+        setRoleToDelete(roleId);
+        setShowDeleteConfirmation(true);
+      };
 
     const orders = [
         {
@@ -198,19 +207,20 @@ export default function AllOrdersPreOrders() {
 
                                 </td>
 
-                                <td>
-                                    <div className=" flex items-center gap-[.2cm] ">
-                                        <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer ">
-                                            <Eye size={16} color="blue" />
+                                {/* <td>
+                                    <div className="flex items-center gap-[.2cm]">
+                                        <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Eye size={10} color="blue" />
                                         </div>
-                                        <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer ">
-                                            <Download size={16} color="blueviolet" />
+                                        <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+                                            <Download size={10} color="blueviolet" />
                                         </div>
-                                        <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer ">
-                                            <Trash size={16} color="red" />
+
+                                        <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Trash size={10} color="red" onClick={() => handleDeleteClick(item.id)} />
                                         </div>
                                     </div>
-                                </td>
+                                </td> */}
                             </tr>
                         ))}
                     </tbody>
