@@ -208,13 +208,13 @@ export default function PreOrderSetting() {
                 <div className="preOrderBoxLower">
                     <div className="productBoxLowerdiv">
                         <p className="productBoxLowerText">PreOrder Product for Seller</p>
-                        <label className="switch">
+                        <label className="switch-set">
                             <input
                                 type="checkbox"
                                 checked={commission.status}
                                 onChange={(e) => setCommission({ ...commission, status: e.target.checked })}
                             />
-                            <span className="slider"></span>
+                            <span className="slider-set"></span>
                         </label>
                     </div>
                     <div className="productBoxLowerdiv">
