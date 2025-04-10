@@ -202,7 +202,7 @@ export default function PreorderProducts() {
                                                 <div className="toggle-buttons">
                                                     <div className="toggle-item">
                                                         <span>Publish</span>
-                                                        <Switch />
+                                                        <Switch value={product.publish} />
                                                     </div>
                                                     <div className="toggle-item">
                                                         <span>Feature</span>

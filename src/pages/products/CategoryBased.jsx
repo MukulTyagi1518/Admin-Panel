@@ -4,6 +4,7 @@ import { GiLargeDress, GiClothes } from "react-icons/gi";
 import { FaTools } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext"; // Adjust import path as needed
 import api from "../../utils/axios"
+import Switch from "../../components/Switch";
 
 
 
@@ -167,17 +168,11 @@ const CategoryDiscountTable = () => {
                         </div>
                       </td>
                       <td>
-                        <label className="switch">
-                          <input
-                            type="checkbox"
-                            checked={c.sallerProduct}
-                            // onChange={() => handleToggle(category.id)}
-                            onChange={() => {
-                              changeSellerData(c._id, !c.sallerProduct)
-                            }}
-                          />
-                          <span className="slider round"></span>
-                        </label>
+
+                        <div className="flex justify-center w-full " >
+                          <Switch value={c.sallerProduct} onChangeFunc={() => { changeSellerData(c._id, !c.sallerProduct) }} />
+                        </div>
+
                       </td>
                       <td>
                         <button
