@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import "./Inhouse.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../Switch";
+import { useNavigate } from "react-router-dom";
 
 const InhouseProduct = () => {
+
+  const navigate = useNavigate();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate("/wholesale/add");
+    };
     const [products, setProducts] = useState([
         // ... (आपका उत्पाद डेटा) ...
         {
@@ -216,7 +223,7 @@ const handleExpandRow = (id) => {
         <div className="product-container4">
             <div className="header">
                 <div className="text-[20px]">All wholesale products</div>
-                <button className="add-btn">Add New wholesale product</button>
+                <button className="add-btn" onClick={handleSubmit}>Add New wholesale product</button>
             </div>
             <div className="filter-options">
                 <select className="filter-dropdown">
@@ -349,12 +356,12 @@ const handleExpandRow = (id) => {
               <Switch/>
           </label>
         </td>
-        <td className="hide-on-small ">
+        <td className="hide-on-small">
           <button className="btn4 view-btn4">
             <FaEye />
           </button>
           <button className="btn4 edit-btn4">
-            <FaEdit />
+            <FaEdit onClick={handleSubmit}/>
           </button>
           <button className="btn4 delete-btn4">
             <FaTrash />
@@ -418,9 +425,9 @@ const handleExpandRow = (id) => {
             <FaEye />
           </button>
           <button className="btn4 edit-btn4">
-            <FaEdit />
+            <FaEdit onClick={handleSubmit}/>
           </button>
-          <button className="btn4 delete-btn4">
+          <button className="btn4-delete-btn4">
             <FaTrash />
           </button>
         </div>

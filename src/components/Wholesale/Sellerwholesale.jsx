@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sellerwholesale.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../Switch";
+import { useNavigate } from "react-router-dom";
 
 const InhouseProduct = () => {
     const [products, setProducts] = useState([
@@ -202,6 +203,11 @@ const handleExpandRow = (id) => {
         setSelectedSeller(seller);
         setIsSellerDropdownOpen(false);
     };
+    const navigate = useNavigate();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate("/wholesale/add");
+    };
 
     return (
         <div className="product-container5">
@@ -360,7 +366,7 @@ const handleExpandRow = (id) => {
             <FaEye />
           </button>
           <button className="btn5 edit-btn5">
-            <FaEdit />
+            <FaEdit onClick={handleSubmit}/>
           </button>
           <button className="btn5 delete-btn5">
             <FaTrash />
@@ -424,7 +430,7 @@ const handleExpandRow = (id) => {
             <FaEye />
           </button>
           <button className="btn5 edit-btn5">
-            <FaEdit />
+            <FaEdit onClick={handleSubmit} />
           </button>
           <button className="btn5 delete-btn5">
             <FaTrash />
