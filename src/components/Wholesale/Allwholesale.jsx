@@ -9,7 +9,7 @@ export default function PreOrderReviews() {
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate("/wholesale/Addwholesale");
+        navigate("/wholesale/add");
     };
 
     const [expandedId, setExpandedId] = useState(null);
@@ -161,10 +161,18 @@ export default function PreOrderReviews() {
                     </tbody>
                 </table>
 
-                {/* Mobile View */}
-                <div className="block md:hidden w-full">
+{/* Mobile View */}
+<div className="block md:hidden w-full">
+  {/* Header Row */}
+  <div className="grid grid-cols-3 bg-gray-200 text-gray-700 font-semibold text-sm px-4 py-2 rounded-t-lg">
+    <span></span>
+    <span className="col-span-1">ID</span>
+    <span className="col-span-1">Name</span>
+  </div>
+
+  {/* Product List */}
   {userData.map((user) => (
-    <div key={user.id} className="border rounded-lg shadow-md mb-4 p-4">
+    <div key={user.id} className="border-t border-gray-300 shadow-sm px-4 py-3">
       {/* Summary Row */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -205,53 +213,21 @@ export default function PreOrderReviews() {
 
           {/* Toggle Switches */}
           <div className="flex items-center">
-            <span className="font-medium text-gray-600">Today's Deal:</span>
-           
-            <label className="inline-flex items-center cursor-pointer ml-auto">
-              {/* <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={user.todaysdeal}
-                onChange={() => handleToggleChange(user.id, "todaysdeal")}
-              />
-             
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
-                <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
-              </div> */}
-               <Switch/>
+            <span className="text-gray-600 font-medium">Today's Deal:</span>
+            <label className="inline-flex items-center ml-auto">
+              <Switch />
             </label>
           </div>
-
           <div className="flex items-center">
-            <span className="font-medium text-gray-600">Published:</span>
-            <label className="inline-flex items-center cursor-pointer ml-auto">
-              {/* <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={user.published}
-                onChange={() => handleToggleChange(user.id, "published")}
-              />
-               
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
-                <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
-              </div> */}
-              <Switch/>
+            <span className="text-gray-600 font-medium">Published:</span>
+            <label className="inline-flex items-center ml-auto">
+              <Switch />
             </label>
           </div>
-
           <div className="flex items-center">
-            <span className="font-medium text-gray-600">Featured:</span>
-            <label className="inline-flex items-center cursor-pointer ml-auto">
-              {/* <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={user.featured}
-                onChange={() => handleToggleChange(user.id, "featured")}
-              /> */}
-              <Switch/>
-              {/* <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 relative">
-                <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5"></div>
-              </div> */}
+            <span className="text-gray-600 font-medium">Featured:</span>
+            <label className="inline-flex items-center ml-auto">
+              <Switch />
             </label>
           </div>
         </div>
