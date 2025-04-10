@@ -147,6 +147,7 @@ import Edittax from "./components/Adminsetting/Edittax.jsx"
 import Apperence from "./components/Adminsetting/Apperence.jsx"
 import AttributeDetail from "./pages/products/AttributeDetail.js";
 import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
+import AddNewFaq from "./pages/products/AddNewFaq.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -250,6 +251,8 @@ function App() {
                 <Route path="/products/addnewbrand" element={<AddNewBrand />} />
                 <Route path="/products/addnewcolor" element={<AddNewColor />} />
                 <Route path="/products/settings" element={<AttributeDetail />} />
+                <Route path="/products/addnewfaq" element={<AddNewFaq/>} />
+                
 
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />

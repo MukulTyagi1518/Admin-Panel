@@ -432,7 +432,7 @@ const handleExpandRow = (id) => {
             <FaEdit />
           </button>
           <button className="btn5 delete-btn5">
-          <div>Num of Sale: {product.info.sale} times</div>
+          {/* <div>Num of Sale: {product.info.sale} times</div> */}
             <FaTrash   onClick={() => openDeleteConfirmation(product.id)}/>
           </button>
         </div>
@@ -446,36 +446,6 @@ const handleExpandRow = (id) => {
   ))}
 </tbody>
 
-
-
-
-{/* <div className="pagination ">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-btn"
-                >
-                    &lsaquo;
-                </button>
-
-                {getPageNumbers().map((page, index) => (
-                    <button
-                        key={index}
-                        onClick={() => typeof page === "number" && paginate(page)}
-                        className={`pagination-btn ${currentPage === page ? "active" : ""} ${page === "..." ? "dots" : ""}`}
-                    >
-                        {page}
-                    </button>
-                ))}
-
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="pagination-btn"
-                >
-                    &rsaquo;
-                </button>
-            </div> */}
                     
 
                 </table>

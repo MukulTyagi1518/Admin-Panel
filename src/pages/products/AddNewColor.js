@@ -68,6 +68,7 @@ export default function AddNewColor({ onColorAdded }) {
                     placeholder="Enter color name"
                 />
                 </div>
+                
             <div className="faqForm">
                 {/* <label>Name</label>
                 <div>

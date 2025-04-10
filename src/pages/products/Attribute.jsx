@@ -1,4 +1,4 @@
-import { Delete, Edit, Trash } from "lucide-react";
+import { Delete, Edit, Trash, Plus } from "lucide-react";
 import "./Attribute.css";
 import { MdOutlineSettings } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -44,10 +44,20 @@ const handleDelete = (id) => {
   closeDeleteConfirmation();
 };
 
+const handleForm = (e) => {
+  e.preventDefault();
+  navigate("/products/addnewfaq");
+};
+
   return (
     <div className="PreOrderFaq ma10">
       <div className="preOrderFaqBox-attribute">
         <div className="preOrderFaqLeft">
+        <div className="addbtn">
+                <button className="add-brand-btn"  onClick={handleForm} >
+                            <Plus size={16} /> Add New FAQ
+                        </button>
+                </div>
           <div className="preOrderLeftUpper">
             <p className="allFaq">Attribute</p>
           </div>
@@ -89,7 +99,7 @@ const handleDelete = (id) => {
           </div>
         </div>
 
-        <div className="preOrderFaqRight-at">
+        {/* <div className="preOrderFaqRight-at">
           <div className="preOrderFaqRightHead">
             <p className="allFaq">Add new FAQ</p>
           </div>
@@ -101,7 +111,7 @@ const handleDelete = (id) => {
               <input type="submit" value="Save" className="inpSub-at" />
             </div>
           </div>
-        </div>
+        </div> */}
         
             {/* Render the Delete Confirmation Modal */}
             {showDeleteConfirmation && (

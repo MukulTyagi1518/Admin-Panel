@@ -1,4 +1,3 @@
-
 import { Download, EyeIcon, Trash } from "lucide-react";
 import React, { useState } from "react";
 import OrderHeader from "./OrderHeader";
@@ -16,13 +15,12 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     { id: 6, code: "ORD006", products: 1, customer: "Eve White", seller: "Seller", amount: "$80.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes" },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20); // Number of items per page
-   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [roleToDelete, setRoleToDelete] = useState(null);
+  const [itemsPerPage] = useState(20);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
 
-  // Apply custom filter if provided
   const filteredOrders = customFilter
     ? customFilter(orders)
     : orders.filter(
@@ -44,7 +42,6 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     }
   };
 
-
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -54,14 +51,12 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     setCurrentPage(pageNumber);
   };
 
-  
   const handleDeleteClick = (roleId) => {
     setRoleToDelete(roleId);
     setShowDeleteConfirmation(true);
   };
 
   const confirmDelete = () => {
-    // Implement your delete logic here
     console.log(`Deleting role with ID: ${roleToDelete}`);
     setShowDeleteConfirmation(false);
     setRoleToDelete(null);
@@ -71,7 +66,6 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
     setShowDeleteConfirmation(false);
     setRoleToDelete(null);
   };
-
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -112,9 +106,10 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Delivery Status</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Payment Method</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Payment Status</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Refund</th>
                 </>
               )}
-              <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Refund</th>
+              {/* <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Refund</th> */}
               <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Actions</th>
             </tr>
           </thead>
@@ -146,9 +141,10 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                       </td>
                       <td className="py-3 px-4 text-sm text-gray-700">{order.paymentMethod}</td>
                       <td className="py-3 px-4 text-sm text-gray-700">{order.paymentStatus}</td>
+                      <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td>
                     </>
                   )}
-                  <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td>
+                  {/* <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td> */}
                   <td className="py-3 px-4">
                     <div className="flex space-x-1">
                       <Download className="text-green-400 hover:text-gray-500 cursor-pointer" />
@@ -194,6 +190,10 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                             <td className="py-2 px-4 font-semibold">Payment Status</td>
                             <td className="py-2 px-4">{order.paymentStatus}</td>
                           </tr>
+                          <tr>
+                             <td className="py-2 px-4 font-semibold">Refund</td>
+                             <td className="py-2 px-4">{order.refund}</td>
+                          </tr>
                         </tbody>
                       </table>
                     </td>
@@ -204,31 +204,31 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
           </tbody>
         </table>
         {showDeleteConfirmation && (
-        <div className="delete-confirmation-overlay">
-          <div className="delete-confirmation-dialog">
-            <div className="dialog-header">
-              <h2>Delete Confirmation</h2>
-              <button
-                className="close-dialog-btn"
-                onClick={cancelDelete}
-              >
-                X
-              </button>
-            </div>
-            <div className="dialog-content">
-              <p>Are you sure to delete this?</p>
-            </div>
-            <div className="dialog-actions">
-              <button className="cancel-btn" onClick={cancelDelete}>
-                Cancel
-              </button>
-              <button className="delete-btn" onClick={confirmDelete}>
-                Delete
-              </button>
+          <div className="delete-confirmation-overlay">
+            <div className="delete-confirmation-dialog">
+              <div className="dialog-header">
+                <h2>Delete Confirmation</h2>
+                <button
+                  className="close-dialog-btn"
+                  onClick={cancelDelete}
+                >
+                  X
+                </button>
+              </div>
+              <div className="dialog-content">
+                <p>Are you sure to delete this?</p>
+              </div>
+              <div className="dialog-actions">
+                <button className="cancel-btn" onClick={cancelDelete}>
+                  Cancel
+                </button>
+                <button className="delete-btn" onClick={confirmDelete}>
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
       <div className="flex justify-between items-center mt-6">
         <div className="text-sm text-gray-500">

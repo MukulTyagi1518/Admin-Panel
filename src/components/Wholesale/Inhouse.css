@@ -113,7 +113,6 @@
     
 }
 
- 
 
 
 
@@ -158,10 +157,11 @@ input[type="checkbox"] {
     padding-left: 4px;
 }
 
-.delete-btn4 {
+.delete-btn6 {
     color: rgb(243, 101, 136) !important;
     padding-left: 4px;
 }
+
 
 
 .product-table4 td {
@@ -245,8 +245,8 @@ input[type="checkbox"] {
     }
 
    
-    .product-table4 th:nth-child(2) {
-        display: block !important;
+    /* .product-table4 th:nth-child(1) {
+        display: inline-flex !important;
         text-align: center !important;
         width: 100%;
         padding: 10px 0;
@@ -255,8 +255,9 @@ input[type="checkbox"] {
         font-weight: bold;
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
-    }
+    } */
 
+ 
 
 
     .product-table4 input[type="checkbox"] {

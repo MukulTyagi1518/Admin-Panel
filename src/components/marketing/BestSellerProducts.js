@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Download, Plus, Star } from "lucide-react";
-import ProductTable from "../reports/ProductTable";
+import ProductTable from "./ProductTable";
 
 const BestSellerProducts = () => {
 

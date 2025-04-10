@@ -174,31 +174,31 @@ export default function PreOrderReviews() {
           >
             {expandedId === user.id ? "−" : "+"}
           </button>
-          <span className="font-semibold text-sm">#{user.id}</span>
+          <span className="font-semibold text-sm">{user.id}</span>
           <span className="font-medium text-gray-800 text-sm">{user.prodName}</span>
         </div>
       </div>
 
       {/* Expanded Details */}
       {expandedId === user.id && (
-        <div className="mt-4 space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Added By:</span>
+        <div className="mt-4 space-y-2 text-sm  w-full">
+          <div className="flex">
+            <span className="font-medium text-gray-600 mr-2">Added By:</span>
             <span>{user.productOwner}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Num of Sale:</span>
+          <div className="flex ">
+            <span className="font-medium text-gray-600 mr-2">Num of Sale:</span>
             <span>{user.info.NumofSale}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Base Price:</span>
+          <div className="flex ">
+            <span className="font-medium text-gray-600 mr-2">Base Price:</span>
             <span>{user.info.BasePrice}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium text-gray-600">Rating:</span>
+          <div className="flex ">
+            <span className="font-medium text-gray-600 mr-2">Rating:</span>
             <span>{user.info.Rating}</span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex ">
             <span className="font-medium text-gray-600">Total Stock:</span>
             <span>{user.totalstock}</span>
           </div>
@@ -206,7 +206,7 @@ export default function PreOrderReviews() {
           {/* Toggle Switches */}
           <div className="flex items-center">
             <span className="font-medium text-gray-600">Today's Deal:</span>
-            <label className="inline-flex items-center cursor-pointer ml-auto">
+            <label className="inline-flex items-center cursor-pointer ml-2">
               <input
                 type="checkbox"
                 className="sr-only peer"
@@ -221,7 +221,7 @@ export default function PreOrderReviews() {
 
           <div className="flex items-center">
             <span className="font-medium text-gray-600">Published:</span>
-            <label className="inline-flex items-center cursor-pointer ml-auto">
+            <label className="inline-flex items-center cursor-pointer ml-2">
               <input
                 type="checkbox"
                 className="sr-only peer"
@@ -236,7 +236,7 @@ export default function PreOrderReviews() {
 
           <div className="flex items-center">
             <span className="font-medium text-gray-600">Featured:</span>
-            <label className="inline-flex items-center cursor-pointer ml-auto">
+            <label className="inline-flex  cursor-pointer ml-2">
               <input
                 type="checkbox"
                 className="sr-only peer"

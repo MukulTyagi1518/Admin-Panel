@@ -1,0 +1,93 @@
+/* AddNewFaq.js Responsive Styles */
+
+/* Base Styles (already provided) */
+.preOrderFaqRight-at {
+    width: 20cm; /* Default width */
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 5px;
+    margin-left: 30%;
+    margin-top: 6%; 
+}
+  
+  
+  .preOrderFaqRightHead {
+    padding: 0.5cm;
+    border-bottom: 1px solid rgb(206, 206, 206);
+  }
+  
+  .faqForm-at {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3cm;
+    padding: 0.5cm;
+  }
+  
+  .faqInp {
+    width: 100%;
+    padding: 0.3cm;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid rgb(206, 206, 206);
+  }
+  
+  .inpSubBox-at {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.2cm;
+  }
+  
+  .inpSub-at {
+    background-color: royalblue;
+    color: white;
+    padding: 0.2cm 0.5cm;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Responsive Adjustments */
+  
+  /* Tablets and Medium Screens (max-width: 1024px) */
+  @media (max-width: 1024px) {
+    .preOrderFaqRight-at {
+      width: 100%; /* Take full width on tablets */
+    }
+  }
+  
+  /* Small Devices (max-width: 768px) */
+  @media (max-width: 768px) {
+    .preOrderFaqRight-at {
+      width: 100%; /* Take full width on small devices */
+      padding: 0.3cm; /* Reduce padding for smaller screens */
+    }
+  
+    .faqForm-at {
+      padding: 0.3cm; /* Reduce form padding */
+      gap: 0.2cm; /* Reduce gap between form elements */
+    }
+  
+    .faqInp {
+      padding: 0.2cm; /* Reduce input padding */
+    }
+  
+    .inpSub-at {
+      padding: 0.2cm 0.4cm; /* Reduce button padding */
+    }
+  }
+  
+  /* Extra Small Devices (max-width: 480px) */
+  @media (max-width: 480px) {
+    .faqForm-at {
+      padding: 0.2cm; /* Further reduce padding */
+    }
+  
+    .inpSub-at {
+      width: 100%; /* Full width button on very small screens */
+    }
+  }
+  
+  /* 390px and Smaller Screens */
+  @media (max-width: 390px) {
+    .preOrderFaqRightHead .allFaq {
+      font-size: 16px; /* Smaller font size for very small screens */
+    }
+  }
