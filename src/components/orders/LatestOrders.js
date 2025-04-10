@@ -1,4 +1,5 @@
-import { Download, EyeIcon, Trash } from "lucide-react";
+
+import { Download, Eye, EyeIcon, Trash } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import OrderHeader from "./OrderHeader";
 import Pagination from "../Pagination";
@@ -304,7 +305,7 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                                         </div>
 
                                         <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
-                                            <Trash size={15} color="red" onClick={() => handleDeleteClick(order.id)} />
+                                            <Trash size={15} color="red"  />
                                         </div>
                                     </div>
                   </td>
