@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Addreview.css";
+import apiInstance from "../../utils/axios"; // Import axios for API calls
 
 import { DataTable } from "../../components/marketing/EmailTemplate/MainPageComponents/DataTable";
 
 const CustomReviewForm = () => {
   const [category, setCategory] = useState("");
   const [product, setProduct] = useState("");
+  const [categories, setCategories] = useState([]); // State for categories
+  const [products, setProducts] = useState([]); // State for products
   const [rating, setRating] = useState(0);
   const [dateType, setDateType] = useState("system");
   const [customDate, setCustomDate] = useState("");
@@ -15,6 +18,43 @@ const CustomReviewForm = () => {
   const [image, setImage] = useState(null); // State for storing the uploaded image
 
   const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await apiInstance.get("/categories/Get-all-categories");
+        console.log("Categories API Response:", response.data); // Debugging log
+        if (response.data && Array.isArray(response.data)) {
+          setCategories(response.data); // Ensure the response is an array
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    const fetchProducts = async () => {
+      try {
+        const response = await apiInstance.get("/products/");
+        console.log("Products API Response:", response.data); // Debugging log
+        setProducts(response.data.data); // Assuming the API returns products in `data.data`
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchCategories();
+    fetchProducts();
+  }, []);
+
+  const filteredProducts = products.filter((prod) => {
+    // If the category is empty, include all products
+    if (!category) return true;
+
+    // Check if the product's category matches the selected category
+    return prod.category && prod.category.some((cat) => cat._id === category);
+  });
 
   const handleFileChange = (event) => {
     if (event.target.files.length > 0) {
@@ -56,9 +96,33 @@ const CustomReviewForm = () => {
     setImage(null); // Reset the image
   };
 
-  const handleSendReviews = () => {
-    alert("Sending review!");
-    setReviews([]);
+  const handleSendReviews = async () => {
+    try {
+      const formData = new FormData();
+      reviews.forEach((review, index) => {
+        formData.append(`customReviewerName[${index}]`, review.reviewerName);
+        formData.append(`category[${index}]`, review.category);
+        formData.append(`product[${index}]`, review.product);
+        formData.append(`rating[${index}]`, review.rating);
+        formData.append(`date[${index}]`, review.date);
+        formData.append(`comment[${index}]`, review.comment);
+        if (review.image) {
+          formData.append(`customReviewerImage[${index}]`, review.image);
+        }
+      });
+
+      const response = await apiInstance.post("productreviews/create-bulk", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert(`${response.data.message}`);
+      setReviews([]); // Clear the reviews after successful submission
+    } catch (error) {
+      console.error("Error sending reviews:", error);
+      alert("Failed to send reviews. Please try again.");
+    }
   };
 
   const columns = [
@@ -120,9 +184,11 @@ const CustomReviewForm = () => {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Select Category</option>
-          <option value="electronics">Electronics</option>
-          <option value="fashion">Fashion</option>
-          <option value="automobile">Automobile</option>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat._id}>
+              {cat.name}
+            </option>
+          ))}
         </select>
 
         <label className="form-label">Product *</label>
@@ -132,10 +198,12 @@ const CustomReviewForm = () => {
           onChange={(e) => setProduct(e.target.value)}
           required
         >
-          <option value="">Please Select Category First</option>
-          {category === "automobile" && (
-            <option value="hummer">Hummer EV 2025</option>
-          )}
+          <option value="">Select Product</option>
+          {filteredProducts.map((prod) => (
+            <option key={prod._id} value={prod._id}>
+              {prod.name}
+            </option>
+          ))}
         </select>
 
         <label className="form-label">Rating *</label>
