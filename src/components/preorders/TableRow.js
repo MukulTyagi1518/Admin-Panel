@@ -189,15 +189,15 @@ function TableRow({ order }) {
               <div><strong>Status:</strong> {order.status}</div>
               <div className="flex gap-2 mt-2">
                 <strong>Options:</strong>
-                <button className="p-1 hover:bg-gray-100 rounded">
-                  <EyeIcon className="w-4 h-4" />
-                </button>
-                <button className="p-1 hover:bg-gray-100 rounded">
-                  <Download className="w-4 h-4" />
-                </button>
-                <button className="p-1 hover:bg-gray-100 rounded">
-                  <Trash2Icon className="w-4 h-4" />
-                </button>
+                <button className="btn8 text-green-500 pl-1">
+              <FaEye />
+            </button>
+            <button className="btn8 text-yellow-400 pl-1">
+              <Download />
+            </button>
+            <button className="btn8 text-pink-400 pl-1">
+              <FaTrash />
+            </button>
               </div>
             </div>
           </td>

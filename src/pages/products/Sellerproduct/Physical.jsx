@@ -238,10 +238,12 @@ const ProductTable = () => {
                   {["todayDeal", "published", "approved", "featured"].map(
                     (field) => (
                       <td className="p-3" key={field}>
+                         <label className="switch">
                         <Switch
                           value={product[field]}
                           onChangeFunc={() => toggleProductStatus(product.id, field)}
                         />
+                        </label>
                       </td>
                     )
                   )}
@@ -305,12 +307,12 @@ const ProductTable = () => {
 
           {products.map((product) => (
             <div key={product.id} className="border p-3 mb-3 rounded-lg">
-              <div className="flex justify-between items-center">
+              <div className="flex  items-center">
                 <button onClick={() => toggleExpand(product.id)} className="p-2">
                   {product.expanded ? "-" : "+"}
                 </button>
                 <div className="flex items-center space-x-2">
-                  <img src={product.image} alt={product.name} className="w-10 h-10" />
+                  <img src={product.image} alt={product.name} className="w-10 h-10 mt-5" />
                   <span>{product.name}</span>
                 </div>
               </div>
