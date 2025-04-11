@@ -115,8 +115,8 @@ import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartn
 import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
 import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRegistration.js";
 import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
-import CreateCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
-import EditCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
+import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
+import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 import ReportsPage from "./components/delivery/ReportsPage.js";
 import ColorEdit from "./pages/products/ColorEdit.jsx";
 import BrandEdit from "./pages/products/BrandEdit.js";
@@ -135,8 +135,6 @@ import CarrierEdit from "./components/admin-settings/shipping/CarrierEdit.js";
 import CarrierCreate from "./components/admin-settings/shipping/CarrierCreate.js";
 import ReviewDetails from "./components/ReviewDetails.js";
 import QueriesDetail from "./components/QueriesDetail.js";
-import AddNewBrand from "./pages/products/AddNewBrand.js";
-import AddNewColor from "./pages/products/AddNewColor.js";
 
 
 import Editinhouse from "./components/Edit/Editinhoue.jsx"
@@ -159,6 +157,8 @@ import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails
 import Footer from "./components/webSettings/footerSettings/Footer.js";
 import AddNewFaq from "./pages/products/AddNewFaq.js";
 
+import Footerpage from "./components/websetting/Footerpage.jsx"
+import Appeareance from "./components/websetting/Appearence.jsx"
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -238,7 +238,6 @@ function App() {
                   <Route path="warranty" element={<Warrenty />} />
 
 
-
                   <Route
                     path="frequently-bought"
                     element={<FrequentlyBought />}
@@ -267,9 +266,6 @@ function App() {
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
-
-
-
                 <Route path="warranty" element={<Warrenty />} />
                 <Route path="colour" element={<Colors />} />
                 <Route path="review" element={<Review />} />
@@ -284,7 +280,6 @@ function App() {
                 />
               </Route>
 
-              <Route path="attribute-value-info/:id" element={<AttributeValueInfo />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
               <Route path="/" element={<Dashboard />} />
@@ -372,13 +367,13 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
-                <Route path="custom-alert" element={<CustomAlerts />} />
+                <Route path="custom-alert-popup" element={<CustomAlerts />} />
                 <Route
-                  path="custom-alert/create"
+                  path="custom-alert-popup/create"
                   element={<CreateCustomAlert />}
                 />
                 <Route
-                  path="custom-alert/edit/:id"
+                  path="custom-alert-popup/edit/:id"
                   element={<EditCustomAlert />}
                 />
                 <Route path="email-templates">
@@ -445,10 +440,6 @@ function App() {
                   <Route path="edit/:id" element={<NewsLetter />} />
                   <Route path="view/:id" element={<NewsLetter />} />
                 </Route>
-                <Route path="notification">
-                  <Route path="settings" element={<Settings />} />
-                  <Route path="types" element={<NotificationTypes />} />
-                </Route>
               </Route>
 
  
@@ -463,7 +454,8 @@ function App() {
                   <Route path="state" element={<ShippingState />} />
                   <Route path="state">
                     <Route index element={<ShippingState />} />
-                    <Route path="edit/:id" element={<StateEdit />} />
+                     <Route path="edit/:id" element={<StateEdit />} /> 
+                   
                   </Route>
                   <Route path="cities" element={<ShippingCities />} />
                   <Route path="cities">
@@ -504,11 +496,7 @@ function App() {
                 <Route path="active" element={<ActiveDeliveryPartner />} />
                 <Route path="inactive" element={<InActiveDeliveryPartner />} />
                 <Route path="pending" element={<PendingDeliveryPartner />} />
-                <Route path="active/reports" element={<ReportsPage />} />
               </Route>
-
-
-
 
 
               <Route path="/support">
