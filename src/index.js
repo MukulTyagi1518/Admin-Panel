@@ -9,6 +9,7 @@ import ProductProvider from "./productContex";
 import CategoryProvider from "./categoryContext";
 import CustomerProvider from "./context/customerContext";
 import { EmailTemplateProvider } from "./context/EmailTemplateContext";
+import OrdersProvider from "./context/ordersContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -16,17 +17,19 @@ const root = createRoot(container);
 root.render(
   <AdminProvider>
     <ProductProvider>
-      <CategoryProvider>
-        <EmailTemplateProvider>
-        <CustomerProvider>
-          <React.StrictMode>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </React.StrictMode>
-        </CustomerProvider>
-        </EmailTemplateProvider>
-      </CategoryProvider>
+      <OrdersProvider>
+        <CategoryProvider>
+          <EmailTemplateProvider>
+            <CustomerProvider>
+              <React.StrictMode>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </React.StrictMode>
+            </CustomerProvider>
+          </EmailTemplateProvider>
+        </CategoryProvider>
+      </OrdersProvider>
     </ProductProvider>
   </AdminProvider>
 );

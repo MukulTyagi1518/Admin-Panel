@@ -232,25 +232,26 @@ const TodaysDeals = () => {
       </div>
 
       <div className="mt-4">
-        <label className="block mb-2 font-medium">Today's Deal Banner Text Color</label>
-        <div className="flex gap-4">
-          {["Light", "Dark"].map((option) => (
-            <label key={option} className="flex items-center">
-              <input
-                type="radio"
-                name="textColor"
-                value={option}
-                checked={formState.textColor === option}
-                onChange={(e) =>
-                  setFormState((prev) => ({ ...prev, textColor: e.target.value }))
-                }
-                className="mr-2"
-              />
-              {option}
-            </label>
-          ))}
-        </div>
-      </div>
+  <label className="block mb-2 font-medium">Today's Deal Banner Text Color</label>
+  <div className="flex gap-6">
+    {["Light", "Dark"].map((option) => (
+      <label key={option} className="flex items-center gap-2 text-sm">
+        <input
+          type="radio"
+          name="textColor"
+          value={option}
+          checked={formState.textColor === option}
+          onChange={(e) =>
+            setFormState((prev) => ({ ...prev, textColor: e.target.value }))
+          }
+          className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+        />
+        {option}
+      </label>
+    ))}
+  </div>
+</div>
+
 
       <div className="mt-6">
         <button

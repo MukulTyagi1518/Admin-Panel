@@ -126,11 +126,8 @@
     margin-top: .3cm;
 }
 
-.preOrderActions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .2cm;
+.preOrderActions1 {
+  
     height: 100%;
     // border: 1px solid black;
 
@@ -542,3 +539,33 @@
     background-size: 1rem; /* Adjust size as needed */
     padding-right: 2rem; /* Make space for the arrow */
 }
+
+
+.expanded-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5cm; /* Adjust spacing as needed */
+    padding: 1cm; /* Add some padding around the details */
+    background-color: #f9f9f9; /* Optional: Add a background color */
+    border-radius: 5px; /* Optional: Add rounded corners */
+  
+    .detail-item {
+      display: flex;
+      gap: 1cm; /* Spacing between label and value */
+      align-items: flex-start; /* Align items to the start for better readability */
+  
+      .detail-label {
+        font-weight: bold;
+        opacity: 0.8;
+        min-width: 150px; /* Adjust width for better alignment of labels */
+      }
+  
+      .detail-value {
+        opacity: 0.7;
+      }
+  
+      .toggle-buttons {
+        margin-top: 0.3cm; /* Add some space for the toggle buttons */
+      }
+    }
+  }

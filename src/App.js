@@ -8,18 +8,18 @@ import EarningsPage from "./pages/EarningsPage.js";
 import Navbar from "./components/Navbar.js";
 import Sidebar from "./components/Sidebar.js";
 import PreordersPage from "./components/preorders/PreOrders.js";
-import HomeSlider from "./components/settings/HomeSlider.js";
-import TodaysDeals from "./components/settings/TodaysDeals.js";
-import BannerLevel1 from "./components/settings/BannerLevel1.js";
-import PreorderBanner1 from "./components/settings/PreorderBanner1.js";
-import BannerLevel2 from "./components/settings/BannerLevel2.js";
-import BannerLevel3 from "./components/settings/BannerLevel3.js";
-import AuctionBanner from "./components/settings/AuctionBanner.js";
-import CategoryWiseProducts from "./components/settings/CaterogyWiseProducts.js";
-import Classified from "./components/settings/Classified.js";
-import NewestPreorderProducts from "./components/settings/NewestPreorderProducts.js";
-import SettingsLayout from "./components/settings/SettingsLayout.js";
-import TopBrands from "./components/settings/TopBrands.js";
+import HomeSlider from "./components/websetting/settings/HomeSlider.js"
+import TodaysDeals from "./components/websetting/settings/TodaysDeals.js";
+import BannerLevel1 from "./components/websetting/settings/BannerLevel1.js";
+import PreorderBanner1 from "./components/websetting/settings/PreorderBanner1.js";
+import BannerLevel2 from "./components/websetting/settings/BannerLevel2.js";
+import BannerLevel3 from "./components/websetting/settings/BannerLevel3.js";
+import AuctionBanner from "./components/websetting/settings/AuctionBanner.js";
+import CategoryWiseProducts from "./components/websetting/settings/CaterogyWiseProducts.js";
+import Classified from "./components/websetting/settings/Classified.js";
+import NewestPreorderProducts from "./components/websetting/settings/NewestPreorderProducts.js";
+import SettingsLayout from "./components/websetting/settings/SettingsLayout.js";
+import TopBrands from "./components/websetting/settings/TopBrands.js";
 import Productadd from "./pages/products/Productadd.jsx";
 import Seo from "./pages/products/Seo.jsx";
 import Shipping from "./pages/products/Shipping.jsx";
@@ -155,9 +155,11 @@ import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
 import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
 import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
-import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
-import Footer from "./components/webSettings/footerSettings/Footer.js";
+// import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
+// import Footer from "./components/websettings/";
 import AddNewFaq from "./pages/products/AddNewFaq.js";
+// import HomePageSettings from "./pages/HomePageSettings.js";
+import Homesetting from "./components/Homesetting/Homesetting.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -540,19 +542,37 @@ function App() {
 
 
               <Route path='/web-settings' >
+
+
+
                 <Route path='header' element={<Headerpage />} />
-                <Route path='footer' element={<Footer />} />
+                {/* <Route path='footer' element={<Footer />} /> */}
                 <Route path='page' element={<Pages />} />
+                <Route path="home" element={<Homesetting />} >
+                  <Route path='homeslider' element={<HomeSlider />} />
+                  <Route path='todaysdeal' element={<TodaysDeals />} />
+                  <Route path='banner1' element={<BannerLevel1 />} />
+                  <Route path='perorder' element={<PreorderProducts />} />
+                  <Route path='banner2' element={<BannerLevel2 />} />
+                  <Route path='banner3' element={<BannerLevel3 />} />
+                  <Route path='auction' element={<AuctionBanner />} />
+                  <Route path='categorywise' element={<CategoryWiseProducts />} />
+                  <Route path='classifieds' element={<Classified />} />
+                  <Route path='newest' element={<NewestPreorderProducts/>} />
+                  <Route path='topbrands' element={<TopBrands/>} />
+
+
+                </Route>
                 <Route path="addpage" element={<Addpage />} />
                 <Route path="editaddpage" element={<Editpage />} />
 
               </Route>
 
-              
+
 
 
               <Route path="/web-settings/footer" element={<FooterWidget />} />
-              <Route path="/admin-settings/apearence" element={<Appeareance />} />
+              <Route path="/web-settings/apearence" element={<Appeareance />} />
 
             </Routes>
           </div>

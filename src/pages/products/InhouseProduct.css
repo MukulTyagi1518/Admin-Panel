@@ -164,6 +164,7 @@ input[type="checkbox"] {
 }
 
 
+
 .product-table2 td {
     white-space: nowrap;
     text-align: center;
@@ -179,12 +180,7 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
-@media (max-width: 1400px) {
-    th.hide-on-small,
-    td.hide-on-small {
-        display: none;
-    }
-}
+
 
 
 .plus-icon {
@@ -218,6 +214,10 @@ input[type="checkbox"] {
 
 
 @media (max-width: 1400px) {
+    th.hide-on-small,
+    td.hide-on-small {
+        display: none;
+    }
     .plus-icon {
         display: flex;
     }
@@ -226,23 +226,15 @@ input[type="checkbox"] {
         text-align: left;
         line-height: 50px;
     }
-    /* .hide-on-small,
-    .product-table thead {
-        display: none;
-    } */
-    .hide-on-small
-     {
-        display: none;
-    }
-    
+   
   
     .product-table2 thead {
         display: table-header-group !important;
     }
 
-    .product-table2 th {
+    /* .product-table2 th {
         display: none !important; 
-    }
+    } */
 
    
     /* .product-table2 th:nth-child(2) {
@@ -257,11 +249,26 @@ input[type="checkbox"] {
         border-top-right-radius: 12px;
     } */
 
-
-
-    .product-table2 input[type="checkbox"] {
-        display: none;
+    .product-table2 th {
+        display: none !important;
     }
+
+    .product-table2 th:first-child,
+    .product-table2 th:nth-child(2),
+    .product-table2 th:nth-child(3)
+         {
+        display: table-cell !important;
+    }
+
+    /* Agar chaho to checkbox dikhana ho */
+    .product-table2 input[type="checkbox"] {
+        display: inline-block !important;
+    }
+
+
+    /* .product-table2 input[type="checkbox"] {
+        display: none;
+    } */
 
     .row-details {
         background-color: #f9f9f9;
@@ -294,27 +301,26 @@ input[type="checkbox"] {
         align-items: center;
     }
     .product-name {
-        display: inline-block !important;
-        
+        display: flex;
+        align-items: center;
         gap: 10px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
+        margin-top: 25px !important;
     }
-
+    
     .product-img {
         width: 40px;
         height: 40px;
         border-radius: 8px;
         object-fit: cover;
-        flex-shrink: 0;
     }
-
+    
+    /* Add these styles to handle long product names */
     .product-name span {
         flex-grow: 1;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        display: inline-block;
+        display: inline-block; /* Ensure span behaves as a block element */
     }
 }
 

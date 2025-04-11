@@ -4,6 +4,7 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
 import FilterComponent from "../../components/FilterComponent";
+import ViewExpandData from "../../components/ViewExpandData";
 
 const InhouseProduct = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const InhouseProduct = () => {
     price: "All",
   });
 
-  const [selectedProducts, setSelectedProducts] = useState([]); 
+  const [selectedProducts, setSelectedProducts] = useState([]);
   // const [expandedRow, setExpandedRow] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -116,81 +117,17 @@ const InhouseProduct = () => {
     },
   ]);
 
-  // const handleExpandRow = (id) => {
-  //   setExpandedRow(expandedRow === id ? null : id);
-  // };
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 5; // Adjust as needed
-  // const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  // const currentItems = products.slice(
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage
-  // );
-
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // const getPageNumbers = () => {
-  //   const pages = [];
-  //   const totalVisiblePages = 5; // Adjust as needed
-
-  //   if (totalPages <= totalVisiblePages) {
-  //     for (let i = 1; i <= totalPages; i++) {
-  //       pages.push(i);
-  //     }
-  //   } else {
-  //     let startPage = Math.max(1, currentPage - 2);
-  //     let endPage = Math.min(totalPages, currentPage + 2);
-
-  //     if (currentPage <= 3) {
-  //       endPage = 5;
-  //     }
-  //     if (currentPage >= totalPages - 2) {
-  //       startPage = totalPages - 4;
-  //     }
-
-  //     for (let i = startPage; i <= endPage; i++) {
-  //       pages.push(i);
-  //     }
-
-  //     if (startPage > 1) {
-  //       pages.unshift("...");
-  //       pages.unshift(1);
-  //     }
-  //     if (endPage < totalPages) {
-  //       pages.push("...");
-  //       pages.push(totalPages);
-  //     }
-  //   }
-  //   return pages;
-  // };
-
-  // const handleToggleChange = (id, field) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.map((product) =>
-  //       product.id === id ? { ...product, [field]: !product[field] } : product
-  //     )
-  //   );
-  // };
-
-
-  // const toggleSellerDropdown = () => {
-  //   setIsSellerDropdownOpen(!isSellerDropdownOpen);
-  // };
-
-  // const selectSeller = (seller) => {
-  //   setSelectedSeller(seller);
-  //   setIsSellerDropdownOpen(false);
-  // };
-
+  
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleExpanded = () => setIsExpanded(prev => !prev);
   const handleBulkAction = (action) => {
     if (action === "Delete Selected") {
       setProducts((prevProducts) =>
         prevProducts.filter((product) => !selectedProducts.includes(product.id))
       );
       setSelectedProducts([]);
-  }};
+    }
+  };
   // Handle "Select All" checkbox
   const handleSelectAll = (isChecked) => {
     if (isChecked) {
@@ -274,6 +211,7 @@ const InhouseProduct = () => {
         <table>
           <thead>
             <tr>
+              <th className="lg:hidden"></th>
               <th>
                 <input
                   type="checkbox"
@@ -303,15 +241,9 @@ const InhouseProduct = () => {
                 {/* Main Row with Plus Icon */}
                 <tr key={product.id}>
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedProducts.includes(product.id)}
-                      onChange={() => handleSelectProduct(product.id)}
-                    />
-                    <div
-                      className={`plus-icon ${
-                        product.expanded ? "rotate" : ""
-                      }`}
+                  <div
+                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                        }`}
                       onClick={() =>
                         setProducts((prevProducts) =>
                           prevProducts.map((p) =>
@@ -322,25 +254,50 @@ const InhouseProduct = () => {
                         )
                       }
                     >
-                      +
+                      
+                      <ViewExpandData isExpanded={isExpanded} toggleExpanded={toggleExpanded} />
+                     
                     </div>
+
+                  </td>
+                  <td> 
+
+                    <input
+                      type="checkbox"
+                      checked={selectedProducts.includes(product.id)}
+                      onChange={() => handleSelectProduct(product.id)}
+                    />
+                    {/* <div
+                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                        }`}
+                      onClick={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, expanded: !p.expanded }
+                              : p
+                          )
+                        )
+                      }
+                    >
+                      
+                      +
+                     
+                    </div> */}
                   </td>
 
-                  {/* <td className="product-name">
-          <img src={product.image} alt={product.name} className="product-img" />
-          <span>{product.name}</span>
-        </td> */}
+                  
 
-                  <td className="product-name">
+                  <td className="product-name  ">
                     <img
                       src={product.image}
                       alt={product.name}
                       className="product-img"
                     />
-                    <span>{product.name}</span>
+                    <span className="mr-5">{product.name}</span>
                   </td>
 
-                  <td className="hide-on-small">{product.addedBy}</td>
+                  <td className="hide-on-small ">{product.addedBy}</td>
                   <td className="hide-on-small">
                     <div>Num of Sale: {product.info.sale} times</div>
                     <div>Base Price: {product.info.price}</div>
@@ -349,35 +306,26 @@ const InhouseProduct = () => {
                   <td className="hide-on-small">{product.stock}</td>
                   <td className="hide-on-small">
                     <label className="switch">
-                      {/* <input
-              type="checkbox"
-              checked={product.deal}
-              onChange={() => handleToggleChange(product.id, "deal")}
-            />
-            <span className="slider"></span> */}
+                     
                       <Switch
-                        checked={product.deal}
-                        onChange={() =>
+                        value={product.deal}
+                        onChangeFunc={() =>
                           setProducts((prevProducts) =>
                             prevProducts.map((p) =>
                               p.id === product.id ? { ...p, deal: !p.deal } : p
                             )
                           )
                         }
-                      />{" "}
+                      />
+                      {" "}
                     </label>
                   </td>
                   <td className="hide-on-small">
                     <label className="switch">
-                      {/* <input
-              type="checkbox"
-              checked={product.published}
-              onChange={() => handleToggleChange(product.id, "published")}
-            />
-            <span className="slider"></span> */}
+
                       <Switch
-                        checked={product.published}
-                        onChange={() =>
+                        value={product.published}
+                        onChangeFunc={() =>
                           setProducts((prevProducts) =>
                             prevProducts.map((p) =>
                               p.id === product.id
@@ -386,20 +334,16 @@ const InhouseProduct = () => {
                             )
                           )
                         }
-                      />{" "}
+                      />
+                      {" "}
                     </label>
                   </td>
                   <td className="hide-on-small">
                     <label className="switch">
-                      {/* <input
-              type="checkbox"
-              checked={product.featured}
-              onChange={() => handleToggleChange(product.id, "featured")}
-            />
-            <span className="slider"></span> */}
+
                       <Switch
-                        checked={product.featured}
-                        onChange={() =>
+                        value={product.featured}
+                        onChangeFunc={() =>
                           setProducts((prevProducts) =>
                             prevProducts.map((p) =>
                               p.id === product.id
@@ -408,7 +352,8 @@ const InhouseProduct = () => {
                             )
                           )
                         }
-                      />{" "}
+                      />
+                      {" "}
                     </label>
                   </td>
                   <td className="hide-on-small ">
@@ -424,7 +369,7 @@ const InhouseProduct = () => {
                   </td>
                 </tr>
 
-                {filteredProducts.expanded && (
+                {product.expanded && (
                   <tr className="row-details mt-0">
                     <td colSpan="9">
                       <div className="details-container">
@@ -438,15 +383,10 @@ const InhouseProduct = () => {
                         <div>
                           Today's Deal:
                           <label className="switch">
-                            {/* <input
-              type="checkbox"
-              checked={product.deal}
-              onChange={() => handleToggleChange(product.id, "deal")}
-            />
-            <span className="slider"></span> */}
+
                             <Switch
-                              checked={product.deal}
-                              onChange={() =>
+                              value={product.deal}
+                              onChangeFunc={() =>
                                 setProducts((prevProducts) =>
                                   prevProducts.map((p) =>
                                     p.id === product.id
@@ -455,22 +395,18 @@ const InhouseProduct = () => {
                                   )
                                 )
                               }
-                            />{" "}
+                            />
+                            {" "}
                           </label>
                         </div>
 
                         <div>
                           Published:
                           <label className="switch">
-                            {/* <input
-              type="checkbox"
-              checked={product.published}
-              onChange={() => handleToggleChange(product.id, "published")}
-            />
-            <span className="slider"></span> */}
+
                             <Switch
-                              checked={product.published}
-                              onChange={() =>
+                              value={product.published}
+                              onChangeFunc={() =>
                                 setProducts((prevProducts) =>
                                   prevProducts.map((p) =>
                                     p.id === product.id
@@ -479,22 +415,18 @@ const InhouseProduct = () => {
                                   )
                                 )
                               }
-                            />{" "}
+                            />
+                            {" "}
                           </label>
                         </div>
 
                         <div>
                           Featured:
                           <label className="switch">
-                            {/* <input
-              type="checkbox"
-              checked={product.featured}
-              onChange={() => handleToggleChange(product.id, "featured")}
-            />
-            <span className="slider"></span> */}
+
                             <Switch
-                              checked={product.featured}
-                              onChange={() =>
+                              value={product.featured}
+                              onChangeFunc={() =>
                                 setProducts((prevProducts) =>
                                   prevProducts.map((p) =>
                                     p.id === product.id
@@ -503,7 +435,8 @@ const InhouseProduct = () => {
                                   )
                                 )
                               }
-                            />{" "}
+                            />
+                            {" "}
                           </label>
                         </div>
 

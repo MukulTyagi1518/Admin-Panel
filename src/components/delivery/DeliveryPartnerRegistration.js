@@ -18,7 +18,7 @@ const DeliveryPartnerRegistration = () => {
       city: "",
       zipCode: "",
     },
-    bankDetails: {
+    bankDetails: { 
       accountName: "",
       accountNumber: "",
       bankName: "",

@@ -53,3 +53,30 @@
     margin-top: 30px;
   }
   
+  .status.replied {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status.not-replied {
+    color: red;
+    font-weight: bold;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 16px;
+  }
+  
+  .delete-btn {
+    color: red;
+  }
+  
+  .not-found {
+    text-align: center;
+    padding: 20px;
+  }
+  

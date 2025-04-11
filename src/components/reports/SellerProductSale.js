@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProductTable from './ProductTable';
+import ProductTable3 from './ProductTable3';
 import Dropdown from '../Dropdown';
 
 function SellerProductSale() {
@@ -89,7 +89,7 @@ function SellerProductSale() {
           </div>
         </div>
 
-        <ProductTable
+        <ProductTable3
           columns={columns}
           data={sellerProductSales}
           currentPage={currentPage}
@@ -102,3 +102,4 @@ function SellerProductSale() {
 }
 
 export default SellerProductSale;
+

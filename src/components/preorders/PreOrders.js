@@ -3,6 +3,7 @@ import OrderStatusCard from "./OrderStatusCard";
 import TableRow from "./TableRow";
 import SearchAndFilter from "./SearchAndFilter";
 import Pagination from "../Pagination"; // Import the Pagination component
+import { EyeIcon } from "lucide-react";
 
 const STATUSES = [
   { name: "All", count: 48, active: true },
@@ -197,7 +198,7 @@ function Preorders() {
       {/* Orders Table */}
       <div className="bg-white rounded-lg shadow overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-gray-50">
+          {/* <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 <input type="checkbox" className="rounded" />
@@ -227,7 +228,43 @@ function Preorders() {
                 Options
               </th>
             </tr>
-          </thead>
+          </thead> */}
+
+
+
+
+          <thead className="bg-gray-100 text-xs text-gray-600 uppercase">
+  <tr>
+    {/* <th className="lg:hidden md:table-cell"></th> */}
+    <th className="px-2 py-3  lg:hidden">
+         
+        </th>
+    <th className="px-2 py-3"> 
+      <input type="checkbox" className="rounded" />
+    </th>
+
+    {/* Product & Quantity - always visible */}
+    <th className="px-2 py-3">Product/Quantity</th>
+
+    {/* Refund column - always visible */}
+    
+
+    {/* Expand button placeholder - only visible on small screens */}
+    {/* <th className="px-2 py-3 md:hidden"></th> */}
+
+    {/* Hidden columns on small screens */}
+    <th className="px-6 py-3 hidden md:table-cell">Preorder Code/Created</th>
+    <th className="px-6 py-3 hidden md:table-cell">Price/Prepayment</th>
+    <th className="px-6 py-3 hidden md:table-cell">Seller</th>
+    <th className="px-6 py-3 hidden md:table-cell">Customer</th>
+    <th className="px-6 py-3 hidden md:table-cell">Status</th>
+    <th className="px-2 py-3 ">Refund</th>
+    <th className="px-6 py-3 hidden md:table-cell">Options</th>
+  </tr>
+</thead>
+
+
+
           <tbody className="bg-white divide-y divide-gray-200">
             {currentOrders.map((order) => (
               <TableRow key={order.id} order={order} />
