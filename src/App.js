@@ -147,8 +147,6 @@ import Addpage from "./components/websetting/Addpage.jsx"
 import Editpage from "./components/websetting/Editpage.jsx"
 import Headerpage from "./components/websetting/Headerpage.jsx"
 import FooterWidget from "./components/websetting/Footerpage.jsx";
-import Appeareance from "./components/websetting/Appearence.jsx"
-
 import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
 import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
