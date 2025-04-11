@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Plus, Minus, X } from "lucide-react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import DeleteConfirmation from "../DeleteConfirmation";
 
 
 const TaxTable = () => {
     const [expandedRow, setExpandedRow] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [newTaxName, setNewTaxName] = useState("");
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+
     const [taxData, setTaxData] = useState([
         { id: 1, type: "VAT", status: true },
         { id: 2, type: "GST", status: false },
@@ -39,6 +43,22 @@ const TaxTable = () => {
             setShowModal(false);
         }
     };
+    const openDeleteConfirmation = (id) => {
+        setAttributeToDeleteId(id);
+        setShowDeleteConfirmation(true);
+      };
+      
+      const closeDeleteConfirmation = () => {
+        setAttributeToDeleteId(null);
+        setShowDeleteConfirmation(false);
+      };
+      
+      const handleDelete = (id) => {
+        // In a real application, you would make an API call here to delete the attribute
+        console.log(`Deleting attribute with ID: ${id}`);
+        // After successful deletion, you would likely update the 'attributes' state
+        closeDeleteConfirmation();
+      };
 
 
     return (
@@ -81,7 +101,7 @@ const TaxTable = () => {
                                     <div className="flex justify-left space-x-2 mt-3">
 
                                         <button className="bg-blue-100 p-2 rounded-full"  onClick={() => handleEdit(tax.id)}><FaEdit className="text-blue-500" /></button>
-                                        <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
+                                        <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(tax.id)}/></button>
 
                                     </div>
                                 </td>
@@ -120,7 +140,7 @@ const TaxTable = () => {
                                 <div className="flex justify-left space-x-2 mt-3">
 
                                     <button className="bg-blue-100 p-2 rounded-full"  onClick={() => handleEdit(tax.id)}><FaEdit className="text-blue-500" /></button>
-                                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
+                                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500"  onClick={() => openDeleteConfirmation(tax.id)}/></button>
 
                                 </div>
                             </div>
@@ -175,6 +195,15 @@ const TaxTable = () => {
                 </div>
             )}
 
+{/* Render the Delete Confirmation Modal */}
+            {showDeleteConfirmation && (
+                <DeleteConfirmation
+                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
         </div>
     );
 };

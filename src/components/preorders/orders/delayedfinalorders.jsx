@@ -395,13 +395,13 @@ export default function DelayedFinalPreOrders() {
       <input type="checkbox" />
     </th>
               <th>Product/Quantity</th>
-              <th>Preorder Code/Created</th>
+              <th className="max-[1400px]:hidden">Preorder Code/Created</th>
               <th className="max-[1400px]:hidden">Price/Prepayment</th>
               <th className="max-[1400px]:hidden">Seller</th>
               <th className="max-[1400px]:hidden">Customer</th>
               <th className="max-[1400px]:hidden">Status</th>
-              <th>Refund</th>
-              <th>Options</th>
+              <th className="max-[1400px]:hidden">Refund</th>
+              <th className="max-[1400px]:hidden">Options</th>
             </tr>
           </thead>
 
@@ -437,7 +437,7 @@ export default function DelayedFinalPreOrders() {
                   </td>
 
                   <td>
-                    <div className="flex flex-col gap-[.3cm] justify-between">
+                    <div className="max-[1400px]:hidden">
                       <p className="font-bold text-blue-500">{item.preorder_code}</p>
                       <p className="font-bold text-black text-opacity-50 overflow-hidden whitespace-nowrap text-ellipsis">
                         Created : {item.created}
@@ -476,7 +476,7 @@ export default function DelayedFinalPreOrders() {
                     </p>
                   </td>
 
-                  <td>
+                  <td className="max-[1400px]:hidden">
                     <p
                       className={
                         item.refund === "Non-Refundable"
@@ -488,7 +488,7 @@ export default function DelayedFinalPreOrders() {
                     </p>
                   </td>
 
-                  <td>
+                  <td className="max-[1400px]:hidden">
                     <div className="flex items-center gap-[.2cm]">
                       <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
                         <Eye size={16} color="blue" />
@@ -506,7 +506,7 @@ export default function DelayedFinalPreOrders() {
                   </td>
                 </tr>
 
-                {expandedRow === index && (
+                {/* {expandedRow === index && (
                   <tr className="max-[1400px]:table-row hidden">
                     <td colSpan={9}>
                       <div className="p-2 bg-gray-100 rounded-md text-sm flex flex-col gap-1">
@@ -514,6 +514,65 @@ export default function DelayedFinalPreOrders() {
                         <p><strong>Seller:</strong> {item.seller}</p>
                         <p><strong>Customer:</strong> {item.customer.name} - {item.customer.email}</p>
                         <p><strong>Status:</strong> {item.status}</p>
+                      </div>
+                    </td>
+                  </tr>
+                )} */}
+                {expandedRow === index && (
+                  <tr className="max-[1200px]:table-row hidden">
+                    <td colSpan={10}>
+                      <div className="p-2 bg-gray-100 rounded-md text-sm">
+                        <table className="w-full">
+                          <tbody>
+                            <tr>
+                              <td className="font-semibold pr-2">Price / Prepayment:</td>
+                              <td>{item.price} / {item.prepayment}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Seller:</td>
+                              <td>{item.seller}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Customer:</td>
+                              <td>{item.customer.name} - {item.customer.email}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Status:</td>
+                              <td>{item.status}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Preorder Code:</td>
+                              <td>{item.preorder_code}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Created:</td>
+                              <td>{item.created}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Refund:</td>
+                              <td>{item.refund}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Options:</td>
+                              <td>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <div className="p-[.2cm] bg-blue-100 w-fit rounded-full cursor-pointer">
+                                    <Eye size={16} color="blue" />
+                                  </div>
+                                  <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-full cursor-pointer">
+                                    <Download size={16} color="blueviolet" />
+                                  </div>
+                                  <div className="p-[.2cm] bg-[#fff4e0] w-fit rounded-full cursor-pointer">
+                                    <BellIcon size={16} color="orange" onClick={handleNotificationClick} />
+                                  </div>
+                                  <div className="p-[.2cm] bg-red-100 w-fit rounded-full cursor-pointer">
+                                    <Trash size={16} color="red" onClick={() => handleDeleteClick(item.id)} />
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </td>
                   </tr>

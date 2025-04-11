@@ -4,6 +4,7 @@ import "./warrenty.css";
 import { Link } from "react-router-dom";
 import Switch from "../../components/Switch";
 
+
 const WarrantyConfig = () => {
   const { productData, setProductData } = useProductContext();
   const [warrantyEnabled, setWarrantyEnabled] = useState(false);
@@ -48,10 +49,7 @@ const WarrantyConfig = () => {
 
       <div className="config-option">
         <span className="option-label">Warranty</span>
-        <Switch
-          enabled={warrantyEnabled}
-          handleClick={handleToggleWarranty}
-        />
+        <Switch value={warrantyEnabled} onChangeFunc={handleToggleWarranty} />
       </div>
 
       {/* Show form when Warranty is enabled */}

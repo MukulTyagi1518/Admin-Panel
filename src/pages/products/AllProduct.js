@@ -4,13 +4,14 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { useProductContext } from "../../productContex";
 import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
+import { DataTable } from "../../components/marketing/EmailTemplate/MainPageComponents/DataTable";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 const AllProduct = () => {
-
-
   const { allProducts, setAllProducts } = useProductContext();
+  const navigate = useNavigate();
 
-
+  // Sellers data
   const [sellers] = useState([
     "Mostafizar Rahman",
     "Thanh Quoc Phu ...",
@@ -19,65 +20,182 @@ const AllProduct = () => {
     "Chaman",
   ]);
 
-  const [expandedRow, setExpandedRow] = useState(null);
-
-  const handleExpandRow = (id) => {
-    setExpandedRow(expandedRow === id ? null : id);
-  };
-
+  // Filter states
   const [selectedSeller, setSelectedSeller] = useState("All Sellers");
   const [isSellerDropdownOpen, setIsSellerDropdownOpen] = useState(false);
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
+  const [bulkAction, setBulkAction] = useState("");
 
-  const handleEdit = (id) => {
-    navigate(`/editinhouse`);
-  };
-
+  // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Adjust as needed
-  const totalPages = Math.ceil(allProducts.length / itemsPerPage);
+  const itemsPerPage = 5;
 
+  // Selection state
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isAllSelected, setIsAllSelected] = useState(false);
+
+  // Filter products based on all criteria
+  const filteredProducts = allProducts.filter((product) => {
+    // Seller filter
+    const matchesSeller =
+      selectedSeller === "All Sellers" || product.addedBy === selectedSeller;
+
+    // Search term filter
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.addedBy.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesSeller && matchesSearch;
+  });
+
+  // Sort products
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortOption) {
+      case "rating-high":
+        return (b.info?.rating || 0) - (a.info?.rating || 0);
+      case "rating-low":
+        return (a.info?.rating || 0) - (b.info?.rating || 0);
+      case "sale-high":
+        return (b.info?.sale || 0) - (a.info?.sale || 0);
+      case "sale-low":
+        return (a.info?.sale || 0) - (b.info?.sale || 0);
+      default:
+        return 0;
+    }
+  });
+
+  // Pagination logic
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = allProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+  // Handle bulk actions
+  const handleBulkAction = () => {
+    if (!bulkAction || selectedProducts.length === 0) return;
 
-  const getPageNumbers = () => {
-    const pages = [];
-    const totalVisiblePages = 5; // Adjust as needed
+    const updatedProducts = [...allProducts];
 
-    if (totalPages <= totalVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      let startPage = Math.max(1, currentPage - 2);
-      let endPage = Math.min(totalPages, currentPage + 2);
-
-      if (currentPage <= 3) {
-        endPage = 5;
-      }
-      if (currentPage >= totalPages - 2) {
-        startPage = totalPages - 4;
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(i);
-      }
-
-      if (startPage > 1) {
-        pages.unshift("...");
-        pages.unshift(1);
-      }
-      if (endPage < totalPages) {
-        pages.push("...");
-        pages.push(totalPages);
-      }
+    switch (bulkAction) {
+      case "delete":
+        // Filter out selected products
+        const remainingProducts = allProducts.filter(
+          (product) => !selectedProducts.includes(product.id)
+        );
+        setAllProducts(remainingProducts);
+        break;
+      case "publish":
+        updatedProducts.forEach((product) => {
+          if (selectedProducts.includes(product.id)) {
+            product.published = true;
+          }
+        });
+        setAllProducts(updatedProducts);
+        break;
+      case "unpublish":
+        updatedProducts.forEach((product) => {
+          if (selectedProducts.includes(product.id)) {
+            product.published = false;
+          }
+        });
+        setAllProducts(updatedProducts);
+        break;
+      default:
+        break;
     }
-    return pages;
+
+    // Reset selections after action
+    setSelectedProducts([]);
+    setIsAllSelected(false);
+    setBulkAction("");
   };
 
+  // Handle select all checkbox
+  const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+    setIsAllSelected(isChecked);
+    
+    if (isChecked) {
+      // Select all products on current page
+      const currentPageIds = currentItems.map(product => product.id);
+      setSelectedProducts(currentPageIds);
+    } else {
+      // Clear all selections
+      setSelectedProducts([]);
+    }
+  };
+
+  // Handle individual checkbox selection
+  const handleSelectProduct = (productId) => {
+    setSelectedProducts(prev => {
+      if (prev.includes(productId)) {
+        // Remove if already selected
+        setIsAllSelected(false);
+        return prev.filter(id => id !== productId);
+      } else {
+        // Add to selection
+        const newSelection = [...prev, productId];
+        // Check if all current page items are now selected
+        if (newSelection.length === currentItems.length) {
+          setIsAllSelected(true);
+        }
+        return newSelection;
+      }
+    });
+  };
+
+  // Check if a product is selected
+  const isProductSelected = (productId) => {
+    return selectedProducts.includes(productId);
+  };
+
+  // Check if all products on current page are selected
+  const isAllPageSelected = () => {
+    if (currentItems.length === 0) return false;
+    return currentItems.every(product => 
+      selectedProducts.includes(product.id)
+    );
+  };
+
+  // Handle search
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      setSearchTerm(e.target.value);
+      setCurrentPage(1);
+      // Reset selections when search changes
+      setSelectedProducts([]);
+      setIsAllSelected(false);
+    }
+  };
+
+  // Handle sort change
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+    setCurrentPage(1);
+    // Reset selections when sort changes
+    setSelectedProducts([]);
+    setIsAllSelected(false);
+  };
+
+  // Toggle seller dropdown
+  const toggleSellerDropdown = () => {
+    setIsSellerDropdownOpen(!isSellerDropdownOpen);
+  };
+
+  // Select seller
+  const selectSeller = (seller) => {
+    setSelectedSeller(seller);
+    setIsSellerDropdownOpen(false);
+    setCurrentPage(1);
+    // Reset selections when filter changes
+    setSelectedProducts([]);
+    setIsAllSelected(false);
+  };
+
+  // Handle toggle changes
   const handleToggleChange = (id, field) => {
     setAllProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -86,53 +204,157 @@ const AllProduct = () => {
     );
   };
 
-  const handleSortChange = (sortType) => {
-    const sortedProducts = [...allProducts];
-
-    switch (sortType) {
-      case "rating-high":
-        sortedProducts.sort((a, b) => b.info.rating - a.info.rating);
-        break;
-      case "rating-low":
-        sortedProducts.sort((a, b) => a.info.rating - b.info.rating);
-        break;
-      case "sale-high":
-        sortedProducts.sort((a, b) => b.info.sale - a.info.sale);
-        break;
-      case "sale-low":
-        sortedProducts.sort((a, b) => a.info.sale - b.info.sale);
-        break;
-      default:
-        return;
-    }
-
-    setAllProducts(sortedProducts);
+  // Handle edit
+  const handleEdit = (id) => {
+    navigate(`/editinhouse`);
   };
 
-  const toggleSellerDropdown = () => {
-    setIsSellerDropdownOpen(!isSellerDropdownOpen);
-  };
+  // Generate columns for DataTable
+  const columns = [
+    {
+      key: "select",
+      title: (
+        <input
+          type="checkbox"
+          checked={isAllPageSelected()}
+          onChange={handleSelectAll}
+        />
+      ),
+      render: (product) => (
+        <input
+          type="checkbox"
+          checked={isProductSelected(product.id)}
+          onChange={() => handleSelectProduct(product.id)}
+        />
+      ),
+    },
+    {
+      key: "name",
+      title: "Name",
+      render: (product) => (
+        <div className="product-name">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="product-img"
+          />
+          <span>{product.name}</span>
+        </div>
+      ),
+    },
+    { key: "addedBy", title: "Added By" },
+    {
+      key: "info",
+      title: "Info",
+      render: (product) => (
+        <div>
+          <div>Num of Sale: {product.info?.sale || 0} times</div>
+          <div>Base Price: ${product.info?.price || "N/A"}</div>
+          <div>Rating: {product.info?.rating || "N/A"}</div>
+        </div>
+      ),
+    },
+    { key: "stock", title: "Total Stock" },
+    {
+      key: "deal",
+      title: "Today's Deal",
+      render: (product) => (
+        <Switch
+          checked={product.deal}
+          onChange={() => handleToggleChange(product.id, "deal")}
+        />
+      ),
+    },
+    {
+      key: "published",
+      title: "Published",
+      render: (product) => (
+        <Switch
+          checked={product.published}
+          onChange={() => handleToggleChange(product.id, "published")}
+        />
+      ),
+    },
+    {
+      key: "featured",
+      title: "Featured",
+      render: (product) => (
+        <Switch
+          checked={product.featured}
+          onChange={() => handleToggleChange(product.id, "featured")}
+        />
+      ),
+    },
+    {
+      key: "options",
+      title: "Options",
+      render: (product) => (
+        <div className="actions">
+          <button className="btn view-btn1">
+            <FaEye />
+          </button>
+          <button 
+            className="btn edit-btn1"
+            onClick={() => handleEdit(product.id)}
+          >
+            <FaEdit />
+          </button>
+          <button className="btn delete-btn1">
+            <FaTrash />
+          </button>
+        </div>
+      ),
+    },
+  ];
 
-  const selectSeller = (seller) => {
-    setSelectedSeller(seller);
-    setIsSellerDropdownOpen(false);
-  };
+  
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+};
 
+const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+};
+
+const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+};
   return (
     <div className="product-container1">
       <div className="header">
         <div>All allProducts</div>
         <button className="add-btn" onClick={() => navigate("/products/create")}>Add New product</button>
       </div>
+
+      {/* Filter Options */}
       <div className="filter-options">
-        <select className="filter-dropdown">
+        {/* Bulk Action Dropdown */}
+        <select
+          className="filter-dropdown"
+          value={bulkAction}
+          onChange={(e) => setBulkAction(e.target.value)}
+        >
           <option value="">Bulk Action</option>
-          {/* ... (विकल्प) ... */}
+          <option value="delete">Delete</option>
+          <option value="publish">Publish</option>
+          <option value="unpublish">Unpublish</option>
         </select>
-        {/* <select className="filter-dropdown">
-                    <option value="">All Sellers</option>
-                    
-                </select> */}
+
+        {/* Apply Bulk Action Button */}
+        <button
+          className="apply-bulk-btn"
+          onClick={handleBulkAction}
+          disabled={!bulkAction || selectedProducts.length === 0}
+        >
+          Apply
+        </button>
+
+        {/* Seller Dropdown */}
         <div className="seller-dropdown">
           <div
             className="seller-dropdown-header"
@@ -145,6 +367,12 @@ const AllProduct = () => {
           </div>
           {isSellerDropdownOpen && (
             <div className="seller-dropdown-list">
+              <div
+                className="seller-dropdown-item"
+                onClick={() => selectSeller("All Sellers")}
+              >
+                All Sellers
+              </div>
               {sellers.map((seller) => (
                 <div
                   key={seller}
@@ -157,217 +385,64 @@ const AllProduct = () => {
             </div>
           )}
         </div>
-        {/* <select className="filter-dropdown">
-                    <option value="">Sort By</option>
-                    
-                </select> */}
+
+        {/* Sort Dropdown */}
         <select
           className="filter-dropdown"
-          onChange={(e) => handleSortChange(e.target.value)}
+          value={sortOption}
+          onChange={handleSortChange}
         >
           <option value="">Sort By</option>
           <option value="rating-high">Rating (High - Low)</option>
           <option value="rating-low">Rating (Low - High)</option>
           <option value="sale-high">Num of Sale (High - Low)</option>
           <option value="sale-low">Num of Sale (Low - High)</option>
-          <option value="sale-high">Num of Sale (High - Low)</option>
-          <option value="sale-low">Num of Sale (Low - High)</option>
         </select>
+
+        {/* Search Input */}
         <input
           type="text"
           className="filter-input"
           placeholder="Type & Enter"
+          onKeyPress={handleSearch}
         />
       </div>
-      <div className="product-table1">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <input type="checkbox" className="check25" />
-              </th>
-              {/* <th class="d-table-cell d-lg-none"></th> */}
-              <th>Name</th>
-              <th>Added By</th>
-              <th>Info</th>
-              <th>Total Stock</th>
-              <th>Today's Deal</th>
-              <th>Published</th>
-              <th>Featured</th>
-              <th>Options</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            {allProducts && allProducts.map((product) => (
-              <>
-                {/* Main Row with Plus Icon */}
-                <tr key={product.id}>
-                  <td>
-                    <div
-                      className={`plus-icon ${product.expanded ? "rotate" : ""
-                        }`}
-                      onClick={() =>
-                        setAllProducts((prevProducts) =>
-                          prevProducts.map((p) =>
-                            p.id === product.id
-                              ? { ...p, expanded: !p.expanded }
-                              : p
-                          )
-                        )
-                      }
-                    >
-                      +
-                    </div>
-                  </td>
+      {/* Products Table */}
+      <DataTable
+        columns={columns}
+        data={currentItems}
+        loading={false}
+        emptyMessage="No products found."
+      />
 
-                  <td className="product-name">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="product-img"
-                    />
-                    <span>{product.name}</span>
-                  </td>
-                  <td className="hide-on-small">{product.addedBy}</td>
-                  <td className="hide-on-small">
-                    <div>Num of Sale:  times</div>
-                    <div>Base Price:</div>
-                    <div>Rating: </div>
-                  </td>
-                  <td className="hide-on-small">{product.stock}</td>
-                  <td className="hide-on-small">
-                    {/* <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={product.deal}
-                        onChange={() => handleToggleChange(product.id, "deal")}
-                      />
-                      <span className="slider"></span>
-                    </label> */}
-                    <Switch />
-                  </td>
-                  <td className="hide-on-small">
-                    {/* <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={product.published}
-                        onChange={() =>
-                          handleToggleChange(product.id, "published")
-                        }
-                      />
-                      <span className="slider"></span>
-                    </label> */}
-                    <Switch />
-                  </td>
-                  <td className="hide-on-small">
-                    {/* <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={product.featured}
-                        onChange={() =>
-                          handleToggleChange(product.id, "featured")
-                        }
-                      />
-                      <span className="slider"></span>
-                    </label> */}
-                    <Switch />
-                  </td>
-                  <td className="hide-on-small ">
-                    <button className="btn view-btn1">
-                      <FaEye />
-                    </button>
-                    <button className="btn edit-btn1">
-                      <FaEdit onClick={() => handleEdit(product.id)} />
-                    </button>
-                    <button className="btn delete-btn1">
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-
-              
-                {product.expanded && (
-                  <tr className="row-details mt-0">
-                    <td colSpan="9">
-                      <div className="details-container">
-                        <div>Added By: {product.addedBy}</div>
-                        <div>
-                          Info: Sale {product.info.sale} times, Price{" "}
-                          {product.info.price}, Rating {product.info.rating}
-                        </div>
-                        <div>Total Stock: {product.stock}</div>
-
-                        <div>
-                          Today's Deal:
-                          <label className="switch">
-                            {/* <input
-                              type="checkbox"
-                              checked={product.deal}
-                              onChange={() =>
-                                handleToggleChange(product.id, "deal")
-                              }
-                            />
-                            <span className="slider"></span> */}
-                            <Switch />
-                          </label>
-
-                        </div>
-
-                        <div>
-                          Published:
-                          <label className="switch">
-                            {/* <input
-                              type="checkbox"
-                              checked={product.published}
-                              onChange={() =>
-                                handleToggleChange(product.id, "published")
-                              }
-                            />
-                            <span className="slider"></span> */}
-                            <Switch />
-                          </label>
-
-                        </div>
-
-                        <div>
-                          Featured:
-                          <label className="switch">
-                            {/* <input
-                              type="checkbox"
-                              checked={product.featured}
-                              onChange={() =>
-                                handleToggleChange(product.id, "featured")
-                              }
-                            />
-                            <span className="slider"></span> */}
-                            <Switch />
-                          </label>
-
-                        </div>
-
-                        <div>
-                          Options:
-                          <button className="btn1 view-btn1">
-                            <FaEye />
-                          </button>
-                          <button className="btn1 edit-btn1">
-                            <FaEdit />
-                          </button>
-                          <button className="btn1 delete-btn1">
-                            <FaTrash />
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </>
-            ))}
-          </tbody>
-
-        </table>
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => (
+            <button
+              key={page}
+              className={`page-item ${currentPage === page ? "active" : ""}`}
+              onClick={() => {
+                setCurrentPage(page);
+                // Reset "select all" when changing pages
+                setIsAllSelected(false);
+              }}
+            >
+              {page}
+            </button>
+          )
+        )}
       </div>
+
+      {showDeleteConfirmation && (
+                      <DeleteConfirmation
+                          isOpen={showDeleteConfirmation}
+                          onConfirm={() => handleDelete(attributeToDeleteId)}
+                          onCancel={closeDeleteConfirmation}
+                         
+                      />
+                  )}
     </div>
   );
 };

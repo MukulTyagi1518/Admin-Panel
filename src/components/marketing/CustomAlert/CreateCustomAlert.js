@@ -76,7 +76,7 @@ const handleSubmit = async (e) => {
     };
 
     await CustomAlertService.createAlert(alertData);
-    navigate('/marketing/custom-alert-popup');
+    navigate('/marketing/custom-alert');
   } catch (err) {
     setError(err.message);
   } finally {
@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="flex items-center gap-4 mb-6">
-        <Link to="/marketing/custom-alert-popup" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
+        <Link to="/marketing/custom-alert" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
           <ArrowLeft size={20} />
         </Link>
         <h1 className="text-2xl font-bold text-gray-800">Create Custom Alert</h1>

@@ -115,8 +115,8 @@ import InActiveDeliveryPartner from "./components/delivery/InActiveDeliveryPartn
 import PendingDeliveryPartner from "./components/delivery/PendingDeliveryPartner.js";
 import DeliveryPartnerRegistration from "./components/delivery/DeliveryPartnerRegistration.js";
 import CustomAlerts from "./components/marketing/CustomAlert/CustomAlert.js";
-import EditCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
-import CreateCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
+import CreateCustomAlert from "./components/marketing/CustomAlert/CreateCustomAlert.js";
+import EditCustomAlert from "./components/marketing/CustomAlert/EditCustomAlert.js";
 import ReportsPage from "./components/delivery/ReportsPage.js";
 import ColorEdit from "./pages/products/ColorEdit.jsx";
 import BrandEdit from "./pages/products/BrandEdit.js";
@@ -135,6 +135,8 @@ import CarrierEdit from "./components/admin-settings/shipping/CarrierEdit.js";
 import CarrierCreate from "./components/admin-settings/shipping/CarrierCreate.js";
 import ReviewDetails from "./components/ReviewDetails.js";
 import QueriesDetail from "./components/QueriesDetail.js";
+import AddNewBrand from "./pages/products/AddNewBrand.js";
+import AddNewColor from "./pages/products/AddNewColor.js";
 
 
 import Editinhouse from "./components/Edit/Editinhoue.jsx"
@@ -149,6 +151,13 @@ import Headerpage from "./components/websetting/Headerpage.jsx"
 import FooterWidget from "./components/websetting/footerpage.jsx";
 import Appeareance from "./components/websetting/Appearence.jsx"
 
+import Settings from "./components/marketing/Notification/Settings.js";
+import AttributeDetail from "./pages/products/AttributeDetail.js";
+import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
+import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
+import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
+import Footer from "./components/webSettings/footerSettings/Footer.js";
+import AddNewFaq from "./pages/products/AddNewFaq.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -205,8 +214,8 @@ function App() {
               <Route path="/sellers/payout-request" element={<Payoutrequest />} />
               <Route path="/wholesale/inhouse" element={<Inhouse />} />
               <Route path="/wholesale/seller" element={<Sellerwholesale />} />
-              <Route path="/products/seller" element={<Physical />} />
-              <Route path="/products/digital" element={<Digital />} />
+              <Route path="/products/seller/physical" element={<Physical />} />
+              <Route path="/products/seller/digital" element={<Digital />} />
 
 
 
@@ -228,6 +237,8 @@ function App() {
                   <Route path="shipping" element={<Shipping />} />
                   <Route path="warranty" element={<Warrenty />} />
 
+
+
                   <Route
                     path="frequently-bought"
                     element={<FrequentlyBought />}
@@ -247,9 +258,18 @@ function App() {
                 />
                 <Route path="/products/editcolor" element={<ColorEdit />} />
                 <Route path="/products/editBrand" element={<BrandEdit />} />
+                <Route path="/products/addnewbrand" element={<AddNewBrand />} />
+                <Route path="/products/addnewcolor" element={<AddNewColor />} />
+                <Route path="/products/settings" element={<AttributeDetail />} />
+                <Route path="/products/addnewfaq" element={<AddNewFaq />} />
+
+
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
+
+
+
                 <Route path="warranty" element={<Warrenty />} />
                 <Route path="colour" element={<Colors />} />
                 <Route path="review" element={<Review />} />
@@ -264,6 +284,7 @@ function App() {
                 />
               </Route>
 
+              <Route path="attribute-value-info/:id" element={<AttributeValueInfo />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
               <Route path="/" element={<Dashboard />} />
@@ -351,13 +372,13 @@ function App() {
                 <Route path="flash-deal/create" element={<CreateFlashDeal />} />
                 <Route path="flash-deal/edit" element={<FlashDealEdit />} />
                 <Route path="ads" element={<SellerAdsMarketing />} />
-                <Route path="custom-alert-popup" element={<CustomAlerts />} />
+                <Route path="custom-alert" element={<CustomAlerts />} />
                 <Route
-                  path="custom-alert-popup/create"
+                  path="custom-alert/create"
                   element={<CreateCustomAlert />}
                 />
                 <Route
-                  path="custom-alert-popup/edit/:id"
+                  path="custom-alert/edit/:id"
                   element={<EditCustomAlert />}
                 />
                 <Route path="email-templates">
@@ -424,6 +445,10 @@ function App() {
                   <Route path="edit/:id" element={<NewsLetter />} />
                   <Route path="view/:id" element={<NewsLetter />} />
                 </Route>
+                <Route path="notification">
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="types" element={<NotificationTypes />} />
+                </Route>
               </Route>
 
 
@@ -479,7 +504,11 @@ function App() {
                 <Route path="active" element={<ActiveDeliveryPartner />} />
                 <Route path="inactive" element={<InActiveDeliveryPartner />} />
                 <Route path="pending" element={<PendingDeliveryPartner />} />
+                <Route path="active/reports" element={<ReportsPage />} />
               </Route>
+
+
+
 
 
               <Route path="/support">
@@ -503,16 +532,24 @@ function App() {
 
               <Route path="/admin-settings/features" element={<Adminsetting />} />
               <Route path="/admin-settings/tax" element={<Vaxtax />} />
-             
+
               <Route path="edittax" element={<Edittax />} />
 
               <Route path="editinhouse" element={<Editinhouse />} />
               <Route path="editattribute" element={<Editattribute />} />
 
-              <Route path="/web-settings/page" element={<Pages />} />
-              <Route path="/web-settings/header" element={<Headerpage />}/>
-              <Route path="addpage" element={<Addpage />} />
-              <Route path="editaddpage" element={<Editpage />} />
+
+              <Route path='/web-settings' >
+                <Route path='header' element={<Headerpage />} />
+                <Route path='footer' element={<Footer />} />
+                <Route path='page' element={<Pages />} />
+                <Route path="addpage" element={<Addpage />} />
+                <Route path="editaddpage" element={<Editpage />} />
+
+              </Route>
+
+              
+
 
               <Route path="/web-settings/footer" element={<FooterWidget />} />
               <Route path="/admin-settings/apearence" element={<Appeareance />} />

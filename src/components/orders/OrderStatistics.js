@@ -27,7 +27,6 @@ const OrderStatistics = () => {
     { icon: FaTimesCircle, title: 'Rejected', value: 0, color: 'bg-red-500' }
   ]);
 
-  const [dateRange, setDateRange] = useState('');
 
 //   useEffect(() => {
 //     const fetchData = async () => {
@@ -53,25 +52,12 @@ const OrderStatistics = () => {
 //     fetchData();
 //   }, [dateRange]);
 
-  const handleDateRangeChange = (event) => {
-    setDateRange(event.target.value);
-  };
+
 
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Order Statistics</h2>
-        <select 
-          className="px-4 py-2 border rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={dateRange}
-          onChange={handleDateRangeChange}
-        >
-          <option value="">Select Date Range</option>
-          <option value="today">Today</option>
-          <option value="week">This Week</option>
-          <option value="month">This Month</option>
-          <option value="year">This Year</option>
-        </select>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

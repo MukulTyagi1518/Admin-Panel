@@ -354,6 +354,8 @@ const RefundRequestTable = () => {
         fetchRefundRequests();
     }, []);
 
+    console.log(refundRequests)
+
     const toggleRow = (id) => {
         setExpandedRows((prev) => ({
             ...prev,

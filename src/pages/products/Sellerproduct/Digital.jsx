@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { FaEdit, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import Switch from "../../../components/Switch";
 
 const ProductTable = () => {
 
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
-    navigate(`/editinhouse`); 
+    navigate(`/editinhouse`);
   }
-  
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -52,14 +53,14 @@ const ProductTable = () => {
 
   return (
     <div className="p-4">
-        <div className="flex justify-between items-center mb-4">
-  <h2 className="text-2xl font-semibold">Digital Products</h2>
-  
-  <button className="bg-purple-500 text-white px-4 py-2 rounded-full ml-auto">
-    Add New Digital Product
-  </button>
-</div>
-      
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">Digital Products</h2>
+
+        <button className="bg-purple-500 text-white px-4 py-2 rounded-full ml-auto">
+          Add New Digital Product
+        </button>
+      </div>
+
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         {/* Desktop View */}
         <table className="w-full border-collapse hidden md:table">
@@ -85,14 +86,15 @@ const ProductTable = () => {
                 {['todayDeal', 'published', 'featured'].map((field) => (
                   <td className="p-3" key={field}>
                     <label className="switch">
-                      <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                      <span className="slider round"></span>
+                      {/* <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} /> */}
+                      <Switch checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
+                      {/* <span className="slider round"></span> */}
                     </label>
                   </td>
                 ))}
-                <td className="p-3 flex space-x-2">
+                <td className="p-3 flex border-none space-x-2">
                   <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
-                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
+                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
                   <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
                 </td>
               </tr>
@@ -115,19 +117,26 @@ const ProductTable = () => {
               </div>
               {product.expanded && (
                 <div className="mt-2 space-y-2">
-                  <div className="flex justify-between"><strong>Base Price:</strong><span>${product.price.toFixed(2)}</span></div>
+                  <div className="flex justify-between">
+                    <strong>Base Price:</strong>
+                    <span>${product.price.toFixed(2)}</span>
+                  </div>
                   {['todayDeal', 'published', 'featured'].map((field) => (
-                    <div className="flex justify-between" key={field}>
+                    <div className="flex justify-between items-end pr-2" key={field}>
                       <strong>{field}</strong>
-                      <label className="switch">
-                        <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                        <span className="slider round"></span>
-                      </label>
+                      <div className="ml-auto">
+                        <Switch
+                          checked={product[field]}
+                          onChange={() => toggleSwitch(product.id, field)}
+                        />
+                      </div>
                     </div>
                   ))}
+
+
                   <div className="flex justify-left space-x-2 mt-3">
                     <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
-                    <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
+                    <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
                     <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
                   </div>
                 </div>

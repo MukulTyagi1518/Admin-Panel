@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth } from "../../firebase";
+import DeliveryPartnerService from "../../services/deliveryPartnerService"
 
 const DeliveryPartnerRegistration = () => {
   const navigate = useNavigate();
@@ -28,13 +31,18 @@ const DeliveryPartnerRegistration = () => {
       aadharcard: null,
     },
   });
-
+  const [files, setFiles] = useState({
+    profilePhoto: null,
+    drivingLicense: null,
+    aadharCard: null
+  });
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [password, setPassword] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmationResult, setConfirmationResult] = useState(null)
 
   const handleChange = (e) => {
     const { name, value, files, type } = e.target;
@@ -60,20 +68,85 @@ const DeliveryPartnerRegistration = () => {
     }
   };
 
-  const generateOtp = () => {
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    setGeneratedOtp(otp);
-    toast.info(`OTP sent to ${formData.personalInfo.phone}: ${otp}`); // Simulate OTP sending
-    setOtpVerified(false);
+  // const generateOtp = () => {
+  //   const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  //   setGeneratedOtp(otp);
+  //   toast.info(`OTP sent to ${formData.personalInfo.phone}: ${otp}`); 
+  //   setOtpVerified(false);
+  // };
+
+  useEffect(() => {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      auth, "recaptcha-container", {
+      size: "invisible",
+      callback: function (response) {
+        console.log("Captcha Resolved");
+      },
+
+      defaultCountry: "IN",
+    }
+    );
+  }, []);
+
+  const [otpSent, setOtpSent] = useState(false)
+
+
+  const generateOtp = async (e) => {
+    e.preventDefault();
+
+    if (formData.personalInfo.length < 10) {
+      alert("Please enter a valid phone number");
+      return;
+    }
+
+    try {
+      const appVerifier = window.recaptchaVerifier;
+      const result = await signInWithPhoneNumber(auth, `+91${formData.personalInfo.phone}`, appVerifier);
+      setConfirmationResult(result);
+      setOtpVerified(false);
+      toast.info(`OTP sent to ${formData.personalInfo.phone}`);
+      setOtpSent(true)
+    } catch (error) {
+      console.log(error);
+      alert("Failed to send OTP: " + error.message);
+    }
   };
 
-  const verifyOtp = () => {
-    if (otp === generatedOtp) {
-      setOtpVerified(true);
+
+
+  // const verifyOtp = () => {
+  //   if (otp === generatedOtp) {
+  //     setOtpVerified(true);
+  //     toast.success("OTP verified successfully!");
+  //   } else {
+  //     setErrors({ ...errors, otp: "Invalid OTP. Please try again." });
+  //     toast.error("Invalid OTP. Please try again.");
+  //   }
+  // };
+
+  const verifyOtp = async (e) => {
+    e.preventDefault();
+
+
+    if (otp.length !== 6) {
+      return alert("Invalid OTP. Please enter a 6-digit OTP.");
+    }
+
+    try {
+      const result = await confirmationResult.confirm(otp);
+
+
+      const user = result.user;
+
+      console.log("Delivery partner", user)
       toast.success("OTP verified successfully!");
-    } else {
-      setErrors({ ...errors, otp: "Invalid OTP. Please try again." });
+      setOtpVerified(true);
+
+    } catch (err) {
+      console.error("OTP Verification Failed:", err);
       toast.error("Invalid OTP. Please try again.");
+      setOtpVerified(false); // Ensure it remains false if verification fails
+
     }
   };
 
@@ -147,24 +220,70 @@ const DeliveryPartnerRegistration = () => {
       setIsSubmitting(true);
 
       try {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        toast.success("Form submitted successfully!");
-        console.log("Form submitted:", {
-          ...formData,
-          otpVerified,
-          password,
-        });
-
-        navigate("/registration-success");
+        // Prepare FormData for multipart upload
+        const formDataToSend = new FormData();
+        
+        // Append personal info
+        formDataToSend.append('firstName', formData.personalInfo.firstName);
+        formDataToSend.append('lastName', formData.personalInfo.lastName);
+        formDataToSend.append('phone', formData.personalInfo.phone);
+        formDataToSend.append('email', formData.personalInfo.email);
+        formDataToSend.append('address', formData.personalInfo.address);
+        formDataToSend.append('city', formData.personalInfo.city);
+        formDataToSend.append('zipCode', formData.personalInfo.zipCode);
+        
+        // Append bank details
+        formDataToSend.append('accountHolder', formData.bankDetails.accountName);
+        formDataToSend.append('accountNumber', formData.bankDetails.accountNumber);
+        formDataToSend.append('bankName', formData.bankDetails.bankName);
+        formDataToSend.append('ifscCode', formData.bankDetails.ifscCode);
+        formDataToSend.append('upiId', formData.bankDetails.upiId || '');
+        
+        // Append files
+        if (formData.documents.profilePhoto) {
+          formDataToSend.append('profilePhoto', formData.documents.profilePhoto);
+        }
+        if (formData.documents.drivinglicense) {
+          formDataToSend.append('drivingLicense', formData.documents.drivinglicense);
+        }
+        if (formData.documents.aadharcard) {
+          formDataToSend.append('aadharCard', formData.documents.aadharcard);
+        }
+    
+        // Call the API service
+        const response = await DeliveryPartnerService.register(formDataToSend);
+        
+        toast.success("Registration successful!");
+        console.log("API Response:", response);
+        
+        // Redirect to success page or do other post-registration actions
+        navigate("/delivery/registration");
+        setFormData([""])
       } catch (error) {
         console.error("Registration error:", error);
-        toast.error("An error occurred during registration.");
+        
+        // Handle different types of errors
+        if (error.response) {
+          // Server responded with an error status
+          if (error.response.status === 400) {
+            toast.error("Validation error: Please check your inputs");
+          } else if (error.response.status === 409) {
+            toast.error("This phone number is already registered");
+          } else {
+            toast.error("Registration failed. Please try again later.");
+          }
+        } else if (error.request) {
+          // Request was made but no response received
+          toast.error("Network error. Please check your connection.");
+        } else {
+          // Something else happened
+          toast.error("An unexpected error occurred");
+        }
       } finally {
         setIsSubmitting(false);
       }
-    }
+    };
+    
   };
 
   return (
@@ -200,11 +319,10 @@ const DeliveryPartnerRegistration = () => {
                         name="personalInfo.firstName"
                         value={formData.personalInfo.firstName}
                         onChange={handleChange}
-                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.firstName
-                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        } border p-2`}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.firstName
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
                       />
                       {errors.firstName && (
                         <p className="mt-1 text-sm text-red-600">
@@ -221,11 +339,10 @@ const DeliveryPartnerRegistration = () => {
                         name="personalInfo.lastName"
                         value={formData.personalInfo.lastName}
                         onChange={handleChange}
-                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.lastName
-                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        } border p-2`}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.lastName
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
                       />
                       {errors.lastName && (
                         <p className="mt-1 text-sm text-red-600">
@@ -246,11 +363,10 @@ const DeliveryPartnerRegistration = () => {
                             name="personalInfo.phone"
                             value={formData.personalInfo.phone}
                             onChange={handleChange}
-                            className={`flex-1 min-w-0 block w-full rounded-none rounded-l-md sm:text-sm ${
-                              errors.contact || errors.otp
-                                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                                : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                            } border p-2`}
+                            className={`flex-1 min-w-0 block w-full rounded-none rounded-l-md sm:text-sm ${errors.contact || errors.otp
+                              ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                              } border p-2`}
                           />
                           <button
                             type="button"
@@ -263,42 +379,49 @@ const DeliveryPartnerRegistration = () => {
                         </div>
                       </div>
 
-                      <div className="sm:col-span-3">
-                        <label className="block text-sm font-medium text-gray-700">
-                          OTP Verification*
-                        </label>
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            className={`flex-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                              errors.otp
-                                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                                : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                            } border p-2`}
-                            placeholder="Enter OTP"
-                          />
-                          <button
-                            type="button"
-                            onClick={verifyOtp}
-                            disabled={!otp}
-                            className="inline-flex items-center px-3 rounded-md border border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                          >
-                            Verify
-                          </button>
-                        </div>
-                        {errors.otp && (
-                          <p className="mt-1 text-sm text-red-600">
-                            {errors.otp}
-                          </p>
-                        )}
-                        {otpVerified && (
-                          <p className="mt-1 text-sm text-green-600">
-                            ✓ Phone number verified
-                          </p>
-                        )}
-                      </div>
+                      {
+                        otpSent ? (
+                          <div className="sm:col-span-3">
+                            <label className="block text-sm font-medium text-gray-700">
+                              OTP Verification*
+                            </label>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                className={`flex-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.otp
+                                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                                  : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                  } border p-2`}
+                                placeholder="Enter OTP"
+                              />
+                              <button
+                                type="button"
+                                onClick={verifyOtp}
+                                disabled={!otp}
+                                className="inline-flex items-center px-3 rounded-md border border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                                Verify
+                              </button>
+                            </div>
+                            {errors.otp && (
+                              <p className="mt-1 text-sm text-red-600">
+                                {errors.otp}
+                              </p>
+                            )}
+                            {otpVerified && (
+                              <p className="mt-1 text-sm text-green-600">
+                                ✓ Phone number verified
+                              </p>
+                            )}
+                          </div>
+                        )
+                          :
+                          <div>
+                          </div>
+
+                      }
                     </>
                     <>
                       <div className="sm:col-span-3">
@@ -310,11 +433,10 @@ const DeliveryPartnerRegistration = () => {
                           name="personalInfo.email"
                           value={formData.personalInfo.email}
                           onChange={handleChange}
-                          className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                            errors.contact || errors.password
-                              ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                          } border p-2`}
+                          className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.contact || errors.password
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                            } border p-2`}
                         />
                       </div>
 
@@ -326,11 +448,10 @@ const DeliveryPartnerRegistration = () => {
                           type="password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                            errors.password
-                              ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                          } border p-2`}
+                          className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.password
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                            } border p-2`}
                         />
                         {errors.password && (
                           <p className="mt-1 text-sm text-red-600">
@@ -399,11 +520,10 @@ const DeliveryPartnerRegistration = () => {
                         name="bankDetails.accountName"
                         value={formData.bankDetails.accountName}
                         onChange={handleChange}
-                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.accountName
-                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        } border p-2`}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.accountName
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
                       />
                       {errors.accountName && (
                         <p className="mt-1 text-sm text-red-600">
@@ -421,11 +541,10 @@ const DeliveryPartnerRegistration = () => {
                         name="bankDetails.accountNumber"
                         value={formData.bankDetails.accountNumber}
                         onChange={handleChange}
-                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.accountNumber
-                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        } border p-2`}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.accountNumber
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
                       />
                       {errors.accountNumber && (
                         <p className="mt-1 text-sm text-red-600">
@@ -443,11 +562,10 @@ const DeliveryPartnerRegistration = () => {
                         name="bankDetails.bankName"
                         value={formData.bankDetails.bankName}
                         onChange={handleChange}
-                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.bankName
-                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        } border p-2`}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.bankName
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
                       />
                       {errors.bankName && (
                         <p className="mt-1 text-sm text-red-600">
@@ -465,11 +583,10 @@ const DeliveryPartnerRegistration = () => {
                         name="bankDetails.ifscCode"
                         value={formData.bankDetails.ifscCode}
                         onChange={handleChange}
-                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${
-                          errors.ifscCode
-                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        } border p-2`}
+                        className={`mt-1 block w-full rounded-md shadow-sm sm:text-sm ${errors.ifscCode
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          } border p-2`}
                       />
                       {errors.ifscCode && (
                         <p className="mt-1 text-sm text-red-600">
@@ -506,9 +623,8 @@ const DeliveryPartnerRegistration = () => {
                         name="documents.profilePhoto"
                         accept="image/*"
                         onChange={handleChange}
-                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${
-                          errors.profilePhoto ? "border-red-500" : ""
-                        }`}
+                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.profilePhoto ? "border-red-500" : ""
+                          }`}
                       />
                       {errors.profilePhoto && (
                         <p className="mt-1 text-sm text-red-600">
@@ -533,9 +649,8 @@ const DeliveryPartnerRegistration = () => {
                         name="documents.drivinglicense"
                         accept="image/*,.pdf"
                         onChange={handleChange}
-                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${
-                          errors.drivinglicense ? "border-red-500" : ""
-                        }`}
+                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.drivinglicense ? "border-red-500" : ""
+                          }`}
                       />
                       {errors.drivinglicense && (
                         <p className="mt-1 text-sm text-red-600">
@@ -560,9 +675,8 @@ const DeliveryPartnerRegistration = () => {
                         name="documents.aadharcard"
                         accept="image/*,.pdf"
                         onChange={handleChange}
-                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${
-                          errors.aadharcard ? "border-red-500" : ""
-                        }`}
+                        className={`mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 ${errors.aadharcard ? "border-red-500" : ""
+                          }`}
                       />
                       {errors.aadharcard && (
                         <p className="mt-1 text-sm text-red-600">
@@ -620,6 +734,7 @@ const DeliveryPartnerRegistration = () => {
           </div>
         </div>
       </div>
+      <div id="recaptcha-container"></div>
     </div>
   );
 };

@@ -3,14 +3,21 @@ import { FaEye, FaEdit, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { HiOutlineDuplicate } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import Switch from "../../../components/Switch";
+import FilterComponent from "../../../components/FilterComponent";
 
 const ProductTable = () => {
-
   const navigate = useNavigate();
-
   const handleEdit = (id) => {
     navigate(`/editinhouse`); 
 };
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [filters, setFilters] = useState({
+    seller: "All",
+    rating: "All",
+    stock: "All",
+    price: "All",
+  });
 
   const [products, setProducts] = useState([
     {
@@ -35,8 +42,8 @@ const ProductTable = () => {
       image: "https://via.placeholder.com/50",
       sales: 9,
       price: 579.0,
-      rating: 5,
-      stock: "Low",
+      rating: 4,
+      stock: "High",
       published: true,
       approved: false,
       featured: false,
@@ -45,6 +52,73 @@ const ProductTable = () => {
     },
   ]);
 
+  const handleSelectAll = (isChecked) => {
+    if (isChecked) {
+      setSelectedProducts(products.map((product) => product.id));
+    } else {
+      setSelectedProducts([]);
+    }
+  };
+
+  const handleSelectProduct = (id) => {
+    setSelectedProducts((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((productId) => productId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  const handleBulkAction = (action) => {
+    if (action === "delete"||"Delete Selected") {
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => !selectedProducts.includes(product.id))
+      );
+      setSelectedProducts([]);
+    }
+  };
+
+  const handleSearch = (term) => {
+    setSearchTerm(term.toLowerCase());
+  };
+
+  const filteredProducts = products.filter((product) => {
+    // Search filter
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchTerm) ||
+      product.seller.toLowerCase().includes(searchTerm);
+
+    // Seller filter
+    const matchesSeller =
+      filters.seller === "All" || product.seller === filters.seller;
+
+    // Rating filter
+    const matchesRating =
+      filters.rating === "All" ||
+      (filters.rating === "High-Low" && product.rating >= 4) ||
+      (filters.rating === "Low-High" && product.rating < 4);
+
+    // Stock filter
+    const matchesStock =
+      filters.stock === "All" || product.stock === filters.stock;
+
+    // Price filter
+    const matchesPrice =
+      filters.price === "All" ||
+      (filters.price === "High-Low" && product.price >= 550) ||
+      (filters.price === "Low-high" && product.price < 550);
+
+    return matchesSearch && matchesSeller && matchesRating && matchesStock && matchesPrice;
+  });
+
+  const toggleProductStatus = (productId, field) => {
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === productId
+          ? { ...product, [field]: !product[field] }
+          : product
+      )
+    );
+  };
   const toggleSwitch = (id, field) => {
     setProducts((prev) =>
       prev.map((product) =>
@@ -52,7 +126,6 @@ const ProductTable = () => {
       )
     );
   };
-
   const toggleExpand = (id) => {
     setProducts((prev) =>
       prev.map((product) =>
@@ -60,18 +133,57 @@ const ProductTable = () => {
       )
     );
   };
-
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">All Products</h2>
+      <FilterComponent
+        title="All Products"
+        filterConfig={{
+          seller: {
+            label: "All seller",
+            options: ["All", "Filon Asset Store", "Another Seller"],
+          },
+          rating: {
+            label: "Sort By rating",
+            options: ["All", "High-Low", "Low-High"],
+          },
+          stock: {
+            label: "Sort By Stock",
+            options: ["All", "High", "Low"],
+          },
+          price: {
+            label: "Sort By Price",
+            options: ["All", "High-low", "Low-high"],
+          },
+          bulk: {
+            label: "Bulk Action",
+            options: ["Delete Selected"],
+            disabled: selectedProducts.length === 0,
+          },
+        }}
+        currentFilters={filters}
+        onFilterChange={(filterType, value) => {
+          setFilters(prev => ({ ...prev, [filterType]: value }));
+        }}
+        onSearch={handleSearch}
+        onBulkAction={handleBulkAction}
+        selectedItems={selectedProducts}
+        totalItems={products.length}
+      />
+
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        {/* Desktop View */}
         <table className="w-full border-collapse hidden md:table">
           <thead>
             <tr className="bg-gray-100 text-left">
-            <th className="p-3">
-                                <input type="checkbox" className="check25" />
-                            </th>
+              <th className="p-3">
+                <input
+                  type="checkbox"
+                  checked={
+                    products.length > 0 &&
+                    selectedProducts.length === products.length
+                  }
+                  onChange={(e) => handleSelectAll(e.target.checked)}
+                />
+              </th>
               <th className="p-3">Name</th>
               <th className="p-3">Added By</th>
               <th className="p-3">Info</th>
@@ -84,46 +196,102 @@ const ProductTable = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) => (
-              <tr key={product.id} className="border-b">
-                <td className="p-3"><input type="checkbox" className="check25" /></td>
-                <td className="p-3 flex border-none mt-3 items-center space-x-2">
-                  <img src={product.image} alt={product.name} className="w-10 h-10" />
-                  <span>{product.name}</span>
-                </td>
-                <td className="p-3">{product.seller}</td>
-                <td className="p-3">
-                  <p><strong>Sales:</strong> {product.sales} times</p>
-                  <p><strong>Price:</strong> ${product.price.toFixed(2)}</p>
-                  <p><strong>Rating:</strong> {product.rating}</p>
-                </td>
-                <td className="p-3">
-                  <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full">{product.stock}</span>
-                </td>
-                {["todayDeal", "published", "approved", "featured"].map((field) => (
-                  <td className="p-3" key={field}>
-                    {/* <label className="switch">
-                      <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                      <span className="slider"></span>
-                    </label> */}
-                    <Switch/>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <tr key={product.id} className="border-b">
+                  <td className="p-3">
+                    <input
+                      type="checkbox"
+                      checked={selectedProducts.includes(product.id)}
+                      onChange={() => handleSelectProduct(product.id)}
+                    />
                   </td>
-                ))}
-                <td className="p-3 flex border-none space-x-2">
-                  <button className="bg-green-100 p-2 rounded-full"><FaEye className="text-green-500" /></button>
-                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
-                  <button className="bg-yellow-100 p-2 rounded-full"><HiOutlineDuplicate className="text-yellow-500" /></button>
+                  <td className="p-3 border-none mt-4 flex items-center space-x-2">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-10 h-10 rounded"
+                    />
+                    <span>{product.name}</span>
+                  </td>
+                  <td className="p-3">{product.seller}</td>
+                  <td className="p-3">
+                    <p>
+                      <strong>Sales:</strong> {product.sales} times
+                    </p>
+                    <p>
+                      <strong>Price:</strong> ${product.price.toFixed(2)}
+                    </p>
+                    <p>
+                      <strong>Rating:</strong> {product.rating}/5
+                    </p>
+                  </td>
+                  <td className="p-3">
+                    <span
+                      className={`px-2 py-1 text-white text-xs rounded-full ${
+                        product.stock === "High"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    >
+                      {product.stock}
+                    </span>
+                  </td>
+                  {["todayDeal", "published", "approved", "featured"].map(
+                    (field) => (
+                      <td className="p-3" key={field}>
+                        <Switch
+                          checked={product[field]}
+                          onChange={() => toggleProductStatus(product.id, field)}
+                        />
+                      </td>
+                    )
+                  )}
+                  <td className="p-3 border-none mt-4 flex space-x-2">
+                    <button
+                      className="bg-green-100 p-2 rounded-full hover:bg-green-200 transition"
+                      title="View"
+                    >
+                      <FaEye className="text-green-500" />
+                    </button>
+                    <button
+                      className="bg-blue-100 p-2 rounded-full hover:bg-blue-200 transition"
+                      title="Edit"
+                      onClick={() => navigate(`/editinhouse/${product.id}`)}
+                    >
+                      <FaEdit className="text-blue-500" />
+                    </button>
+                    <button
+                      className="bg-red-100 p-2 rounded-full hover:bg-red-200 transition"
+                      title="Delete"
+                      onClick={() => {
+                        setSelectedProducts([product.id]);
+                        handleBulkAction("delete");
+                      }}
+                    >
+                      <FaTrash className="text-red-500" />
+                    </button>
+                    <button
+                      className="bg-yellow-100 p-2 rounded-full hover:bg-yellow-200 transition"
+                      title="Duplicate"
+                    >
+                      <HiOutlineDuplicate className="text-yellow-500" />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="10" className="p-4 text-center text-gray-500">
+                  No products found matching your criteria
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-
-        {/* Mobile View */}
         <div className="md:hidden">
           {products.map((product) => (
-            <div key={product.id} className="border p-3 mb-3 rounded-lg">
+            <div key={product.id} className="border-none p-3 mb-3 rounded-lg">
               <div className="flex justify-between items-center">
                 <button onClick={() => toggleExpand(product.id)} className="p-2">
                   {product.expanded ? <FaMinus /> : <FaPlus />}
@@ -146,13 +314,14 @@ const ProductTable = () => {
                   {["todayDeal", "published", "approved", "featured"].map((field) => (
                     <div className="flex justify-between" key={field}>
                       <strong>{field}</strong>
-                      <label className="switch">
-                        <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                        <span className="slider"></span>
+                      <label >
+                        {/* <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
+                        <span className="slider"></span> */}
+                        <Switch checked={product[field]} onChange={() => toggleSwitch(product.id, field)}/>
                       </label>
                     </div>
                   ))}
-                  <div className="flex justify-left space-x-2 mt-3">
+                  <div className="flex border-none justify-left space-x-2 mt-3">
                     <button className="bg-green-100 p-2 rounded-full"><FaEye className="text-green-500" /></button>
                     <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
                     <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>

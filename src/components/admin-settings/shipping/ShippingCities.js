@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FiEdit, FiTrash2, FiPlus } from 'react-icons/fi';
 import Switch from '../../Switch';
 import { useNavigate } from 'react-router-dom';
+import DeleteConfirmation from '../../DeleteConfirmation';
 
 const statesData = [
   { id: 1, name: 'Andaman and Nicobar Islands', country: 'India', areaWiseCost: '$0.00', showHide: true },
@@ -23,7 +24,8 @@ const ShippingCities = () => {
   const [isStateDropdownOpen, setIsStateDropdownOpen] = useState(false);
   const [expandedRows, setExpandedRows] = useState({});
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [roleToDelete, setRoleToDelete] = useState(null);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+    
 
   const handleToggle = (id) => {
     setStates(states.map(state =>
@@ -42,10 +44,7 @@ const ShippingCities = () => {
     navigate(`/admin-settings/shipping/cities/edit/${id}`);
   };
 
-  const handleDelete = (id) => {
-    setStates(states.filter(state => state.id !== id));
-  };
-
+  
   const toggleStateDropdown = () => {
     setIsStateDropdownOpen(!isStateDropdownOpen);
   };
@@ -59,21 +58,26 @@ const ShippingCities = () => {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleDeleteClick = (roleId) => {
-    setRoleToDelete(roleId);
+  // const handleDeleteClick = (roleId) => {
+  //   setRoleToDelete(roleId);
+  //   setShowDeleteConfirmation(true);
+  // };
+
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
     setShowDeleteConfirmation(true);
   };
-
-  const confirmDelete = () => {
-    // Implement your delete logic here
-    console.log(`Deleting role with ID: ${roleToDelete}`);
+  
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
     setShowDeleteConfirmation(false);
-    setRoleToDelete(null);
   };
-
-  const cancelDelete = () => {
-    setShowDeleteConfirmation(false);
-    setRoleToDelete(null);
+  
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
   };
 
   return (
@@ -124,7 +128,7 @@ const ShippingCities = () => {
                         <FiEdit onClick={() => handlereview(state.id)} />
                       </button>
                       <button className="text-red-500">
-                        <FiTrash2 onClick={() => handleDeleteClick(state.id)}  />
+                        <FiTrash2 onClick={() => openDeleteConfirmation(state.id)} />
                       </button>
                     </td>
                     
@@ -150,39 +154,13 @@ const ShippingCities = () => {
                                   <FiEdit onClick={() => handlereview(state.id)} />
                                 </button>
                                 <button className="text-red-500">
-                                  <FiTrash2 />
+                                  <FiTrash2  onClick={() => openDeleteConfirmation(state.id)} />
                                 </button>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-{/* 
-                        {showDeleteConfirmation && (
-        <div className="delete-confirmation-overlay">
-          <div className="delete-confirmation-dialog">
-            <div className="dialog-header">
-              <h2>Delete Confirmation</h2>
-              <button
-                className="close-dialog-btn"
-                onClick={cancelDelete}
-              >
-                X
-              </button>
-            </div>
-            <div className="dialog-content">
-              <p>Are you sure to delete this?</p>
-            </div>
-            <div className="dialog-actions">
-              <button className="cancel-btn" onClick={cancelDelete}>
-                Cancel
-              </button>
-              <button className="delete-btn" onClick={confirmDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )} */}
+
                       </td>
                     </tr>
                   )}
@@ -253,7 +231,17 @@ const ShippingCities = () => {
             </div>
           </div>
         </div>
+
+
       </div>
+       {showDeleteConfirmation && (
+                      <DeleteConfirmation
+                          isOpen={showDeleteConfirmation}
+                          onConfirm={() => handleDelete(attributeToDeleteId)}
+                          onCancel={closeDeleteConfirmation}
+                         
+                      />
+                  )}
     </div>
   );
 };

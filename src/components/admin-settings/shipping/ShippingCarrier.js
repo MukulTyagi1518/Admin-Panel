@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Switch from '../../Switch'; 
 import fedexLogo from '../shipping/carrier.webp'; 
 import { useNavigate } from 'react-router-dom';
-// import upsLogo from './ups.png';   
-// import dhlLogo from './dhl.png';     
+import DeleteConfirmation from '../../DeleteConfirmation';
+import { useState } from 'react';
+
 
 const carriersData = [
   { id: 1, logo: {fedexLogo}, name: 'FedEx', transitTime: 20, status: true },
@@ -15,8 +16,12 @@ const carriersData = [
   { id: 6, logo: "", name: 'DHL', transitTime: 15, status: true },
 ];
 
+
 const ShippingCarrier = () => {
   const [carriers, setCarriers] = useState(carriersData);
+  
+ const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+ const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
   const handleStatusChange = (id) => {
     setCarriers(carriers.map(carrier =>
@@ -29,10 +34,21 @@ const ShippingCarrier = () => {
     // Implement your edit logic here
   };
 
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+  
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+  
   const handleDelete = (id) => {
-    console.log(`Delete carrier with ID: ${id}`);
-    // Implement your delete logic here
-    setCarriers(carriers.filter(carrier => carrier.id !== id));
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
   };
   const navigate = useNavigate();
 
@@ -109,7 +125,7 @@ const ShippingCarrier = () => {
                                                             <FiEdit onClick={() => handleEdit(carrier.id)} />
                                                           </button>
                                                           <button className="text-red-500">
-                                                            <FiTrash2  />
+                                                            <FiTrash2   onClick={() => openDeleteConfirmation(carrier.id)} />
                                                           </button>
                                                         </td>
                 </tr>
@@ -118,6 +134,15 @@ const ShippingCarrier = () => {
           </table>
         </div>
       </div>
+       {/* Render the Delete Confirmation Modal */}
+       {showDeleteConfirmation && (
+                <DeleteConfirmation
+                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
     </div>
   );
 };

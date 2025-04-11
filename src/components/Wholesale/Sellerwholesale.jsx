@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sellerwholesale.css";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../Switch";
+import DeleteConfirmation from "../DeleteConfirmation";
 import { useNavigate } from "react-router-dom";
 
 const InhouseProduct = () => {
@@ -114,6 +115,8 @@ const handleExpandRow = (id) => {
 
     const [selectedSeller, setSelectedSeller] = useState("All Sellers");
     const [isSellerDropdownOpen, setIsSellerDropdownOpen] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
 
 
@@ -209,6 +212,22 @@ const handleExpandRow = (id) => {
         navigate("/wholesale/add");
     };
 
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+    };
+    
+    const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+    };
+    
+    const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+    };
     return (
         <div className="product-container5">
             <div className="header">
@@ -224,21 +243,7 @@ const handleExpandRow = (id) => {
                     <option value="">All Sellers</option>
                     
                 </select> */}
-                {/* <div className="seller-dropdown">
-                    <div className="seller-dropdown-header" onClick={toggleSellerDropdown}>
-                        {selectedSeller}
-                        <span className={`arrow ${isSellerDropdownOpen ? "up" : "down"}`}></span>
-                    </div>
-                    {isSellerDropdownOpen && (
-                        <div className="seller-dropdown-list">
-                            {sellers.map((seller) => (
-                                <div key={seller} className="seller-dropdown-item" onClick={() => selectSeller(seller)}>
-                                    {seller}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div> */}
+                
                 <select className="filter-dropdown">
                     <option value="">All Seller</option>
                     <option value="Sam">Sam</option>
@@ -369,7 +374,7 @@ const handleExpandRow = (id) => {
             <FaEdit onClick={handleSubmit}/>
           </button>
           <button className="btn5 delete-btn5">
-            <FaTrash />
+            <FaTrash onClick={() => openDeleteConfirmation(product.id)}/>
           </button>
         </td>
       </tr>
@@ -433,7 +438,8 @@ const handleExpandRow = (id) => {
             <FaEdit onClick={handleSubmit} />
           </button>
           <button className="btn5 delete-btn5">
-            <FaTrash />
+          {/* <div>Num of Sale: {product.info.sale} times</div> */}
+            <FaTrash   onClick={() => openDeleteConfirmation(product.id)}/>
           </button>
         </div>
 
@@ -446,36 +452,6 @@ const handleExpandRow = (id) => {
   ))}
 </tbody>
 
-
-
-
-{/* <div className="pagination ">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-btn"
-                >
-                    &lsaquo;
-                </button>
-
-                {getPageNumbers().map((page, index) => (
-                    <button
-                        key={index}
-                        onClick={() => typeof page === "number" && paginate(page)}
-                        className={`pagination-btn ${currentPage === page ? "active" : ""} ${page === "..." ? "dots" : ""}`}
-                    >
-                        {page}
-                    </button>
-                ))}
-
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="pagination-btn"
-                >
-                    &rsaquo;
-                </button>
-            </div> */}
                     
 
                 </table>
@@ -483,6 +459,14 @@ const handleExpandRow = (id) => {
               
 
             </div>
+             {showDeleteConfirmation && (
+                            <DeleteConfirmation
+                                isOpen={showDeleteConfirmation}
+                                onConfirm={() => handleDelete(attributeToDeleteId)}
+                                onCancel={closeDeleteConfirmation}
+                               
+                            />
+                        )}
         </div>
     );
 };

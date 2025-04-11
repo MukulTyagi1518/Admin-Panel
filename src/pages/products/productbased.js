@@ -216,6 +216,7 @@ import "./CategoryBased.css";
 import { useCategoryContext } from "../../categoryContext";
 import api from "../../utils/axios";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import Switch from "../../components/Switch";
 
 const Productbased = () => {
   const { categoryData, setCategoryData } = useCategoryContext();
@@ -293,9 +294,9 @@ const Productbased = () => {
       <h2 className="category-title">Set Product Wise Discount</h2>
       <div className="divider mt-2"></div>
       <div className="search-bar">
-            <h5>Product</h5>
-            <input type="text" placeholder="Type name & Enter" />
-          </div>
+        <h5>Product</h5>
+        <input type="text" placeholder="Type name & Enter" />
+      </div>
       <div className="divider"></div>
       <div className="table-container">
         {categoryData.length > 0 ? (
@@ -363,14 +364,10 @@ const Productbased = () => {
                       </div>
                     </td>
                     <td className="hide-on-mobile">
-                      <label className="switch">
-                        <input
-                          type="checkbox"
-                          checked={c.sallerProduct}
-                          onChange={() => changeSellerData(c._id, !c.sallerProduct)}
-                        />
-                        <span className="slider round"></span>
-                      </label>
+                      <Switch
+                        value={c.sallerProduct}
+                        onChangeFunc={() => changeSellerData(c._id, !c.sallerProduct)}
+                      />
                     </td>
                     <td className="hide-on-mobile">
                       <button

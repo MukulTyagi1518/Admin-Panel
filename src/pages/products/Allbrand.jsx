@@ -1,4 +1,5 @@
-import { Delete, Edit, Trash } from "lucide-react"
+// import { Delete, Edit, Trash,plus } from "lucide-react"
+import { Delete, Edit, Trash, Plus } from "lucide-react"
 import "./Allbrand.css"
 import { useEffect, useState } from "react";
 import apiInstance from "../../utils/axios";
@@ -69,6 +70,8 @@ export default function AllBrands() {
         fetchBrands()
     }, [])
 
+    
+
     const handleCreateBrand = async (e) => {
         e.preventDefault();
 
@@ -120,13 +123,26 @@ export default function AllBrands() {
         navigate("/products/editBrand");
     };
 
+    const handleForm = (e) => {
+        e.preventDefault();
+        navigate("/products/addnewbrand");
+      };
+
     return (
         <div className="PreOrderFaq ma10">
             <div className="preOrderFaqBox-brand">
                 <div className="preOrderFaqLeft">
+                <div className="addbtn">
+                <button className="add-brand-btn"  onClick={handleForm} >
+                            <Plus size={16} /> Add New Brand
+                        </button>
+                </div>
                     <div className="preOrderLeftUpper">
+                        
                         <p className="allFaq">All Brands</p>
+                        
                         <input type="text" placeholder="Type to search...." className="searchFaq" />
+                        
                     </div>
                     <div className="preOrderLeftLower">
                         <div className="table-container faqTable">
@@ -202,7 +218,7 @@ export default function AllBrands() {
                         </div>
                     </div>
                 </div>
-                <div className="preOrderFaqRight">
+                {/* <div className="preOrderFaqRight">
                     <div className="preOrderFaqRightHead">
                         <p className="allFaq">Add new Brand</p>
                     </div>
@@ -230,7 +246,7 @@ export default function AllBrands() {
                             <input onClick={handleCreateBrand} type="submit" value="Save" className="inpSub" />
                         </div>
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </div>
