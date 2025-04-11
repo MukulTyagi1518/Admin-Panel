@@ -194,16 +194,11 @@ const Ticket = () => {
             <React.Fragment key={ticket._id}>
               <tr>
                 <td className="hide-on-large">
-<<<<<<< HEAD
-                  <button className="toggle-btn" onClick={() => toggleRow(ticket.id)}>
-                    {expandedRows[ticket.id] ? "+" :  "-"}
-=======
                   <button
                     className="toggle-btn"
                     onClick={() => toggleRow(ticket._id)}
                   >
                     {expandedRows[ticket._id] ? <FaPlus /> : <FaPlus />}
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
                   </button>
                 </td>
                 <td className="hide-on-small">#{ticket.ticketId}</td>

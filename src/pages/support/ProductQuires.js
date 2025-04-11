@@ -6,14 +6,9 @@ import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 const Conversation = () => {
   const [expandedRows, setExpandedRows] = useState({});
-<<<<<<< HEAD
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
-=======
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [showModal, setShowModal] = useState(false);
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -31,23 +26,6 @@ const Conversation = () => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-<<<<<<< HEAD
-  const openDeleteConfirmation = (id) => {
-    setAttributeToDeleteId(id);
-    setShowDeleteConfirmation(true);
-  };
-  
-  const closeDeleteConfirmation = () => {
-    setAttributeToDeleteId(null);
-    setShowDeleteConfirmation(false);
-  };
-  
-  const handleDelete = (id) => {
-    // In a real application, you would make an API call here to delete the attribute
-    console.log(`Deleting attribute with ID: ${id}`);
-    // After successful deletion, you would likely update the 'attributes' state
-    closeDeleteConfirmation();
-=======
   const handleView = async (id) => {
     try {
       const res = await axios.get(`http://localhost:5000/api/productconversation/${id}`);
@@ -66,7 +44,6 @@ const Conversation = () => {
     } catch (err) {
       console.error("Error deleting conversation", err);
     }
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
   };
 
   return (
@@ -91,26 +68,16 @@ const Conversation = () => {
                 <td className="hide-on-small">{conversation.date}</td>
                 <td className="hide-on-small">{conversation.title}</td>
                 <td>
-<<<<<<< HEAD
-                  <button onClick={() => toggleRow(conversation.id)} className="expand-btn mr-3">
-                    +
-=======
                   <button onClick={() => toggleRow(conversation._id)} className="expand-btn mr-3">
                     <FaPlus />
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
                   </button>
                   {conversation.senderName || conversation.sender}
                   {conversation.isNew && <span className="new-badge">new</span>}
                 </td>
                 <td>{conversation.receiverName || conversation.receiver}</td>
                 <td>
-<<<<<<< HEAD
-                  <button className="icon-btn4 mr-2"><FaEye /></button>
-                  <button className="icon-btn4 delete-btn4"><FaTrash onClick={() => openDeleteConfirmation(conversation.id)}/></button>
-=======
                   <button className="icon-btn4 mr-2" onClick={() => handleView(conversation._id)}><FaEye /></button>
                   <button className="icon-btn4 delete-btn4" onClick={() => handleDelete(conversation._id)}><FaTrash /></button>
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
                 </td>
               </tr>
 
@@ -144,17 +111,6 @@ const Conversation = () => {
           ))}
         </tbody>
       </table>
-<<<<<<< HEAD
-      {/* Render the Delete Confirmation Modal */}
-      {showDeleteConfirmation && (
-                <DeleteConfirmation
-                    isOpen={showDeleteConfirmation}
-                    onConfirm={() => handleDelete(attributeToDeleteId)}
-                    onCancel={closeDeleteConfirmation}
-                   
-                />
-            )}
-=======
 
       {/*  MODAL for Eye icon view */}
       {showModal && selectedConversation && (
@@ -171,7 +127,6 @@ const Conversation = () => {
           </div>
         </div>
       )}
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
     </div>
   );
 };

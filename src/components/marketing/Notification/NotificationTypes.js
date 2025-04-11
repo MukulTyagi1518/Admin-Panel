@@ -5,9 +5,6 @@ import design1Image from './images/notification.png';
 
 const NotificationTypes = () => {
   const [activeTab, setActiveTab] = useState('customer');
-<<<<<<< HEAD
-  const [notificationTypes, setNotificationTypes] = useState([]);
-=======
   const [expandedRows, setExpandedRows] = useState({});
   
   const [notificationTypes, setNotificationTypes] = useState([
@@ -30,7 +27,6 @@ const NotificationTypes = () => {
     { id: 15, userType: 'admin', type: 'New Seller Applied', defaultText: 'A new seller has applied: [[seller_name]]', image: '', status: true, isDefault: true },
   ]);
 
->>>>>>> 0c25c1aa83ea20bf8ba865046479494c56c2aa4a
   const [newNotification, setNewNotification] = useState({
     type: '',
     defaultText: '',
