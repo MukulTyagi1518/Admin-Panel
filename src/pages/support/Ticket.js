@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Ticket.css";
 import { FaPlus, FaEye } from "react-icons/fa"; 
+import ViewExpandData from "../../components/ViewExpandData";
 
 const tickets = [
   {
@@ -69,9 +70,13 @@ const Ticket = () => {
             <React.Fragment key={ticket.id}>
               <tr>
                 <td className="hide-on-large">
-                  <button className="toggle-btn" onClick={() => toggleRow(ticket.id)}>
+                  {/* <button className="toggle-btn" onClick={() => toggleRow(ticket.id)}>
                     {expandedRows[ticket.id] ? "+" :  "-"}
-                  </button>
+                  </button> */}
+                   <ViewExpandData
+                    isExpanded={expandedRows[ticket.id]}
+                    toggleExpanded={() => toggleRow(ticket.id)}
+                  />
                 </td>
                 <td className="hide-on-small">{ticket.id}</td>
                 <td className="hide-on-small">{ticket.sendingDate}</td>
@@ -81,7 +86,14 @@ const Ticket = () => {
                 <td className="hide-on-small">{ticket.lastReply}</td>
                 {/* <td><FaEye /></td> */}
                 <td>
-                  <button><FaEye className="eye-icon" /></button>
+                  {/* <button><FaEye className="eye-icon" /></button> */}
+                  <div className="flex gap-2">
+                                      <button className="btn8 text-green-500 pl-1">
+                                        <FaEye />
+                                      </button>
+                  
+                  
+                                    </div>
                 </td>
               </tr>
               {/* {expandedRows[ticket.id] && (

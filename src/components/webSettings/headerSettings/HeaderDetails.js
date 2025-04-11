@@ -92,6 +92,7 @@ const HeaderDetails = () => {
       <h2 className="page-left-title">Website Header</h2>
 
       <div className="header-details">
+     
         <div className="title-bar">
           <h2 className="center-title">Header Setting</h2>
         </div>
@@ -157,7 +158,7 @@ const HeaderDetails = () => {
                   checked={textColor === 'dark'}
                   onChange={() => setTextColor('dark')}
                 />
-                <span className="checkmark"></span>
+                <span className="checkmark mt-2"></span>
               </label>
               <label className="radio-container">
                 Light
@@ -168,7 +169,7 @@ const HeaderDetails = () => {
                   checked={textColor === 'light'}
                   onChange={() => setTextColor('light')}
                 />
-                <span className="checkmark"></span>
+                <span className="checkmark "></span>
               </label>
             </div>
           </div>

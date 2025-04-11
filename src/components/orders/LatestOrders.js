@@ -1,9 +1,10 @@
-import { Download, EyeIcon, Trash } from "lucide-react";
+import { Download, DownloadCloud, EyeIcon, Trash } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import OrderHeader from "./OrderHeader";
 import Pagination from "../Pagination";
 import { useMediaQuery } from 'react-responsive';
-import { FaPlus, FaMinus } from 'react-icons/fa';
+import { FaPlus, FaMinus, FaTrash, FaEye } from 'react-icons/fa';
+import ViewExpandData from "../ViewExpandData";
 
 const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
   const [orders, setOrders] = useState([
@@ -258,11 +259,18 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
               <React.Fragment key={order.id}>
                 <tr className="border-b border-gray-100 hover:bg-gray-50">
                   {isBelow1400 && (
+                    // <td className="py-3 px-4">
+                    //   <button onClick={() => toggleOrderExpansion(order.id)}>
+                    //     {expandedOrders.includes(order.id) ? <FaMinus /> : <FaPlus />}
+                    //   </button>
+                    // </td>
                     <td className="py-3 px-4">
-                      <button onClick={() => toggleOrderExpansion(order.id)}>
-                        {expandedOrders.includes(order.id) ? <FaMinus /> : <FaPlus />}
-                      </button>
-                    </td>
+                    <ViewExpandData
+                      isExpanded={expandedOrders.includes(order.id)}
+                      toggleExpanded={() => toggleOrderExpansion(order.id)}
+                    />
+                  </td>
+
                   )}
                   <td className="py-3 px-4">
                     <input
@@ -290,11 +298,28 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                   )}
                   {/* <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td> */}
                   <td className="py-3 px-4">
-                    <div className="flex space-x-1">
-                      <Download className="text-green-400 hover:text-gray-500 cursor-pointer" />
+                    {/* <div className="flex space-x-1"> */}
+                      {/* <Download className="text-green-400 hover:text-gray-500 cursor-pointer" />
                       <Trash className="text-red-400 hover:text-gray-500 cursor-pointer" onClick={() => handleDelete(order.id)} />
-                      <EyeIcon className="text-cyan-400 hover:text-gray-600 cursor-pointer" />
-                    </div>
+                      <EyeIcon className="text-cyan-400 hover:text-gray-600 cursor-pointer" /> */}
+                       
+                                 
+                                   <div className="flex gap-2">
+                                  
+                                              
+                                              <button className="btn8 text-yellow-400 pl-1">
+                                                <Download />
+                                              </button>
+                                              <button className="btn8 text-pink-400 pl-1">
+                                                <FaTrash onClick={() => handleDelete(order.id)}  />
+                                              </button>
+                                              <button className="btn8 text-green-500 pl-1">
+                                                <FaEye />
+                                              </button>
+                                  
+                                  
+                                            </div>
+                    {/* </div> */}
                   </td>
                 </tr>
                 {expandedOrders.includes(order.id) && isBelow1400 && (

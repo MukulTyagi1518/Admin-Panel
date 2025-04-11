@@ -3,6 +3,7 @@ import "./Inhouse.css";
 import { FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Switch from "../Switch";
 import DeleteConfirmation from "../DeleteConfirmation";
+import ViewExpandData from "../ViewExpandData";
 
 const InhouseProduct = () => {
   const [products, setProducts] = useState([
@@ -285,7 +286,7 @@ const InhouseProduct = () => {
             {products.map((product) => (
               <>
                 <tr key={product.id}>
-                <td>
+                {/* <td>
                   <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""
                         }`}
@@ -304,7 +305,19 @@ const InhouseProduct = () => {
                      
                     </div>
 
-                  </td>
+                  </td> */}
+                     <td>
+    <ViewExpandData
+      isExpanded={product.expanded}
+      toggleExpanded={() =>
+        setProducts((prevProducts) =>
+          prevProducts.map((p) =>
+            p.id === product.id ? { ...p, expanded: !p.expanded } : p
+          )
+        )
+      }
+    />
+  </td>
                   <td>
                     <input
                       type="checkbox"

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import "./Conversation.css";
 import { FaPlus, FaEye, FaTrash } from "react-icons/fa";
 import DeleteConfirmation from "../../components/DeleteConfirmation";
+import ViewExpandData from "../../components/ViewExpandData";
 
 const Conversation = () => {
   const [expandedRows, setExpandedRows] = useState({});
@@ -81,6 +82,7 @@ const Conversation = () => {
       <table className="conversation-table">
         <thead>
           <tr>
+            <th className="lg:hidden"></th>
            {/* <th className="hide-on-large"></th> */}
             <th className="hide-on-small">#</th>
             <th className="hide-on-small">Date</th>
@@ -102,18 +104,34 @@ const Conversation = () => {
                     <FaPlus />
                   </button>
                 </td> */}
+                 <ViewExpandData
+                    isExpanded={expandedRows[conversation.id]}
+                    toggleExpanded={() => toggleRow(conversation.id)}
+                  />
                 <td>
-                  <button onClick={() => toggleRow(conversation.id)} className="expand-btn mr-3">
+                  {/* <button onClick={() => toggleRow(conversation.id)} className="expand-btn mr-3">
                     +
-                  </button>
+                  </button> */}
+                  
                   
                   {conversation.sender}
                   {conversation.isNew && <span className="new-badge">new</span>}
                 </td>
                 <td>{conversation.receiver}</td>
                 <td>
-                  <button className="icon-btn4 mr-2"><FaEye /></button>
-                  <button className="icon-btn4 delete-btn4"><FaTrash onClick={() => openDeleteConfirmation(conversation.id)}/></button>
+                  {/* <button className="icon-btn4 mr-2"><FaEye /></button>
+                  <button className="icon-btn4 delete-btn4"><FaTrash onClick={() => openDeleteConfirmation(conversation.id)}/></button> */}
+                   <div className="flex gap-2">
+                                        
+                                  <button className="btn8 text-pink-400 pl-1">
+                                    <FaTrash onClick={() => openDeleteConfirmation(conversation.id)} />
+                                  </button>
+                                  <button className="btn8 text-green-500 pl-1">
+                                    <FaEye />
+                                  </button>
+                      
+                      
+                                </div>
                 </td>
               </tr>
               

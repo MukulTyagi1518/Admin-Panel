@@ -3,6 +3,7 @@ import "./Sellerwholesale.css";
 import { FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Switch from "../Switch";
 import DeleteConfirmation from "../DeleteConfirmation";
+import ViewExpandData from "../ViewExpandData";
 
 const InhouseProduct = () => {
   const [products, setProducts] = useState([
@@ -281,7 +282,7 @@ const InhouseProduct = () => {
 
                 <tr key={product.id}>
  
-                <td className="lg:hidden">
+                {/* <td className="lg:hidden">
                 <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""}`}
                       onClick={() =>
@@ -295,7 +296,19 @@ const InhouseProduct = () => {
                       +
                     </div>
 
-                  </td>
+                  </td> */}
+                    <td>
+    <ViewExpandData
+      isExpanded={product.expanded}
+      toggleExpanded={() =>
+        setProducts((prevProducts) =>
+          prevProducts.map((p) =>
+            p.id === product.id ? { ...p, expanded: !p.expanded } : p
+          )
+        )
+      }
+    />
+  </td>
 
                   <td>
                     <input

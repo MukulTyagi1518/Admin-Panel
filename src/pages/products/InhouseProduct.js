@@ -5,6 +5,7 @@ import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
 import FilterComponent from "../../components/FilterComponent";
 import ViewExpandData from "../../components/ViewExpandData";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
 
 const InhouseProduct = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const InhouseProduct = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   // const [expandedRow, setExpandedRow] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
   const [products, setProducts] = useState([
     {
@@ -147,6 +150,24 @@ const InhouseProduct = () => {
           ? prevSelected.filter((productId) => productId !== id) // Deselect if already selected
           : [...prevSelected, id] // Add to selected if not already selected
     );
+  };
+
+
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+  
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+  
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
   };
 
   const filteredProducts = products.filter((product) => {
@@ -364,7 +385,7 @@ const InhouseProduct = () => {
                       <FaEdit onClick={() => handleEdit(product.id)} />
                     </button>
                     <button className="btn3 delete-btn3">
-                      <FaTrash />
+                      <FaTrash   onClick={() => openDeleteConfirmation(product.id)}/>
                     </button>
                   </td>
                 </tr>
@@ -449,7 +470,7 @@ const InhouseProduct = () => {
                             <FaEdit onClick={() => handleEdit(product.id)} />
                           </button>
                           <button className="btn3 delete-btn3">
-                            <FaTrash />
+                            <FaTrash  onClick={() => openDeleteConfirmation(product.id)} />
                           </button>
                         </div>
                       </div>
@@ -461,6 +482,14 @@ const InhouseProduct = () => {
           </tbody>
         </table>
       </div>
+      {showDeleteConfirmation && (
+                <DeleteConfirmation
+                                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 /* === Layout Containers === */
 
 .header-wrapper {
-  display: flex;
+  display: block;
   align-items: flex-start;
   gap: 40px;
   padding: 20px 30px;
   flex-wrap: wrap;
+  margin-left: 30%;
 }
 
 .header-details {
@@ -16,6 +17,7 @@
   max-width: 800px;
   width: 100%;
   font-family: sans-serif;
+
 }
 
 .page-left-title {
@@ -23,7 +25,9 @@
   color: #444;
   font-weight: bold;
   white-space: nowrap;
-  margin-top: 10px;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  
 }
 
 .title-bar {
@@ -235,6 +239,23 @@
   gap: 20px;
   flex-wrap: wrap;
 }
+
+
+
+.radio-container input[type="radio"] {
+  width: 22px; /* Example of a large size */
+  height: 22px; /* Example of a large size */
+  margin-left: 20px !important;
+}
+
+.radio-container .checkmark {
+  width: 22px;
+  height: 22px;
+ 
+
+ 
+}
+
 
 .radio-neon-group input[type="radio"] {
   display: none;

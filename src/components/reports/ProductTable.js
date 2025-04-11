@@ -159,6 +159,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import Pagination from "../Pagination";
 import React from "react";
+import ViewExpandData from "../ViewExpandData";
 
 const ProductTable = ({
   columns,
@@ -227,9 +228,12 @@ const ProductTable = ({
                   {isMobileView && (
                     <td
                       className="py-3 px-4 text-sm text-gray-700 cursor-pointer font-bold"
-                      onClick={() => toggleRow(actualIndex)}
+                      
                     >
-                      {isExpanded ? "-" : "+"}
+                       <ViewExpandData
+                        isExpanded={isExpanded}
+                        toggleExpanded={() => toggleRow(actualIndex)}
+                      />
                     </td>
                   )}
                   {getVisibleColumns().map((column, colIndex) => (
