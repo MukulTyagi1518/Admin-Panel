@@ -250,7 +250,7 @@ function Preorders() {
     
 
     {/* Expand button placeholder - only visible on small screens */}
-    <th className="px-2 py-3 md:hidden"></th>
+    {/* <th className="px-2 py-3 md:hidden"></th> */}
 
     {/* Hidden columns on small screens */}
     <th className="px-6 py-3 hidden md:table-cell">Preorder Code/Created</th>

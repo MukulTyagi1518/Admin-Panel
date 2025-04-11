@@ -77,19 +77,22 @@ import { useState } from "react";
 import { Download, EyeIcon, Trash2Icon, Plus, Minus } from "lucide-react";
 import React from "react";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import ViewExpandData from "../ViewExpandData";
 
 function TableRow({ order }) {
   const [isExpanded, setIsExpanded] = useState(false);
-
+  const toggleExpanded = () => setIsExpanded(prev => !prev);
   return (
     <>
       {/* Main visible row */}
       <tr className="hover:bg-gray-50">
-        <td className="px-2 py-3 md:hidden">
+        {/* <td className="px-2 py-3 md:hidden">
           <button onClick={() => setIsExpanded(!isExpanded)}>
             {isExpanded ? <EyeIcon size={18} color="blue" /> : <EyeIcon size={18} color="blue" />}
           </button>
-        </td>
+        </td> */}
+       <ViewExpandData isExpanded={isExpanded} toggleExpanded={toggleExpanded} />
+
         <td className="px-2 py-3">
           <input type="checkbox" className="rounded" />
         </td>

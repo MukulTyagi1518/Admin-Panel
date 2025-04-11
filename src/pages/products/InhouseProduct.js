@@ -4,6 +4,7 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
 import FilterComponent from "../../components/FilterComponent";
+import ViewExpandData from "../../components/ViewExpandData";
 
 const InhouseProduct = () => {
   const navigate = useNavigate();
@@ -116,74 +117,9 @@ const InhouseProduct = () => {
     },
   ]);
 
-  // const handleExpandRow = (id) => {
-  //   setExpandedRow(expandedRow === id ? null : id);
-  // };
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 5; // Adjust as needed
-  // const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  // const currentItems = products.slice(
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage
-  // );
-
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // const getPageNumbers = () => {
-  //   const pages = [];
-  //   const totalVisiblePages = 5; // Adjust as needed
-
-  //   if (totalPages <= totalVisiblePages) {
-  //     for (let i = 1; i <= totalPages; i++) {
-  //       pages.push(i);
-  //     }
-  //   } else {
-  //     let startPage = Math.max(1, currentPage - 2);
-  //     let endPage = Math.min(totalPages, currentPage + 2);
-
-  //     if (currentPage <= 3) {
-  //       endPage = 5;
-  //     }
-  //     if (currentPage >= totalPages - 2) {
-  //       startPage = totalPages - 4;
-  //     }
-
-  //     for (let i = startPage; i <= endPage; i++) {
-  //       pages.push(i);
-  //     }
-
-  //     if (startPage > 1) {
-  //       pages.unshift("...");
-  //       pages.unshift(1);
-  //     }
-  //     if (endPage < totalPages) {
-  //       pages.push("...");
-  //       pages.push(totalPages);
-  //     }
-  //   }
-  //   return pages;
-  // };
-
-  // const handleToggleChange = (id, field) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.map((product) =>
-  //       product.id === id ? { ...product, [field]: !product[field] } : product
-  //     )
-  //   );
-  // };
-
-
-  // const toggleSellerDropdown = () => {
-  //   setIsSellerDropdownOpen(!isSellerDropdownOpen);
-  // };
-
-  // const selectSeller = (seller) => {
-  //   setSelectedSeller(seller);
-  //   setIsSellerDropdownOpen(false);
-  // };
-
+  
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleExpanded = () => setIsExpanded(prev => !prev);
   const handleBulkAction = (action) => {
     if (action === "Delete Selected") {
       setProducts((prevProducts) =>
@@ -319,7 +255,7 @@ const InhouseProduct = () => {
                       }
                     >
                       
-                      +
+                      <ViewExpandData isExpanded={isExpanded} toggleExpanded={toggleExpanded} />
                      
                     </div>
 

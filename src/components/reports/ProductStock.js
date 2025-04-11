@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Dropdown from "../Dropdown";
-import ProductTable from "./ProductTable";
+import ProductTable4 from "./ProductTable4";
 
 function ProductStock() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -75,7 +75,7 @@ function ProductStock() {
           </div>
         </div>
 
-         <ProductTable
+         <ProductTable4
                   columns={columns}
                   data={productStock}
                   currentPage={currentPage}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ProductTable from './ProductTable'
+import ProductTable5 from './ProductTable5'
 
 function UserSearches() {
 
@@ -55,7 +55,7 @@ function UserSearches() {
         
         </div>
 
-         <ProductTable
+         <ProductTable5
                   columns={columns}
                   data={productStock}
                   currentPage={currentPage}
