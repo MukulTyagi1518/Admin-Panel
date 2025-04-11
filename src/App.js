@@ -147,7 +147,8 @@ import Addpage from "./components/websetting/Addpage.jsx"
 import Editpage from "./components/websetting/Editpage.jsx"
 import Headerpage from "./components/websetting/Headerpage.jsx"
 
-
+import Footerpage from "./components/websetting/Footerpage.jsx"
+import Appeareance from "./components/websetting/Appearence.jsx"
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -437,7 +438,8 @@ function App() {
                   <Route path="state" element={<ShippingState />} />
                   <Route path="state">
                     <Route index element={<ShippingState />} />
-                    <Route path="edit/:id" element={<StateEdit />} />
+                     <Route path="edit/:id" element={<StateEdit />} /> 
+                   
                   </Route>
                   <Route path="cities" element={<ShippingCities />} />
                   <Route path="cities">
@@ -511,8 +513,9 @@ function App() {
               <Route path="/web-settings/page" element={<Pages />} />
               <Route path="/web-settings/header" element={<Headerpage />}/>
               <Route path="addpage" element={<Addpage />} />
-              <Route path="editaddpage" element={<Editpage />} />
-
+              <Route path="editaddpage/:id" element={<Editpage />} />
+              <Route path="/web-settings/footer" element={<Footerpage />} />
+              <Route path="/admin-settings/apearence" element={<Appeareance />} />
             </Routes>
           </div>
         </div >
