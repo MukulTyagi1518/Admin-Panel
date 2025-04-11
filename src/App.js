@@ -148,6 +148,8 @@ import Pages from "./components/websetting/pages.jsx"
 import Addpage from "./components/websetting/Addpage.jsx"
 import Editpage from "./components/websetting/Editpage.jsx"
 import Headerpage from "./components/websetting/Headerpage.jsx"
+import FooterWidget from "./components/websetting/Footerpage.jsx";
+import Appeareance from "./components/websetting/Appearence.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
@@ -449,7 +451,7 @@ function App() {
                 </Route>
               </Route>
 
-
+ 
 
 
 
@@ -531,7 +533,7 @@ function App() {
               <Route path="/admin-settings/features" element={<Adminsetting />} />
               <Route path="/admin-settings/tax" element={<Vaxtax />} />
 
-              <Route path="edittax" element={<Edittax />} />
+              <Route path="edittax/:taxId/:taxName/:taxStatus" element={<Edittax />} />
 
               <Route path="editinhouse" element={<Editinhouse />} />
               <Route path="editattribute" element={<Editattribute />} />
@@ -546,8 +548,11 @@ function App() {
 
               </Route>
 
-              
 
+
+
+              <Route path="/web-settings/footer" element={<FooterWidget />} />
+              <Route path="/admin-settings/apearence" element={<Appeareance />} />
 
             </Routes>
           </div>

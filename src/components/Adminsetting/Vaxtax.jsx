@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, Minus, X } from "lucide-react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import DeleteConfirmation from "../DeleteConfirmation";
+import { AdminSettingsService } from "../../services/adminSettingServices";
 
 
 const TaxTable = () => {
@@ -13,24 +14,33 @@ const TaxTable = () => {
     const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
     const [taxData, setTaxData] = useState([
-        { id: 1, type: "VAT", status: true },
-        { id: 2, type: "GST", status: false },
-        { id: 3, type: "TAX", status: false },
     ]);
+
+    console.log(taxData)
+
+    const [fetchVatTaxes, setFetchVatTaxes] = useState(false)
+
+    useEffect(() => {
+        AdminSettingsService.getVatTax(setTaxData, fetchVatTaxes, setFetchVatTaxes);
+    }, [fetchVatTaxes])
 
     const navigate = useNavigate();
 
-    const handleEdit = (id) => {
-        navigate(`/Edittax`);
+    const handleEdit = (id, name, status) => {
+        navigate(`/Edittax/${id}/${name}/${status}`);
     };
-    
 
-    const toggleStatus = (id) => {
-        setTaxData((prev) =>
-            prev.map((tax) =>
-                tax.id === id ? { ...tax, status: !tax.status } : tax
-            )
-        );
+
+    const toggleStatus = (id, name, status) => {
+        // setTaxData((prev) =>
+        //     prev.map((tax) =>
+        //         tax.id === id ? { ...tax, status: !tax.status } : tax
+        //     )
+        // );
+        AdminSettingsService.updateVatTax(id, name, status)
+        setFetchVatTaxes(true)
+
+        console.log(name, status)
     };
 
     const handleSave = () => {
@@ -39,26 +49,31 @@ const TaxTable = () => {
                 ...prev,
                 { id: prev.length + 1, type: newTaxName, status: true },
             ]);
+
+            AdminSettingsService.createVatTax(newTaxName)
             setNewTaxName("");
             setShowModal(false);
         }
     };
-    const openDeleteConfirmation = (id) => {
-        setAttributeToDeleteId(id);
+    const openDeleteConfirmation = (name) => {
+        setAttributeToDeleteId(name);
         setShowDeleteConfirmation(true);
-      };
-      
-      const closeDeleteConfirmation = () => {
+    };
+
+    const closeDeleteConfirmation = () => {
         setAttributeToDeleteId(null);
         setShowDeleteConfirmation(false);
-      };
-      
-      const handleDelete = (id) => {
+    };
+
+    const handleDelete = (name) => {
         // In a real application, you would make an API call here to delete the attribute
-        console.log(`Deleting attribute with ID: ${id}`);
+        AdminSettingsService.deleteVatTax(name)
+        setFetchVatTaxes(true)
+        // console.log(name);
+
         // After successful deletion, you would likely update the 'attributes' state
         closeDeleteConfirmation();
-      };
+    };
 
 
     return (
@@ -82,16 +97,16 @@ const TaxTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {taxData.map((tax) => (
+                        {taxData.map((tax, index) => (
                             <tr key={tax.id} className="text-center">
-                                <td className="p-3 border">{tax.id}</td>
-                                <td className="p-3 border">{tax.type}</td>
+                                <td className="p-3 border">{index + 1}</td>
+                                <td className="p-3 border">{tax.name}</td>
                                 <td className="p-3 border">
                                     <label className="inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
                                             checked={tax.status}
-                                            onChange={() => toggleStatus(tax.id)}
+                                            onChange={() => toggleStatus(tax._id, tax.name, tax.status)}
                                             className="sr-only peer"
                                         />
                                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 rounded-full peer peer-checked:bg-green-500 relative after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
@@ -100,8 +115,8 @@ const TaxTable = () => {
                                 <td className="p-3 border space-x-2">
                                     <div className="flex justify-left space-x-2 mt-3">
 
-                                        <button className="bg-blue-100 p-2 rounded-full"  onClick={() => handleEdit(tax.id)}><FaEdit className="text-blue-500" /></button>
-                                        <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(tax.id)}/></button>
+                                        <button className="bg-blue-100 p-2 rounded-full" onClick={() => handleEdit(tax._id, tax.name, tax.status)}><FaEdit className="text-blue-500" /></button>
+                                        <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(tax.name)} /></button>
 
                                     </div>
                                 </td>
@@ -139,8 +154,8 @@ const TaxTable = () => {
                                 </div>
                                 <div className="flex justify-left space-x-2 mt-3">
 
-                                    <button className="bg-blue-100 p-2 rounded-full"  onClick={() => handleEdit(tax.id)}><FaEdit className="text-blue-500" /></button>
-                                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500"  onClick={() => openDeleteConfirmation(tax.id)}/></button>
+                                    <button className="bg-blue-100 p-2 rounded-full" onClick={() => handleEdit(tax.id)}><FaEdit className="text-blue-500" /></button>
+                                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(tax.id)} /></button>
 
                                 </div>
                             </div>
@@ -195,13 +210,13 @@ const TaxTable = () => {
                 </div>
             )}
 
-{/* Render the Delete Confirmation Modal */}
+            {/* Render the Delete Confirmation Modal */}
             {showDeleteConfirmation && (
                 <DeleteConfirmation
                     isOpen={showDeleteConfirmation}
-                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onConfirm={() => { handleDelete(attributeToDeleteId) }}
                     onCancel={closeDeleteConfirmation}
-                   
+
                 />
             )}
         </div>
