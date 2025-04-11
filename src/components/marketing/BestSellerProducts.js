@@ -4,8 +4,6 @@ import ProductTable from "./ProductTable";
 import apiInstance from "../../utils/axios";
 
 
-import apiInstance from "../../utils/axios"
-
 const BestSellerProducts = () => {
  const [currentPage, setCurrentPage] = useState(1);
   const [sellerProducts, setSellerProducts] = useState([]);

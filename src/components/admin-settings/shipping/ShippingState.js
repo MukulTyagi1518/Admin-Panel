@@ -127,8 +127,6 @@ const ShippingState = () => {
   const [newState, setNewState] = useState({ name: '', country: 'Afghanistan' });
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-=======
   // Fetch states on component mount
   useEffect(() => {
     const fetchStates = async () => {
@@ -161,7 +159,6 @@ const ShippingState = () => {
   
 
   // Handle toggle for Show/Hide
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
   const handleToggle = (id) => {
     setStates(states.map(state =>
       state.id === id ? { ...state, showHide: !state.showHide } : state
@@ -193,10 +190,7 @@ const ShippingState = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
   // Navigate to the review/edit page
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
   const handlereview = (id) => {
     navigate(`/admin-settings/shipping/state/edit/${id}`);
   };
@@ -231,17 +225,8 @@ const ShippingState = () => {
                   <td className="p-2">{state.name}</td>
                   <td className="p-2">{state.country}</td>
                   <td className="p-2">
-<<<<<<< HEAD
-  <Switch
-    value={state.showHide}
-    onChangeFunc={() => handleToggle(state.id)}
-  />
-</td>
-
-=======
                     <Switch checked={state.showHide} onChange={() => handleToggle(state.id)} />
                   </td>
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
                   <td className="p-2">
                     <button className="text-blue-500">
                       <FiEdit onClick={() => handlereview(state.id)} />
@@ -253,12 +238,7 @@ const ShippingState = () => {
           </table>
         </div>
 
-<<<<<<< HEAD
-        {/* Add New State Section (Responsive: Positioned below the table on smaller screens) */}
-        <div className="w-full md:w-1/3 p-4 bg-gray-100 rounded mt-6 md:mt-0">
-=======
         <div className="w-full md:w-1/3 p-4 bg-gray-100 rounded">
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
           <h2 className="text-xl font-bold mb-4">Add New State</h2>
           <div className="flex flex-col space-y-2">
             <label htmlFor="name">Name</label>
@@ -296,7 +276,3 @@ const ShippingState = () => {
 };
 
 export default ShippingState;
-<<<<<<< HEAD
-=======
-
->>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
