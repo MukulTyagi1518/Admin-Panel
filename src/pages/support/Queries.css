@@ -37,8 +37,8 @@
 /* 🔵 Plus icon - Hidden by default */
 .expand-btn {
   display: none;
-  background-color: #9dc3ec;
-  color: white;
+ 
+  color: #000;
   border: none;
   padding: 0px 6px;
   font-size: 16px;

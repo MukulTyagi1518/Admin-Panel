@@ -146,51 +146,45 @@ export default function PreorderProducts() {
             <div className="poplh1">
               <div className="poph1menuleft">
                 <button
-                  className={`poph1menuitem ${
-                    activeFilter === "All" ? "popActive" : ""
-                  }`}
+                  className={`poph1menuitem ${activeFilter === "All" ? "popActive" : ""
+                    }`}
                   onClick={() => setActiveFilter("All")}
                 >
                   All ({products.length})
                 </button>
                 <button
-                  className={`poph1menuitem ${
-                    activeFilter === "Inhouse" ? "popActive" : ""
-                  }`}
+                  className={`poph1menuitem ${activeFilter === "Inhouse" ? "popActive" : ""
+                    }`}
                   onClick={() => setActiveFilter("Inhouse")}
                 >
                   Inhouse (
                   {products.filter((p) => p.type === "In-House").length})
                 </button>
                 <button
-                  className={`poph1menuitem ${
-                    activeFilter === "Sellers" ? "popActive" : ""
-                  }`}
+                  className={`poph1menuitem ${activeFilter === "Sellers" ? "popActive" : ""
+                    }`}
                   onClick={() => setActiveFilter("Sellers")}
                 >
                   Sellers (
                   {products.filter((p) => p.type !== "In-House").length})
                 </button>
                 <button
-                  className={`poph1menuitem ${
-                    activeFilter === "Published" ? "popActive" : ""
-                  }`}
+                  className={`poph1menuitem ${activeFilter === "Published" ? "popActive" : ""
+                    }`}
                   onClick={() => setActiveFilter("Published")}
                 >
                   Published ({products.filter((p) => p.publish).length})
                 </button>
                 <button
-                  className={`poph1menuitem ${
-                    activeFilter === "Unpublished" ? "popActive" : ""
-                  }`}
+                  className={`poph1menuitem ${activeFilter === "Unpublished" ? "popActive" : ""
+                    }`}
                   onClick={() => setActiveFilter("Unpublished")}
                 >
                   Unpublished ({products.filter((p) => !p.publish).length})
                 </button>
                 <button
-                  className={`poph1menuitem ${
-                    activeFilter === "Discounted" ? "popActive" : ""
-                  }`}
+                  className={`poph1menuitem ${activeFilter === "Discounted" ? "popActive" : ""
+                    }`}
                   onClick={() => setActiveFilter("Discounted")}
                 >
                   Discounted (
@@ -303,11 +297,10 @@ export default function PreorderProducts() {
                         </td>
                         <td className="responsive-hidden availabilityBox">
                           <p
-                            className={`availability ${
-                              product.availability === "Available Now"
-                                ? "available"
-                                : "not-available"
-                            }`}
+                            className={`availability ${product.availability === "Available Now"
+                              ? "available"
+                              : "not-available"
+                              }`}
                           >
                             {product.availability}
                           </p>
@@ -327,25 +320,28 @@ export default function PreorderProducts() {
                             <div className="toggle-item">
                               <span>Publish</span>
                               <Switch
-                                checked={product.publish}
-                                onChange={() =>
+                                value={product.publish}
+                                onChangeFunc={() =>
                                   toggleProductStatus(product.id, "publish")
                                 }
                               />
+
                             </div>
                             <div className="toggle-item">
                               <span>Feature</span>
                               <Switch
-                                checked={product.featured}
-                                onChange={() =>
+                                value={product.featured}
+                                onChangeFunc={() =>
                                   toggleProductStatus(product.id, "featured")
                                 }
                               />
+
+
                             </div>
                           </div>
                         </td>
                         <td>
-                          <div className="preOrderActions">
+                          <div className="preOrderActions1 flex flex-row gap-[.3cm]">
                             <div className="action">
                               <EyeIcon size={18} color="blue" />
                             </div>
@@ -359,48 +355,75 @@ export default function PreorderProducts() {
                         <tr className="responsive-expanded">
                           <td colSpan="10">
                             <div className="expanded-details">
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>Product Details</th>
-                                    <th>Price</th>
-                                    <th>Discount</th>
-                                    <th>Availability</th>
-                                    <th>Orders</th>
-                                    <th>Status</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      {product.name}, {product.category},{" "}
-                                      {product.type}, {product.productCreated}
-                                    </td>
-                                    <td>
-                                      {product.price} /pc, Pre Payment Needed:{" "}
-                                      {product.prePaymentNeeded ? "Yes" : "No"}
-                                    </td>
-                                    <td>{product.discount}</td>
-                                    <td>{product.availability}</td>
-                                    <td>
-                                      Preorder: {product.preorder}, Final Order:{" "}
-                                      {product.finalOrder}
-                                    </td>
-                                    <td>
-                                      <div className="toggle-buttons">
-                                        <div className="toggle-item">
-                                          <span>Publish</span>
-                                          <Switch />
-                                        </div>
-                                        <div className="toggle-item">
-                                          <span>Feature</span>
-                                          <Switch />
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                              <div className="detail-item">
+                                <span className="detail-label">Product Details:</span>
+                                <span className="detail-value">
+                                  {product.name}, {product.category}, {product.type}, {product.productCreated}
+                                </span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Price:</span>
+                                <span className="detail-value">
+                                  {product.price} /pc, Pre Payment Needed: {product.prePaymentNeeded ? "Yes" : "No"}
+                                </span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Discount:</span>
+                                <span className="detail-value">{product.discount}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Availability:</span>
+                                <span className="detail-value">{product.availability}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Orders:</span>
+                                <span className="detail-value">
+                                  Preorder: {product.preorder}, Final Order: {product.finalOrder}
+                                </span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Status:</span>
+                                <div className="toggle-buttons">
+                                  <div className="toggle-item">
+                                    <span>Publish</span>
+                                    <Switch
+                                      value={product.publish}
+                                      onChangeFunc={() =>
+                                        toggleProductStatus(product.id, "publish")
+                                      }
+                                    />
+                                  </div>
+                                  <div className="toggle-item">
+                                    <span>Feature</span>
+                                    <Switch
+                                      value={product.featured}
+                                      onChangeFunc={() =>
+                                        toggleProductStatus(product.id, "featured")
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Seller:</span>
+                                <span className="detail-value">{product.seller}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Min Purchase Qty:</span>
+                                <span className="detail-value">{product.MinPurchaseQty} pc</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Refund:</span>
+                                <span className="detail-value">{product.refund}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Rating:</span>
+                                <span className="detail-value">{product.rating}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Stock:</span>
+                                <span className="detail-value">{product.stock}</span>
+                              </div>
                             </div>
                           </td>
                         </tr>

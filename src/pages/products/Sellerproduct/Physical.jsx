@@ -8,8 +8,8 @@ import FilterComponent from "../../../components/FilterComponent";
 const ProductTable = () => {
   const navigate = useNavigate();
   const handleEdit = (id) => {
-    navigate(`/editinhouse`); 
-};
+    navigate(`/editinhouse/${id}`); // Corrected navigation path
+  };
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [filters, setFilters] = useState({
@@ -24,7 +24,7 @@ const ProductTable = () => {
       id: 1,
       name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
       seller: "Filon Asset Store",
-      image: "https://via.placeholder.com/50",
+      image: "https://m.media-amazon.com/images/I/61nGyXI56mL.jpg",
       sales: 16,
       price: 559.99,
       rating: 5,
@@ -39,7 +39,7 @@ const ProductTable = () => {
       id: 2,
       name: "Lenovo V30a Business All-in-One Desktop",
       seller: "Filon Asset Store",
-      image: "https://via.placeholder.com/50",
+      image: "https://m.media-amazon.com/images/I/61nGyXI56mL.jpg",
       sales: 9,
       price: 579.0,
       rating: 4,
@@ -69,7 +69,7 @@ const ProductTable = () => {
   };
 
   const handleBulkAction = (action) => {
-    if (action === "delete"||"Delete Selected") {
+    if (action === "delete" || action === "Delete Selected") {
       setProducts((prevProducts) =>
         prevProducts.filter((product) => !selectedProducts.includes(product.id))
       );
@@ -111,11 +111,9 @@ const ProductTable = () => {
   });
 
   const toggleProductStatus = (productId, field) => {
-    setProducts(prevProducts =>
-      prevProducts.map(product =>
-        product.id === productId
-          ? { ...product, [field]: !product[field] }
-          : product
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId ? { ...product, [field]: !product[field] } : product
       )
     );
   };
@@ -162,7 +160,7 @@ const ProductTable = () => {
         }}
         currentFilters={filters}
         onFilterChange={(filterType, value) => {
-          setFilters(prev => ({ ...prev, [filterType]: value }));
+          setFilters((prev) => ({ ...prev, [filterType]: value }));
         }}
         onSearch={handleSearch}
         onBulkAction={handleBulkAction}
@@ -184,7 +182,7 @@ const ProductTable = () => {
                   onChange={(e) => handleSelectAll(e.target.checked)}
                 />
               </th>
-              <th className="p-3">Name</th>
+              <th className="p-3 ">Name</th>
               <th className="p-3">Added By</th>
               <th className="p-3">Info</th>
               <th className="p-3">Total Stock</th>
@@ -199,14 +197,14 @@ const ProductTable = () => {
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <tr key={product.id} className="border-b">
-                  <td className="p-3">
+                  <td className="p-3 border-0">
                     <input
                       type="checkbox"
                       checked={selectedProducts.includes(product.id)}
                       onChange={() => handleSelectProduct(product.id)}
                     />
                   </td>
-                  <td className="p-3 flex items-center space-x-2">
+                  <td className="flex items-center space-x-2">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -240,10 +238,12 @@ const ProductTable = () => {
                   {["todayDeal", "published", "approved", "featured"].map(
                     (field) => (
                       <td className="p-3" key={field}>
+                         <label className="switch">
                         <Switch
-                          checked={product[field]}
-                          onChange={() => toggleProductStatus(product.id, field)}
+                          value={product[field]}
+                          onChangeFunc={() => toggleProductStatus(product.id, field)}
                         />
+                        </label>
                       </td>
                     )
                   )}
@@ -257,7 +257,7 @@ const ProductTable = () => {
                     <button
                       className="bg-blue-100 p-2 rounded-full hover:bg-blue-200 transition"
                       title="Edit"
-                      onClick={() => navigate(`/editinhouse/${product.id}`)}
+                      onClick={() => handleEdit(product.id)}
                     >
                       <FaEdit className="text-blue-500" />
                     </button>
@@ -290,48 +290,88 @@ const ProductTable = () => {
           </tbody>
         </table>
         <div className="md:hidden">
+        <div className="flex items-center justify-between bg-gray-100 px-4 py-2 rounded-lg mb-2">
+    <div className="flex items-center space-x-2">
+      <input
+        type="checkbox"
+        checked={selectedProducts.length === products.length}
+        onChange={handleSelectAll}
+        className="mr-5"
+      />
+      <span className="font-medium ml-4">Name</span>
+    </div>
+  </div>
+
+
+  
+
           {products.map((product) => (
             <div key={product.id} className="border p-3 mb-3 rounded-lg">
-              <div className="flex justify-between items-center">
+              <div className="flex  items-center">
                 <button onClick={() => toggleExpand(product.id)} className="p-2">
-                  {product.expanded ? <FaMinus /> : <FaPlus />}
+                  {product.expanded ? "-" : "+"}
                 </button>
                 <div className="flex items-center space-x-2">
-                  <img src={product.image} alt={product.name} className="w-10 h-10" />
+                  <img src={product.image} alt={product.name} className="w-10 h-10 mt-5" />
                   <span>{product.name}</span>
                 </div>
               </div>
               {product.expanded && (
-                <div className="mt-2 space-y-2">
-                  <div className="flex justify-between"><strong>Added By:</strong><span>{product.seller}</span></div>
-                  <div className="flex justify-between"><strong>Sales:</strong><span>{product.sales} times</span></div>
-                  <div className="flex justify-between"><strong>Price:</strong><span>${product.price.toFixed(2)}</span></div>
-                  <div className="flex justify-between"><strong>Rating:</strong><span>{product.rating}</span></div>
-                  <div className="flex justify-between">
-                    <strong>Stock:</strong>
-                    <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full">{product.stock}</span>
+                <div className="mt-5 space-y-2 bg-gray">
+                  <div className="flex ">
+                    Added By:
+                    <span className="ml-3">{product.seller}</span>
+                  </div>
+                  <div className="flex ">
+                    Sales:
+                    <span  className="ml-3">{product.sales} times</span>
+                  </div>
+                  <div className="flex ">
+                    Price:
+                    <span  className="ml-3">${product.price.toFixed(2)}</span>
+                  </div>
+                  <div className="flex ">
+                    Rating:
+                    <span  className="ml-3">{product.rating}</span>
+                  </div>
+                  <div className="flex ">
+                    Stock:
+                    <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full ml-3">
+                      {product.stock}
+                    </span>
                   </div>
                   {["todayDeal", "published", "approved", "featured"].map((field) => (
-                    <div className="flex justify-between" key={field}>
-                      <strong>{field}</strong>
-                      <label className="switch">
-                        <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                        <span className="slider"></span>
+                    <div className="flex " key={field}>
+                     {field}
+                      <label className="switch ml-3 mt-1">
+                      <Switch
+                          value={product[field]}
+                          onChangeFunc={() => toggleProductStatus(product.id, field)}
+                        />
+                       
                       </label>
                     </div>
                   ))}
                   <div className="flex justify-left space-x-2 mt-3">
-                    <button className="bg-green-100 p-2 rounded-full"><FaEye className="text-green-500" /></button>
-                    <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
-                    <button className="bg-yellow-100 p-2 rounded-full"><HiOutlineDuplicate className="text-yellow-500" /></button>
+                    Options:
+                    <button className="bg-green-100 p-2 rounded-full ml-2 mt-2">
+                      <FaEye className="text-green-500" />
+                    </button>
+                    <button className="bg-blue-100 p-2 rounded-full">
+                      <FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" />
+                    </button>
+                    <button className="bg-red-100 p-2 rounded-full">
+                      <FaTrash className="text-red-500" />
+                    </button>
+                    <button className="bg-yellow-100 p-2 rounded-full">
+                      <HiOutlineDuplicate className="text-yellow-500" />
+                    </button>
                   </div>
                 </div>
               )}
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );

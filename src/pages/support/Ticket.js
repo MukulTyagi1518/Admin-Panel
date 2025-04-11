@@ -70,7 +70,7 @@ const Ticket = () => {
               <tr>
                 <td className="hide-on-large">
                   <button className="toggle-btn" onClick={() => toggleRow(ticket.id)}>
-                    {expandedRows[ticket.id] ? <FaPlus /> : <FaPlus />}
+                    {expandedRows[ticket.id] ? "+" :  "-"}
                   </button>
                 </td>
                 <td className="hide-on-small">{ticket.id}</td>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Download, Plus, Star } from "lucide-react";
 import ProductTable from "./ProductTable";
+import apiInstance from "../../utils/axios";
+
 
 import apiInstance from "../../utils/axios"
 

@@ -112,7 +112,7 @@ export default function PreOrderFaq() {
         },
     ]
     return (
-        <div className="PreOrderFaq-whole">
+        <div className="PreOrderFaq ">
             <div className="product-table">
                 <p className="customersText">
                     Add new wholesale product
@@ -388,53 +388,38 @@ export default function PreOrderFaq() {
                         </div>
                     </div>
                     {/* refund */}
-                    <div className="w-full max-w-4xl mx-auto border border-gray-300 rounded-md p-4 mt-4">
-                        <h3 className="text-lg font-semibold text-gray-800">Refund</h3>
-                        <div className="border-b border-gray-200 my-2"></div>
-
-                        {/* Toggle Section */}
-                        <div className="flex items-center justify-between mt-2">
-                            <span className="text-sm text-gray-700">Refundable?</span>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={isRefundable}
-                                    onChange={() => setIsRefundable(!isRefundable)}
-                                    className="sr-only peer"
-                                />
-                                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 transition-all duration-300"></div>
-                                <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 peer-checked:translate-x-full"></div>
-                            </label>
+                    <div className="refund-container">
+                        <h3 className="refund-title">Refund</h3>
+                        <div className="seo-divider"></div>
+                        <div className="refund-option">
+                            <span>Refundable?</span>
+                            <Switch
+                                value={isRefundable}
+                                onChangeFunc={() => setIsRefundable(!isRefundable)}
+                            />
                         </div>
 
                         {/* Refund Note */}
                         {isRefundable && (
-                            <div className="mt-4">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Refund Note</label>
-                                <div className="w-full px-4 py-2 border text-center border-gray-300 rounded-md text-sm text-gray-600 bg-gray-50 hover:bg-gray-100 cursor-pointer">
+                            <div className="refund-note mt-4">
+                                <label className="note-label block mb-1 font-medium">Refund Note</label>
+                                <div className="note-box p-2 border border-gray-300 rounded-md cursor-pointer">
                                     + Select Refund Note
                                 </div>
                             </div>
                         )}
                     </div>
                     {/* warrenty */}
-                    <div className="w-full max-w-4xl  mx-auto border border-gray-300 rounded-md p-4 mt-4">
-                        <h3 className="text-lg font-semibold text-gray-800">Warranty</h3>
-                        <div className="border-b border-gray-200 my-2"></div>
+                    <div className="warranty-container-new">
+                        <h3 className="warranty-title">Warranty</h3>
+                        <div className="seo-divider"></div>
+                        <div className="warranty-option">
+                            <span>Warranty</span>
+                            <Switch
+                                value={isWarranty}
+                                onChangeFunc={() => setIsWarranty(!isWarranty)}
+                            />
 
-                        {/* Toggle Switch */}
-                        <div className="flex items-center justify-between mt-2">
-                            <span className="text-sm text-gray-700">Warranty</span>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={isWarranty}
-                                    onChange={() => setIsWarranty(!isWarranty)}
-                                    className="sr-only peer"
-                                />
-                                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-500 transition-all duration-300"></div>
-                                <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 peer-checked:translate-x-full"></div>
-                            </label>
                         </div>
 
                         {/* Conditional Warranty Inputs */}

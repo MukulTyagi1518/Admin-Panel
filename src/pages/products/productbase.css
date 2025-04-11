@@ -20,11 +20,13 @@
     justify-content: space-between; /* Aligns "Category" left and input right */
     align-items: center;
     margin-bottom: 15px;
+   
   }
   
   .search-bar h5 {
     margin: 0;
     font-size: 16px;
+    
   }
   
   .search-bar input {

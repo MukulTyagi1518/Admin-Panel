@@ -92,7 +92,7 @@ const ShippingZone = () => {
                     {zone.name}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <Switch isChecked={zone.status} onToggle={() => handleStatusChange(zone.id)} />
+                    <Switch value={zone.status} onChangeFunc={() => handleStatusChange(zone.id)} />
                   </td>
                   {/* <td className="px-3 py-3 whitespace-nowrap text-right text-sm font-medium">
                     <button

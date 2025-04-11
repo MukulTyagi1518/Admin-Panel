@@ -34,7 +34,9 @@
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
-
+.seller-dropdown{
+    background-color: #fff;
+}
 .filter-dropdown,
 .filter-input,
 .seller-dropdown {
