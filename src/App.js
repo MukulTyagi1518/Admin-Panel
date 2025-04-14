@@ -144,6 +144,12 @@ import Editattribute from "./components/Edit/Editattribute.jsx"
 import Adminsetting from "./components/Adminsetting/Adminsetting.jsx"
 import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
 import Edittax from "./components/Adminsetting/Edittax.jsx"
+import Pages from "./components/websetting/pages.jsx"
+import Addpage from "./components/websetting/Addpage.jsx"
+import Editpage from "./components/websetting/Editpage.jsx"
+import Headerpage from "./components/websetting/Headerpage.jsx"
+import FooterWidget from "./components/websetting/Footerpage.jsx";
+import Appeareance from "./components/websetting/Appearence.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
@@ -151,7 +157,6 @@ import NotificationTypes from "./components/marketing/Notification/NotificationT
 import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
 import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
 import Footer from "./components/webSettings/footerSettings/Footer.js";
-import Pages from "./components/webSettings/page/Pages.js";
 import AddNewFaq from "./pages/products/AddNewFaq.js";
 
 function App() {
@@ -232,8 +237,6 @@ function App() {
                   <Route path="shipping" element={<Shipping />} />
                   <Route path="warranty" element={<Warrenty />} />
 
-
-
                   <Route
                     path="frequently-bought"
                     element={<FrequentlyBought />}
@@ -256,8 +259,8 @@ function App() {
                 <Route path="/products/addnewbrand" element={<AddNewBrand />} />
                 <Route path="/products/addnewcolor" element={<AddNewColor />} />
                 <Route path="/products/settings" element={<AttributeDetail />} />
-                <Route path="/products/addnewfaq" element={<AddNewFaq/>} />
-                
+                <Route path="/products/addnewfaq" element={<AddNewFaq />} />
+
 
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
@@ -535,19 +538,26 @@ function App() {
 
 
               <Route path='/web-settings' >
-                <Route path='header' element={<HeaderDetails />} />
+                <Route path='header' element={<Headerpage />} />
                 <Route path='footer' element={<Footer />} />
                 <Route path='page' element={<Pages />} />
+                <Route path="addpage" element={<Addpage />} />
+                <Route path="editaddpage" element={<Editpage />} />
 
               </Route>
 
+              
+
+
+              <Route path="/web-settings/footer" element={<FooterWidget />} />
+              <Route path="/admin-settings/apearence" element={<Appeareance />} />
 
             </Routes>
           </div>
         </div >
       </div >
     </>
-  ); 
+  );
 }
 
 export default App;

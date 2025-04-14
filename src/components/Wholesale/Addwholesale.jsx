@@ -2,13 +2,40 @@ import { Delete, Edit, Trash } from "lucide-react"
 import "./Addwholesale.css"
 import { MdOutlineSettings } from "react-icons/md"
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useProductContext } from "../../productContex";
 import Switch from "../Switch";
 
 
 export default function PreOrderFaq() {
+
+    const [quantity, setQuantity] = React.useState(1);
+
+    const [showQuantity, setShowQuantity] = useState(true);
+    const [showTextOnly, setShowTextOnly] = useState(false);
+    const [hideStock, setHideStock] = useState(false);
+
+    const [status, setStatus] = useState(true);
+
+    const [showShipping, setShowShipping] = useState(true);
+    const [showRate, setShowRate] = useState(true);
+    const [showMulitiply, setShowMulitiply] = useState(true);
+    const [showStatus, setShowStatus] = useState(true);
+    const [showFeatured, setShowFeatured] = useState(true);
+    const [showDeal, setShowDeal] = useState(true);
+    const [tax, setTax] = useState("");
+    const [vat, setVat] = useState("");
+    const [taxType, setTaxType] = useState("Flat");
+    const [vatType, setVatType] = useState("Flat");
+
+    const [flashTitle, setFlashTitle] = useState("");
+    const [discount, setDiscount] = useState(0);
+    const [discountType, setDiscountType] = useState("");
+    const [shippingDays, setShippingDays] = useState("");
+
+    const [selectedOption, setSelectedOption] = useState("product");
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     const navigate = useNavigate();
 
@@ -91,13 +118,14 @@ export default function PreOrderFaq() {
                     Add new wholesale product
                 </p>
             </div>
-            <div className="preOrderFaqBox border border-black  ">
+            <div className="preOrderFaqBox">
                 <div className="procol">
                     <div className="preOrderFaqLeft-new">
                         <div className="preOrderLeftUpper-new">
-                            <p className="allFaq">All Colors</p>
+                            <p className="allFaq">Product Information</p>
                             {/* <input type="text" placeholder="Type to search...." className="searchFaq" /> */}
                         </div>
+                        <br></br>
                         <div className="seo-divider"></div>
                         <div className="preOrderLeftLower">
                             <form className="addwhole-form">
@@ -371,6 +399,7 @@ export default function PreOrderFaq() {
                             />
                         </div>
 
+                        {/* Refund Note */}
                         {isRefundable && (
                             <div className="refund-note mt-4">
                                 <label className="note-label block mb-1 font-medium">Refund Note</label>
@@ -393,13 +422,16 @@ export default function PreOrderFaq() {
 
                         </div>
 
+                        {/* Conditional Warranty Inputs */}
                         {isWarranty && (
                             <>
-                                <div className="warranty-select">
-                                    <label>Warranty Type</label>
+                                {/* Warranty Type Dropdown */}
+                                <div className="mt-4">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Warranty Type</label>
                                     <select
                                         value={warrantyType}
                                         onChange={(e) => setWarrantyType(e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 bg-white focus:outline-none"
                                     >
                                         <option value="">Select Warranty</option>
                                         <option value="1 Year">1 Year</option>
@@ -408,25 +440,87 @@ export default function PreOrderFaq() {
                                     </select>
                                 </div>
 
-                                <div className="warranty-note">
-                                    <label className="note-label">Warranty Note</label>
-                                    <div className="note-box">+ Select Warranty Note</div>
+                                {/* Warranty Note */}
+                                <div className="mt-4">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Warranty Note</label>
+                                    <div className="w-full px-4 py-2  border border-gray-300 text-center rounded-md text-sm text-gray-600 bg-gray-50 hover:bg-gray-100 cursor-pointer">
+                                        + Select Warranty Note
+                                    </div>
                                 </div>
                             </>
                         )}
                     </div>
+
                     {/* Frequently */}
+                    <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-md p-4 mt-6 shadow-sm">
+                        <h3 className="text-lg font-semibold text-gray-800">Frequently Bought</h3>
+                        <div className="border-b border-gray-200 my-3"></div>
+
+                        {/* Radio Options */}
+                        <div className="flex flex-wrap gap-6 mt-3 text-sm font-medium text-gray-700">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="frequent"
+                                    value="product"
+                                    checked={selectedOption === "product"}
+                                    onChange={() => setSelectedOption("product")}
+                                    className="accent-blue-600 w-4 h-4"
+                                />
+                                <span className={selectedOption === "product" ? "font-semibold" : ""}>
+                                    Select Product
+                                </span>
+                            </label>
+
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="frequent"
+                                    value="category"
+                                    checked={selectedOption === "category"}
+                                    onChange={() => setSelectedOption("category")}
+                                    className="accent-blue-600 w-4 h-4"
+                                />
+                                <span className={selectedOption === "category" ? " font-semibold" : ""}>
+                                    Select Category
+                                </span>
+                            </label>
+                        </div>
+
+                        {/* Category Dropdown */}
+                        {selectedOption === "category" && (
+                            <div className="mt-5 flex flex-wrap items-center gap-3">
+                                <label className="text-sm text-gray-700 font-medium">Category</label>
+                                <select
+                                    value={selectedCategory}
+                                    onChange={(e) => setSelectedCategory(e.target.value)}
+                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                >
+                                    <option value="">Select Category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="grocery">Grocery</option>
+                                    <option value="books">Books</option>
+                                </select>
+                            </div>
+                        )}
+
+                        {/* Add More Box - Show only for 'product' selection */}
+                        {selectedOption === "product" && (
+                            <div className="mt-6">
+                                <div className="w-full border border-dashed border-gray-300 rounded-md py-4 text-center text-gray-600 text-sm hover:bg-gray-50 cursor-pointer transition">
+                                    + Add More
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-
-
-
-
-                <div className="prerow border border-black  ">
-                    <div className="preOrderFaqRight-new">
+                <div className="prerow   ">
+                    <div className="preOrderFaqRight-new2">
 
                         <div className="preOrderFaqRightHead">
-                            <p className="allFaq">Add new Color</p>
+                            <p className="allFaq">Product category</p>
                         </div>
 
                         <div className="faqForm">
@@ -448,42 +542,300 @@ export default function PreOrderFaq() {
 
                         <div className="faqForm">
                             <div className=" flex items-center justify-between  w-full">
-                                <label className="text-black w-fit font-medium ">Enable Shipping</label>
-                                <div className="ml-auto ">
-                                    <label className="switch">
-                                        <input type="checkbox" />
-                                        <span className="slider"></span>
-                                    </label>
-                                </div>
+                                <label className="text-black w-fit font-normal">Free Shipping</label>
+                                <button
+                                    onClick={() => setShowShipping(!showShipping)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showShipping ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showShipping ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
                             </div>
                             <div className=" flex items-center justify-between w-full">
-                                <label className="text-black font-medium">Enable Shipping</label>
-                                <div className="ml-auto">
-                                    <label className="switch">
-                                        <input type="checkbox" />
-                                        <span className="slider"></span>
-                                    </label>
-                                </div>
+                                <label className="text-black font-normal">Flat Rate</label>
+                                <button
+                                    onClick={() => setShowRate(!showRate)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showRate ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showRate ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
                             </div>
                             <div className=" flex items-center justify-between w-full">
-                                <label className="text-black font-medium">Enable Shipping</label>
-                                <div className="ml-auto">
-                                    <label className="switch">
-                                        <input type="checkbox" />
-                                        <span className="slider"></span>
-                                    </label>
-                                </div>
+                                <label className="text-black font-normal">Is Product Quantity Mulitiply</label>
+                                <button
+                                    onClick={() => setShowMulitiply(!showMulitiply)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showMulitiply ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showMulitiply ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-4 ">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Low Stock Quantity Warning</h2>
+
+                        <div className="mt-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                                className="w-full px-4 py-2 pb-4 border border-gray-300 rounded-md focus:outline-none text-gray-700"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6  pb-8">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
+                            Stock Visibility State
+                        </h2>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-700">Show Stock Quantity</span>
+                                <button
+                                    onClick={() => setShowQuantity(!showQuantity)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showQuantity ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showQuantity ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-700">Show Stock With Text Only</span>
+                                <button
+                                    onClick={() => setShowTextOnly(!showTextOnly)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showTextOnly ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showTextOnly ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-700">Hide Stock</span>
+                                <button
+                                    onClick={() => setHideStock(!hideStock)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${hideStock ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${hideStock ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
+                            Cash On Delivery
+                        </h2>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-700">Status</span>
+                                <button
+                                    onClick={() => setShowStatus(!showStatus)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showStatus ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showStatus ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
+                            Featured
+                        </h2>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-700">Status</span>
+                                <button
+                                    onClick={() => setShowFeatured(!showFeatured)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showFeatured ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showFeatured ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
+                            Todays Deal
+                        </h2>
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-gray-700">Status</span>
+                                <button
+                                    onClick={() => setShowDeal(!showDeal)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showDeal ? "bg-green-500" : "bg-gray-300"
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showDeal ? "translate-x-6" : "translate-x-1"
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="w-full max-w-xl mx-auto  border border-gray-300 rounded-md p-4 mt-4 pb-8">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Flash Deal</h2>
+
+                        {/* Flash Title */}
+                        <div className="mt-4">
+                            <label className="block text-sm  font-normal text-gray-700 mb-1">Add To Flash</label>
+                            <select
+                                value={flashTitle}
+                                onChange={(e) => setFlashTitle(e.target.value)}
+                                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-0 focus:border-transparent"
+                            >
+                                <option value="">Choose Flash Title</option>
+                                <option value="flash1">End of Season</option>
+                                <option value="flash2">Winter Sale</option>
+                                <option value="flash2">Electronics</option>
+                                <option value="flash2">Flash Deal</option>
+                                <option value="flash2">Flash Sale</option>
+                            </select>
+                        </div>
+
+                        {/* Discount Input */}
+                        <div className="mt-4">
+                            <label className="block text-sm font-normal text-gray-700 mb-1">Discount</label>
+                            <input
+                                type="number"
+                                value={discount}
+                                onChange={(e) => setDiscount(e.target.value)}
+                                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-0 focus:border-transparent"
+                            />
+                        </div>
+
+                        {/* Discount Type Dropdown */}
+                        <div className="mt-4">
+                            <label className="block text-sm font-normal text-gray-700 mb-2">Discount Type</label>
+                            <select
+                                value={discountType}
+                                onChange={(e) => setDiscountType(e.target.value)}
+                                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-0 focus:border-transparent"
+                            >
+                                <option value="">Choose Discount Type</option>
+                                <option value="flat">Flat</option>
+                                <option value="percent">Percent</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div className="w-full max-w-xl mx-auto border border-gray-300 rounded-md p-4 mt-4">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Estimate Shipping Time</h2>
+
+                        <div className="mt-4">
+                            <label className="block text-sm font-normal text-gray-700 mb-1">Shipping Days</label>
+                            <div className="flex rounded-md border border-gray-300 overflow-hidden">
+                                <input
+                                    type="number"
+                                    placeholder="Shipping Days"
+                                    value={shippingDays}
+                                    onChange={(e) => setShippingDays(e.target.value)}
+                                    className="w-full px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-0 focus:border-transparent"
+                                />
+                                <span className="inline-flex items-center px-4 text-sm text-gray-500 bg-gray-100 border-l border-gray-300">
+                                    Days
+                                </span>
                             </div>
                         </div>
                     </div>
 
+                    <div className="w-full max-w-xl mx-auto border border-gray-300 rounded-md p-4 mt-4">
+                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Vat & TAX</h2>
 
+                        {/* Tax Section */}
+                        <div className="mt-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Tax</label>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <input
+                                    type="number"
+                                    placeholder="0"
+                                    value={tax}
+                                    onChange={(e) => setTax(e.target.value)}
+                                    className="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300"
+                                />
+                                <select
+                                    value={taxType}
+                                    onChange={(e) => setTaxType(e.target.value)}
+                                    className="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300"
+                                >
+                                    <option>Flat</option>
+                                    <option>Percent</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* VAT Section */}
+                        <div className="mt-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Vat</label>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <input
+                                    type="number"
+                                    placeholder="0"
+                                    value={vat}
+                                    onChange={(e) => setVat(e.target.value)}
+                                    className="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300"
+                                />
+                                <select
+                                    value={vatType}
+                                    onChange={(e) => setVatType(e.target.value)}
+                                    className="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300"
+                                >
+                                    <option>Flat</option>
+                                    <option>Percent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-
-
-
             </div>
+            <div className="button-group">
+                      <button className="btn-btn-gray">Save & Unpublish</button>
+                      <Link to='/products/create/add' >
+                        <button className="btn-btn-green">Save & Publish</button>
+                      </Link>
+                    </div>
         </div>
     )
 }

@@ -327,8 +327,8 @@ const handleDelete = (id) => {
   return (
     <div className="product-container1">
       <div className="header">
-        <div>All Products</div>
-        <button className="add-btn">Add New Product</button>
+        <div>All allProducts</div>
+        <button className="add-btn" onClick={() => navigate("/products/create")}>Add New product</button>
       </div>
 
       {/* Filter Options */}

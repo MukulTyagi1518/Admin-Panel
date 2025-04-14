@@ -3,12 +3,15 @@
 
 import React, { useState } from "react";
 import "./ReviewDetail.css";
+import { useNavigate } from "react-router-dom";
 
 function ReviewDetail() {
   const [activeTab, setActiveTab] = useState("reviews");
   const [isPublished, setIsPublished] = useState(true); // Switch state
   const [selectedState, setSelectedState] = useState(""); // State filter
   const [selectedDistrict, setSelectedDistrict] = useState(""); // District filter
+
+   const navigate = useNavigate();
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -62,7 +65,7 @@ function ReviewDetail() {
     <div className="review-detail-container p-5">
       <div className="review-header">
         <h2>Detail Reviews</h2>
-        <button className="add-review-button">Add Custom Reviews</button>
+        <button className="add-review-button" onClick={() => navigate("/products/Addreview")}>Add Custom Reviews</button>
       </div>
 
       <div className="product-review">

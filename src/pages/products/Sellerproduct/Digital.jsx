@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Switch from "../../../components/Switch";
 import DeleteConfirmation from "../../../components/DeleteConfirmation";
 import ViewExpandData from "../../../components/ViewExpandData";
+import { Download, Edit, Eye, Trash } from "lucide-react";
 
 const ProductTable = () => {
 
@@ -120,9 +121,19 @@ const ProductTable = () => {
                   </td>
                 ))}
                 <div className="p-3 flex space-x-2">
-                  <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
+                  {/* <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
                   <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} /></button>
+                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} /></button> */}
+                  <div className="  p-[.2cm] bg-purple-200 text-purple-800 rounded-[50%]">
+                                                  <Download size={15} color="blue" />
+                                                </div>
+                                                <div className=" p-[.2cm] bg-[#fff4e0] rounded-[50%]">
+                                                  <Edit size={15} color="orange" onClick={() => handleEdit(product.id)}/>
+                                                </div>
+                          
+                                                <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                                  <Trash size={15} color="red"  onClick={() => openDeleteConfirmation(product.id)} />
+                                                </div>
                 </div>
               </tr>
             ))}
@@ -179,7 +190,7 @@ const ProductTable = () => {
                       <tr>
                         <td className="p-2 font-semibold">Actions</td>
                         <td className="p-2 flex space-x-2">
-                          <button className="bg-green-100 p-2 rounded-full">
+                          {/* <button className="bg-green-100 p-2 rounded-full">
                             <TfiDownload className="text-green-500" />
                           </button>
                           <button className="bg-blue-100 p-2 rounded-full" onClick={() => handleEdit(product.id)}>
@@ -187,7 +198,17 @@ const ProductTable = () => {
                           </button>
                           <button className="bg-red-100 p-2 rounded-full" onClick={() => openDeleteConfirmation(product.id)}>
                             <FaTrash className="text-red-500" />
-                          </button>
+                          </button> */}
+                          <div className="  p-[.1cm] bg-purple-200 text-purple-800 rounded-[50%]">
+                                                  <Download size={15} color="blue" />
+                                                </div>
+                                                <div className=" p-[.1cm] bg-[#fff4e0] text-yellow-800 rounded-[50%]">
+                                                  <Edit size={15} color="orange" onClick={() => handleEdit(product.id)}/>
+                                                </div>
+                          
+                                                <div className=" p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                                  <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)} />
+                                                </div>
                         </td>
                       </tr>
                     </tbody>

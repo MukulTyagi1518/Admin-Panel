@@ -8,7 +8,7 @@ const settingsData = [
       { label: "Maintenance Mode Activation" },
       { label: "Disable image encoding?" }
     ]
-  },
+  }, 
   {
     section: "Business Related",
     items: [

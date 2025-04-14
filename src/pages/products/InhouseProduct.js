@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import FilterComponent from "../../components/FilterComponent";
 import ViewExpandData from "../../components/ViewExpandData";
 import DeleteConfirmation from "../../components/DeleteConfirmation";
+import { Edit, Eye, EyeIcon, Trash } from "lucide-react";
 
 const InhouseProduct = () => {
   const navigate = useNavigate();
@@ -263,7 +264,7 @@ const InhouseProduct = () => {
                 <tr key={product.id}>
                   <td>
                   <div
-                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                      className={`plus-icon ${product.expanded ? "" : ""
                         }`}
                       onClick={() =>
                         setProducts((prevProducts) =>
@@ -274,9 +275,16 @@ const InhouseProduct = () => {
                           )
                         )
                       }
+                      
                     >
                       
-                      <ViewExpandData isExpanded={isExpanded} toggleExpanded={toggleExpanded} />
+                      {/* <ViewExpandData  isExpanded={isExpanded} toggleExpanded={toggleExpanded} /> */
+                      }
+   <EyeIcon size={18} color="blue" />
+  
+                    
+                            
+                        
                      
                     </div>
 
@@ -378,15 +386,26 @@ const InhouseProduct = () => {
                     </label>
                   </td>
                   <td className="hide-on-small ">
-                    <button className="btn3 view-btn3">
+                    {/* <button className="btn3 view-btn3 p-[.1cm] bg-green-200 text-green-800 rounded-[50%]">
                       <FaEye />
                     </button>
-                    <button className="btn3 edit-btn3">
+                    <button className="btn3 edit-btn3 p-[.1cm] bg-yellow-200 text-yellow-800 rounded-[50%]">
                       <FaEdit onClick={() => handleEdit(product.id)} />
                     </button>
-                    <button className="btn3 delete-btn3">
+                    <button className="btn3 delete-btn3 p-[.1cm] bg-red-200 text-red-800 rounded-[50%]">
                       <FaTrash   onClick={() => openDeleteConfirmation(product.id)}/>
-                    </button>
+                    </button> */}
+                    <div className=" btn3 view-btn3 p-[.1cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
+                      </div>
+                      <div className=" btn3 edit-btn3 p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                        <Edit size={15} color="orange" />
+                      </div>
+
+                      <div className="btn3 delete-btn3 p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" />
+                      </div>
+                     
                   </td>
                 </tr>
 
@@ -463,7 +482,7 @@ const InhouseProduct = () => {
 
                         <div>
                           Options:
-                          <button className="btn3 view-btn3">
+                          {/* <button className="btn3 view-btn3">
                             <FaEye />
                           </button>
                           <button className="btn3 edit-btn3">
@@ -471,7 +490,17 @@ const InhouseProduct = () => {
                           </button>
                           <button className="btn3 delete-btn3">
                             <FaTrash  onClick={() => openDeleteConfirmation(product.id)} />
-                          </button>
+                          </button> */}
+                          <div className=" btn3 view-btn3 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
+                      </div>
+                      <div className=" btn3 edit-btn3 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                        <Edit size={15} color="orange" />
+                      </div>
+
+                      <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" />
+                      </div>
                         </div>
                       </div>
                     </td>

@@ -1,121 +1,189 @@
-import { useState } from "react";
-import "./Sellerverification.css";
-import { RxCross2 } from "react-icons/rx";
 
-export default function SellerVerificationForm() {
-    const [fields, setFields] = useState([
-        { id: 1, label: "Your Name", type: "text" },
-        { id: 2, label: "Shop Name", type: "text" },
-        { id: 3, label: "Email", type: "email" },
-        { id: 4, label: "License No", type: "text" },
-        { id: 5, label: "Full Address", type: "text" },
-        { id: 6, label: "Phone Number", type: "tel" },
-        { id: 7, label: "Tax Papers", type: "text" }
-    ]);
 
-    const availableFields = [
-        { id: 8, label: "Text Input", type: "text" },
-        { id: 9, label: "Select", type: "select" },
-        { id: 10, label: "Multiple Select", type: "select" },
-        { id: 11, label: "Radio", type: "select" },
-        { id: 11, label: "File", type: "select" }
-    ];
 
-    const addField = (field) => {
-        if (!fields.find(f => f.id === field.id)) {
-            setFields([...fields, field.type === "select" ? { ...field, options: [] } : field]);
-        }
-    };
 
-    const removeField = (id) => {
-        setFields(fields.filter(field => field.id !== id));
-    };
+import React, { useState } from 'react';
+import axios from 'axios';
 
-    const addOption = (id) => {
-        setFields(fields.map(field => 
-            field.id === id 
-                ? { ...field, options: [...field.options, ""] } 
-                : field
-        ));
-    };
+export default function SellerForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    shopName: '',
+    email: '',
+    licenseNo: '',
+    fullAddress: '',
+    phoneNumber: '',
+    taxPapers: null // Changed to null for file input handling
+  });
 
-    const removeOption = (fieldId, optionIndex) => {
-        setFields(fields.map(field =>
-            field.id === fieldId
-                ? { ...field, options: field.options.filter((_, index) => index !== optionIndex) }
-                : field
-        ));
-    };
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
 
-    return (
-        <div className="seller-form-container bg-white p-6 rounded-lg max-w-4xl mx-auto shadow-md flex flex-col md:flex-row gap-6">
-            {/* Left Form */}
-            <div className="flex-1">
-                <h2 className="text-xl font-normal mb-4">Seller Verification Form</h2>
-                <div className="form-fields space-y-4">
-                    {fields.map(field => (
-                        <div key={field.id} className="field-item flex flex-col bg-gray-200 p-3 rounded-md">
-                            <div className="flex items-center">
-                                <span className="text-sm font-semibold w-16">{field.type === "file" ? "File" : field.type === "select" ? "Select" : "Text"}</span>
-                                <input 
-                                    type={field.type === "select" ? "text" : field.type} 
-                                    placeholder={field.label} 
-                                    className="flex-1 px-3 py-2 border rounded-md focus:outline-none" 
-                                />
-                                <button 
-                                    className="text-black-500 ml-3" 
-                                    onClick={() => removeField(field.id)}
-                                >
-                                  <RxCross2 />
-                                </button>
-                            </div>
+    if (type === 'file') {
+      // Handle file input
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      // Handle text input
+      setFormData({ ...formData, [name]: value });
+    }
+  };
 
-                            {field.type === "select" && (
-                                <div className="mt-2">
-                                    {field.options.map((option, index) => (
-                                        <div key={index} className="flex items-center mt-2">
-                                            <input 
-                                                type="text" 
-                                                className="px-3 py-2 border rounded-md flex-1" 
-                                                placeholder={`Option ${index + 1}`} 
-                                            />
-                                            <button 
-                                                className="text-black-500 ml-2"
-                                                onClick={() => removeOption(field.id, index)}
-                                            >
-                                                <RxCross2 />
-                                            </button>
-                                        </div>
-                                    ))}
-                                    <button 
-                                        className="bg-green-600 text-white px-4 py-2 mt-2 rounded-md self-center"
-                                        onClick={() => addOption(field.id)}
-                                    >
-                                        Add option
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-                <button className="save-btn bg-blue-500 text-white py-2 px-4 rounded-md mt-4 hover:bg-blue-600">Save</button>
-            </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            {/* Right Table */}
-            <div className="available-fields p-4 bg-white rounded-md shadow-md w-64">
-                <h3 className="text-lg font-normal mb-3">Add Fields</h3>
-                <ul className="space-y-2">
-                    {availableFields.map(field => (
-                        <li 
-                            key={field.id} 
-                            className="cursor-pointer bg-gray-300 p-2 rounded-md hover:bg-gray-400"
-                            onClick={() => addField(field)}
-                        >
-                            {field.label}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('shopName', formData.shopName);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('licenseNo', formData.licenseNo);
+    formDataToSend.append('fullAddress', formData.fullAddress);
+    formDataToSend.append('phoneNumber', formData.phoneNumber);
+    formDataToSend.append('taxPapers', formData.taxPapers); // Add file to FormData
+
+    try {
+      // Replace with your actual POST API endpoint
+      const response = await axios.post('http://localhost:5000/api/seller-verification/create', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Form submitted successfully:', response.data);
+      // Handle the success response (e.g., show a success message, redirect, etc.)
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle the error response (e.g., show an error message)
+    }
+  };
+
+  return (
+    <div className="p-4 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-4">Seller Information</h2>
+
+      <div className="bg-white shadow rounded-lg p-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          {/* Name */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              Your Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+              className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Shop Name */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              Shop Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="shopName"
+              value={formData.shopName}
+              onChange={handleChange}
+              placeholder="Shop Name"
+              className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Email */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* License No */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              License No <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="licenseNo"
+              value={formData.licenseNo}
+              onChange={handleChange}
+              placeholder="License No"
+              className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Full Address */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              Full Address <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="fullAddress"
+              value={formData.fullAddress}
+              onChange={handleChange}
+              placeholder="Full Address"
+              className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Phone Number */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              Phone Number <span className="text-red-500">*</span>
+            </label>
+            <input
+  type="text"
+  name="phoneNumber"  // Changed here to match the state key
+  value={formData.phoneNumber}
+  onChange={handleChange}
+  placeholder="Phone Number"
+  className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+  required
+/>
+
+          </div>
+
+          {/* Tax Papers */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <label className="md:w-1/4 font-medium text-sm text-gray-700">
+              Tax Papers <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="file"
+              name="taxPapers"
+              onChange={handleChange}
+              className="w-full md:w-3/4 border border-gray-300 rounded px-3 py-2 focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Save Button */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }

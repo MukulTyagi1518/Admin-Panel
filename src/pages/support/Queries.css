@@ -73,6 +73,51 @@
   .styled-table td {
     padding: 12px;
   }
+<<<<<<< HEAD
+=======
+  
+  /* .styled-table th {
+    /* background-color: #f8f9fa; */
+  
+   */
+  .status {
+    background-color: gold;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .view-btn {
+    background-color: lightblue;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .expand-btn {
+    display: none;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 1400px) {
+    .hide-on-small {
+      display: none;
+    }
+  
+    .expand-btn {
+      display: inline-block;
+    }
+  }
+  
+  .expand-row {
+    background-color: #f1f1f1;
+  }
+  
+>>>>>>> 3b2c6cfdfea26763bb9d5eb605760fadfe1ab1c2
 
   /* Expanded content layout */
   .expand-row td {

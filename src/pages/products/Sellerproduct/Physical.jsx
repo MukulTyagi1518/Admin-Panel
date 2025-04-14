@@ -6,6 +6,7 @@ import Switch from "../../../components/Switch";
 import FilterComponent from "../../../components/FilterComponent";
 import DeleteConfirmation from "../../../components/DeleteConfirmation";
 import ViewExpandData from "../../../components/ViewExpandData";
+import { Edit, Eye, Trash } from "lucide-react";
 
 const ProductTable = () => {
   const navigate = useNavigate();
@@ -273,7 +274,7 @@ const ProductTable = () => {
                     )
                   )}
                   <td className="p-3 flex space-x-2">
-                    <button
+                    {/* <button
                       className="bg-green-100 p-2 rounded-full hover:bg-green-200 transition"
                       title="View"
                     >
@@ -301,8 +302,21 @@ const ProductTable = () => {
                       title="Duplicate"
                     >
                       <HiOutlineDuplicate className="text-yellow-500" />
-                    </button>
-                  </td>
+                    </button>*/}
+                     <div className="  p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Eye size={15} color="blue" />
+                                          </div>
+                                          <div className="  p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                                            <Edit size={15} color="orange" onClick={() => handleEdit(product.id)} />
+                                          </div>
+                    
+                                          <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
+                                          <div className=" p-[.2cm] bg-purple-100 w-fit rounded-[50%] cursor-pointerr">
+                                            <HiOutlineDuplicate size={15} color="purple" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
+                  </td> 
                 </tr>
               ))
             ) : (
@@ -387,7 +401,7 @@ const ProductTable = () => {
                   ))}
                   <div className="flex justify-left space-x-2 mt-3">
                     Options:
-                    <button className="bg-green-100 p-2 rounded-full ml-2 mt-2">
+                    {/* <button className="bg-green-100 p-2 rounded-full ml-2 mt-2">
                       <FaEye className="text-green-500" />
                     </button>
                     <button className="bg-blue-100 p-2 rounded-full">
@@ -398,7 +412,20 @@ const ProductTable = () => {
                     </button>
                     <button className="bg-yellow-100 p-2 rounded-full">
                       <HiOutlineDuplicate className="text-yellow-500" />
-                    </button>
+                    </button> */}
+                    <div className="  p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Eye size={15} color="blue" />
+                                          </div>
+                                          <div className="  p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                                            <Edit size={15} color="orange" onClick={() => handleEdit(product.id)} />
+                                          </div>
+                    
+                                          <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
+                                          <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <HiOutlineDuplicate size={15} color="red" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
                   </div>
                 </div>
               )}

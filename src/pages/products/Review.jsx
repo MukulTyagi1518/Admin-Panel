@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Eye, Trash } from "lucide-react";
 import "./Review.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import apiInstance from "../../utils/axios";
 
 export default function PreOrderReviews() {
   const navigate = useNavigate();
   const [expandedRows, setExpandedRows] = useState([]);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState(null);
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await apiInstance.get("/productreviews");
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    fetchReviews();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,13 +49,6 @@ export default function PreOrderReviews() {
     setShowDeleteConfirmation(false);
     setRoleToDelete(null);
   };
-
-  const users = [
-    { id: 1, prodName: "Hummer EV 2025", productOwner: "Sahil Kalkal", rating: 5, review: 15 },
-    { id: 2, prodName: "Tesla Model X", productOwner: "Aman Gupta", rating: 4, review: 10 },
-    { id: 3, prodName: "BMW iX", productOwner: "Rohit Sharma", rating: 5, review: 8 },
-    { id: 4, prodName: "Audi e-Tron", productOwner: "Neha Verma", rating: 4.5, review: 12 },
-  ];
 
   const handleRowToggle = (id) => {
     setExpandedRows((prev) =>
@@ -79,80 +86,87 @@ export default function PreOrderReviews() {
                 {/* <th className="hide-on-mobile"></th> */}
                 <th className="">#</th>
                 <th>Product Name</th>
-                <th className="responsive-hide">Product Owner</th>
+                <th className="responsive-hide">Reviewer Name</th>
                 <th className="responsive-hide">Rating</th>
-                <th className="responsive-hide">Reviews</th>
+                <th className="responsive-hide">Comment</th>
+                <th className="responsive-hide">Image</th>
                 <th>Options</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <React.Fragment key={user.id}>
+              {reviews.map((review) => (
+                <React.Fragment key={review._id}>
                   <tr>
-                    <td onClick={() => handleRowToggle(user.id)} className="plus-icon">
-                      {expandedRows.includes(user.id) ? "-" : "+"}
+                    <td onClick={() => handleRowToggle(review._id)} className="plus-icon">
+                      {expandedRows.includes(review._id) ? "-" : "+"}
                     </td>
-                    <td className="hide-on-mobile ">{user.id}</td>
-                    <td className="prodNameQuery">{user.prodName}</td>
-                    <td className="responsive-hide">{user.productOwner}</td>
-                    <td className="responsive-hide">{user.rating}</td>
-                    <td className="responsive-hide">{user.review}</td>
+                    <td className="hide-on-mobile">{review._id}</td>
+                    <td className="prodNameQuery">{review.product}</td>
+                    <td className="responsive-hide">{review.customReviewerName}</td>
+                    <td className="responsive-hide">{review.rating}</td>
+                    <td className="responsive-hide">{review.comment || "N/A"}</td>
+                    <td className="responsive-hide">
+                      {review.customReviewerImage ? (
+                        <img
+                          src={review.customReviewerImage}
+                          alt="Reviewer"
+                          className="h-10 w-10 object-cover rounded"
+                        />
+                      ) : (
+                        "No image"
+                      )}
+                    </td>
                     <td>
                       <div className="flex flex-row gap-[.3cm]">
                         <div className="action eye-action">
                           <Eye color="blue" size={18} onClick={handlereview} />
                         </div>
                         <div className="action">
-                          <Trash color="blue" size={18} onClick={() => handleDeleteClick(user.id)} />
+                          <Trash color="blue" size={18} onClick={() => handleDeleteClick(review._id)} />
                         </div>
                       </div>
                     </td>
                   </tr>
-                  {/* {expandedRows.includes(user.id) && (
-                    <tr className="expanded-row">
-                      <td colSpan="6">
-                        <div className="expanded-content">
-                          <p>
-                            <strong>Product Owner:</strong> {user.productOwner}
-                          </p>
-                          <p>
-                            <strong>Rating:</strong> {user.rating}
-                          </p>
-                          <p>
-                            <strong>Reviews:</strong> {user.review}
-                          </p>
-                        </div>
-                      </td>
-                    </tr>
-                  )} */}
-                  {expandedRows.includes(user.id) && (
+                  {expandedRows.includes(review._id) && (
                     <tr className="expanded-content">
-                      <td colSpan="6">
+                      <td colSpan="7">
                         <table style={{ width: "100%" }}>
                           <tbody>
                             <tr>
-                              <td>Product Owner</td>
-                              <td>{user.productOwner}</td>
+                              <td>Reviewer Name</td>
+                              <td>{review.customReviewerName}</td>
                             </tr>
                             <tr>
                               <td>Rating</td>
-                              <td>{user.rating}</td>
+                              <td>{review.rating}</td>
                             </tr>
                             <tr>
-                              <td>Reviews</td>
-                              <td>{user.review}</td>
+                              <td>Comment</td>
+                              <td>{review.comment || "N/A"}</td>
                             </tr>
                             <tr>
-                              <td>Custom Reviews</td>
-                              <td>0</td> {/* Default 0 or dynamic value */}
+                              <td>Review Images</td>
+                              <td>{review.reviewImages?.length || 0}</td>
+                            </tr>
+                            <tr>
+                              <td>Reviewer Image</td>
+                              <td>
+                                {review.customReviewerImage ? (
+                                  <img
+                                    src={review.customReviewerImage}
+                                    alt="Reviewer"
+                                    className="h-10 w-10 object-cover rounded"
+                                  />
+                                ) : (
+                                  "No image"
+                                )}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
                       </td>
                     </tr>
                   )}
-
-
                 </React.Fragment>
               ))}
             </tbody>

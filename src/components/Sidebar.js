@@ -201,6 +201,7 @@ const menuItems = [
       { name: "Footer setting", path: "/web-settings/footer" },
       { name: "Page", path: "/web-settings/page" },
       { name: "Subscribers", path: "/web-settings/subscribers" },
+      { name: "Apearence", path: "/web-settings/apearence" },
     ],
     path: "/web-settings",
   },
@@ -244,7 +245,7 @@ const menuItems = [
       },
 
 
-      { name: "Apearence", path: "/admin-settings/apearence" },
+      
     ],
     path: "/admin-settings",
   },
