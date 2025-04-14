@@ -168,7 +168,7 @@ const ProductTable = () => {
         totalItems={products.length}
       />
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      <div className="overflow-x-auto  bg-white shadow-md rounded-lg">
         <table className="w-full border-collapse hidden md:table">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -204,7 +204,7 @@ const ProductTable = () => {
                       onChange={() => handleSelectProduct(product.id)}
                     />
                   </td>
-                  <td className="flex items-center space-x-2">
+                  <td className="flex border-none items-center space-x-2">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -306,70 +306,58 @@ const ProductTable = () => {
   
 
           {products.map((product) => (
-            <div key={product.id} className="border p-3 mb-3 rounded-lg">
-              <div className="flex  items-center">
-                <button onClick={() => toggleExpand(product.id)} className="p-2">
-                  {product.expanded ? "-" : "+"}
-                </button>
-                <div className="flex items-center space-x-2">
-                  <img src={product.image} alt={product.name} className="w-10 h-10 mt-5" />
-                  <span>{product.name}</span>
-                </div>
-              </div>
-              {product.expanded && (
-                <div className="mt-5 space-y-2 bg-gray">
-                  <div className="flex ">
-                    Added By:
-                    <span className="ml-3">{product.seller}</span>
-                  </div>
-                  <div className="flex ">
-                    Sales:
-                    <span  className="ml-3">{product.sales} times</span>
-                  </div>
-                  <div className="flex ">
-                    Price:
-                    <span  className="ml-3">${product.price.toFixed(2)}</span>
-                  </div>
-                  <div className="flex ">
-                    Rating:
-                    <span  className="ml-3">{product.rating}</span>
-                  </div>
-                  <div className="flex ">
-                    Stock:
-                    <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full ml-3">
-                      {product.stock}
-                    </span>
-                  </div>
-                  {["todayDeal", "published", "approved", "featured"].map((field) => (
-                    <div className="flex " key={field}>
-                     {field}
-                      <label className="switch ml-3 mt-1">
-                      <Switch
-                          value={product[field]}
-                          onChangeFunc={() => toggleProductStatus(product.id, field)}
-                        />
-                       
-                      </label>
-                    </div>
-                  ))}
-                  <div className="flex justify-left space-x-2 mt-3">
-                    Options:
-                    <button className="bg-green-100 p-2 rounded-full ml-2 mt-2">
-                      <FaEye className="text-green-500" />
-                    </button>
-                    <button className="bg-blue-100 p-2 rounded-full">
-                      <FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" />
-                    </button>
-                    <button className="bg-red-100 p-2 rounded-full">
-                      <FaTrash className="text-red-500" />
-                    </button>
-                    <button className="bg-yellow-100 p-2 rounded-full">
-                      <HiOutlineDuplicate className="text-yellow-500" />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+           <div className="mt-5 space-y-2 bg-gray-50 p-3 rounded-md">
+           <div className="flex justify-between">
+             <span className="font-medium">Added By:</span>
+             <span>{product.seller}</span>
+           </div>
+           <div className="flex justify-between">
+             <span className="font-medium">Sales:</span>
+             <span>{product.sales} times</span>
+           </div>
+           <div className="flex justify-between">
+             <span className="font-medium">Price:</span>
+             <span>${product.price.toFixed(2)}</span>
+           </div>
+           <div className="flex justify-between">
+             <span className="font-medium">Rating:</span>
+             <span>{product.rating}</span>
+           </div>
+           <div className="flex justify-between items-center">
+             <span className="font-medium">Stock:</span>
+             <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full">
+               {product.stock}
+             </span>
+           </div>
+         
+           {["todayDeal", "published", "approved", "featured"].map((field) => (
+             <div className="flex justify-between items-center" key={field}>
+               <span className="font-medium">{field}:</span>
+               <label className=" ml-3 mt-1">
+                 <Switch
+                   value={product[field]}
+                   onChangeFunc={() => toggleProductStatus(product.id, field)}
+                 />
+               </label>
+             </div>
+           ))}
+         
+           <div className="flex justify-start space-x-2 mt-3 items-center">
+             <span className="font-medium">Options:</span>
+             <button className="bg-green-100 p-2 rounded-full">
+               <FaEye className="text-green-500" />
+             </button>
+             <button className="bg-blue-100 p-2 rounded-full">
+               <FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" />
+             </button>
+             <button className="bg-red-100 p-2 rounded-full">
+               <FaTrash className="text-red-500" />
+             </button>
+             <button className="bg-yellow-100 p-2 rounded-full">
+               <HiOutlineDuplicate className="text-yellow-500" />
+             </button>
+           </div>
+         </div>
           ))}
         </div>
       </div>
