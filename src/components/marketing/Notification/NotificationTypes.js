@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import apiInstance from '../../../utils/axios';
-import { Plus, Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
-import design1Image from './images/notification.png';
+import {  Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const NotificationTypes = () => {
   const [activeTab, setActiveTab] = useState('customer');
@@ -84,13 +84,16 @@ const NotificationTypes = () => {
 
   const deleteNotification = async (id) => {
     try {
-      await apiInstance.delete(`/notification/${id}`);
-      setNotificationTypes(notificationTypes.filter(item => item.id !== id));
-    } catch (error) {
-      console.error('Error deleting notification:', error);
+      console.log('Deleting notification with id:', id); // Debugging log
+      
+      const response=await apiInstance.delete(`/notification/${id}`);
+      setNotificationTypes(notificationTypes.filter(item => item._id !== id));
+      return response.data;
+
+    } catch (err) {
+      console.error('Failed to delete notification:', err);
     }
   };
-
   const filteredNotifications = notificationTypes.filter(item =>
     item.type?.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -211,12 +214,14 @@ const NotificationTypes = () => {
                         </button>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium sm:px-6">
-                        <button className="text-blue-600 hover:text-blue-900 mr-4">
+                       <Link to={`/marketing/notification/edit/${item._id}`}>
+                       <button className="text-blue-600 hover:text-blue-900 mr-4">
                           <Edit2 className="h-4 w-4" />
                         </button>
+                       </Link>
                         {!item.isDefault && (
                           <button 
-                            onClick={() => deleteNotification(item.id)}
+                            onClick={() => deleteNotification(item._id)}
                             className="text-red-600 hover:text-red-900"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -235,7 +240,7 @@ const NotificationTypes = () => {
             <h2 className="text-lg font-semibold mb-4">Add New Notification Type</h2>
             <form onSubmit={handleAddNotification}>
               <div className="space-y-4">
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">User Type</label>
                   <select
                     name="userType"
@@ -247,7 +252,7 @@ const NotificationTypes = () => {
                     <option value="seller">Seller</option>
                     <option value="admin">Admin</option>
                   </select>
-                </div>
+                </div> */}
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
@@ -310,7 +315,7 @@ const NotificationTypes = () => {
           <h2 className="text-lg font-semibold mb-4">Add New Notification Type</h2>
           <form onSubmit={handleAddNotification}>
             <div className="space-y-4">
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">User Type</label>
                 <select
                   name="userType"
@@ -322,7 +327,7 @@ const NotificationTypes = () => {
                   <option value="seller">Seller</option>
                   <option value="admin">Admin</option>
                 </select>
-              </div>
+              </div> */}
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>

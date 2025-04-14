@@ -92,12 +92,12 @@ import Payout from "./pages/sellers/Payout.js";
 import Rating from "./pages/sellers/Rating.js";
 import AllSellers from "./pages/sellers/AllSellers.js";
 import Create from "./pages/sellers/Create.jsx";
-import Refundrequest from "./components/Refund/Refundrequest.jsx"
-import Approvedrefund from "./components/Refund/Approvedrefund.jsx"
-import Reject from "./components/Refund/Reject.jsx"
-import Physical from "./pages/products/Sellerproduct/Physical.jsx"
-import Digital from "./pages/products/Sellerproduct/Digital.jsx"
-import Commision from "./components/Seller/Commision.jsx"
+import Refundrequest from "./components/Refund/Refundrequest.jsx";
+import Approvedrefund from "./components/Refund/Approvedrefund.jsx";
+import Reject from "./components/Refund/Reject.jsx";
+import Physical from "./pages/products/Sellerproduct/Physical.jsx";
+import Digital from "./pages/products/Sellerproduct/Digital.jsx";
+import Commision from "./components/Seller/Commision.jsx";
 import Ticket from "./pages/support/Ticket.js";
 import ProductQuires from "./pages/support/ProductQuires.js";
 import Conversation from "./pages/support/ProductQuires.js";
@@ -138,16 +138,15 @@ import QueriesDetail from "./components/QueriesDetail.js";
 import AddNewBrand from "./pages/products/AddNewBrand.js";
 import AddNewColor from "./pages/products/AddNewColor.js";
 
-
-import Editinhouse from "./components/Edit/Editinhoue.jsx"
-import Editattribute from "./components/Edit/Editattribute.jsx"
-import Adminsetting from "./components/Adminsetting/Adminsetting.jsx"
-import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
-import Edittax from "./components/Adminsetting/Edittax.jsx"
-import Pages from "./components/websetting/pages.jsx"
-import Addpage from "./components/websetting/Addpage.jsx"
-import Editpage from "./components/websetting/Editpage.jsx"
-import Headerpage from "./components/websetting/Headerpage.jsx"
+import Editinhouse from "./components/Edit/Editinhoue.jsx";
+import Editattribute from "./components/Edit/Editattribute.jsx";
+import Adminsetting from "./components/Adminsetting/Adminsetting.jsx";
+import Vaxtax from "./components/Adminsetting/Vaxtax.jsx";
+import Edittax from "./components/Adminsetting/Edittax.jsx";
+import Pages from "./components/websetting/pages.jsx";
+import Addpage from "./components/websetting/Addpage.jsx";
+import Editpage from "./components/websetting/Editpage.jsx";
+import Headerpage from "./components/websetting/Headerpage.jsx";
 
 import Settings from "./components/marketing/Notification/Settings.js";
 import AttributeDetail from "./pages/products/AttributeDetail.js";
@@ -156,6 +155,9 @@ import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
 import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
 import Footer from "./components/webSettings/footerSettings/Footer.js";
 import AddNewFaq from "./pages/products/AddNewFaq.js";
+import NotificationTypeEdit from "./components/marketing/Notification/NotificationTypesEdit.js";
+import CustomNotification from "./components/marketing/Notification/CustomNotification.js";
+import CustomNotificationHistory from "./components/marketing/Notification/CustomNotificationHistory.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -201,30 +203,25 @@ function App() {
                 element={<CategoryBased />}
               />
 
-
-
               <Route path="/wholesale/all" element={<Allwholesale />} />
               <Route path="/wholesale/add" element={<Addwholesale />} />
               <Route path="/products/Brandimport" element={<Brandimport />} />
               <Route path="/products/bulk-import" element={<Bulkimport />} />
               <Route path="/products/bulk-export" element={<Bulkexport />} />
               <Route path="/sellers/verify" element={<Sellerverification />} />
-              <Route path="/sellers/payout-request" element={<Payoutrequest />} />
+              <Route
+                path="/sellers/payout-request"
+                element={<Payoutrequest />}
+              />
               <Route path="/wholesale/inhouse" element={<Inhouse />} />
               <Route path="/wholesale/seller" element={<Sellerwholesale />} />
               <Route path="/products/seller/physical" element={<Physical />} />
               <Route path="/products/seller/digital" element={<Digital />} />
 
-
-
-
               <Route path="/refunds/request" element={<Refundrequest />} />
               <Route path="/refunds/approved" element={<Approvedrefund />} />
               <Route path="/refunds/reject" element={<Reject />} />
               <Route path="/sellers/commission" element={<Commision />} />
-
-
-
 
               <Route path="/products">
                 <Route path="create" element={<AddNewProductMain />}>
@@ -234,8 +231,6 @@ function App() {
                   <Route path="seo" element={<Seo />} />
                   <Route path="shipping" element={<Shipping />} />
                   <Route path="warranty" element={<Warrenty />} />
-
-
 
                   <Route
                     path="frequently-bought"
@@ -258,15 +253,15 @@ function App() {
                 <Route path="/products/editBrand" element={<BrandEdit />} />
                 <Route path="/products/addnewbrand" element={<AddNewBrand />} />
                 <Route path="/products/addnewcolor" element={<AddNewColor />} />
-                <Route path="/products/settings" element={<AttributeDetail />} />
+                <Route
+                  path="/products/settings"
+                  element={<AttributeDetail />}
+                />
                 <Route path="/products/addnewfaq" element={<AddNewFaq />} />
-
 
                 <Route path="category-discount" element={<CategoryBased />} />
                 <Route path="brand" element={<AllBrands />} />
                 <Route path="attribute" element={<Attribute />} />
-
-
 
                 <Route path="warranty" element={<Warrenty />} />
                 <Route path="colour" element={<Colors />} />
@@ -282,7 +277,10 @@ function App() {
                 />
               </Route>
 
-              <Route path="attribute-value-info/:id" element={<AttributeValueInfo />} />
+              <Route
+                path="attribute-value-info/:id"
+                element={<AttributeValueInfo />}
+              />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
               <Route path="/" element={<Dashboard />} />
@@ -321,15 +319,11 @@ function App() {
                 <Route path="queries" element={<PreOrderQueries />} />
                 <Route path="queries">
                   <Route path="queriesdetail" element={<QueriesDetail />} />
-
-
                 </Route>
                 <Route path="reviews" element={<PreOrderReviews />} />
                 <Route path="reviews" element={<PreOrderReviews />} />
                 <Route path="reviews">
                   <Route path="ReviewDetails" element={<ReviewDetails />} />
-
-
                 </Route>
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
@@ -446,17 +440,19 @@ function App() {
                 <Route path="notification">
                   <Route path="settings" element={<Settings />} />
                   <Route path="types" element={<NotificationTypes />} />
+                  <Route path="edit/:id" element={<NotificationTypeEdit />} />
+                  <Route path="custom-notification" element={<CustomNotification />} />
+                  <Route path="custom-notification/history" element={<CustomNotificationHistory />} />
                 </Route>
               </Route>
 
-
-
-
-
               {/* </Route> */}
               <Route path="/admin-settings">
-                <Route path="shipping" >
-                  <Route path="configuration" element={<ShippingConfiguration />} />
+                <Route path="shipping">
+                  <Route
+                    path="configuration"
+                    element={<ShippingConfiguration />}
+                  />
                   <Route path="countries" element={<ShippingCountries />} />
                   <Route path="state" element={<ShippingState />} />
                   <Route path="state">
@@ -480,15 +476,9 @@ function App() {
                     <Route index element={<ShippingCarrier />} />
                     <Route path="edit/:id" element={<CarrierEdit />} />
                   </Route>
-
                 </Route>
                 <Route path="payment" element={<PaymentMethod />} />
               </Route>
-
-
-
-
-
 
               <Route path="/sellers">
                 <Route path="all" element={<AllSellers />} />
@@ -497,17 +487,18 @@ function App() {
                 <Route path="" element={<UnpaidOrders />} />
                 <Route path="create" element={<Create />} />
               </Route>
+
+
               <Route path="/delivery">
-                <Route path="registration" element={<DeliveryPartnerRegistration />} />
+                <Route
+                  path="registration"
+                  element={<DeliveryPartnerRegistration />}
+                />
                 <Route path="active" element={<ActiveDeliveryPartner />} />
                 <Route path="inactive" element={<InActiveDeliveryPartner />} />
                 <Route path="pending" element={<PendingDeliveryPartner />} />
                 <Route path="active/reports" element={<ReportsPage />} />
               </Route>
-
-
-
-
 
               <Route path="/support">
                 <Route path="ticket" element={<Ticket />} />
@@ -515,7 +506,7 @@ function App() {
                 <Route path="queries" element={<Queries />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="create" element={<Create />} />
-                <Route path="supports" element={< Supports />} />
+                <Route path="supports" element={<Supports />} />
               </Route>
 
               <Route path="/staffs">
@@ -528,31 +519,26 @@ function App() {
                 <Route path="editInfo/:id" element={<EditInfo />} />
               </Route>
 
-              <Route path="/admin-settings/features" element={<Adminsetting />} />
+              <Route
+                path="/admin-settings/features"
+                element={<Adminsetting />}
+              />
               <Route path="/admin-settings/tax" element={<Vaxtax />} />
-
               <Route path="edittax" element={<Edittax />} />
-
               <Route path="editinhouse" element={<Editinhouse />} />
               <Route path="editattribute" element={<Editattribute />} />
 
-
-              <Route path='/web-settings' >
-                <Route path='header' element={<Headerpage />} />
-                <Route path='footer' element={<Footer />} />
-                <Route path='page' element={<Pages />} />
+              <Route path="/web-settings">
+                <Route path="header" element={<Headerpage />} />
+                <Route path="footer" element={<Footer />} />
+                <Route path="page" element={<Pages />} />
                 <Route path="addpage" element={<Addpage />} />
                 <Route path="editaddpage" element={<Editpage />} />
-
               </Route>
-
-              
-
-
             </Routes>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 }
