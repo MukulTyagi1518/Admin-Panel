@@ -6,6 +6,7 @@ import Pagination from "../Pagination";
 import { useMediaQuery } from 'react-responsive';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useOrdersContext } from "../../context/ordersContext";
+import ViewExpandData from "../ViewExpandData";
 
 
 function LatestOrders({ customFilter, title = "Latest allOrders" }) {
@@ -257,11 +258,18 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
               <React.Fragment key={order.id}>
                 <tr className="border-b border-gray-100 hover:bg-gray-50">
                   {isBelow1400 && (
+                    // <td className="py-3 px-4">
+                    //   <button onClick={() => toggleOrderExpansion(order.id)}>
+                    //     {expandedOrders.includes(order.id) ? <FaMinus /> : <FaPlus />}
+                    //   </button>
+                    // </td>
                     <td className="py-3 px-4">
-                      <button onClick={() => toggleOrderExpansion(order.id)}>
-                        {expandedOrders.includes(order.id) ? <FaMinus /> : <FaPlus />}
-                      </button>
-                    </td>
+                    <ViewExpandData
+                      isExpanded={expandedOrders.includes(order.id)}
+                      toggleExpanded={() => toggleOrderExpansion(order.id)}
+                    />
+                  </td>
+
                   )}
                   <td className="py-3 px-4">
                     <input

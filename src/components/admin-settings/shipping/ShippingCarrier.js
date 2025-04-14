@@ -4,6 +4,7 @@ import Switch from '../../Switch';
 import fedexLogo from '../shipping/carrier.webp'; 
 import { useNavigate } from 'react-router-dom';
 import DeleteConfirmation from '../../DeleteConfirmation';
+import { Edit, Trash } from 'lucide-react';
 
 const carriersData = [
   { id: 1, logo: {fedexLogo}, name: 'FedEx', transitTime: 20, status: true },
@@ -112,12 +113,18 @@ const ShippingCarrier = () => {
                       <Switch value={carrier.status} onChangeFunc={() => handleStatusChange(carrier.id)} />
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap text-right text-sm font-medium hidden md:table-cell">
-                      <button className="text-blue-500 mr-2">
+                      {/* <button className="text-blue-500 mr-2">
                         <FiEdit onClick={() => handleEdit(carrier.id)} />
                       </button>
                       <button className="text-red-500">
                         <FiTrash2 onClick={() => openDeleteConfirmation(carrier.id)} />
+                      </button> */}
+                       <button className=" p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer mr-2">
+                        <Edit onClick={() => handleEdit(carrier.id)} color="orange" size={15} />
                       </button>
+                      <button className=" p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash onClick={() => openDeleteConfirmation(carrier.id)} color="red" size={15}  />
+                      </button> 
                     </td>
                   </tr>
 

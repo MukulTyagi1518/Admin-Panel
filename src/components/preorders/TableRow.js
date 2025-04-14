@@ -74,7 +74,7 @@
 
 
 import { useState } from "react";
-import { Download, EyeIcon, Trash2Icon, Plus, Minus } from "lucide-react";
+import { Download, EyeIcon, Trash2Icon, Plus, Minus, Trash, Eye } from "lucide-react";
 import React from "react";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import ViewExpandData from "../ViewExpandData";
@@ -160,7 +160,7 @@ function TableRow({ order }) {
 
           <div className="flex gap-2">
 
-            <button className="btn8 text-green-500 pl-1">
+            {/* <button className="btn8 text-green-500 pl-1">
               <FaEye />
             </button>
             <button className="btn8 text-yellow-400 pl-1">
@@ -168,7 +168,17 @@ function TableRow({ order }) {
             </button>
             <button className="btn8 text-pink-400 pl-1">
               <FaTrash />
-            </button>
+            </button> */}
+            <div className=" btn3 view-btn3 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
+                      </div>
+                      <div className=" btn3 edit-btn3 p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+                        <Download size={15} color="blueviolet" />
+                      </div>
+
+                      <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" />
+                      </div>
 
 
           </div>

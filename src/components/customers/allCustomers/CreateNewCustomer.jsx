@@ -59,7 +59,8 @@ const CreateNewCustomer = () => {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+        {/* <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg"> */}
+        <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto"> {/* Adjusted width here */}
           {/* Card Header */}
           <div className="px-6 py-4 border-b border-gray-200 ">
             <h2 className="text-xl font-semibold text-gray-800">

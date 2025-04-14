@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import apiInstance from '../../../utils/axios';
 import {  Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Plus, Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
+import design1Image from './images/notification.png';
+import React from 'react';
 
 const NotificationTypes = () => {
   const [activeTab, setActiveTab] = useState('customer');
   const [expandedRows, setExpandedRows] = useState({});
-  
+
   const [notificationTypes, setNotificationTypes] = useState([
     { id: 1, userType: 'customer', type: 'Order Placed', defaultText: 'Your Order: [[order_code]] has been Placed', image: design1Image, status: true, isDefault: true },
     { id: 2, userType: 'customer', type: 'Order Confirmed', defaultText: 'Your Order: [[order_code]] has been Confirmed', image: '', status: true, isDefault: true },
@@ -31,7 +34,7 @@ const NotificationTypes = () => {
     type: '',
     defaultText: '',
     image: null,
-    status: true
+    status: true,
   });
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -54,16 +57,16 @@ const NotificationTypes = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewNotification(prev => ({
+    setNewNotification((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleFileChange = (e) => {
-    setNewNotification(prev => ({
+    setNewNotification((prev) => ({
       ...prev,
-      image: e.target.files[0]
+      image: e.target.files[0],
     }));
   };
 
@@ -119,13 +122,27 @@ const NotificationTypes = () => {
     item.type?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // const toggleExpand = (id) => {
+  //   setExpandedRows((prev) => ({
+  //     ...prev,
+  //     [id]: !prev[id],
+  //   }));
+  // };
+
+  const toggleExpand = (id) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile Sidebar (Top) */}
       <div className="lg:hidden bg-white shadow-md p-4">
         <h2 className="text-lg font-semibold mb-4">Notification Types</h2>
         <p className="text-sm text-gray-500 mb-6">Default notification types can not be deleted.</p>
-        
+
         <div className="mb-6">
           <input
             type="text"
@@ -164,7 +181,7 @@ const NotificationTypes = () => {
         <div className="hidden lg:block w-64 bg-white shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">Notification Types</h2>
           <p className="text-sm text-gray-500 mb-6">Default notification types can not be deleted.</p>
-          
+
           <div className="mb-6">
             <input
               type="text"
@@ -205,16 +222,22 @@ const NotificationTypes = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th className="lg:hidden px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6"></th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Image</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Type</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Default Text</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Status</th>
+                    <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Default Text</th>
+                    <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Status</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                {/* <tbody className="bg-white divide-y divide-gray-200">
                   {filteredNotifications.map((item) => (
                     <tr key={item.id}>
+                      <td className="lg:hidden px-4 py-4 whitespace-nowrap text-sm font-medium sm:px-6">
+                        <button onClick={() => toggleExpand(item.id)} className="text-blue-600 hover:text-blue-900">
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </td>
                       <td className="px-4 py-4 whitespace-nowrap sm:px-6">
                         {item.image ? (
                           <img src={item.image} alt={item.type} className="h-10 w-10 rounded-full" />
@@ -225,8 +248,8 @@ const NotificationTypes = () => {
                         )}
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 sm:px-6">{item.type}</td>
-                      <td className="px-4 py-4 text-sm text-gray-500 sm:px-6">{item.defaultText}</td>
-                      <td className="px-4 py-4 whitespace-nowrap sm:px-6">
+                      <td className="hidden lg:table-cell px-4 py-4 text-sm text-gray-500 sm:px-6">{item.defaultText}</td>
+                      <td className="hidden lg:table-cell px-4 py-4 whitespace-nowrap sm:px-6">
                         <button
                           onClick={() => toggleStatus(item.id)}
                           className={`px-3 py-1 rounded-full text-xs font-medium ${item.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
@@ -243,6 +266,8 @@ const NotificationTypes = () => {
                         {!item.isDefault && (
                           <button 
                             onClick={() => deleteNotification(item._id)}
+                          <button
+                            onClick={() => deleteNotification(item.id)}
                             className="text-red-600 hover:text-red-900"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -251,7 +276,112 @@ const NotificationTypes = () => {
                       </td>
                     </tr>
                   ))}
-                </tbody>
+                  {filteredNotifications.map((item) => (
+                    <tr key={`expanded-${item.id}`} className={`${expandedRows[item.id] ? '' : 'hidden'} lg:hidden`}>
+                      <td colSpan="6" className="px-4 py-4">
+                        <div className="flex flex-col">
+                          <div className="mb-2">
+                            <span className="font-semibold">Default Text:</span> {item.defaultText}
+                          </div>
+                          <div>
+                            <span className="font-semibold">Status:</span>
+                            <button
+                              onClick={() => toggleStatus(item.id)}
+                              className={`ml-2 px-3 py-1 rounded-full text-xs font-medium ${item.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                            >
+                              {item.status ? 'Active' : 'Inactive'}
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody> */}
+                <tbody className="bg-white divide-y divide-gray-200">
+  {filteredNotifications
+    .filter(item => item.userType === activeTab)
+    .map((item) => (
+      <React.Fragment key={item.id}>
+        {/* Main Row */}
+        <tr>
+          <td className="lg:hidden px-4 py-4 whitespace-nowrap text-sm font-medium sm:px-6">
+            <button
+              onClick={() => toggleExpand(item.id)}
+              className="text-blue-600 hover:text-blue-900"
+            >
+              <Plus className={`h-4 w-4 transition-transform duration-200 ${expandedRows[item.id] ? '' : ''}`} />
+            </button>
+          </td>
+
+          <td className="px-4 py-4 whitespace-nowrap sm:px-6">
+            {item.image ? (
+              <img src={item.image} alt={item.type} className="h-10 w-10 rounded-full" />
+            ) : (
+              <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                <ImageIcon className="text-gray-400 h-5 w-5" />
+              </div>
+            )}
+          </td>
+
+          <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 sm:px-6">{item.type}</td>
+
+          <td className="hidden lg:table-cell px-4 py-4 text-sm text-gray-500 sm:px-6">{item.defaultText}</td>
+
+          <td className="hidden lg:table-cell px-4 py-4 whitespace-nowrap sm:px-6">
+            <button
+              onClick={() => toggleStatus(item.id)}
+              className={`px-3 py-1 rounded-full text-xs font-medium ${item.status === true || item.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
+              }`}
+            >
+              {item.status === true || item.status === 'active' ? 'Active' : 'Inactive'}
+            </button>
+          </td>
+
+          <td className="px-4 py-4 whitespace-nowrap text-sm font-medium sm:px-6">
+            <button className="text-blue-600 hover:text-blue-900 mr-4">
+              <Edit2 className="h-4 w-4" />
+            </button>
+            {!item.isDefault && (
+              <button
+                onClick={() => deleteNotification(item.id)}
+                className="text-red-600 hover:text-red-900"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            )}
+          </td>
+        </tr>
+
+        {/* Expandable Row for Mobile */}
+        {expandedRows[item.id] && (
+          <tr className="lg:hidden bg-gray-50">
+            <td colSpan="6" className="px-4 py-4">
+              <div className="flex flex-col space-y-2 text-sm text-gray-700">
+                <div>
+                  <span className="font-semibold">Default Text:</span> {item.defaultText}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="font-semibold">Status:</span>
+                  <button
+                    onClick={() => toggleStatus(item.id)}
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${item.status === true || item.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.status === true || item.status === 'active' ? 'Active' : 'Inactive'}
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        )}
+      </React.Fragment>
+    ))}
+</tbody>
+
               </table>
             </div>
           </div>
@@ -275,6 +405,8 @@ const NotificationTypes = () => {
                   </select>
                 </div> */}
                 
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
                   <input
@@ -286,7 +418,7 @@ const NotificationTypes = () => {
                     required
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Image (36x36)</label>
                   <div className="flex items-center">
@@ -304,7 +436,7 @@ const NotificationTypes = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Default Text *</label>
                   <textarea
@@ -317,7 +449,7 @@ const NotificationTypes = () => {
                     placeholder="(Best within 80 characters)"
                   />
                 </div>
-                
+
                 <div className="pt-2">
                   <button
                     type="submit"
@@ -350,6 +482,8 @@ const NotificationTypes = () => {
                 </select>
               </div> */}
               
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
                 <input
@@ -361,7 +495,7 @@ const NotificationTypes = () => {
                   required
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Image (36x36)</label>
                 <div className="flex items-center">
@@ -379,7 +513,7 @@ const NotificationTypes = () => {
                   </span>
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Default Text *</label>
                 <textarea
@@ -392,7 +526,7 @@ const NotificationTypes = () => {
                   placeholder="(Best within 80 characters)"
                 />
               </div>
-              
+
               <div className="pt-2">
                 <button
                   type="submit"
@@ -410,3 +544,7 @@ const NotificationTypes = () => {
 };
 
 export default NotificationTypes;
+
+
+
+

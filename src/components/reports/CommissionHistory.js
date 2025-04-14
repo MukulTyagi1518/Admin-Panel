@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProductTable from "./ProductTable";
+import ProductTable2 from "./ProductTable2";
 import Dropdown from "../Dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -115,8 +115,11 @@ function CommissionHistory() {
 
   return (
     <>
-      <h1 className="text-xl font-bold text-gray-800 m-5">
+      {/* <h1 className="text-xl font-bold text-gray-800 m-5">
         Commission History Report
+      </h1> */}
+      <h1 className="text-xl font-bold text-gray-800 m-8 text-center ">
+      Commission History Report
       </h1>
       <div className="bg-white p-3 shadow-lg rounded-lg mb-6 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
         <div className="flex flex-col mb-3 md:flex-row md:items-center md:justify-between border-b">
@@ -150,7 +153,7 @@ function CommissionHistory() {
             </button>
           </div>
         </div>
-        <ProductTable
+        <ProductTable2
           columns={columns}
           data={filteredData}
           currentPage={currentPage}

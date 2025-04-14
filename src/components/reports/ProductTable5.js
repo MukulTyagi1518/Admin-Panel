@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import { Plus, Minus } from 'lucide-react';
+import ViewExpandData from '../ViewExpandData';
 
 
 const ProductTable5 = ({ columns, data, currentPage, itemsPerPage, onPageChange, showPagination = true }) => {
@@ -45,9 +46,13 @@ const ProductTable5 = ({ columns, data, currentPage, itemsPerPage, onPageChange,
               <React.Fragment key={rowIndex}>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">
-                    <button onClick={() => toggleRow(absoluteIndex)} className="text-gray-600 lg:hidden">
+                    {/* <button onClick={() => toggleRow(absoluteIndex)} className="text-gray-600 lg:hidden">
                       {isExpanded ? <Minus size={16} /> : <Plus size={16} />}
-                    </button>
+                    </button> */}
+                    <ViewExpandData
+                      isExpanded={isExpanded}
+                      toggleExpanded={() => toggleRow(absoluteIndex)}
+                    />
                   </td>
                   {columns.map((column, colIndex) => (
                     <td

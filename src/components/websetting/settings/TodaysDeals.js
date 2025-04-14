@@ -232,6 +232,7 @@ const TodaysDeals = () => {
       </div>
 
       <div className="mt-4">
+<<<<<<< HEAD:src/components/websetting/settings/TodaysDeals.js
   <label className="block mb-2 font-medium">Today's Deal Banner Text Color</label>
   <div className="flex gap-6">
     {["Light", "Dark"].map((option) => (
@@ -252,6 +253,37 @@ const TodaysDeals = () => {
   </div>
 </div>
 
+=======
+        <label className="block mb-2 font-medium">Today's Deal Banner Text Color</label>
+        <div className="flex gap-4">
+          {["Light", "Dark"].map((option) => (
+            <label key={option} className="flex items-center">
+              {/* <input
+                type="radio"
+                name="textColor"
+                value={option}
+                checked={formState.textColor === option}
+                onChange={(e) =>
+                  setFormState((prev) => ({ ...prev, textColor: e.target.value }))
+                }
+                className="mr-2"
+              /> */}
+              <input
+                type="radio"
+                name="textColor"
+                value={option}
+                checked={formState.textColor === option}
+                onChange={(e) =>
+                  setFormState((prev) => ({ ...prev, textColor: e.target.value }))
+                }
+                className="mr-2 w-5 h-5"
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+      </div>
+>>>>>>> origin/smita:src/components/settings/TodaysDeals.js
 
       <div className="mt-6">
         <button

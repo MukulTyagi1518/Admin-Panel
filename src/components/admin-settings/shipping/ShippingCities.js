@@ -3,6 +3,7 @@ import { FiEdit, FiTrash2, FiPlus } from 'react-icons/fi';
 import Switch from '../../Switch';
 import { useNavigate } from 'react-router-dom';
 import DeleteConfirmation from '../../DeleteConfirmation';
+import { Edit, Trash } from 'lucide-react';
 
 const statesData = [
   { id: 1, name: 'Andaman and Nicobar Islands', country: 'India', areaWiseCost: '$0.00', showHide: true },
@@ -115,12 +116,21 @@ const ShippingCities = () => {
                       <Switch value={state.showHide} onChangeFunc={() => handleToggle(state.id)} />
                     </td>
                     <td className="p-2 hidden md:table-cell">
-                      <button className="text-blue-500 mr-2">
+                      {/* <button className="text-blue-500 mr-2">
                         <FiEdit onClick={() => handlereview(state.id)} />
                       </button>
                       <button className="text-red-500">
                         <FiTrash2 onClick={() => openDeleteConfirmation(state.id)} />
+                      </button> */}
+                      <button className=" p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer mr-2">
+                        <Edit onClick={() => handlereview(state.id)} color="orange" size={15} />
                       </button>
+                      <button className=" p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash onClick={() => openDeleteConfirmation(state.id)} color="red" size={15}  />
+                      </button> 
+                      
+                      
+
                     </td>
                   </tr>
                   {expandedRows[state.id] && (
