@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import { FaEdit, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { TfiDownload } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import Switch from "../../../components/Switch";
+import DeleteConfirmation from "../../../components/DeleteConfirmation";
 
 const ProductTable = () => {
 
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
-    navigate(`/editinhouse`); 
+    navigate(`/editinhouse`);
   }
-  
+
   const [products, setProducts] = useState([
     {
       id: 1,
       name: "Microsoft Windows 10 Pro",
-      image: "https://via.placeholder.com/50",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsfZjkPZdOIVDmhZbBUn61stvQ-31YPhgnRw&s",
       price: 35.0,
       todayDeal: false,
       published: true,
@@ -25,7 +27,7 @@ const ProductTable = () => {
     {
       id: 2,
       name: "Grand Theft Auto V - Premium Online Edition",
-      image: "https://via.placeholder.com/50",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsfZjkPZdOIVDmhZbBUn61stvQ-31YPhgnRw&s",
       price: 25.0,
       todayDeal: false,
       published: true,
@@ -33,6 +35,29 @@ const ProductTable = () => {
       expanded: false,
     },
   ]);
+
+   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+   const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+    const [roleToDelete, setRoleToDelete] = useState(null);
+
+
+    const openDeleteConfirmation = (id) => {
+      setAttributeToDeleteId(id);
+      setShowDeleteConfirmation(true);
+    };
+    
+    const closeDeleteConfirmation = () => {
+      setAttributeToDeleteId(null);
+      setShowDeleteConfirmation(false);
+    };
+    
+    const handleDelete = (id) => {
+      // In a real application, you would make an API call here to delete the attribute
+      console.log(`Deleting attribute with ID: ${id}`);
+      // After successful deletion, you would likely update the 'attributes' state
+      closeDeleteConfirmation();
+    };
+
 
   const toggleSwitch = (id, field) => {
     setProducts((prev) =>
@@ -52,14 +77,14 @@ const ProductTable = () => {
 
   return (
     <div className="p-4">
-        <div className="flex justify-between items-center mb-4">
-  <h2 className="text-2xl font-semibold">Digital Products</h2>
-  
-  <button className="bg-purple-500 text-white px-4 py-2 rounded-full ml-auto">
-    Add New Digital Product
-  </button>
-</div>
-      
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">Digital Products</h2>
+
+        <button className="bg-purple-500 text-white px-4 py-2 rounded-full ml-auto">
+          Add New Digital Product
+        </button>
+      </div>
+
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         {/* Desktop View */}
         <table className="w-full border-collapse hidden md:table">
@@ -85,16 +110,19 @@ const ProductTable = () => {
                 {['todayDeal', 'published', 'featured'].map((field) => (
                   <td className="p-3" key={field}>
                     <label className="switch">
-                      <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                      <span className="slider round"></span>
+                    <Switch
+  value={product[field]}
+  onChangeFunc={() => toggleSwitch(product.id, field)}
+/>
+
                     </label>
                   </td>
                 ))}
-                <td className="p-3 flex space-x-2">
+                <div className="p-3 flex space-x-2">
                   <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
                   <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
-                </td>
+                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} /></button>
+                </div>
               </tr>
             ))}
           </tbody>
@@ -102,40 +130,73 @@ const ProductTable = () => {
 
         {/* Mobile View */}
         <div className="md:hidden">
+        <div className="flex items-center  bg-gray-100 px-4 py-2 rounded-lg ">
+    <div className="flex  space-x-2">
+      <span className="font-medium mr-2">#</span>
+      <span className="font-medium ml-4">Name</span>
+    </div>
+  </div>
+          
           {products.map((product) => (
             <div key={product.id} className="border p-3 mb-3 rounded-lg">
-              <div className="flex items-center">
+              <div className="flex  items-center">
                 <button onClick={() => toggleExpand(product.id)} className="p-2">
-                  {product.expanded ? <FaMinus /> : <FaPlus />}
+                  {product.expanded ? "-" : "+"}
                 </button>
                 <div className="flex items-center space-x-2">
-                  <img src={product.image} alt={product.name} className="w-10 h-10" />
-                  <span>{product.name}</span>
+                  <img src={product.image} alt={product.name} className="w-10 h-10 mt-5 ml-3" />
+                  <span className="">{product.name}</span>
                 </div>
               </div>
               {product.expanded && (
-                <div className="mt-2 space-y-2">
-                  <div className="flex justify-between"><strong>Base Price:</strong><span>${product.price.toFixed(2)}</span></div>
-                  {['todayDeal', 'published', 'featured'].map((field) => (
-                    <div className="flex justify-between" key={field}>
-                      <strong>{field}</strong>
-                      <label className="switch">
-                        <input type="checkbox" checked={product[field]} onChange={() => toggleSwitch(product.id, field)} />
-                        <span className="slider round"></span>
-                      </label>
-                    </div>
-                  ))}
-                  <div className="flex justify-left space-x-2 mt-3">
-                    <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
-                    <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                    <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" /></button>
-                  </div>
-                </div>
-              )}
+  <div className="mt-3 overflow-x-auto">
+    <table className="w-full text-sm border">
+      <tbody>
+        <tr className="border-b">
+          <td className="p-2 font-semibold">Base Price</td>
+          <td className="p-2">${product.price.toFixed(2)}</td>
+        </tr>
+        {['todayDeal', 'published', 'featured'].map((field) => (
+          <tr className="border-b" key={field}>
+            <td className="p-2 font-semibold capitalize">{field.replace(/([A-Z])/g, ' $1')}</td>
+            <td className="p-2">
+              <label className="switch">
+              <Switch value={product[field]} onChangeFunc={() => toggleSwitch(product.id, field)} />
+              </label>
+            </td>
+          </tr>
+        ))}
+        <tr>
+          <td className="p-2 font-semibold">Actions</td>
+          <td className="p-2 flex space-x-2">
+            <button className="bg-green-100 p-2 rounded-full">
+              <TfiDownload className="text-green-500" />
+            </button>
+            <button className="bg-blue-100 p-2 rounded-full" onClick={() => handleEdit(product.id)}>
+              <FaEdit className="text-blue-500" />
+            </button>
+            <button className="bg-red-100 p-2 rounded-full" onClick={() => openDeleteConfirmation(product.id)}>
+              <FaTrash className="text-red-500" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}
+
             </div>
           ))}
         </div>
       </div>
+      {showDeleteConfirmation && (
+                <DeleteConfirmation
+                                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
     </div>
   );
 };

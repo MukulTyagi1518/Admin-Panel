@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Inhouse.css";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Switch from "../Switch";
 import DeleteConfirmation from "../DeleteConfirmation";
 
@@ -266,30 +266,51 @@ const InhouseProduct = () => {
         <table>
           <thead>
             <tr>
+            <th className="lg:hidden"></th>
               <th>
                 <input type="checkbox" />
               </th>
 
               <th className="name">Name</th>
-
-              <th>Info</th>
-              <th>Total Stock</th>
-              <th>Today's Deal</th>
-              <th>Published</th>
-              <th>Featured</th>
-              <th>Options</th>
+              <th className="hide-on-small">Info</th>
+              <th className="hide-on-small">Total Stock</th>
+              <th className="hide-on-small">Today's Deal</th>
+              <th className="hide-on-small">Published</th>
+              <th className="hide-on-small">Featured</th>
+              <th className="hide-on-small">Options</th>
             </tr>
           </thead>
 
           <tbody>
             {products.map((product) => (
               <>
-                {/* Main Row with Plus Icon */}
-
                 <tr key={product.id}>
-                  {/* <td><input type="checkbox" /></td> */}
+                <td>
+                  <div
+                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                        }`}
+                      onClick={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, expanded: !p.expanded }
+                              : p
+                          )
+                        )
+                      }
+                    >
+                      
+                      +
+                     
+                    </div>
+
+                  </td>
                   <td>
-                    <div
+                    <input
+                      type="checkbox"
+
+                    />
+                    {/* <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""}`}
                       onClick={() =>
                         setProducts((prevProducts) =>
@@ -298,23 +319,16 @@ const InhouseProduct = () => {
                           )
                         )
                       }
+
                     >
+                     
                       +
-                    </div>
+                    </div> */}
                   </td>
-
-
-
-                  {/* <td className="product-name">
-          <img src={product.image} alt={product.name} className="product-img" />
-          <span>{product.name}</span>
-        </td> */}
                   <td className="product-name">
                     <img src={product.image} alt={product.name} className="product-img" />
-                    <span>{product.name}</span>
+                    <span className="mr-5">{product.name}</span>
                   </td>
-
-
                   <td className="hide-on-small">
                     <div>Num of Sale: {product.info.sale} times</div>
                     <div>Base Price: {product.info.price}</div>
@@ -322,135 +336,107 @@ const InhouseProduct = () => {
                   </td>
                   <td className="hide-on-small">{product.stock}</td>
                   <td className="hide-on-small">
-                    <label className="switch">
-                      {/* <input
-              type="checkbox"
-              checked={product.deal}
-              onChange={() => handleToggleChange(product.id, "deal")}
-            />
-            <span className="slider"></span> */}
-                      <Switch />
-                    </label>
+                    <Switch
+                      value={product.deal}
+                      onChangeFunc={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id ? { ...p, deal: !p.deal } : p
+                          )
+                        )
+                      }
+                    />
                   </td>
                   <td className="hide-on-small">
-                    <label className="switch">
-                      {/* <input
-              type="checkbox"
-              checked={product.published}
-              onChange={() => handleToggleChange(product.id, "published")}
-            />
-            <span className="slider"></span> */}
-                      <Switch />
-                    </label>
+                    <Switch
+                      value={product.published}
+                      onChangeFunc={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, published: !p.published }
+                              : p
+                          )
+                        )
+                      }
+                    />
                   </td>
                   <td className="hide-on-small">
-                    <label className="switch">
-
-                      {/* <input
-              type="checkbox"
-              checked={product.featured}
-              onChange={() => handleToggleChange(product.id, "featured")}
-            /> */}
-                      {/* <span className="slider"></span> */}
-                      <Switch />
-                    </label>
+                    <Switch
+                      value={product.featured}
+                      onChangeFunc={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, featured: !p.featured }
+                              : p
+                          )
+                        )
+                      }
+                    />
                   </td>
-                  <td className="hide-on-small ">
-                    <button className="btn4 view-btn4">
-                      <FaEye />
-                    </button>
-                    <button className="btn4 edit-btn4">
-                      <FaEdit />
-                    </button>
-                    <button className="btn4 delete-btn6">
-                      <FaTrash onClick={() => openDeleteConfirmation(product.id)} />
-                    </button>
+                  <td className="hide-on-small">
+                    <button className="btn4 view-btn4"><FaEye /></button>
+                    <button className="btn4 edit-btn4"><FaEdit /></button>
+                    <button className="btn4 delete-btn6"><FaTrash onClick={() => openDeleteConfirmation(product.id)} /></button>
                   </td>
                 </tr>
-
-
                 {product.expanded && (
                   <tr className="row-details mt-0">
                     <td colSpan="9">
                       <div className="details-container">
                         <div>Added By: {product.addedBy}</div>
-                        <div>
-                          Info:   Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}
-                        </div>
+                        <div>Info: Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}</div>
                         <div className="total">Total Stock: {product.stock}</div>
-
-                        <div>
-                          Today's Deal:
-                          <label className="switch ">
-                            {/* <input
-                              type="checkbox"
-                              checked={product.deal}
-                              onChange={() => handleToggleChange(product.id, "deal")}
-                            />
-                            <span className="slider"></span> */}
-                            <Switch />
-                          </label>
-                        </div>
-
-                        <div>
-                          Published:
-                          <label className="switch">
-                            {/* <input
-                              type="checkbox"
-                              checked={product.published}
-                              onChange={() => handleToggleChange(product.id, "published")}
-                            />
-                            <span className="slider"></span> */}
-                            <Switch />
-                          </label>
-                        </div>
-
-                        <div>
-                          Featured:
-                          <label className="switch">
-                            {/* <input
-                              type="checkbox"
-                              checked={product.featured}
-                              onChange={() => handleToggleChange(product.id, "featured")}
-                            />
-                            <span className="slider"></span> */}
-                            <Switch />
-                          </label>
-                        </div>
-
+                        <div>Today's Deal: <Switch
+                      value={product.deal}
+                      onChangeFunc={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id ? { ...p, deal: !p.deal } : p
+                          )
+                        )
+                      }
+                    /></div>
+                        <div>Published: <Switch
+                      value={product.published}
+                      onChangeFunc={() =>
+                        setProducts((prevProducts) =>
+                          prevProducts.map((p) =>
+                            p.id === product.id
+                              ? { ...p, published: !p.published }
+                              : p
+                          )
+                        )
+                      }
+                    /></div>
+                        <div>Featured:                       <Switch
+                          value={product.featured}
+                          onChangeFunc={() =>
+                            setProducts((prevProducts) =>
+                              prevProducts.map((p) =>
+                                p.id === product.id
+                                  ? { ...p, featured: !p.featured }
+                                  : p
+                              )
+                            )
+                          }
+                        /></div>
                         <div>
                           Options:
-                          <button className="btn4 view-btn4">
-                            <FaEye />
-                          </button>
-                          <button className="btn4 edit-btn4">
-                            <FaEdit />
-                          </button>
-                          <button className="btn4 delete-btn6">
-                            <FaTrash onClick={() => openDeleteConfirmation(product.id)} />
-                          </button>
+                          <button className="btn4 view-btn4"><FaEye /></button>
+                          <button className="btn4 edit-btn4"><FaEdit /></button>
+                          <button className="btn4 delete-btn6"><FaTrash onClick={() => openDeleteConfirmation(product.id)} /></button>
                         </div>
-
                       </div>
                     </td>
                   </tr>
                 )}
-
               </>
             ))}
           </tbody>
-
-
-
-
-
-
-
-        </table>
-
-
-
-      </div>
+      </table>
+</div>
       {showDeleteConfirmation && (
         <DeleteConfirmation
           isOpen={showDeleteConfirmation}

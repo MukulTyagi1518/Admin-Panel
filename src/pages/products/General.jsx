@@ -222,22 +222,22 @@ const General = () => {
                 }}
               /> */}
               {/* <label htmlFor="refundToggle" className="toggle-label"></label> */}
-              <Switch id="refundToggle"
-                className="custom-toggle"
-                checked={isRefundable}
-                onChange={() => {
-                  setIsRefundable(!isRefundable)
+              <Switch
+                value={productData.refundable}
+                onChangeFunc={() =>
                   setProductData((prev) => ({
                     ...prev,
-                    refundable: !isRefundable ? true : false
+                    refundable: !prev.refundable,
                   }))
-                }}/>
+                }
+              />
+
             </div>
           </div>
 
 
           {/* Refund Note Section - Appears Only When Toggle is ON */}
-          {isRefundable && (
+          {productData.refundable && (
             <div className="refund-note">
               <label>Note (Add from preset)</label>
               <div className="refund-note-box">
@@ -266,15 +266,19 @@ const General = () => {
                 }))
               }}
             /> */}
-            <Switch  className="custom-toggle"
-              checked={isFeatured}
-              onChange={() => {
-                setIsFeatured(!isFeatured)
+            <Switch
+              className="custom-toggle"
+              value={isFeatured}
+              onChangeFunc={() => {
+                const newValue = !isFeatured;
+                setIsFeatured(newValue);
                 setProductData((prev) => ({
                   ...prev,
-                  featured: !isFeatured ? true : false
-                }))
-              }}/>
+                  featured: newValue,
+                }));
+              }}
+            />
+
             {/* <label htmlFor="featuredToggle" className="toggle-label"></label> */}
             <p>If you enable this, this product will be granted as a featured product.</p>
           </div>
@@ -294,16 +298,20 @@ const General = () => {
               }}
             />
             <label htmlFor="dealToggle" className="toggle-label"></label> */}
-            <Switch id="dealToggle"
+            <Switch
+              id="dealToggle"
               className="custom-toggle"
-              checked={isTodaysDeal}
-              onChange={() => {
-                setIsTodaysDeal(!isTodaysDeal)
+              value={isTodaysDeal}
+              onChangeFunc={() => {
+                const newValue = !isTodaysDeal;
+                setIsTodaysDeal(newValue);
                 setProductData((prev) => ({
                   ...prev,
-                  todaysDeal: !isTodaysDeal ? true : false
-                }))
-              }}/>
+                  todaysDeal: newValue,
+                }));
+              }}
+            />
+
             <p>If you enable this, this product will be granted as a today's deal product.</p>
           </div>
 

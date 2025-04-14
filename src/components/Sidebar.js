@@ -198,11 +198,16 @@ const menuItems = [
     name: "Web Settings",
     icon: <FileText size={20} />,
     subItems: [
-      { name: "Home page settings", path: "/web-settings/home" },
+      { 
+        name: "Home page settings", 
+        path:"/web-settings/home",
+       },
+
       { name: "Header setting", path: "/web-settings/header" },
       { name: "Footer setting", path: "/web-settings/footer" },
       { name: "Page", path: "/web-settings/page" },
-      { name: "Subscribers", path: "/web-settings/subscribers" },
+      
+      { name: "Apearence", path: "/web-settings/apearence" },
     ],
     path: "/web-settings",
   },
@@ -246,7 +251,7 @@ const menuItems = [
       },
 
 
-      { name: "Apearence", path: "/admin-settings/apearence" },
+      
     ],
     path: "/admin-settings",
   },

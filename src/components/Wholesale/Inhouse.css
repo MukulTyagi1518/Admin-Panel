@@ -15,7 +15,9 @@
     align-items: center;
     flex-wrap: wrap; 
 }
-
+.plus{
+    color: #544f4f;
+}
 .add-btn {
     background-color: #8a3ffc;
     color: white;
@@ -60,21 +62,7 @@
     object-fit: cover;
 }
 
-/* Seller Dropdown Styles */
-/* .seller-dropdown {
-    position: relative;
-}
 
-.seller-dropdown-header {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
 
 .seller-dropdown { 
     position: relative; 
@@ -240,9 +228,7 @@ input[type="checkbox"] {
         display: table-header-group !important;
     }
 
-    .product-table4 th {
-        display: none !important; 
-    }
+   
 
    
     /* .product-table4 th:nth-child(1) {
@@ -258,10 +244,20 @@ input[type="checkbox"] {
     } */
 
  
+    .product-table4 th {
+        display: none !important;
+    }
 
+    .product-table4 th:first-child,
+    .product-table4 th:nth-child(2),
+    .product-table4 th:nth-child(3)
+         {
+        display: table-cell !important;
+    }
 
+    /* Agar chaho to checkbox dikhana ho */
     .product-table4 input[type="checkbox"] {
-        display: none;
+        display: inline-block !important;
     }
 
     .row-details {

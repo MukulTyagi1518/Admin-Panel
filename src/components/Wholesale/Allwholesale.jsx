@@ -10,7 +10,7 @@ export default function PreOrderReviews() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/wholesale/add");
+    navigate("/wholesale/Addwholesale");
   };
 
   const [expandedId, setExpandedId] = useState(null);
@@ -127,22 +127,34 @@ export default function PreOrderReviews() {
                 </td>
                 <td>{user.totalstock}</td>
                 <td>
-                  {/* <label className="switch"> */}
-                  {/* <input type="checkbox" checked={user.todaysdeal} onChange={() => handleToggleChange(user.id, "todaysdeal")} /> */}<Switch />
-                  {/* <span className="slider"></span>
-                                    </label> */}
+                  <label className="switch">
+                    {/* <input type="checkbox" checked={user.todaysdeal} onChange={() => handleToggleChange(user.id, "todaysdeal")} /><Switch/>
+                                        <span className="slider"></span> */}
+                    <Switch
+                      value={user.todaysdeal}
+                      onChangeFunc={() => handleToggleChange(user.id, "todaysdeal")}
+                    />
+
+                  </label>
                 </td>
                 <td>
-                  {/* <label className="switch"> */}
-                  {/* <input type="checkbox" checked={user.published} onChange={() => handleToggleChange(user.id, "published")} /> */}<Switch />
-                  {/* <span className="slider"></span>
-                                    </label> */}
+                  <label className="switch">
+                    <Switch
+                      value={user.published}
+                      onChangeFunc={() => handleToggleChange(user.id, "published")}
+                    />
+
+                  </label>
                 </td>
                 <td>
-                  {/* <label className="switch">
-                                        <input type="checkbox" checked={user.featured} onChange={() => handleToggleChange(user.id, "featured")} />
-                                        <span className="slider"></span>
-                                    </label> */}<Switch />
+                  <label className="switch">
+                    <Switch
+                      value={user.featured}
+                      onChangeFunc={() => handleToggleChange(user.id, "featured")}
+                    />
+
+                  </label>
+                  {/* <Switch/>  */}
                 </td>
                 <td>
                   <div className="actions">
@@ -164,16 +176,8 @@ export default function PreOrderReviews() {
 
         {/* Mobile View */}
         <div className="block md:hidden w-full">
-          {/* Header Row */}
-          <div className="grid grid-cols-3 bg-gray-200 text-gray-700 font-semibold text-sm px-4 py-2 rounded-t-lg">
-            <span></span>
-            <span className="col-span-1">ID</span>
-            <span className="col-span-1">Name</span>
-          </div>
-
-          {/* Product List */}
           {userData.map((user) => (
-            <div key={user.id} className="border-t border-gray-300 shadow-sm px-4 py-3">
+            <div key={user.id} className="border rounded-lg shadow-md mb-4 p-4">
               {/* Summary Row */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -214,21 +218,38 @@ export default function PreOrderReviews() {
 
                   {/* Toggle Switches */}
                   <div className="flex items-center">
-                    <span className="text-gray-600 font-medium">Today's Deal:</span>
-                    <label className="inline-flex items-center ml-auto">
-                      <Switch />
+                    <span className="font-medium text-gray-600">Today's Deal:</span>
+
+                    <label className="inline-flex items-center cursor-pointer  ml-3">
+                      <Switch
+                        value={user.todaysdeal}
+                        onChangeFunc={() => handleToggleChange(user.id, "todaysdeal")}
+                      />
+
+
                     </label>
                   </div>
+
                   <div className="flex items-center">
-                    <span className="text-gray-600 font-medium">Published:</span>
-                    <label className="inline-flex items-center ml-auto">
-                      <Switch />
+                    <span className="font-medium text-gray-600">Published:</span>
+                    <label className="inline-flex items-center cursor-pointer  ml-3">
+                      <Switch
+                        value={user.published}
+                        onChangeFunc={() => handleToggleChange(user.id, "published")}
+                      />
+
+                      
                     </label>
                   </div>
+
                   <div className="flex items-center">
-                    <span className="text-gray-600 font-medium">Featured:</span>
-                    <label className="inline-flex items-center ml-auto">
-                      <Switch />
+                    <span className="font-medium text-gray-600">Featured:</span>
+                    <label className="inline-flex items-center cursor-pointer  ml-3">
+                      <Switch
+                        value={user.featured}
+                        onChangeFunc={() => handleToggleChange(user.id, "featured")}
+                      />
+
                     </label>
                   </div>
                 </div>

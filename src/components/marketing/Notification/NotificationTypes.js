@@ -5,7 +5,28 @@ import { Link } from 'react-router-dom';
 
 const NotificationTypes = () => {
   const [activeTab, setActiveTab] = useState('customer');
-  const [notificationTypes, setNotificationTypes] = useState([]);
+  const [expandedRows, setExpandedRows] = useState({});
+  
+  const [notificationTypes, setNotificationTypes] = useState([
+    { id: 1, userType: 'customer', type: 'Order Placed', defaultText: 'Your Order: [[order_code]] has been Placed', image: design1Image, status: true, isDefault: true },
+    { id: 2, userType: 'customer', type: 'Order Confirmed', defaultText: 'Your Order: [[order_code]] has been Confirmed', image: '', status: true, isDefault: true },
+    { id: 3, userType: 'customer', type: 'Order Picked Up', defaultText: 'Your Order: [[order_code]] has been picked up', image: '', status: true, isDefault: true },
+    { id: 4, userType: 'customer', type: 'Order On the Way', defaultText: 'Your Order: [[order_code]] is on the way', image: '', status: true, isDefault: true },
+    { id: 5, userType: 'customer', type: 'Order Delivered', defaultText: 'Your Order: [[order_code]] has been delivered', image: '', status: true, isDefault: true },
+    { id: 6, userType: 'customer', type: 'Order Cancelled', defaultText: 'Your Order: [[order_code]] has been cancelled', image: '', status: true, isDefault: true },
+    { id: 7, userType: 'customer', type: 'Successful Payment', defaultText: 'Your payment for order: [[order_code]] is successful', image: '', status: true, isDefault: true },
+    { id: 8, userType: 'customer', type: 'Complete Unpaid Order Payment', defaultText: 'Your order: [[order_code]] is still not paid for. Kindly complete your payment.', image: '', status: true, isDefault: true },
+    { id: 9, userType: 'customer', type: 'SALE', defaultText: 'Sale Offer', image: '', status: true, isDefault: false },
+    { id: 10, userType: 'customer', type: 'Coupon Sale', defaultText: 'A Big Coupon Offer', image: '', status: true, isDefault: false },
+    // Seller notifications
+    { id: 11, userType: 'seller', type: 'New Order', defaultText: 'You have a new order: [[order_code]]', image: '', status: true, isDefault: true },
+    { id: 12, userType: 'seller', type: 'Order Cancelled', defaultText: 'Order [[order_code]] has been cancelled', image: '', status: true, isDefault: true },
+    { id: 13, userType: 'seller', type: 'Payment Received', defaultText: 'Payment received for order: [[order_code]]', image: '', status: true, isDefault: true },
+    // Admin notifications
+    { id: 14, userType: 'admin', type: 'New User Registered', defaultText: 'A new user has registered: [[user_name]]', image: '', status: true, isDefault: true },
+    { id: 15, userType: 'admin', type: 'New Seller Applied', defaultText: 'A new seller has applied: [[seller_name]]', image: '', status: true, isDefault: true },
+  ]);
+
   const [newNotification, setNewNotification] = useState({
     type: '',
     defaultText: '',

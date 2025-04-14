@@ -3,6 +3,7 @@ import { useProductContext } from "../../productContex";
 import "./Shipping.css";
 import { type } from "@testing-library/user-event/dist/type";
 import { Link } from "react-router-dom";
+import Switch from "../../components/Switch";
 
 const ShippingConfig = () => {
   const { productData, setProductData } = useProductContext();
@@ -65,48 +66,55 @@ const ShippingConfig = () => {
       <div className="shipping-option-new">
         <span>Cash On Delivery</span>
         <label className="toggle-switch-new">
-          <input
-            type="checkbox"
-            checked={cashOnDelivery}
-            onChange={handleTogglecashOnDelivery}
-          />
-          <span className="toggle-slider-new"></span>
+        <Switch
+  className="custom-toggle"
+  value={cashOnDelivery}
+  onChangeFunc={() => setCashOnDelivery(!cashOnDelivery)}
+/>
+
         </label>
       </div>
 
       <div className="shipping-option-new">
         <span>Free Shipping</span>
         <label className="toggle-switch-new">
-          <input
-            type="checkbox"
-            checked={productData.freeShipping}
-            onChange={handleTogglefreeShiping}
-          />
-          <span className="toggle-slider-new"></span>
+        <Switch
+  className="custom-toggle"
+  value={productData.freeShipping}
+  onChangeFunc={() =>
+    setProductData((prev) => ({
+      ...prev,
+      freeShipping: !prev.freeShipping,
+    }))
+  }
+/>
+
         </label>
       </div>
 
       <div className="shipping-option-new">
         <span>Flat Rate</span>
         <label className="toggle-switch-new">
-          <input
-            type="checkbox"
-            checked={flatRate}
-            onChange={handleToggleflatRate}
-          />
-          <span className="toggle-slider-new"></span>
+        <Switch
+  className="custom-toggle"
+  value={flatRate}
+  onChangeFunc={() => setFlatRate((prev) => !prev)}
+/>
+
         </label>
       </div>
 
       <div className="shipping-option-new">
         <span>Is Product Quantity Multiply</span>
         <label className="toggle-switch-new">
-          <input
-            type="checkbox"
-            checked={productQuantityMultiply}
-            onChange={handleToggleproductQuantityMultiply}
-          />
-          <span className="toggle-slider-new"></span>
+        <Switch
+  className="custom-toggle"
+  value={productQuantityMultiply}
+  onChangeFunc={() =>
+    setProductQuantityMultiply((prev) => !prev)
+  }
+/>
+
         </label>
       </div>
 

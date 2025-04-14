@@ -5,17 +5,15 @@ import OrderHeader from "./OrderHeader";
 import Pagination from "../Pagination";
 import { useMediaQuery } from 'react-responsive';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { useOrdersContext } from "../../context/ordersContext";
 
-const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
-  const [orders, setOrders] = useState([
-    { id: 1, code: "ORD001", products: 2, customer: "John Doe", seller: "InHouse Order", amount: "$100.00", deliveryStatus: "Pending", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "No", date: "2023-05-15" },
-    { id: 2, code: "ORD002", products: 3, customer: "Jane Smith", seller: "Seller", amount: "$150.00", deliveryStatus: "Shipping", paymentMethod: "PayPal", paymentStatus: "Paid", refund: "No", date: "2023-05-16" },
-    { id: 3, code: "ORD003", products: 1, customer: "Alice Johnson", seller: "Seller", amount: "$50.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes", date: "2023-05-17" },
-    { id: 4, code: "ORD004", products: 4, customer: "Bob Brown", seller: "Seller", amount: "$200.00", deliveryStatus: "Pending", paymentMethod: "Credit Card", paymentStatus: "Unpaid", refund: "No", date: "2023-05-18" },
-    { id: 5, code: "ORD005", products: 2, customer: "Charlie Davis", seller: "InHouse Order", amount: "$120.00", deliveryStatus: "Shipping", paymentMethod: "PayPal", paymentStatus: "Paid", refund: "No", date: "2023-05-19" },
-    { id: 6, code: "ORD006", products: 1, customer: "Eve White", seller: "Seller", amount: "$80.00", deliveryStatus: "Completed", paymentMethod: "Credit Card", paymentStatus: "Paid", refund: "Yes", date: "2023-05-20" },
-  ]);
-  
+
+function LatestOrders({ customFilter, title = "Latest allOrders" }) {
+
+
+  const { allOrders, setAllOrders } = useOrdersContext()
+
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,32 +32,32 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
   const [expandedOrders, setExpandedOrders] = useState([]);
 
   const [isAllSelected, setIsAllSelected] = useState(false); // State to track if all checkboxes are selected
-  const [selectedOrders, setSelectedOrders] = useState([]); // State to track selected orders
+  const [selectedOrders, setSelectedOrders] = useState([]); // State to track selected allOrders
 
-  // Filter orders based on search term and filters
-  const filteredOrders = orders.filter(order => {
+  // Filter allOrders based on search term and filters
+  const filteredOrders = allOrders.filter(order => {
     // Search term filter
-    const matchesSearch = 
+    const matchesSearch =
       order.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.deliveryStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.paymentStatus.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     // Delivery status filter
-    const matchesDelivery = filters.delivery === "All" || 
+    const matchesDelivery = filters.delivery === "All" ||
       order.deliveryStatus === filters.delivery;
-    
+
     // Payment status filter
-    const matchesPayment = filters.payment === "All" || 
+    const matchesPayment = filters.payment === "All" ||
       order.paymentStatus === filters.payment;
-    
+
     // Date filter (simplified for demo)
-    const matchesDate = filters.date === "All" || 
+    const matchesDate = filters.date === "All" ||
       (filters.date === "Today" && order.date === new Date().toISOString().split('T')[0]) ||
       (filters.date === "Last 7 Days" && isWithinLastNDays(order.date, 7)) ||
       (filters.date === "This Month" && isThisMonth(order.date));
-    
+
     return matchesSearch && matchesDelivery && matchesPayment && matchesDate;
   });
 
@@ -82,8 +80,8 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
   const handleBulkAction = (action) => {
     // In a real app, you would update the server and then the local state
     // For demo, we'll just update the local state
-    let updatedOrders = [...orders];
-  
+    let updatedOrders = [...allOrders];
+
     switch (action) {
       case "Mark as Delivered":
         updatedOrders = updatedOrders.map((order) =>
@@ -103,13 +101,13 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
         updatedOrders = updatedOrders.filter(
           (order) => !selectedOrders.includes(order.id)
         );
-        setSelectedOrders([]); // Clear selected orders after deletion
+        setSelectedOrders([]); // Clear selected allOrders after deletion
         break;
       default:
         break;
     }
-  
-    setOrders(updatedOrders);
+
+    setAllOrders(updatedOrders);
     setFilters((prev) => ({ ...prev, bulk: null })); // Reset bulk filter
   };
 
@@ -129,18 +127,18 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  
+
   const handleDelete = (id) => {
     setRoleToDelete(id);
     setShowDeleteConfirmation(true);
   };
-  
+
   const confirmDelete = async () => {
     try {
       setIsLoading(true);
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500));
-      setOrders(orders.filter(order => order.id !== roleToDelete));
+      setAllOrders(allOrders.filter(order => order.id !== roleToDelete));
       setShowDeleteConfirmation(false);
       setRoleToDelete(null);
       setIsLoading(false);
@@ -173,12 +171,12 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
   // Handle filter changes from OrderHeader
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({ ...prev, [filterType]: value }));
-    
+
     // If it's a bulk action, perform it immediately
     if (filterType === "bulk" && value !== "Bulk Action") {
       handleBulkAction(value);
     }
-    
+
     // Reset to page 1 when filters change
     setCurrentPage(1);
   };
@@ -195,7 +193,7 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
       setSelectedOrders([]);
     } else {
       // Select all
-      setSelectedOrders(orders.map(order => order.id));
+      setSelectedOrders(allOrders.map(order => order.id));
     }
     setIsAllSelected(!isAllSelected);
   };
@@ -212,13 +210,13 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
 
   useEffect(() => {
     // Update the "Select All" checkbox state based on individual selections
-    setIsAllSelected(selectedOrders.length === orders.length);
-  }, [selectedOrders, orders]);
+    setIsAllSelected(selectedOrders.length === allOrders.length);
+  }, [selectedOrders, allOrders]);
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mx-auto">
-      <OrderHeader 
-        onFilterChange={handleFilterChange} 
+      <OrderHeader
+        onFilterChange={handleFilterChange}
         onSearch={handleSearch}
         currentFilters={filters}
       />
@@ -297,17 +295,17 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                       <EyeIcon className="text-cyan-400 hover:text-gray-600 cursor-pointer" />
                     </div> */}
                     <div className="flex items-center gap-[.2cm]">
-                                        <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
-                                            <Eye size={15} color="blue" />
-                                        </div>
-                                        <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
-                                            <Download size={15} color="blueviolet" />
-                                        </div>
+                      <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
+                      </div>
+                      <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+                        <Download size={15} color="blueviolet" />
+                      </div>
 
-                                        <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
-                                            <Trash size={15} color="red"  />
-                                        </div>
-                                    </div>
+                      <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" />
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 {expandedOrders.includes(order.id) && isBelow1400 && (
@@ -348,8 +346,8 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                             <td className="py-2 px-4">{order.paymentStatus}</td>
                           </tr>
                           <tr>
-                             <td className="py-2 px-4 font-semibold">Refund</td>
-                             <td className="py-2 px-4">{order.refund}</td>
+                            <td className="py-2 px-4 font-semibold">Refund</td>
+                            <td className="py-2 px-4">{order.refund}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -376,13 +374,13 @@ const LatestOrders = ({ customFilter, title = "Latest Orders" }) => {
                 <p>Are you sure you want to delete this order?</p>
               </div>
               <div className="flex justify-end space-x-3">
-                <button 
+                <button
                   className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
                   onClick={cancelDelete}
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                   onClick={confirmDelete}
                 >
