@@ -273,13 +273,8 @@ const ProductTable = () => {
                       </td>
                     )
                   )}
-<<<<<<< HEAD
-                  <td className="p-3 border-none mt-4 flex space-x-2">
-                    <button
-=======
                   <td className="p-3 flex space-x-2">
                     {/* <button
->>>>>>> origin/smita
                       className="bg-green-100 p-2 rounded-full hover:bg-green-200 transition"
                       title="View"
                     >
@@ -352,60 +347,6 @@ const ProductTable = () => {
 
 
           {products.map((product) => (
-<<<<<<< HEAD
-           <div className="mt-5 space-y-2 bg-gray-50 p-3 rounded-md">
-           <div className="flex justify-between">
-             <span className="font-medium">Added By:</span>
-             <span>{product.seller}</span>
-           </div>
-           <div className="flex justify-between">
-             <span className="font-medium">Sales:</span>
-             <span>{product.sales} times</span>
-           </div>
-           <div className="flex justify-between">
-             <span className="font-medium">Price:</span>
-             <span>${product.price.toFixed(2)}</span>
-           </div>
-           <div className="flex justify-between">
-             <span className="font-medium">Rating:</span>
-             <span>{product.rating}</span>
-           </div>
-           <div className="flex justify-between items-center">
-             <span className="font-medium">Stock:</span>
-             <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full">
-               {product.stock}
-             </span>
-           </div>
-         
-           {["todayDeal", "published", "approved", "featured"].map((field) => (
-             <div className="flex justify-between items-center" key={field}>
-               <span className="font-medium">{field}:</span>
-               <label className=" ml-3 mt-1">
-                 <Switch
-                   value={product[field]}
-                   onChangeFunc={() => toggleProductStatus(product.id, field)}
-                 />
-               </label>
-             </div>
-           ))}
-         
-           <div className="flex justify-start space-x-2 mt-3 items-center">
-             <span className="font-medium">Options:</span>
-             <button className="bg-green-100 p-2 rounded-full">
-               <FaEye className="text-green-500" />
-             </button>
-             <button className="bg-blue-100 p-2 rounded-full">
-               <FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" />
-             </button>
-             <button className="bg-red-100 p-2 rounded-full">
-               <FaTrash className="text-red-500" />
-             </button>
-             <button className="bg-yellow-100 p-2 rounded-full">
-               <HiOutlineDuplicate className="text-yellow-500" />
-             </button>
-           </div>
-         </div>
-=======
             <div key={product.id} className="border p-3 mb-3 rounded-lg">
               <div className="flex  items-center">
                 {/* <button onClick={() => toggleExpand(product.id)} className="p-2">
@@ -489,7 +430,6 @@ const ProductTable = () => {
                 </div>
               )}
             </div>
->>>>>>> origin/smita
           ))}
         </div>
       </div>

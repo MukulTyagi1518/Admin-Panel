@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./EditInhouse.css";
+import "./Editinhouse.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
 import { Link, useParams } from "react-router-dom"
-import ProductCategory from "../../components/ProductCategory";
+import ProductCategory from "../ProductCategory";
 import Switch from "../Switch";
 
 const General = () => {

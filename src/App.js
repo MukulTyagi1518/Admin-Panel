@@ -138,7 +138,7 @@ import QueriesDetail from "./components/QueriesDetail.js";
 import AddNewBrand from "./pages/products/AddNewBrand.js";
 import AddNewColor from "./pages/products/AddNewColor.js";
 
-import Editinhouse from "./components/Edit/Editinhoue.jsx";
+import Editinhouse from "./components/Edit/Editinhouse.jsx";
 import Editattribute from "./components/Edit/Editattribute.jsx";
 import Adminsetting from "./components/Adminsetting/Adminsetting.jsx";
 import Vaxtax from "./components/Adminsetting/Vaxtax.jsx";
@@ -148,20 +148,11 @@ import Addpage from "./components/websetting/Addpage.jsx";
 import Editpage from "./components/websetting/Editpage.jsx";
 import Headerpage from "./components/websetting/Headerpage.jsx";
 
-import Editinhouse from "./components/Edit/Editinhoue.jsx"
-import Editattribute from "./components/Edit/Editattribute.jsx"
-import Adminsetting from "./components/Adminsetting/Adminsetting.jsx"
-import Vaxtax from "./components/Adminsetting/Vaxtax.jsx"
-import Edittax from "./components/Adminsetting/Edittax.jsx"
-import Pages from "./components/websetting/pages.jsx"
-import Addpage from "./components/websetting/Addpage.jsx"
-import Editpage from "./components/websetting/Editpage.jsx"
-import Headerpage from "./components/websetting/Headerpage.jsx"
-import FooterWidget from "./components/websetting/footerpage.jsx";
+import FooterWidget from "./components/websetting/Footerpage.jsx"
 import Appeareance from "./components/websetting/Appearence.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
-import AttributeDetail from "./pages/products/AttributeDetail.js";
+import AttributeDetail from "./pages/products/AttributeDetail.js"
 import NotificationTypes from "./components/marketing/Notification/NotificationTypes.js";
 import AttributeValueInfo from "./pages/products/AttributeValueInfo.js";
 // import HeaderDetails from "./components/webSettings/headerSettings/HeaderDetails.js";
@@ -172,6 +163,8 @@ import CustomNotification from "./components/marketing/Notification/CustomNotifi
 import CustomNotificationHistory from "./components/marketing/Notification/CustomNotificationHistory.js";
 // import HomePageSettings from "./pages/HomePageSettings.js";
 import Homesetting from "./components/Homesetting/Homesetting.jsx";
+import AllDeliveryPartners from "./components/delivery/AllDeliveryPartners.js";
+import OrderHistoryModal from "./components/delivery/component/OrderHistoryModal.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -508,6 +501,8 @@ function App() {
                   path="registration"
                   element={<DeliveryPartnerRegistration />}
                 />
+                <Route path="all" element={<AllDeliveryPartners />} />
+                <Route path="all/view" element={<OrderHistoryModal />} />
                 <Route path="active" element={<ActiveDeliveryPartner />} />
                 <Route path="inactive" element={<InActiveDeliveryPartner />} />
                 <Route path="pending" element={<PendingDeliveryPartner />} />
@@ -544,17 +539,18 @@ function App() {
 
               <Route path="/web-settings">
                 <Route path="header" element={<Headerpage />} />
-                <Route path="footer" element={<Footer />} />
+                <Route path="footer" element={<FooterWidget />} />
                 <Route path="page" element={<Pages />} />
+                </Route>
 
-              <Route path='/web-settings' >
+              <Route path='/web-settings'>
 
 
 
                 <Route path='header' element={<Headerpage />} />
                 {/* <Route path='footer' element={<Footer />} /> */}
                 <Route path='page' element={<Pages />} />
-                <Route path="home" element={<Homesetting />} >
+                <Route path="home" element={<Homesetting />}>
                   <Route path='homeslider' element={<HomeSlider />} />
                   <Route path='todaysdeal' element={<TodaysDeals />} />
                   <Route path='banner1' element={<BannerLevel1 />} />
@@ -564,10 +560,8 @@ function App() {
                   <Route path='auction' element={<AuctionBanner />} />
                   <Route path='categorywise' element={<CategoryWiseProducts />} />
                   <Route path='classifieds' element={<Classified />} />
-                  <Route path='newest' element={<NewestPreorderProducts/>} />
-                  <Route path='topbrands' element={<TopBrands/>} />
-
-
+                  <Route path='newest' element={<NewestPreorderProducts />} />
+                  <Route path='topbrands' element={<TopBrands />} />
                 </Route>
                 <Route path="addpage" element={<Addpage />} />
                 <Route path="editaddpage" element={<Editpage />} />

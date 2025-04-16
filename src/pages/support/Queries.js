@@ -273,39 +273,6 @@ const Queries = () => {
           ))}
         </tbody> */}
         <thead>
-<<<<<<< HEAD
-  <tr>
-    <th></th>
-    <th>#</th>
-    <th>User Name</th>
-    <th className="hide-on-small">Product Name</th>
-    <th className="hide-on-small">Question</th>
-    <th className="hide-on-small">Reply</th>
-    <th className="hide-on-small">Status</th>
-    <th>Options</th>
-  </tr>
-</thead>
-<tbody>
-  {queries.map((item, index) => (
-    <React.Fragment key={item.id}>
-      <tr>
-        <td>
-          <button className="expand-btn" onClick={() => toggleRow(index)}>+</button>
-        </td>
-        <td>{item.id}</td>
-        <td>{item.user}</td>
-        <td className="hide-on-small">{item.product}</td>
-        <td className="hide-on-small">{item.question}</td>
-        <td className="hide-on-small">{item.reply || "—"}</td>
-        <td className="hide-on-small">
-          <span className="status">{item.status}</span>
-        </td>
-        <td>
-          <button className="icon-btn" onClick={handleViewReplyPage}><FaEye /></button>
-        </td>
-      </tr>
-      {/* {expandedRows[index] && (
-=======
           <tr>
             <th></th>
             <th>#</th>
@@ -349,7 +316,6 @@ const Queries = () => {
                 </td>
               </tr>
               {/* {expandedRows[index] && (
->>>>>>> origin/smita
         <tr className="expand-row">
           <td colSpan="8">
             <strong>Product Name:</strong> {item.product}<br />

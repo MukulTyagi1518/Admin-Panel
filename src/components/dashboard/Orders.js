@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ClockIcon,
   CheckCircleIcon,
@@ -17,6 +17,7 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -54,20 +55,63 @@ function OrderStatusCard({
 
 const Orders = () => {
   const [orderData, setOrderData] = useState({
-    placed: 50,
-    confirmed: 50,
-    processed: 35,
-    pending: 15,
-    shipped: 25,
+    placed: 0,
+    delivered: 0,
+    processed: 0,
+    pending: 0,
+    shipped: 0,
   });
 
-  const totalOrders = Object.values(orderData).reduce(
-    (acc, value) => acc + value,
-    0
-  );
+  const [totalOrders, setTotalOrders] = useState(0);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/orders/list");
+        const orders = response.data;
+
+        const statusCounts = {
+          placed: 0,
+          delivered: 0,
+          processed: 0,
+          pending: 0,
+          shipped: 0,
+        };
+
+        orders.forEach((order) => {
+          switch (order.DeliveryStatus.toLowerCase()) {
+            case "placed":
+              statusCounts.placed++;
+              break;
+            case "delivered":
+              statusCounts.delivered++;
+              break;
+            case "processed":
+              statusCounts.processed++;
+              break;
+            case "pending":
+              statusCounts.pending++;
+              break;
+            case "shipped":
+              statusCounts.shipped++;
+              break;
+            default:
+              break;
+          }
+        });
+
+        setOrderData(statusCounts);
+        setTotalOrders(orders.length);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const pieChartData = {
-    labels: ["Placed", "Confirmed", "Processed", "Pending", "Shipped"],
+    labels: ["Placed", "Delivered", "Processed", "Pending", "Shipped"],
     datasets: [
       {
         data: Object.values(orderData),
@@ -122,8 +166,8 @@ const Orders = () => {
         />
         <OrderStatusCard
           icon={<CheckCircleIcon />}
-          label="Confirmed Order"
-          value={orderData.confirmed}
+          label="Delivered Order"
+          value={orderData.delivered}
           bgColor="bg-green-100"
           textColor="text-green-700"
           iconColor="text-green-600"

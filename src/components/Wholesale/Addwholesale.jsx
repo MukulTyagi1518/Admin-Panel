@@ -516,13 +516,8 @@ export default function PreOrderFaq() {
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                <div className="prerow-whole">
-                    <div className="preOrderFaqRight-new">
-=======
                 <div className="prerow   ">
                     <div className="preOrderFaqRight-new2">
->>>>>>> origin/smita
 
                         <div className="preOrderFaqRightHead">
                             <p className="allFaq">Product category</p>
