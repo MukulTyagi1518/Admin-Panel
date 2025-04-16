@@ -771,7 +771,10 @@
 import React, { useState } from 'react';
 import Switch from '../Switch';
 
+
 function PaymentMethod() {
+  const [isRazorpayEnabled, setIsRazorpayEnabled] = useState(false);
+
   const [razorpay, setRazorpay] = useState({
     razorKey: '',
     razorSecret: '',
@@ -833,7 +836,9 @@ function PaymentMethod() {
             <h2 className="text-lg font-semibold justify-start mr-4">Razorpay Payment</h2>
           </div>
           <label className="inline-flex items-center cursor-pointer">
-            <span className="mr-2 "><Switch /></span>
+            {/* <span className="mr-2 "><Switch /></span> */}
+            <Switch checked={isRazorpayEnabled} onChange={() => setIsRazorpayEnabled(!isRazorpayEnabled)} />
+
           </label>
         </div>
         <form onSubmit={handlePayment}>

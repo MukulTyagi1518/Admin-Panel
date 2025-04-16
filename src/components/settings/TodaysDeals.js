@@ -236,7 +236,7 @@ const TodaysDeals = () => {
         <div className="flex gap-4">
           {["Light", "Dark"].map((option) => (
             <label key={option} className="flex items-center">
-              <input
+              {/* <input
                 type="radio"
                 name="textColor"
                 value={option}
@@ -245,6 +245,16 @@ const TodaysDeals = () => {
                   setFormState((prev) => ({ ...prev, textColor: e.target.value }))
                 }
                 className="mr-2"
+              /> */}
+              <input
+                type="radio"
+                name="textColor"
+                value={option}
+                checked={formState.textColor === option}
+                onChange={(e) =>
+                  setFormState((prev) => ({ ...prev, textColor: e.target.value }))
+                }
+                className="mr-2 w-5 h-5"
               />
               {option}
             </label>

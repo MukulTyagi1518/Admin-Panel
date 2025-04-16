@@ -3,6 +3,8 @@ import "./Inhouse.css";
 import { FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Switch from "../Switch";
 import DeleteConfirmation from "../DeleteConfirmation";
+import ViewExpandData from "../ViewExpandData";
+import { Edit, Eye, EyeIcon, Trash } from "lucide-react";
 
 const InhouseProduct = () => {
   const [products, setProducts] = useState([
@@ -266,7 +268,7 @@ const InhouseProduct = () => {
         <table>
           <thead>
             <tr>
-            <th className="lg:hidden"></th>
+              <th className="lg:hidden"></th>
               <th>
                 <input type="checkbox" />
               </th>
@@ -285,7 +287,7 @@ const InhouseProduct = () => {
             {products.map((product) => (
               <>
                 <tr key={product.id}>
-                <td>
+                  <td>
                   <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""
                         }`}
@@ -300,11 +302,12 @@ const InhouseProduct = () => {
                       }
                     >
                       
-                      +
+                      <EyeIcon size={18} color="blue" />
                      
                     </div>
 
                   </td>
+                  
                   <td>
                     <input
                       type="checkbox"
@@ -376,9 +379,19 @@ const InhouseProduct = () => {
                     />
                   </td>
                   <td className="hide-on-small">
-                    <button className="btn4 view-btn4"><FaEye /></button>
+                    {/* <button className="btn4 view-btn4"><FaEye /></button>
                     <button className="btn4 edit-btn4"><FaEdit /></button>
-                    <button className="btn4 delete-btn6"><FaTrash onClick={() => openDeleteConfirmation(product.id)} /></button>
+                    <button className="btn4 delete-btn6"><FaTrash onClick={() => openDeleteConfirmation(product.id)} /></button> */}
+                    <div className=" btn4 view-btn4 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                      <Eye size={15} color="blue" />
+                    </div>
+                    <div className=" btn4 edit-btn4 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                      <Edit size={15} color="orange" />
+                    </div>
+
+                    <div className="btn4 delete-btn4 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                      <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)} />
+                    </div>
                   </td>
                 </tr>
                 {product.expanded && (
@@ -389,27 +402,27 @@ const InhouseProduct = () => {
                         <div>Info: Sale {product.info.sale} times, Price {product.info.price}, Rating {product.info.rating}</div>
                         <div className="total">Total Stock: {product.stock}</div>
                         <div>Today's Deal: <Switch
-                      value={product.deal}
-                      onChangeFunc={() =>
-                        setProducts((prevProducts) =>
-                          prevProducts.map((p) =>
-                            p.id === product.id ? { ...p, deal: !p.deal } : p
-                          )
-                        )
-                      }
-                    /></div>
+                          value={product.deal}
+                          onChangeFunc={() =>
+                            setProducts((prevProducts) =>
+                              prevProducts.map((p) =>
+                                p.id === product.id ? { ...p, deal: !p.deal } : p
+                              )
+                            )
+                          }
+                        /></div>
                         <div>Published: <Switch
-                      value={product.published}
-                      onChangeFunc={() =>
-                        setProducts((prevProducts) =>
-                          prevProducts.map((p) =>
-                            p.id === product.id
-                              ? { ...p, published: !p.published }
-                              : p
-                          )
-                        )
-                      }
-                    /></div>
+                          value={product.published}
+                          onChangeFunc={() =>
+                            setProducts((prevProducts) =>
+                              prevProducts.map((p) =>
+                                p.id === product.id
+                                  ? { ...p, published: !p.published }
+                                  : p
+                              )
+                            )
+                          }
+                        /></div>
                         <div>Featured:                       <Switch
                           value={product.featured}
                           onChangeFunc={() =>
@@ -424,9 +437,19 @@ const InhouseProduct = () => {
                         /></div>
                         <div>
                           Options:
-                          <button className="btn4 view-btn4"><FaEye /></button>
+                          {/* <button className="btn4 view-btn4"><FaEye /></button>
                           <button className="btn4 edit-btn4"><FaEdit /></button>
-                          <button className="btn4 delete-btn6"><FaTrash onClick={() => openDeleteConfirmation(product.id)} /></button>
+                          <button className="btn4 delete-btn6"><FaTrash onClick={() => openDeleteConfirmation(product.id)} /></button> */}
+                          <div className=" btn4 view-btn4 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                      <Eye size={15} color="blue" />
+                    </div>
+                    <div className=" btn4 edit-btn4 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                      <Edit size={15} color="orange" />
+                    </div>
+
+                    <div className="btn4 delete-btn4 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                      <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)} />
+                    </div>
                         </div>
                       </div>
                     </td>

@@ -193,6 +193,7 @@ import "./Queries.css";
 import { FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ViewExpandData from "../../components/ViewExpandData";
 
 const Queries = () => {
   const [queries, setQueries] = useState([]);
@@ -272,37 +273,49 @@ const Queries = () => {
           ))}
         </tbody> */}
         <thead>
-  <tr>
-    <th></th>
-    <th>#</th>
-    <th>User Name</th>
-    <th className="hide-on-small">Product Name</th>
-    <th className="hide-on-small">Question</th>
-    <th className="hide-on-small">Reply</th>
-    <th className="hide-on-small">Status</th>
-    <th>Options</th>
-  </tr>
-</thead>
-<tbody>
-  {data.map((item, index) => (
-    <React.Fragment key={item.id}>
-      <tr>
-        <td>
-          <button className="expand-btn" onClick={() => toggleRow(index)}>+</button>
-        </td>
-        <td>{item.id}</td>
-        <td>{item.user}</td>
-        <td className="hide-on-small">{item.product}</td>
-        <td className="hide-on-small">{item.question}</td>
-        <td className="hide-on-small">{item.reply || "—"}</td>
-        <td className="hide-on-small">
-          <span className="status">{item.status}</span>
-        </td>
-        <td>
-          <button className="icon-btn" onClick={handlereview}><FaEye /></button>
-        </td>
-      </tr>
-      {/* {expandedRows[index] && (
+          <tr>
+            <th></th>
+            <th>#</th>
+            <th>User Name</th>
+            <th className="hide-on-small">Product Name</th>
+            <th className="hide-on-small">Question</th>
+            <th className="hide-on-small">Reply</th>
+            <th className="hide-on-small">Status</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          {queries.map((item, index) => (
+            <React.Fragment key={item.id}>
+              <tr>
+                <td>
+                  {/* <button className="expand-btn" onClick={() => toggleRow(index)}>+</button> */}
+                  <ViewExpandData
+                    isExpanded={expandedRows[index]}
+                    toggleExpanded={() => toggleRow(index)}
+                  />
+                </td>
+
+                <td>{item.id}</td>
+                <td>{item.user}</td>
+                <td className="hide-on-small">{item.product}</td>
+                <td className="hide-on-small">{item.question}</td>
+                <td className="hide-on-small">{item.reply || "—"}</td>
+                <td className="hide-on-small">
+                  <span className="status">{item.status}</span>
+                </td>
+                <td>
+                  {/* <button className="icon-btn" onClick={handlereview}><FaEye /></button> */}
+                  <div className="flex gap-2">
+                    <button className="btn8 text-green-500 pl-1">
+                      <FaEye  onClick={() => handleViewReplyPage(item._id)}/>
+                    </button>
+
+
+                  </div>
+                </td>
+              </tr>
+              {/* {expandedRows[index] && (
         <tr className="expand-row">
           <td colSpan="8">
             <strong>Product Name:</strong> {item.product}<br />
@@ -312,10 +325,10 @@ const Queries = () => {
           </td>
         </tr>
       )} */}
-        {expandedRows[index] && (
+              {expandedRows[index] && (
                 <tr className="expand-row">
                   <td colSpan="8">
-                    <table className="min-w-full bg-gray-100 p-4">
+                    <table className="w-full bg-gray-100 p-4">
                       <tbody>
                         <tr className="border-b inline-flex">
                           <td className="py-2 px-4 font-semibold">Product Name</td>
@@ -338,9 +351,9 @@ const Queries = () => {
                   </td>
                 </tr>
               )}
-    </React.Fragment>
-  ))}
-</tbody>
+            </React.Fragment>
+          ))}
+        </tbody>
 
       </table>
     </div>

@@ -4,15 +4,17 @@ import { TfiDownload } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import Switch from "../../../components/Switch";
 import DeleteConfirmation from "../../../components/DeleteConfirmation";
+import ViewExpandData from "../../../components/ViewExpandData";
+import { Download, Edit, Eye, Trash } from "lucide-react";
 
 const ProductTable = () => {
 
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
-    navigate(`/editinhouse`); 
+    navigate(`/editinhouse`);
   }
-  
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -36,27 +38,27 @@ const ProductTable = () => {
     },
   ]);
 
-   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-   const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
-    const [roleToDelete, setRoleToDelete] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
 
-    const openDeleteConfirmation = (id) => {
-      setAttributeToDeleteId(id);
-      setShowDeleteConfirmation(true);
-    };
-    
-    const closeDeleteConfirmation = () => {
-      setAttributeToDeleteId(null);
-      setShowDeleteConfirmation(false);
-    };
-    
-    const handleDelete = (id) => {
-      // In a real application, you would make an API call here to delete the attribute
-      console.log(`Deleting attribute with ID: ${id}`);
-      // After successful deletion, you would likely update the 'attributes' state
-      closeDeleteConfirmation();
-    };
+
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+  };
 
 
   const toggleSwitch = (id, field) => {
@@ -77,14 +79,14 @@ const ProductTable = () => {
 
   return (
     <div className="p-4">
-        <div className="flex justify-between items-center mb-4">
-  <h2 className="text-2xl font-semibold">Digital Products</h2>
-  
-  <button className="bg-purple-500 text-white px-4 py-2 rounded-full ml-auto">
-    Add New Digital Product
-  </button>
-</div>
-      
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">Digital Products</h2>
+
+        <button className="bg-purple-500 text-white px-4 py-2 rounded-full ml-auto">
+          Add New Digital Product
+        </button>
+      </div>
+
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         {/* Desktop View */}
         <table className="w-full border-collapse hidden md:table">
@@ -110,18 +112,28 @@ const ProductTable = () => {
                 {['todayDeal', 'published', 'featured'].map((field) => (
                   <td className="p-3" key={field}>
                     <label className="switch">
-                    <Switch
-  value={product[field]}
-  onChangeFunc={() => toggleSwitch(product.id, field)}
-/>
+                      <Switch
+                        value={product[field]}
+                        onChangeFunc={() => toggleSwitch(product.id, field)}
+                      />
 
                     </label>
                   </td>
                 ))}
                 <div className="p-3 flex space-x-2">
-                  <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
-                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit  onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
-                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} /></button>
+                  {/* <button className="bg-green-100 p-2 rounded-full"><TfiDownload className="text-green-500" /></button>
+                  <button className="bg-blue-100 p-2 rounded-full"><FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" /></button>
+                  <button className="bg-red-100 p-2 rounded-full"><FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} /></button> */}
+                  <div className="  p-[.2cm] bg-purple-200 text-purple-800 rounded-[50%]">
+                                                  <Download size={15} color="blue" />
+                                                </div>
+                                                <div className=" p-[.2cm] bg-[#fff4e0] rounded-[50%]">
+                                                  <Edit size={15} color="orange" onClick={() => handleEdit(product.id)}/>
+                                                </div>
+                          
+                                                <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                                  <Trash size={15} color="red"  onClick={() => openDeleteConfirmation(product.id)} />
+                                                </div>
                 </div>
               </tr>
             ))}
@@ -130,73 +142,92 @@ const ProductTable = () => {
 
         {/* Mobile View */}
         <div className="md:hidden">
-        <div className="flex items-center  bg-gray-100 px-4 py-2 rounded-lg ">
-    <div className="flex  space-x-2">
-      <span className="font-medium mr-2">#</span>
-      <span className="font-medium ml-4">Name</span>
-    </div>
-  </div>
-          
-          {products.map((product) => (
+          <div className="flex items-center  bg-gray-100 px-4 py-2 rounded-lg ">
+            <div className="flex  space-x-2">
+            <span className="font-medium mr-5 ml-4"></span>
+              <span className="font-medium mr-2">#</span>
+              <span className="font-medium ml-4">Name</span>
+            </div>
+          </div>
+
+          {products.map((product,index) => (
             <div key={product.id} className="border p-3 mb-3 rounded-lg">
               <div className="flex  items-center">
-                <button onClick={() => toggleExpand(product.id)} className="p-2">
+                {/* <button onClick={() => toggleExpand(product.id)} className="p-2">
                   {product.expanded ? "-" : "+"}
-                </button>
+                </button> */}
+                <ViewExpandData
+                isExpanded={product.expanded}
+                toggleExpanded={() => toggleExpand(product.id)}
+                className="mt-4"
+              />
+
+                
                 <div className="flex items-center space-x-2">
+                <span className="mr-2 ml-2 font-semibold">{index + 1}</span> {/* Use 'index' here */}
                   <img src={product.image} alt={product.name} className="w-10 h-10 mt-5 ml-3" />
                   <span className="">{product.name}</span>
                 </div>
               </div>
               {product.expanded && (
-  <div className="mt-3 overflow-x-auto">
-    <table className="w-full text-sm border">
-      <tbody>
-        <tr className="border-b">
-          <td className="p-2 font-semibold">Base Price</td>
-          <td className="p-2">${product.price.toFixed(2)}</td>
-        </tr>
-        {['todayDeal', 'published', 'featured'].map((field) => (
-          <tr className="border-b" key={field}>
-            <td className="p-2 font-semibold capitalize">{field.replace(/([A-Z])/g, ' $1')}</td>
-            <td className="p-2">
-              <label className="switch">
-              <Switch value={product[field]} onChangeFunc={() => toggleSwitch(product.id, field)} />
-              </label>
-            </td>
-          </tr>
-        ))}
-        <tr>
-          <td className="p-2 font-semibold">Actions</td>
-          <td className="p-2 flex space-x-2">
-            <button className="bg-green-100 p-2 rounded-full">
-              <TfiDownload className="text-green-500" />
-            </button>
-            <button className="bg-blue-100 p-2 rounded-full" onClick={() => handleEdit(product.id)}>
-              <FaEdit className="text-blue-500" />
-            </button>
-            <button className="bg-red-100 p-2 rounded-full" onClick={() => openDeleteConfirmation(product.id)}>
-              <FaTrash className="text-red-500" />
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-)}
+                <div className="mt-3 overflow-x-auto">
+                  <table className="w-full text-sm border">
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="p-2 font-semibold">Base Price</td>
+                        <td className="p-2">${product.price.toFixed(2)}</td>
+                      </tr>
+                      {['todayDeal', 'published', 'featured'].map((field) => (
+                        <tr className="border-b" key={field}>
+                          <td className="p-2 font-semibold capitalize">{field.replace(/([A-Z])/g, ' $1')}</td>
+                          <td className="p-2">
+                            <label className="switch">
+                              <Switch value={product[field]} onChangeFunc={() => toggleSwitch(product.id, field)} />
+                            </label>
+                          </td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td className="p-2 font-semibold">Actions</td>
+                        <td className="p-2 flex space-x-2">
+                          {/* <button className="bg-green-100 p-2 rounded-full">
+                            <TfiDownload className="text-green-500" />
+                          </button>
+                          <button className="bg-blue-100 p-2 rounded-full" onClick={() => handleEdit(product.id)}>
+                            <FaEdit className="text-blue-500" />
+                          </button>
+                          <button className="bg-red-100 p-2 rounded-full" onClick={() => openDeleteConfirmation(product.id)}>
+                            <FaTrash className="text-red-500" />
+                          </button> */}
+                          <div className="  p-[.1cm] bg-purple-200 text-purple-800 rounded-[50%]">
+                                                  <Download size={15} color="blue" />
+                                                </div>
+                                                <div className=" p-[.1cm] bg-[#fff4e0] text-yellow-800 rounded-[50%]">
+                                                  <Edit size={15} color="orange" onClick={() => handleEdit(product.id)}/>
+                                                </div>
+                          
+                                                <div className=" p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                                  <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)} />
+                                                </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
 
             </div>
           ))}
         </div>
       </div>
       {showDeleteConfirmation && (
-                <DeleteConfirmation
-                                    isOpen={showDeleteConfirmation}
-                    onConfirm={() => handleDelete(attributeToDeleteId)}
-                    onCancel={closeDeleteConfirmation}
-                   
-                />
-            )}
+        <DeleteConfirmation
+          isOpen={showDeleteConfirmation}
+          onConfirm={() => handleDelete(attributeToDeleteId)}
+          onCancel={closeDeleteConfirmation}
+
+        />
+      )}
     </div>
   );
 };

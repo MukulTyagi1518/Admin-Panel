@@ -5,6 +5,8 @@ import Switch from "../../components/Switch";
 import { useNavigate } from "react-router-dom";
 import FilterComponent from "../../components/FilterComponent";
 import ViewExpandData from "../../components/ViewExpandData";
+import DeleteConfirmation from "../../components/DeleteConfirmation";
+import { Edit, Eye, EyeIcon, Trash } from "lucide-react";
 
 const InhouseProduct = () => {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ const InhouseProduct = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   // const [expandedRow, setExpandedRow] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
 
   const [products, setProducts] = useState([
     {
@@ -149,6 +153,24 @@ const InhouseProduct = () => {
     );
   };
 
+
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+  
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+  
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+  };
+
   const filteredProducts = products.filter((product) => {
     // Search filter
     const matchesSearch =
@@ -242,7 +264,7 @@ const InhouseProduct = () => {
                 <tr key={product.id}>
                   <td>
                   <div
-                      className={`plus-icon ${product.expanded ? "rotate" : ""
+                      className={`plus-icon ${product.expanded ? "" : ""
                         }`}
                       onClick={() =>
                         setProducts((prevProducts) =>
@@ -253,9 +275,16 @@ const InhouseProduct = () => {
                           )
                         )
                       }
+                      
                     >
                       
-                      <ViewExpandData isExpanded={isExpanded} toggleExpanded={toggleExpanded} />
+                      {/* <ViewExpandData  isExpanded={isExpanded} toggleExpanded={toggleExpanded} /> */
+                      }
+   <EyeIcon size={18} color="blue" />
+  
+                    
+                            
+                        
                      
                     </div>
 
@@ -357,15 +386,26 @@ const InhouseProduct = () => {
                     </label>
                   </td>
                   <td className="hide-on-small ">
-                    <button className="btn3 view-btn3">
+                    {/* <button className="btn3 view-btn3 p-[.1cm] bg-green-200 text-green-800 rounded-[50%]">
                       <FaEye />
                     </button>
-                    <button className="btn3 edit-btn3">
+                    <button className="btn3 edit-btn3 p-[.1cm] bg-yellow-200 text-yellow-800 rounded-[50%]">
                       <FaEdit onClick={() => handleEdit(product.id)} />
                     </button>
-                    <button className="btn3 delete-btn3">
-                      <FaTrash />
-                    </button>
+                    <button className="btn3 delete-btn3 p-[.1cm] bg-red-200 text-red-800 rounded-[50%]">
+                      <FaTrash   onClick={() => openDeleteConfirmation(product.id)}/>
+                    </button> */}
+                    <div className=" btn3 view-btn3 p-[.1cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
+                      </div>
+                      <div className=" btn3 edit-btn3 p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                        <Edit size={15} color="orange" />
+                      </div>
+
+                      <div className="btn3 delete-btn3 p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" />
+                      </div>
+                     
                   </td>
                 </tr>
 
@@ -442,15 +482,25 @@ const InhouseProduct = () => {
 
                         <div>
                           Options:
-                          <button className="btn3 view-btn3">
+                          {/* <button className="btn3 view-btn3">
                             <FaEye />
                           </button>
                           <button className="btn3 edit-btn3">
                             <FaEdit onClick={() => handleEdit(product.id)} />
                           </button>
                           <button className="btn3 delete-btn3">
-                            <FaTrash />
-                          </button>
+                            <FaTrash  onClick={() => openDeleteConfirmation(product.id)} />
+                          </button> */}
+                          <div className=" btn3 view-btn3 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
+                      </div>
+                      <div className=" btn3 edit-btn3 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                        <Edit size={15} color="orange" />
+                      </div>
+
+                      <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" />
+                      </div>
                         </div>
                       </div>
                     </td>
@@ -461,6 +511,14 @@ const InhouseProduct = () => {
           </tbody>
         </table>
       </div>
+      {showDeleteConfirmation && (
+                <DeleteConfirmation
+                                    isOpen={showDeleteConfirmation}
+                    onConfirm={() => handleDelete(attributeToDeleteId)}
+                    onCancel={closeDeleteConfirmation}
+                   
+                />
+            )}
     </div>
   );
 };

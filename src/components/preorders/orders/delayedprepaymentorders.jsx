@@ -239,7 +239,7 @@ export default function DelayedPrepaymentPreOrders() {
 
                   <td className="max-[1200px]:hidden">
                     <div className="flex items-center gap-[.2cm]">
-                      <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                      {/* <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
                         <Eye size={16} color="blue" />
                       </div>
                       <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
@@ -250,70 +250,88 @@ export default function DelayedPrepaymentPreOrders() {
                       </div>
                       <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
                         <Trash size={16} color="red" onClick={() => handleDeleteClick(item.id)} />
+                      </div> */}
+                      <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                        <Eye size={15} color="blue" />
                       </div>
+                      <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+                        <Download size={15} color="blueviolet" />
+                      </div>
+                      <div className="p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                        <BellIcon size={16} color="orange" onClick={handleNotificationClick} />
+                      </div>
+                      <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash size={15} color="red" onClick={() => handleDeleteClick(item.id)} />
+                      </div>
+
+
+                      
+
+
+
                     </div>
                   </td>
                 </tr>
 
                 {expandedRow === index && (
-  <tr className="max-[1200px]:table-row hidden">
-    <td colSpan={10}>
-      <div className="p-2 bg-gray-100 rounded-md text-sm">
-        <table className="w-full">
-          <tbody>
-            <tr>
-              <td className="font-semibold pr-2">Price / Prepayment:</td>
-              <td>{item.price} / {item.prepayment}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Seller:</td>
-              <td>{item.seller}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Customer:</td>
-              <td>{item.customer.name} - {item.customer.email}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Status:</td>
-              <td>{item.status}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Preorder Code:</td>
-              <td>{item.preorder_code}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Created:</td>
-              <td>{item.created}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Refund:</td>
-              <td>{item.refund}</td>
-            </tr>
-            <tr>
-              <td className="font-semibold pr-2">Options:</td>
-              <td>
-                <div className="flex items-center gap-2 mt-1">
-                  <div className="p-[.2cm] bg-blue-100 w-fit rounded-full cursor-pointer">
-                    <Eye size={16} color="blue" />
-                  </div>
-                  <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-full cursor-pointer">
-                    <Download size={16} color="blueviolet" />
-                  </div>
-                  <div className="p-[.2cm] bg-[#fff4e0] w-fit rounded-full cursor-pointer">
-                    <BellIcon size={16} color="orange" onClick={handleNotificationClick} />
-                  </div>
-                  <div className="p-[.2cm] bg-red-100 w-fit rounded-full cursor-pointer">
-                    <Trash size={16} color="red" onClick={() => handleDeleteClick(item.id)} />
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </td>
-  </tr>
-)}
+                  <tr className="max-[1200px]:table-row hidden">
+                    <td colSpan={10}>
+                      <div className="p-2 bg-gray-100 rounded-md text-sm">
+                        <table className="w-full">
+                          <tbody>
+                            <tr>
+                              <td className="font-semibold pr-2">Price / Prepayment:</td>
+                              <td>{item.price} / {item.prepayment}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Seller:</td>
+                              <td>{item.seller}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Customer:</td>
+                              <td>{item.customer.name} - {item.customer.email}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Status:</td>
+                              <td>{item.status}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Preorder Code:</td>
+                              <td>{item.preorder_code}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Created:</td>
+                              <td>{item.created}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Refund:</td>
+                              <td>{item.refund}</td>
+                            </tr>
+                            <tr>
+                              <td className="font-semibold pr-2">Options:</td>
+                              <td>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <div className="p-[.2cm] bg-blue-100 w-fit rounded-full cursor-pointer">
+                                    <Eye size={16} color="blue" />
+                                  </div>
+                                  <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-full cursor-pointer">
+                                    <Download size={16} color="blueviolet" />
+                                  </div>
+                                  <div className="p-[.2cm] bg-[#fff4e0] w-fit rounded-full cursor-pointer">
+                                    <BellIcon size={16} color="orange" onClick={handleNotificationClick} />
+                                  </div>
+                                  <div className="p-[.2cm] bg-red-100 w-fit rounded-full cursor-pointer">
+                                    <Trash size={16} color="red" onClick={() => handleDeleteClick(item.id)} />
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                )}
 
               </>
             ))}

@@ -4,14 +4,20 @@ import { HiOutlineDuplicate } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import Switch from "../../../components/Switch";
 import FilterComponent from "../../../components/FilterComponent";
+import DeleteConfirmation from "../../../components/DeleteConfirmation";
+import ViewExpandData from "../../../components/ViewExpandData";
+import { Edit, Eye, Trash } from "lucide-react";
 
 const ProductTable = () => {
   const navigate = useNavigate();
-  const handleEdit = (id) => {
-    navigate(`/editinhouse/${id}`); // Corrected navigation path
-  };
+  // const handleEdit = (id) => {
+  //   navigate(`/editinhouse/${id}`); // Corrected navigation path
+  // };
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
+
   const [filters, setFilters] = useState({
     seller: "All",
     rating: "All",
@@ -51,6 +57,24 @@ const ProductTable = () => {
       expanded: false,
     },
   ]);
+
+  const openDeleteConfirmation = (id) => {
+    setAttributeToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setAttributeToDeleteId(null);
+    setShowDeleteConfirmation(false);
+  };
+
+  const handleDelete = (id) => {
+    // In a real application, you would make an API call here to delete the attribute
+    console.log(`Deleting attribute with ID: ${id}`);
+    // After successful deletion, you would likely update the 'attributes' state
+    closeDeleteConfirmation();
+  };
+
 
   const handleSelectAll = (isChecked) => {
     if (isChecked) {
@@ -130,6 +154,9 @@ const ProductTable = () => {
         product.id === id ? { ...product, expanded: !product.expanded } : product
       )
     );
+  };
+  const handleEdit = (id) => {
+    navigate(`/editinhouse`);
   };
   return (
     <div className="p-4">
@@ -226,11 +253,10 @@ const ProductTable = () => {
                   </td>
                   <td className="p-3">
                     <span
-                      className={`px-2 py-1 text-white text-xs rounded-full ${
-                        product.stock === "High"
+                      className={`px-2 py-1 text-white text-xs rounded-full ${product.stock === "High"
                           ? "bg-green-500"
                           : "bg-red-500"
-                      }`}
+                        }`}
                     >
                       {product.stock}
                     </span>
@@ -238,17 +264,17 @@ const ProductTable = () => {
                   {["todayDeal", "published", "approved", "featured"].map(
                     (field) => (
                       <td className="p-3" key={field}>
-                         <label className="switch">
-                        <Switch
-                          value={product[field]}
-                          onChangeFunc={() => toggleProductStatus(product.id, field)}
-                        />
+                        <label className="switch">
+                          <Switch
+                            value={product[field]}
+                            onChangeFunc={() => toggleProductStatus(product.id, field)}
+                          />
                         </label>
                       </td>
                     )
                   )}
                   <td className="p-3 flex space-x-2">
-                    <button
+                    {/* <button
                       className="bg-green-100 p-2 rounded-full hover:bg-green-200 transition"
                       title="View"
                     >
@@ -269,15 +295,28 @@ const ProductTable = () => {
                         handleBulkAction("delete");
                       }}
                     >
-                      <FaTrash className="text-red-500" />
+                      <FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} />
                     </button>
                     <button
                       className="bg-yellow-100 p-2 rounded-full hover:bg-yellow-200 transition"
                       title="Duplicate"
                     >
                       <HiOutlineDuplicate className="text-yellow-500" />
-                    </button>
-                  </td>
+                    </button>*/}
+                     <div className="  p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Eye size={15} color="blue" />
+                                          </div>
+                                          <div className="  p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                                            <Edit size={15} color="orange" onClick={() => handleEdit(product.id)} />
+                                          </div>
+                    
+                                          <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
+                                          <div className=" p-[.2cm] bg-purple-100 w-fit rounded-[50%] cursor-pointerr">
+                                            <HiOutlineDuplicate size={15} color="purple" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
+                  </td> 
                 </tr>
               ))
             ) : (
@@ -290,28 +329,36 @@ const ProductTable = () => {
           </tbody>
         </table>
         <div className="md:hidden">
-        <div className="flex items-center justify-between bg-gray-100 px-4 py-2 rounded-lg mb-2">
-    <div className="flex items-center space-x-2">
-      <input
-        type="checkbox"
-        checked={selectedProducts.length === products.length}
-        onChange={handleSelectAll}
-        className="mr-5"
-      />
-      <span className="font-medium ml-4">Name</span>
-    </div>
-  </div>
+          <div className="flex items-center justify-between bg-gray-100 px-4 py-2 rounded-lg mb-2">
+
+            <div className="flex items-center space-x-2">
+
+              <input
+                type="checkbox"
+                checked={selectedProducts.length === products.length}
+                onChange={handleSelectAll}
+                className="mr-5"
+              />
+              <span className="font-medium ml-4">Name</span>
+            </div>
+          </div>
 
 
-  
+
 
           {products.map((product) => (
             <div key={product.id} className="border p-3 mb-3 rounded-lg">
               <div className="flex  items-center">
-                <button onClick={() => toggleExpand(product.id)} className="p-2">
+                {/* <button onClick={() => toggleExpand(product.id)} className="p-2">
                   {product.expanded ? "-" : "+"}
-                </button>
+                </button> */}
+                <ViewExpandData
+                  isExpanded={product.expanded}
+                  toggleExpanded={() => toggleExpand(product.id)}
+
+                />
                 <div className="flex items-center space-x-2">
+
                   <img src={product.image} alt={product.name} className="w-10 h-10 mt-5" />
                   <span>{product.name}</span>
                 </div>
@@ -324,15 +371,15 @@ const ProductTable = () => {
                   </div>
                   <div className="flex ">
                     Sales:
-                    <span  className="ml-3">{product.sales} times</span>
+                    <span className="ml-3">{product.sales} times</span>
                   </div>
                   <div className="flex ">
                     Price:
-                    <span  className="ml-3">${product.price.toFixed(2)}</span>
+                    <span className="ml-3">${product.price.toFixed(2)}</span>
                   </div>
                   <div className="flex ">
                     Rating:
-                    <span  className="ml-3">{product.rating}</span>
+                    <span className="ml-3">{product.rating}</span>
                   </div>
                   <div className="flex ">
                     Stock:
@@ -342,30 +389,43 @@ const ProductTable = () => {
                   </div>
                   {["todayDeal", "published", "approved", "featured"].map((field) => (
                     <div className="flex " key={field}>
-                     {field}
+                      {field}
                       <label className="switch ml-3 mt-1">
-                      <Switch
+                        <Switch
                           value={product[field]}
                           onChangeFunc={() => toggleProductStatus(product.id, field)}
                         />
-                       
+
                       </label>
                     </div>
                   ))}
                   <div className="flex justify-left space-x-2 mt-3">
                     Options:
-                    <button className="bg-green-100 p-2 rounded-full ml-2 mt-2">
+                    {/* <button className="bg-green-100 p-2 rounded-full ml-2 mt-2">
                       <FaEye className="text-green-500" />
                     </button>
                     <button className="bg-blue-100 p-2 rounded-full">
                       <FaEdit onClick={() => handleEdit(product.id)} className="text-blue-500" />
                     </button>
                     <button className="bg-red-100 p-2 rounded-full">
-                      <FaTrash className="text-red-500" />
+                      <FaTrash className="text-red-500" onClick={() => openDeleteConfirmation(product.id)} />
                     </button>
                     <button className="bg-yellow-100 p-2 rounded-full">
                       <HiOutlineDuplicate className="text-yellow-500" />
-                    </button>
+                    </button> */}
+                    <div className="  p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Eye size={15} color="blue" />
+                                          </div>
+                                          <div className="  p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                                            <Edit size={15} color="orange" onClick={() => handleEdit(product.id)} />
+                                          </div>
+                    
+                                          <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
+                                          <div className=" p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                            <HiOutlineDuplicate size={15} color="red" onClick={() => openDeleteConfirmation(product.id)}/>
+                                          </div>
                   </div>
                 </div>
               )}
@@ -373,6 +433,14 @@ const ProductTable = () => {
           ))}
         </div>
       </div>
+      {showDeleteConfirmation && (
+        <DeleteConfirmation
+          isOpen={showDeleteConfirmation}
+          onConfirm={() => handleDelete(attributeToDeleteId)}
+          onCancel={closeDeleteConfirmation}
+
+        />
+      )}
     </div>
   );
 };

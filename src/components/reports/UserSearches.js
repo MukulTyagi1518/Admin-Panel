@@ -50,8 +50,11 @@ function UserSearches() {
 
       <div className="bg-white m-5 p-5 shadow-lg rounded-lg mb-6 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
         <div className="flex flex-col  md:flex-row md:items-center border-b">
-          <h1 className="text-lg text-gray-800 pb-3">User Search Report
-          </h1>
+          {/* <h1 className="text-lg text-gray-800 pb-3">User Search Report
+          </h1> */}
+          <h1 className="text-xl font-bold text-gray-800 m-8 text-center ">
+      User Search Report
+      </h1>
         
         </div>
 

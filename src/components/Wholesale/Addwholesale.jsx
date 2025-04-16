@@ -517,7 +517,7 @@ export default function PreOrderFaq() {
                 </div>
 
                 <div className="prerow   ">
-                    <div className="preOrderFaqRight-new">
+                    <div className="preOrderFaqRight-new2">
 
                         <div className="preOrderFaqRightHead">
                             <p className="allFaq">Product category</p>
