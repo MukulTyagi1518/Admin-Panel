@@ -4,11 +4,14 @@ import { MdOutlineSettings } from "react-icons/md"
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import { useProductContext } from "../../productContex";
 import Switch from "../Switch";
+import ProductCategory from "../ProductCategory";
+// import { useProductContext } from "../../productContex";
+// import Switch from "./Switch";
+// import ProductCategory from "./ProductCategory";
 
 
-export default function PreOrderFaq() {
+export default function WholesaleCreate() {
 
     const [quantity, setQuantity] = React.useState(1);
 
@@ -36,8 +39,11 @@ export default function PreOrderFaq() {
 
     const [selectedOption, setSelectedOption] = useState("product");
     const [selectedCategory, setSelectedCategory] = useState("");
-
+    const [productData, setProductData] = useState("");
     const navigate = useNavigate();
+  
+
+   
 
     const [videoProvider, setVideoProvider] = useState("Youtube");
     const [videoLink, setVideoLink] = useState("");
@@ -71,13 +77,14 @@ export default function PreOrderFaq() {
 
 
     const [metaImage, setMetaImage] = useState(null)
-    const { productData, setProductData } = useProductContext()
+    // const { productData, setProductData } = useProductContext()
 
     console.log(productData)
 
     const [isWarranty, setIsWarranty] = useState(false);
     const [warrantyType, setWarrantyType] = useState("");
-
+   
+    const [shippingCost, setShippingCost] = useState(0); // Shipping cost state
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -114,14 +121,15 @@ export default function PreOrderFaq() {
     return (
         <div className="PreOrderFaq-whole ">
             <div className="product-table">
-                <p className="customersText">
+                <p className="customersText mt-6 ml-6">
                     Add new wholesale product
                 </p>
             </div>
             <div className="preOrderFaqBox-new">
                 <div className="procol">
                     <div className="preOrderFaqLeft-new">
-                        <div className="preOrderLeftUpper-new">
+                        <div className="border p-4 rounded">
+                        <div className="">
                             <p className="allFaq">Product Information</p>
                             {/* <input type="text" placeholder="Type to search...." className="searchFaq" /> */}
                         </div>
@@ -180,7 +188,8 @@ export default function PreOrderFaq() {
                                 </div>
                             </form>
                         </div>
-                    </div>
+                        </div>
+                  
 
 
                     <div className="pro-container">
@@ -309,6 +318,7 @@ export default function PreOrderFaq() {
 
                     {/* PDF */}
 
+
                     <div className="pro-container">
                         <h3 className="pro-heading">Product Images</h3>
                         <div className="seo-divider"></div>
@@ -325,6 +335,8 @@ export default function PreOrderFaq() {
                             </div>
                         </div>
                     </div>
+
+                    
 
                     {/* SEO */}
                     <div className="seo-container">
@@ -515,11 +527,12 @@ export default function PreOrderFaq() {
                         )}
                     </div>
                 </div>
+                </div>
 
-                <div className="prerow   ">
-                    <div className="preOrderFaqRight-new2">
+                <div className="prerow-whole8">
+                    <div className="preOrderFaqRight-new">
 
-                        <div className="preOrderFaqRightHead">
+                        {/* <div className="preOrderFaqRightHead">
                             <p className="allFaq">Product category</p>
                         </div>
 
@@ -533,10 +546,17 @@ export default function PreOrderFaq() {
                             <div className="inpSubBox">
                                 <input type="submit" value="Save" className="inpSub" />
                             </div>
+                        </div> */}
+                       <div className="border p-5 rounded">
+                       <div className="preOrderFaqRightHead">
+                            <p className="allFaq">Product category</p>
                         </div>
-                    </div>
-                    <div className="preOrderFaqRight-new">
-                        <div className="preOrderFaqRightHead">
+                      
+                        <ProductCategory/>
+                        </div>
+                    {/* </div> */}
+                    {/* <div className="preOrderFaqRight-new mt-5">
+                        <div className="preOrderFaqRightHead  ">
                             <p className="allFaq">Shipping Configuration</p>
                         </div>
 
@@ -582,7 +602,75 @@ export default function PreOrderFaq() {
 
                             </div>
                         </div>
-                    </div>
+                    </div> */}
+                      <div className="preOrderFaqRight-new7 mt-5 border rounded">
+      <div className="preOrderFaqRightHead">
+        <p className="allFaq">Shipping Configuration</p>
+      </div>
+
+      <div className="faqForm">
+        <div className="flex items-center justify-between w-full">
+          <label className="text-black w-fit font-normal">Free Shipping</label>
+          <button
+            onClick={() => setShowShipping(!showShipping)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+              showShipping ? 'bg-green-500' : 'bg-gray-300'
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                showShipping ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        </div>
+
+        <div className="flex items-center justify-between w-full">
+          <label className="text-black font-normal">Flat Rate</label>
+          <button
+            onClick={() => setShowRate(!showRate)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+              showRate ? 'bg-green-500' : 'bg-gray-300'
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                showRate ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+            
+          </button>
+        </div>
+
+        {showRate && (
+          <div className="flex items-center  w-full" style={{ width: '100%' }}> {/* निश्चित चौड़ाई */}
+            <label className="text-black font-normal">Shipping cost</label>
+            <input
+              type="number"
+              value={shippingCost}
+              onChange={(e) => setShippingCost(e.target.value)}
+              className="border p-2 rounded flex-grow"
+            />
+          </div>
+        )}
+
+        <div className="flex items-center justify-between w-full">
+          <label className="text-black font-normal">Is Product Quantity Mulitiply</label>
+          <button
+            onClick={() => setShowMulitiply(!showMulitiply)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+              showMulitiply ? 'bg-green-500' : 'bg-gray-300'
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                showMulitiply ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        </div>
+      </div>
+    </div>
                     <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-4 ">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Low Stock Quantity Warning</h2>
 
@@ -670,7 +758,7 @@ export default function PreOrderFaq() {
 
                         </div>
                     </div>
-                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
+                    {/* <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
                             Featured
                         </h2>
@@ -717,7 +805,7 @@ export default function PreOrderFaq() {
                     <div className="w-full max-w-xl mx-auto  border border-gray-300 rounded-md p-4 mt-4 pb-8">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Flash Deal</h2>
 
-                        {/* Flash Title */}
+                        
                         <div className="mt-4">
                             <label className="block text-sm  font-normal text-gray-700 mb-1">Add To Flash</label>
                             <select
@@ -734,7 +822,7 @@ export default function PreOrderFaq() {
                             </select>
                         </div>
 
-                        {/* Discount Input */}
+                        
                         <div className="mt-4">
                             <label className="block text-sm font-normal text-gray-700 mb-1">Discount</label>
                             <input
@@ -745,7 +833,7 @@ export default function PreOrderFaq() {
                             />
                         </div>
 
-                        {/* Discount Type Dropdown */}
+                        
                         <div className="mt-4">
                             <label className="block text-sm font-normal text-gray-700 mb-2">Discount Type</label>
                             <select
@@ -759,7 +847,7 @@ export default function PreOrderFaq() {
                             </select>
                         </div>
 
-                    </div>
+                    </div> */}
                     <div className="w-full max-w-xl mx-auto border border-gray-300 rounded-md p-4 mt-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Estimate Shipping Time</h2>
 
@@ -827,7 +915,15 @@ export default function PreOrderFaq() {
                             </div>
                         </div>
                     </div>
+                    {/* <div className="button-group">
+                      <button className="btn-btn-gray">Save & Unpublish</button>
+                      <Link to='/products/create/add' >
+                        <button className="btn-btn-green">Save & Publish</button>
+                      </Link>
+                    </div> */}
+                    </div>
                 </div>
+                
 
             </div>
             <div className="button-group">
