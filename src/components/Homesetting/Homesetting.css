@@ -1,0 +1,107 @@
+.homesettingContainer {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.homesettingSidebar {
+  width: 250px;
+  padding: 20px;
+  background-color: #ffffff; /* optional: keep it white */
+  border: none; /* removes border */
+  box-shadow: none; /* if any shadow was there */
+}
+
+.homesettingSidebar h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 10px 0 20px;
+}
+
+.tabList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tabLink {
+  color: #444;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tabLink:hover {
+  background-color: #f0f0f0;
+}
+
+.tabLink.active {
+  background-color: #e8f0ff;
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.addonTag {
+  font-size: 11px;
+  background-color: #c1c1c1;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.homesettingContent {
+  flex-grow: 1;
+  padding: 24px;
+  background-color: #fafafa;
+}
+
+  /* Responsive Layout */
+  @media (max-width: 768px) {
+    .homesettingContainer {
+      flex-direction: column;
+    }
+  
+    .homesettingSidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px 15px;
+      overflow-x: auto;
+    }
+  
+    .tabList {
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 12px;
+    }
+  
+    .tabLink {
+      flex-shrink: 0;
+      padding: 8px 10px;
+    }
+  
+    .homesettingSidebar h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+  
+    .divider {
+      margin-bottom: 10px;
+    }
+  
+    .homesettingContent {
+      padding: 16px;
+    }
+  }
+  

@@ -195,7 +195,7 @@ const ProductTable = () => {
         totalItems={products.length}
       />
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      <div className="overflow-x-auto  bg-white shadow-md rounded-lg">
         <table className="w-full border-collapse hidden md:table">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -231,7 +231,7 @@ const ProductTable = () => {
                       onChange={() => handleSelectProduct(product.id)}
                     />
                   </td>
-                  <td className="flex items-center space-x-2">
+                  <td className="flex border-none items-center space-x-2">
                     <img
                       src={product.image}
                       alt={product.name}

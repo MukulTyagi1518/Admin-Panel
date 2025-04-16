@@ -43,8 +43,8 @@ const AllProduct = () => {
 
     // Search term filter
     const matchesSearch =
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.addedBy.toLowerCase().includes(searchTerm.toLowerCase());
+      product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.addedBy?.toLowerCase().includes(searchTerm.toLowerCase());
 
     return matchesSeller && matchesSearch;
   });

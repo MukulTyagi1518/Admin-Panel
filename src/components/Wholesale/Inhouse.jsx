@@ -458,18 +458,8 @@ const InhouseProduct = () => {
               </>
             ))}
           </tbody>
-
-
-
-
-
-
-
-        </table>
-
-
-
-      </div>
+      </table>
+</div>
       {showDeleteConfirmation && (
         <DeleteConfirmation
           isOpen={showDeleteConfirmation}

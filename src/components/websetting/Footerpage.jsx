@@ -126,27 +126,27 @@ const FooterWidget = () => {
                 <div className="border-b border-gray-300 mb-4 ml-4 mr-4"></div>
 
                 {/* Footer Bottom */}
-                <Footerbottom handleUpdate={handleUpdate} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/>
+                {/* <Footerbottom handleUpdate={handleUpdate} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/> */}
 
-                {/* Social Link Widget */}
-                <Socialwidget setShowLinks={setShowLinks} showLinks={showLinks} socialLinks={socialLinks} handleChange={handleChange}/>
+                {/* Social Link Widget */}   {/* Download App Link */} {/* Payment Methods Widget */}
+                <Socialwidget  handleUpdate={handleUpdate} handleFileChangefile={handleFileChangefile} fileName={fileName} setShowLinks={setShowLinks} showLinks={showLinks} socialLinks={socialLinks} handleChange={handleChange} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/>
 
-                 {/* Download App Link */}
+              
 
-                 <Downloadapp />
+                 {/* <Downloadapp /> */}
 
-                 {/* Payment Methods Widget */}
-                  <Paymentwidget handleFileChangefile={handleFileChangefile} fileName={fileName}/>
+                
+                  {/* <Paymentwidget handleFileChangefile={handleFileChangefile} fileName={fileName}/> */}
 
             </div>
-            <div className="text-right mt-3">
+            {/* <div className="text-right mt-3">
                             <button
                                 onClick={handleUpdate}
                                 className="bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
                             >
                                 Update
                             </button>
-                        </div>
+                        </div> */}
 
            
 

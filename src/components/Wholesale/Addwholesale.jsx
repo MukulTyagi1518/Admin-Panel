@@ -112,13 +112,13 @@ export default function PreOrderFaq() {
         },
     ]
     return (
-        <div className="PreOrderFaq ">
+        <div className="PreOrderFaq-whole ">
             <div className="product-table">
                 <p className="customersText">
                     Add new wholesale product
                 </p>
             </div>
-            <div className="preOrderFaqBox">
+            <div className="preOrderFaqBox-new">
                 <div className="procol">
                     <div className="preOrderFaqLeft-new">
                         <div className="preOrderLeftUpper-new">
@@ -388,7 +388,7 @@ export default function PreOrderFaq() {
                         </div>
                     </div>
                     {/* refund */}
-                    <div className="refund-container">
+                    <div className="refund-container-new">
                         <h3 className="refund-title">Refund</h3>
                         <div className="seo-divider"></div>
                         <div className="refund-option">

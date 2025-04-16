@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaBox, FaClock, FaCheck, FaTruck, FaCheckDouble, FaBan, FaUndo, FaTimesCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 const StatCard = ({ icon: Icon, title, value, color }) => (
   <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
@@ -17,42 +18,78 @@ const StatCard = ({ icon: Icon, title, value, color }) => (
 
 const OrderStatistics = () => {
   const [stats, setStats] = useState([
-    { icon: FaBox, title: 'Total Orders', value: 175, color: 'bg-red-400' },
-    { icon: FaClock, title: 'Pending', value: 15, color: 'bg-yellow-400' },
-    { icon: FaCheck, title: 'Confirmed', value: 50, color: 'bg-green-400' },
-    { icon: FaTruck, title: 'Ongoing', value: 35, color: 'bg-blue-400' },
-    { icon: FaCheckDouble, title: 'Delivered', value: 25, color: 'bg-purple-400' },
-    { icon: FaBan, title: 'Canceled', value: 7, color: 'bg-red-400' },
+    { icon: FaBox, title: 'Total Orders', value: 0, color: 'bg-red-400' },
+    { icon: FaClock, title: 'Pending', value: 0, color: 'bg-yellow-400' },
+    { icon: FaCheck, title: 'Confirmed', value: 0, color: 'bg-green-400' },
+    { icon: FaTruck, title: 'Ongoing', value: 0, color: 'bg-blue-400' },
+    { icon: FaCheckDouble, title: 'Delivered', value: 0, color: 'bg-purple-400' },
+    { icon: FaBan, title: 'Canceled', value: 0, color: 'bg-red-400' },
     { icon: FaUndo, title: 'Returned', value: 0, color: 'bg-blue-300' },
     { icon: FaTimesCircle, title: 'Rejected', value: 0, color: 'bg-red-500' }
   ]);
 
+  useEffect(() => {
+    const fetchOrderStats = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/orders/list');
+        const orders = response.data;
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch(`/api/order-stats?range=${dateRange}`);
-//         const data = await response.json();
-        
-//         setStats([
-//           { icon: FaBox, title: 'Total Orders', value: data.totalOrders, color: 'bg-red-400' },
-//           { icon: FaClock, title: 'Pending', value: data.pending, color: 'bg-yellow-400' },
-//           { icon: FaCheck, title: 'Confirmed', value: data.confirmed, color: 'bg-green-400' },
-//           { icon: FaTruck, title: 'Ongoing', value: data.ongoing, color: 'bg-blue-400' },
-//           { icon: FaCheckDouble, title: 'Delivered', value: data.delivered, color: 'bg-purple-400' },
-//           { icon: FaBan, title: 'Canceled', value: data.canceled, color: 'bg-red-400' },
-//           { icon: FaUndo, title: 'Returned', value: data.returned, color: 'bg-blue-300' },
-//           { icon: FaTimesCircle, title: 'Rejected', value: data.rejected, color: 'bg-red-500' }
-//         ]);
-//       } catch (error) {
-//         console.error('Failed to fetch order statistics:', error);
-//       }
-//     };
+        const statusCounts = {
+          totalOrders: orders.length,
+          pending: 0,
+          confirmed: 0,
+          ongoing: 0,
+          delivered: 0,
+          canceled: 0,
+          returned: 0,
+          rejected: 0,
+        };
 
-//     fetchData();
-//   }, [dateRange]);
+        orders.forEach((order) => {
+          switch (order.DeliveryStatus.toLowerCase()) {
+            case 'pending':
+              statusCounts.pending++;
+              break;
+            case 'confirmed':
+              statusCounts.confirmed++;
+              break;
+            case 'ongoing':
+              statusCounts.ongoing++;
+              break;
+            case 'delivered':
+              statusCounts.delivered++;
+              break;
+            case 'canceled':
+              statusCounts.canceled++;
+              break;
+            case 'returned':
+              statusCounts.returned++;
+              break;
+            case 'rejected':
+              statusCounts.rejected++;
+              break;
+            default:
+              break;
+          }
+        });
 
+        setStats([
+          { icon: FaBox, title: 'Total Orders', value: statusCounts.totalOrders, color: 'bg-red-400' },
+          { icon: FaClock, title: 'Pending', value: statusCounts.pending, color: 'bg-yellow-400' },
+          { icon: FaCheck, title: 'Confirmed', value: statusCounts.confirmed, color: 'bg-green-400' },
+          { icon: FaTruck, title: 'Ongoing', value: statusCounts.ongoing, color: 'bg-blue-400' },
+          { icon: FaCheckDouble, title: 'Delivered', value: statusCounts.delivered, color: 'bg-purple-400' },
+          { icon: FaBan, title: 'Canceled', value: statusCounts.canceled, color: 'bg-red-400' },
+          { icon: FaUndo, title: 'Returned', value: statusCounts.returned, color: 'bg-blue-300' },
+          { icon: FaTimesCircle, title: 'Rejected', value: statusCounts.rejected, color: 'bg-red-500' }
+        ]);
+      } catch (error) {
+        console.error('Error fetching order statistics:', error);
+      }
+    };
 
+    fetchOrderStats();
+  }, []);
 
   return (
     <div className="p-6">
