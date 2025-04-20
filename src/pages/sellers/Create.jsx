@@ -70,7 +70,7 @@ const Create = () => {
       console.log("Seller added successfully:", response.data);
 
       // Redirect to All Sellers page
-      navigate("/sellers");
+      navigate("/sellers/all");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong.");
     } finally {

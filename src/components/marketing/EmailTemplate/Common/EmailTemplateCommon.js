@@ -56,8 +56,8 @@ const EmailTemplateCommon = () => {
   );
 
   const columns = [
-    { key: "_id", title: "ID" },
     { key: "name", title: "Email Type" },
+    { key: "_id", title: "ID" },
     { key: "subject", title: "Subject" },
     {
       key: "status",

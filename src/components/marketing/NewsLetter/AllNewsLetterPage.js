@@ -3,6 +3,8 @@ import { newsletterService } from '../../../services/newsLetterService';
 import { TrashIcon, PlusIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from '../EmailTemplate/MainPageComponents/DataTable';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { StatusToggle } from './EmailTemplate/MainPageComponents/StatusToggle';
 
 const AllNewslettersPage = () => {
@@ -48,6 +50,10 @@ const AllNewslettersPage = () => {
     try {
       await newsletterService.deleteNewsletter(id);
       setNewsletters(newsletters.filter(newsletter => newsletter._id !== id));
+      toast.error("Newsletter deleted successfully", {
+        position: "top-center",
+        autoClose: 2000,
+      });
     } catch (err) {
       console.error('Failed to delete newsletter:', err);
     }
@@ -87,6 +93,8 @@ const AllNewslettersPage = () => {
 
   return (
     <div className="mx-10 px-4 py-8 ">
+            <ToastContainer position="top-center" />
+
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">All Newsletters</h1>

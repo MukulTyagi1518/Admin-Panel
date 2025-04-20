@@ -30,12 +30,14 @@ const menuItems = [
       { name: "Inhouse product", path: "/products/inhouse" },
       { name: "Bulk import", path: "/products/bulk-import" },
       { name: "Bulk export", path: "/products/bulk-export" },
-      { name: "Seller product", path: "/products/seller",
-        subItems:[
-          {name:"Digital", path:"/products/seller/digital"},
-          {name:"Physical", path:"/products/seller/physical"}
-        ]
-       },
+      {
+        name: "Seller product",
+        path: "/products/seller",
+        subItems: [
+          { name: "Digital", path: "/products/seller/digital" },
+          { name: "Physical", path: "/products/seller/physical" },
+        ],
+      },
       { name: "Category", path: "/products/category" },
       { name: "Category based discount", path: "/products/category-discount" },
       { name: "Brand", path: "/products/brand" },
@@ -43,7 +45,7 @@ const menuItems = [
       { name: "Colour", path: "/products/colour" },
       { name: "Warrenty", path: "/products/warranty" },
       { name: "Product review", path: "/products/review" },
-      { name: "Product based discount", path: "/products/product-discount" }
+      { name: "Product based discount", path: "/products/product-discount" },
     ],
     path: "/products",
   },
@@ -118,7 +120,6 @@ const menuItems = [
       { name: "Payout request", path: "/sellers/payout-request" },
       { name: "Seller verify account", path: "/sellers/verify" },
       { name: "Seller commission", path: "/sellers/commission" },
-
     ],
     path: "/sellers",
   },
@@ -164,11 +165,11 @@ const menuItems = [
       },
       {
         name: "Custom Alert popup",
-        path: "/marketing/custom-alert"
+        path: "/marketing/custom-alert",
       },
       {
         name: "News Letter",
-        path: "/marketing/all-news-letters"
+        path: "/marketing/all-news-letters",
       },
       {
         name: "Notification",
@@ -176,10 +177,16 @@ const menuItems = [
         subItems: [
           { name: "Settings", path: "/marketing/notification/settings" },
           { name: "Notification Types", path: "/marketing/notification/types" },
-          { name: "Custom Notification", path: "/marketing/notification/custom-notification" },
-          { name: "Custom Notification History", path: "/marketing/notification/custom-notification/history" }
-        ]
-      }
+          {
+            name: "Custom Notification",
+            path: "/marketing/notification/custom-notification",
+          },
+          {
+            name: "Custom Notification History",
+            path: "/marketing/notification/custom-notification/history",
+          },
+        ],
+      },
     ],
     path: "/marketing",
   },
@@ -198,15 +205,15 @@ const menuItems = [
     name: "Web Settings",
     icon: <FileText size={20} />,
     subItems: [
-      { 
-        name: "Home page settings", 
-        path:"/web-settings/home",
-       },
+      {
+        name: "Home page settings",
+        path: "/web-settings/home",
+      },
 
       { name: "Header setting", path: "/web-settings/header" },
       { name: "Footer setting", path: "/web-settings/footer" },
       { name: "Page", path: "/web-settings/page" },
-      
+
       { name: "Apearence", path: "/web-settings/apearence" },
     ],
     path: "/web-settings",
@@ -219,39 +226,35 @@ const menuItems = [
       { name: "Vax And Tax or gst", path: "/admin-settings/tax" },
       { name: "Payment method", path: "/admin-settings/payment" },
       {
-        name: "Shipping", path: "/admin-settings/shipping",
+        name: "Shipping",
+        path: "/admin-settings/shipping",
         subItems: [
           {
             name: "Shipping Configuration",
-            path: "/admin-settings/shipping/configuration"
+            path: "/admin-settings/shipping/configuration",
           },
           {
             name: "Shipping Countries",
-            path: "/admin-settings/shipping/countries"
+            path: "/admin-settings/shipping/countries",
           },
           {
             name: "Shipping State",
-            path: "/admin-settings/shipping/state"
+            path: "/admin-settings/shipping/state",
           },
           {
             name: "Shipping Cities",
-            path: "/admin-settings/shipping/cities"
+            path: "/admin-settings/shipping/cities",
           },
           {
             name: "Shipping Zones",
-            path: "/admin-settings/shipping/zones"
+            path: "/admin-settings/shipping/zones",
           },
           {
             name: "Shipping Carrier",
-            path: "/admin-settings/shipping/carrier"
+            path: "/admin-settings/shipping/carrier",
           },
-
-
         ],
       },
-
-
-      
     ],
     path: "/admin-settings",
   },
@@ -294,7 +297,6 @@ function Sidebar({ isSidebarVisible }) {
   };
   const renderSubItems = (subItems) => {
     return (
-
       <ul className=" pl-5 py-2 space-y-1">
         {subItems.map((subItem, subIndex) => (
           <li
@@ -315,11 +317,16 @@ function Sidebar({ isSidebarVisible }) {
                   )}
                 </div>
                 {openItems[subItem.name] && (
-                  <ul className="flex flex-col  ">{renderSubItems(subItem.subItems)}</ul>
+                  <ul className="flex flex-col  ">
+                    {renderSubItems(subItem.subItems)}
+                  </ul>
                 )}
               </>
             ) : (
-              <span className=" w-full " onClick={() => handleSubItemClick(subItem.path)}>
+              <span
+                className=" w-full "
+                onClick={() => handleSubItemClick(subItem.path)}
+              >
                 {subItem.name}
               </span>
             )}
@@ -365,18 +372,19 @@ function Sidebar({ isSidebarVisible }) {
         {menuItems.map((item, index) => (
           <div key={index} className="flex flex-col">
             <div
-              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${openItems[index]
-                ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
-                : "text-white "
-                }`}
+              className={`flex items-center justify-between py-3 px-5 cursor-pointer transition-colors duration-150 hover:bg-white/10 ${
+                openItems[index]
+                  ? "text-white bg-white/5 border-l-4 border-[#ff5722]"
+                  : "text-white "
+              }`}
               onClick={() => {
                 if (item.subItems && item.subItems.length > 0) {
                   toggleItem(index);
                 } else {
-
                   navigate(item.path);
                 }
-              }}            >
+              }}
+            >
               <div className="flex items-center gap-2  ">
                 {item.icon}
                 {isSidebarVisible && <span>{item.name}</span>}
@@ -394,7 +402,7 @@ function Sidebar({ isSidebarVisible }) {
               item.subItems &&
               item.subItems.length > 0 &&
               isSidebarVisible && (
-                <div className="pl-5 " >{renderSubItems(item.subItems)}</div>
+                <div className="pl-5 ">{renderSubItems(item.subItems)}</div>
               )}
           </div>
         ))}

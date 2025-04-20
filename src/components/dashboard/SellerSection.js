@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Users } from "lucide-react";
 import StatCard from "./StatCard";
+import { useNavigate } from "react-router-dom";
 
 // Reusable SellerStatusItem component
 function SellerStatusItem({ color, label, value }) {
@@ -14,6 +15,7 @@ function SellerStatusItem({ color, label, value }) {
 }
 
 function SellerSection() {
+  const navigate = useNavigate();
   const [totalSellers, setTotalSellers] = useState(0);
   const [approvedSellers, setApprovedSellers] = useState(0);
   const [topSellers, setTopSellers] = useState([]);
@@ -26,7 +28,7 @@ function SellerSection() {
 
         setTotalSellers(sellers.length);
         const filteredSellers = sellers.filter((seller) => !seller.isBanned);
-        console.log(filteredSellers)
+        console.log(filteredSellers);
         setApprovedSellers(filteredSellers.length);
 
         const sortedSellers = filteredSellers
@@ -52,7 +54,11 @@ function SellerSection() {
       />
 
       {/* Approved Sellers */}
-      <SellerStatusItem color="cyan" label="Approved Sellers" value={approvedSellers} />
+      <SellerStatusItem
+        color="cyan"
+        label="Approved Sellers"
+        value={approvedSellers}
+      />
 
       {/* Top Sellers */}
       <SellerStatusItem color="yellow" label="Top Sellers" />
@@ -60,10 +66,7 @@ function SellerSection() {
       {/* Seller Avatars */}
       <div className="flex gap-2.5 mb-5">
         {topSellers.map((seller) => (
-          <div
-            key={seller._id}
-            className="flex flex-col items-center w-16"
-          >
+          <div key={seller._id} className="flex flex-col items-center w-16">
             <div className="w-10 h-10 rounded-full overflow-hidden bg-[#f0f0f0]">
               <img
                 src={seller.avatar || "/placeholder.svg"}
@@ -78,7 +81,10 @@ function SellerSection() {
 
       {/* Seller Buttons */}
       <div className="flex flex-col gap-2.5 my-10">
-        <button className="flex-1 bg-[#e8f5e9] text-[#4caf50] py-2 px-4 rounded-md border-none cursor-pointer hover:bg-green-400 hover:text-green-50">
+        <button
+          onClick={() => navigate("/sellers/all")}
+          className="flex-1 bg-[#e8f5e9] text-[#4caf50] py-2 px-4 rounded-md border-none cursor-pointer hover:bg-green-400 hover:text-green-50"
+        >
           All Sellers
         </button>
         <button className="flex-1 bg-[#ffe2e2] text-[#ff5252] py-2 px-4 rounded-md border border-[#ffebee] cursor-pointer hover:bg-red-400 hover:text-red-50">

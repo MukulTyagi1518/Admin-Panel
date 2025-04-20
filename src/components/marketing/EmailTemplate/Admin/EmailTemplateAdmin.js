@@ -52,31 +52,31 @@ const EmailTemplateAdmin = () => {
   const currentItems = filteredTemplates.slice(indexOfFirstItem, indexOfLastItem);
 
   const columns = [
-    { key: "_id", title: "ID" },
     { key: "name", title: "Email Type" },
+    { key: "_id", title: "ID" },
     { key: "subject", title: "Subject" },
     {
       key: "status",
       title: "Status",
       render: (template) => (
-        <div className="flex justify-center">
           <StatusToggle
             status={template.status}
             onToggle={() => toggleStatus(template._id, template.status)}
           />
-        </div>
       ),
     },
     {
       key: "actions",
       title: "Actions",
       render: (template) => (
-        <ActionButtons
+       <div className="flex items-center space-x-2">
+           <ActionButtons
           onEdit={() =>
             navigate(`/marketing/email-templates/admin/${template._id}`)
           }
           onDelete={() => deleteTemplate(template._id)}
         />
+       </div>
       ),
     },
   ];

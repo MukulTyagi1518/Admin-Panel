@@ -2,9 +2,12 @@ import React from 'react'
 import LatestOrders from '../orders/LatestOrders'
 
 function PaidOrders() {
-    const filterPaidOrders = (orders) => {
-        return orders.filter(order => order.paymentStatus === "Paid");
-      };
+  const filterPaidOrders = (orders) => {
+    return orders.filter(order => 
+      (order.PaymentStatus || order.paymentStatus) === "Paid"
+    );
+  };
+
     
       return (
         <LatestOrders 

@@ -53,8 +53,8 @@ const EmailTemplateSeller = () => {
   const currentItems = filteredTemplates.slice(indexOfFirstItem, indexOfLastItem);
 
   const columns = [
-    { key: "_id", title: "ID" },
     { key: "name", title: "Email Type" },
+    { key: "_id", title: "ID" },
     { key: "subject", title: "Subject" },
     {
       key: "status",

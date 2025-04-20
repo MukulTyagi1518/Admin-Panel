@@ -15,7 +15,7 @@ const BestSellerProducts = () => {
     const statusBadge = (status) => {
         const baseClasses = "px-2 py-1 rounded-full text-xs font-medium";
         switch (status) {
-          case "In Stock":
+          case "in stock":
             return <span className={`${baseClasses} bg-green-100 text-green-800`}>{status}</span>;
          
           case "Low Stock":

@@ -34,7 +34,7 @@ const OrderHeader = ({ onFilterChange, onSearch, currentFilters }) => {
     },
     payment: {
       label: "Filter by Payment",
-      options: ["All", "Paid", "Unpaid", "Refunded"],
+      options: ["All", "Paid", "Not Paid", "Refunded"],
       currentValue: currentFilters.payment
     },
     date: {

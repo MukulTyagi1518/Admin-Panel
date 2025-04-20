@@ -165,6 +165,7 @@ import CustomNotificationHistory from "./components/marketing/Notification/Custo
 import Homesetting from "./components/Homesetting/Homesetting.jsx";
 import AllDeliveryPartners from "./components/delivery/AllDeliveryPartners.js";
 import OrderHistoryModal from "./components/delivery/component/OrderHistoryModal.js";
+import TotalEarningsModal from "./components/delivery/component/TotalEarningsModal.js";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -503,10 +504,12 @@ function App() {
                 />
                 <Route path="all" element={<AllDeliveryPartners />} />
                 <Route path="all/view" element={<OrderHistoryModal />} />
+                <Route path="all/view/:id" element={<TotalEarningsModal />} />
                 <Route path="active" element={<ActiveDeliveryPartner />} />
+                <Route path="active/reports" element={<ReportsPage />} />
+                <Route path="active/view/:id" element={<TotalEarningsModal />} />
                 <Route path="inactive" element={<InActiveDeliveryPartner />} />
                 <Route path="pending" element={<PendingDeliveryPartner />} />
-                <Route path="active/reports" element={<ReportsPage />} />
               </Route>
 
               <Route path="/support">

@@ -1,27 +1,92 @@
-import { Ban, ChevronDownIcon, ShieldAlert, ShieldCheck, Trash2, UserPlus } from "lucide-react";
+import {
+  Ban,
+  ChevronDownIcon,
+  ShieldAlert,
+  ShieldCheck,
+  Trash2,
+  UserPlus,
+} from "lucide-react";
 import "./allCustomers.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import CreateNewCustomer from "./CreateNewCustomer";
 import { useNavigate } from "react-router-dom";
-import apiInstance from "../../../utils/axios"
+import apiInstance from "../../../utils/axios";
 import { useCustomerContext } from "../../../context/customerContext";
+import FilterComponent from "../../../components/FilterComponent"; // Import FilterComponent
 
 export default function AllCustomers() {
   const navigate = useNavigate();
-  const { customers, setCustomers, setFetchCustomers } = useCustomerContext()
+  const { customers: initialCustomers, setCustomers, setFetchCustomers } =
+    useCustomerContext();
   const [selected, setSelected] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // Search term state
+  const [filters, setFilters] = useState({
+    verification: "All", // Filter state
+  });
+  const [customers, setCustomersState] = useState(initialCustomers); // Local state for customers
+  const [filteredCustomers, setFilteredCustomers] = useState(initialCustomers);
 
+  // Filter configuration for FilterComponent
+  const filterConfig = {
+    verification: {
+      label: "Verification Status",
+      options: ["All", "Verified", "Not verified"],
+    },
+  };
 
+  // Function to handle filter changes
+  const handleFilterChange = (filterType, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
+  };
 
+  // Function to handle search input changes
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+  };
+
+  // useCallback to memoize the filter function
+  const applyFilters = useCallback(() => {
+    let filtered = [...initialCustomers];
+
+    // Apply verification filter
+    if (filters.verification !== "All") {
+      filtered = filtered.filter((customer) => {
+        const isVerified = customer.isVerified ? "Verified" : "Not verified";
+        return isVerified === filters.verification;
+      });
+    }
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter((customer) =>
+        customer.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Update customers state with filtered results
+    setFilteredCustomers(filtered);
+  }, [filters, searchTerm, initialCustomers]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
+
+  useEffect(() => {
+    setCustomersState(initialCustomers);
+    setFilteredCustomers(initialCustomers);
+  }, [initialCustomers]);
 
   const handleBlockUser = async (userId) => {
     try {
       await apiInstance.patch(`/user1/block/${userId}`);
-      setFetchCustomers(true)
-      alert("Customer Blocked")
+      setFetchCustomers(true);
+      alert("Customer Blocked");
     } catch (error) {
       console.error("Error blocking user:", error);
     }
@@ -29,8 +94,8 @@ export default function AllCustomers() {
   const handleUnblockUser = async (userId) => {
     try {
       await apiInstance.patch(`/user1/unblock/${userId}`);
-      setFetchCustomers(true)
-      alert("Customer Unblocked")
+      setFetchCustomers(true);
+      alert("Customer Unblocked");
     } catch (error) {
       console.error("Error unblocking user:", error);
     }
@@ -39,30 +104,28 @@ export default function AllCustomers() {
   const deleteCustomer = async (id) => {
     try {
       await apiInstance.delete(`/user1/${id}`);
-      setFetchCustomers(true)
-      alert("Customer Deleted")
+      setFetchCustomers(true);
+      alert("Customer Deleted");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleVerifyToggle = async (id, verificationStatus) => {
     try {
       if (verificationStatus) {
         await apiInstance.patch(`/user1/unverify/${id}`);
-        alert("Customer Unverified")
-        setFetchCustomers(true)
-      }
-      else {
+        alert("Customer Unverified");
+        setFetchCustomers(true);
+      } else {
         await apiInstance.patch(`/user1/verify/${id}`);
-        alert("Customer Verified")
-        setFetchCustomers(true)
+        alert("Customer Verified");
+        setFetchCustomers(true);
       }
+    } catch (err) {
+      console.log(err);
     }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  };
 
   const handleCheckboxChange = (user) => {
     let updatedSelected = selected.some((item) => item.id === user.id)
@@ -75,6 +138,18 @@ export default function AllCustomers() {
   const handleSelectAll = () => {
     setSelected(selectAll ? [] : customers);
     setSelectAll(!selectAll);
+  };
+
+  const handleBulkAction = (action) => {
+    // Implement bulk actions here, e.g., deleting selected customers
+    if (action === "Delete Selected") {
+      selected.forEach(async (customer) => {
+        await deleteCustomer(customer._id);
+      });
+      setSelected([]); // Clear selected customers after deletion
+      setFetchCustomers(true); // Refresh customer list
+      alert("Selected customers deleted.");
+    }
   };
 
   return (
@@ -96,25 +171,17 @@ export default function AllCustomers() {
         <div className="allCustomersLowerBox">
           <div className="allCustomersLowerHeader">
             <p className="customersText">Customers</p>
-            <div className="lower-menu">
-              <div className="bulkButtonBox">
-                <div className="bulkButton">
-                  <p className="bulkText">Bulk Action</p>
-                  <ChevronDownIcon size={18} />
-                </div>
-              </div>
-              <div className="bulkButtonBox">
-                <div className="bulkButton">
-                  <p className="bulkText">Filter by verification status</p>
-                  <ChevronDownIcon size={18} color="grey" />
-                </div>
-              </div>
-              <input
-                type="text"
-                placeholder="Type email to search"
-                className="searchInput"
-              />
-            </div>
+            {/* Integrate FilterComponent here */}
+            <FilterComponent
+              title="Customers"
+              filterConfig={filterConfig}
+              currentFilters={filters}
+              onFilterChange={handleFilterChange}
+              onSearch={handleSearch}
+              onBulkAction={handleBulkAction} // Add bulk action handler
+              selectedItems={selected.map((item) => item.id)} // Pass selected items
+              totalItems={customers.length} // Pass total items
+            />
           </div>
           <div className="allCustomersLower">
             <div className="table-container">
@@ -136,7 +203,7 @@ export default function AllCustomers() {
                   </tr>
                 </thead>
                 <tbody>
-                  {customers.map((user) => (
+                  {filteredCustomers.map((user) => (
                     <tr key={user.id}>
                       <td>
                         <input
@@ -156,40 +223,41 @@ export default function AllCustomers() {
                               : "badge"
                           }
                         >
-                          {
-                            user.isVerified ? "Verified" : "Not verified"
-                          }
+                          {user.isVerified ? "Verified" : "Not verified"}
                         </span>
                       </td>
                       <td>
                         <td>
                           <div className="actions">
-
-                            {
-                              user.isVerified ?
-                                <div
-                                  className="action"
-                                  onClick={() => handleVerifyToggle(user._id, user.isVerified)}
-                                >
-                                  <ShieldCheck
-                                    color="blue"
-                                    size={18}
-                                    className="cursor-pointer"
-                                    title="Unblock User"
-                                  />
-                                </div>
-                                : <div
-                                  className="action"
-                                  onClick={() => handleVerifyToggle(user._id, user.isVerified)}
-                                >
-                                  <ShieldAlert
-                                    color="blue"
-                                    size={18}
-                                    className="cursor-pointer"
-                                    title="Unblock User"
-                                  />
-                                </div>
-                            }
+                            {user.isVerified ? (
+                              <div
+                                className="action"
+                                onClick={() =>
+                                  handleVerifyToggle(user._id, user.isVerified)
+                                }
+                              >
+                                <ShieldCheck
+                                  color="blue"
+                                  size={18}
+                                  className="cursor-pointer"
+                                  title="Unblock User"
+                                />
+                              </div>
+                            ) : (
+                              <div
+                                className="action"
+                                onClick={() =>
+                                  handleVerifyToggle(user._id, user.isVerified)
+                                }
+                              >
+                                <ShieldAlert
+                                  color="blue"
+                                  size={18}
+                                  className="cursor-pointer"
+                                  title="Unblock User"
+                                />
+                              </div>
+                            )}
 
                             {user.isBlocked ? (
                               <div
@@ -217,9 +285,13 @@ export default function AllCustomers() {
                               </div>
                             )}
                             <div className="action">
-                              <Trash2 color="blue" onClick={() => {
-                                deleteCustomer(user._id)
-                              }} size={18} />
+                              <Trash2
+                                color="blue"
+                                onClick={() => {
+                                  deleteCustomer(user._id);
+                                }}
+                                size={18}
+                              />
                             </div>
                           </div>
                         </td>

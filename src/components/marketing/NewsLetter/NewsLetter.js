@@ -1,10 +1,19 @@
 import { useState } from "react";
-import { ChevronLeft, Mail, Send, Users, UserCheck, X, ChevronDown } from "lucide-react";
+import {
+  ChevronLeft,
+  Mail,
+  Send,
+  Users,
+  UserCheck,
+  X,
+  ChevronDown,
+} from "lucide-react";
 import { TextEditor } from "../EmailTemplate/EditorComponents/TextEditor";
 import { newsletterService } from "../../../services/newsLetterService";
 import { useNavigate } from "react-router-dom";
 import { useCustomerContext } from "../../../context/customerContext";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NewsLetter = () => {
   const navigate = useNavigate();
@@ -17,7 +26,7 @@ const NewsLetter = () => {
   // Mock data - in a real app, this would come from your API
   const userGroups = {
     allUsers: customers,
-    subscribers: customers.filter(user => user.isSubscribed),
+    subscribers: customers.filter((user) => user.isSubscribed),
   };
 
   const [formData, setFormData] = useState({
@@ -91,16 +100,14 @@ const NewsLetter = () => {
 
     try {
       const newsletterData = {
-        emails: formData.selectedUsers.map(user => user.email),
+        emails: formData.selectedUsers.map((user) => user.email),
         subject: formData.subject,
-        content: formData.content
+        content: formData.content,
       };
       const response = await newsletterService.saveNewsletter(newsletterData);
-      
+
       setSuccess("Newsletter saved successfully!");
-      alert("NewsLetter Sent")
-      console.log("Newsletter saved:", response);
- 
+      navigate(-1);
       resetForm();
     } catch (error) {
       console.error("Error saving newsletter:", error);
@@ -129,6 +136,7 @@ const NewsLetter = () => {
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
+      <ToastContainer position="top-center" />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -227,31 +235,46 @@ const NewsLetter = () => {
                               type="checkbox"
                               checked={
                                 filteredUsers("allUsers").length > 0 &&
-                                filteredUsers("allUsers").every(user => 
-                                  formData.selectedUsers.some(u => u._id === user._id)
+                                filteredUsers("allUsers").every((user) =>
+                                  formData.selectedUsers.some(
+                                    (u) => u._id === user._id
+                                  )
                                 )
                               }
                               onChange={(e) => {
                                 if (e.target.checked) {
-                                  const newUsers = filteredUsers("allUsers").filter(
-                                    user => !formData.selectedUsers.some(u => u._id === user._id)
+                                  const newUsers = filteredUsers(
+                                    "allUsers"
+                                  ).filter(
+                                    (user) =>
+                                      !formData.selectedUsers.some(
+                                        (u) => u._id === user._id
+                                      )
                                   );
-                                  setFormData(prev => ({
+                                  setFormData((prev) => ({
                                     ...prev,
-                                    selectedUsers: [...prev.selectedUsers, ...newUsers]
+                                    selectedUsers: [
+                                      ...prev.selectedUsers,
+                                      ...newUsers,
+                                    ],
                                   }));
                                 } else {
-                                  setFormData(prev => ({
+                                  setFormData((prev) => ({
                                     ...prev,
                                     selectedUsers: prev.selectedUsers.filter(
-                                      u => !filteredUsers("allUsers").some(user => user._id === u._id)
-                                    )
+                                      (u) =>
+                                        !filteredUsers("allUsers").some(
+                                          (user) => user._id === u._id
+                                        )
+                                    ),
                                   }));
                                 }
                               }}
                               className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
                             />
-                            <span className="text-sm font-medium text-gray-900">Select All</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              Select All
+                            </span>
                           </div>
                           <ul className="divide-y divide-gray-200">
                             {filteredUsers("allUsers").length > 0 ? (
@@ -260,20 +283,28 @@ const NewsLetter = () => {
                                   <button
                                     type="button"
                                     className={`w-full text-left px-3 py-3 flex items-center ${
-                                      formData.selectedUsers.some(u => u._id === user._id)
+                                      formData.selectedUsers.some(
+                                        (u) => u._id === user._id
+                                      )
                                         ? "bg-blue-50"
                                         : ""
                                     }`}
                                     onClick={() => handleUserSelect(user)}
                                   >
-                                    <div className={`flex items-center h-5 mr-3 ${
-                                      formData.selectedUsers.some(u => u._id === user._id)
-                                        ? "text-blue-600"
-                                        : "text-gray-400"
-                                    }`}>
+                                    <div
+                                      className={`flex items-center h-5 mr-3 ${
+                                        formData.selectedUsers.some(
+                                          (u) => u._id === user._id
+                                        )
+                                          ? "text-blue-600"
+                                          : "text-gray-400"
+                                      }`}
+                                    >
                                       <input
                                         type="checkbox"
-                                        checked={formData.selectedUsers.some(u => u._id === user._id)}
+                                        checked={formData.selectedUsers.some(
+                                          (u) => u._id === user._id
+                                        )}
                                         readOnly
                                         className="h-4 w-4 rounded border-gray-300 focus:ring-blue-500"
                                       />
@@ -289,7 +320,6 @@ const NewsLetter = () => {
                                   </button>
                                 </li>
                               ))
-                              
                             ) : (
                               <li className="px-3 py-3 text-sm text-gray-500 text-center">
                                 No users found
@@ -341,31 +371,46 @@ const NewsLetter = () => {
                               type="checkbox"
                               checked={
                                 filteredUsers("subscribers").length > 0 &&
-                                filteredUsers("subscribers").every(user => 
-                                  formData.selectedUsers.some(u => u.id === user.id)
+                                filteredUsers("subscribers").every((user) =>
+                                  formData.selectedUsers.some(
+                                    (u) => u.id === user.id
+                                  )
                                 )
                               }
                               onChange={(e) => {
                                 if (e.target.checked) {
-                                  const newSubscribers = filteredUsers("subscribers").filter(
-                                    user => !formData.selectedUsers.some(u => u.id === user.id)
+                                  const newSubscribers = filteredUsers(
+                                    "subscribers"
+                                  ).filter(
+                                    (user) =>
+                                      !formData.selectedUsers.some(
+                                        (u) => u.id === user.id
+                                      )
                                   );
-                                  setFormData(prev => ({
+                                  setFormData((prev) => ({
                                     ...prev,
-                                    selectedUsers: [...prev.selectedUsers, ...newSubscribers]
+                                    selectedUsers: [
+                                      ...prev.selectedUsers,
+                                      ...newSubscribers,
+                                    ],
                                   }));
                                 } else {
-                                  setFormData(prev => ({
+                                  setFormData((prev) => ({
                                     ...prev,
                                     selectedUsers: prev.selectedUsers.filter(
-                                      u => !filteredUsers("subscribers").some(user => user.id === u.id)
-                                    )
+                                      (u) =>
+                                        !filteredUsers("subscribers").some(
+                                          (user) => user.id === u.id
+                                        )
+                                    ),
                                   }));
                                 }
                               }}
                               className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
                             />
-                            <span className="text-sm font-medium text-gray-900">Select All</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              Select All
+                            </span>
                           </div>
                           <ul className="divide-y divide-gray-200">
                             {filteredUsers("subscribers").length > 0 ? (
@@ -474,7 +519,15 @@ const NewsLetter = () => {
                   "Sending..."
                 ) : (
                   <>
-                    <Send className="w-4 h-4 mr-2" />
+                    <Send
+                      className="w-4 h-4 mr-2"
+                      onClick={() =>
+                        toast.success("Newsletter saved successfully!", {
+                          position: "top-center",
+                          autoClose: 2000,
+                        })
+                      }
+                    />
                     Send Newsletter
                   </>
                 )}

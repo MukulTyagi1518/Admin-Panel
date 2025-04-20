@@ -1,20 +1,17 @@
-import { Download, Eye, EyeIcon, Trash } from "lucide-react";
+import { Download, Eye, Trash } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import OrderHeader from "./OrderHeader";
 import Pagination from "../Pagination";
-import { useMediaQuery } from 'react-responsive';
-import { FaPlus, FaMinus } from 'react-icons/fa';
+import { useMediaQuery } from "react-responsive";
 import { useOrdersContext } from "../../context/ordersContext";
 import ViewExpandData from "../ViewExpandData";
-import axios from "axios";
 import apiInstance from "../../utils/axios";
 
-function LatestOrders({ customFilter, title = "Latest allOrders" }) {
-
-  const { allOrders, setAllOrders } = useOrdersContext()
+function LatestOrders({ customFilter = null, title = "Latest allOrders" }) {
+  const { allOrders, setAllOrders } = useOrdersContext();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
@@ -24,7 +21,7 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
     DeliveryStatus: "All",
     payment: "All",
     date: "All",
-    bulk: null
+    bulk: null,
   });
 
   const isBelow1400 = useMediaQuery({ maxWidth: 1400 });
@@ -32,28 +29,35 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
 
   const [isAllSelected, setIsAllSelected] = useState(false); // State to track if all checkboxes are selected
   const [selectedOrders, setSelectedOrders] = useState([]); // State to track selected allOrders
+  const ordersToFilter = customFilter ? customFilter(allOrders) : allOrders;
 
   // Filter allOrders based on search term and filters
-  const filteredOrders = allOrders.filter(order => {
+  const filteredOrders = ordersToFilter.filter((order) => {
     // Search term filter
     const matchesSearch =
       order.code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customer?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.seller?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.DeliveryStatus?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.paymentStatus?.toLowerCase().includes(searchTerm.toLowerCase());
+      (order.PaymentStatus || order.paymentStatus)
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
     // Delivery status filter
-    const matchesDelivery = filters.DeliveryStatus === "All" ||
+    const matchesDelivery =
+      filters.DeliveryStatus === "All" ||
       order.DeliveryStatus === filters.DeliveryStatus;
 
     // Payment status filter
-    const matchesPayment = filters.payment === "All" ||
-      order.paymentStatus === filters.payment;
+    const matchesPayment =
+      filters.payment === "All" ||
+      (order.PaymentStatus || order.paymentStatus) === filters.payment;
 
     // Date filter (simplified for demo)
-    const matchesDate = filters.date === "All" ||
-      (filters.date === "Today" && order.date === new Date().toISOString().split('T')[0]) ||
+    const matchesDate =
+      filters.date === "All" ||
+      (filters.date === "Today" &&
+        order.date === new Date().toISOString().split("T")[0]) ||
       (filters.date === "Last 7 Days" && isWithinLastNDays(order.date, 7)) ||
       (filters.date === "This Month" && isThisMonth(order.date));
 
@@ -73,7 +77,10 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
   function isThisMonth(dateString) {
     const date = new Date(dateString);
     const today = new Date();
-    return date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+    return (
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
   }
 
   const handleBulkAction = (action) => {
@@ -112,7 +119,7 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
 
   const toggleOrderExpansion = (orderId) => {
     if (expandedOrders.includes(orderId)) {
-      setExpandedOrders(expandedOrders.filter(id => id !== orderId));
+      setExpandedOrders(expandedOrders.filter((id) => id !== orderId));
     } else {
       setExpandedOrders([...expandedOrders, orderId]);
     }
@@ -130,13 +137,16 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
   const handleDelete = async (id) => {
     setRoleToDelete(id);
     setShowDeleteConfirmation(true);
+    console.log(roleToDelete);
   };
 
   const confirmDelete = async () => {
     try {
       setIsLoading(true);
-      await apiInstance.delete(`orders/${roleToDelete}`);
-      setAllOrders(allOrders.filter(order => order.id !== roleToDelete));
+      await apiInstance.delete(`orders/delete/${roleToDelete}`);
+      setAllOrders((prev) =>
+        prev.filter((order) => order._id !== roleToDelete)
+      );
       setShowDeleteConfirmation(false);
       setRoleToDelete(null);
       setIsLoading(false);
@@ -168,7 +178,7 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
 
   // Handle filter changes from OrderHeader
   const handleFilterChange = (filterType, value) => {
-    setFilters(prev => ({ ...prev, [filterType]: value }));
+    setFilters((prev) => ({ ...prev, [filterType]: value }));
 
     // If it's a bulk action, perform it immediately
     if (filterType === "bulk" && value !== "Bulk Action") {
@@ -185,41 +195,44 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
     setCurrentPage(1);
   };
 
-  const handleSelectAll = () => {
-    if (isAllSelected) {
-      // Unselect all filtered rows
-      const updatedSelection = selectedOrders.filter(orderId => 
-        !filteredOrders.some(order => order.id === orderId)
-      );
-      setSelectedOrders(updatedSelection);
+  const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+    const currentPageOrderIds = currentOrders.map((order) => order.id);
+
+    if (isChecked) {
+      // Add all current page orders to selection
+      setSelectedOrders((prev) => {
+        const newSelection = [...prev];
+        currentPageOrderIds.forEach((id) => {
+          if (!newSelection.includes(id)) {
+            newSelection.push(id);
+          }
+        });
+        return newSelection;
+      });
     } else {
-      // Select all filtered rows
-      const updatedSelection = [
-        ...selectedOrders,
-        ...filteredOrders
-          .filter(order => !selectedOrders.includes(order.id))
-          .map(order => order.id)
-      ];
-      setSelectedOrders(updatedSelection);
+      // Remove all current page orders from selection
+      setSelectedOrders((prev) =>
+        prev.filter((id) => !currentPageOrderIds.includes(id))
+      );
     }
-    setIsAllSelected(!isAllSelected);
   };
 
-  const handleSelectOrder = (id) => {
-    if (selectedOrders.includes(id)) {
-      // Unselect the order
-      const updatedSelection = selectedOrders.filter(orderId => orderId !== id);
-      setSelectedOrders(updatedSelection);
-    } else {
-      // Select the order
-      const updatedSelection = [...selectedOrders, id];
-      setSelectedOrders(updatedSelection);
-    }
+  const handleSelectOrder = (orderId) => {
+    setSelectedOrders((prev) => {
+      if (prev.includes(orderId)) {
+        return prev.filter((id) => id !== orderId);
+      } else {
+        return [...prev, orderId];
+      }
+    });
   };
 
   useEffect(() => {
     // Update "Select All" checkbox state based on filtered rows
-    const allFilteredSelected = filteredOrders.every(order => selectedOrders.includes(order.id));
+    const allFilteredSelected = filteredOrders.every((order) =>
+      selectedOrders.includes(order.id)
+    );
     setIsAllSelected(allFilteredSelected && filteredOrders.length > 0);
   }, [selectedOrders, filteredOrders]);
 
@@ -237,7 +250,9 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
         <table className="min-w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              {isBelow1400 && <th className="text-left py-3 px-4 text-sm font-medium text-gray-500"></th>}
+              {isBelow1400 && (
+                <th className="text-left py-3 px-4 text-sm font-medium text-gray-500"></th>
+              )}
               <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
                 <input
                   type="checkbox"
@@ -245,130 +260,163 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
                   onChange={handleSelectAll}
                 />
               </th>
-              <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Order Code</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                Order ID
+              </th>
+
               {!isBelow1400 && (
                 <>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Num. of Products</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Customer</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Seller</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Amount</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Delivery Status</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Payment Method</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Payment Status</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Refund</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Items
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Customer
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Seller
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Total
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Delivery Status
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Payment Method
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Payment Status
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                    Refund
+                  </th>
                 </>
               )}
-              <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Actions</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
-            {currentOrders.map((order) => (
-              <React.Fragment key={order.id}>
-                <tr className="border-b border-gray-100 hover:bg-gray-50">
-                  {isBelow1400 && (
-                    <td className="py-3 px-4">
-                      <ViewExpandData
-                        isExpanded={expandedOrders.includes(order.id)}
-                        toggleExpanded={() => toggleOrderExpansion(order.id)}
-                      />
-                    </td>
-                  )}
-                  <td className="py-3 px-4">
-                    <input
-                      type="checkbox"
-                      checked={selectedOrders.includes(order.id)}
-                      onChange={() => handleSelectOrder(order.id)}
-                    />
-                  </td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{order.code}</td>
-                  {!isBelow1400 && (
-                    <>
-                      <td className="py-3 px-4 text-sm text-gray-500">{order.totalItems}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.customer}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.seller}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.amount}</td>
-                      <td className="py-3 px-4">
-                        <span className={`text-sm font-medium ${getStatusColor(order.DeliveryStatus)}`}>
-                          {order.DeliveryStatus}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.paymentMethod}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.PaymentStatus}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.Refund}</td>
-                    </>
-                  )}
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-[.2cm]">
-                      <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
-                        <Eye size={15} color="blue" />
-                      </div>
-                      <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
-                        <Download size={15} color="blueviolet" />
-                      </div>
-                      <div
-                        className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer"
-                        onClick={() => handleDelete(order.id)}
-                      >
-                        <Trash size={15} color="red" />
-                      </div>
-                    </div>
+  {currentOrders.map((order) => (
+    <React.Fragment key={order._id}> {/* Changed from order.id to order._id */}
+      <tr className="border-b border-gray-100 hover:bg-gray-50">
+        {isBelow1400 && (
+          <td className="py-3 px-4">
+            <ViewExpandData
+              isExpanded={expandedOrders.includes(order._id)}
+              toggleExpanded={() => toggleOrderExpansion(order._id)}
+            />
+          </td>
+        )}
+        <td className="py-3 px-4">
+          <input
+            type="checkbox"
+            checked={selectedOrders.includes(order._id)}
+            onChange={() => handleSelectOrder(order._id)}
+          />
+        </td>
+        <td className="py-3 px-4 text-sm text-gray-700">{order._id}</td>
+        {!isBelow1400 && (
+          <>
+            <td className="py-3 px-4 text-sm text-gray-500">{order.items.length}</td>
+            <td className="py-3 px-4 text-sm text-gray-700">
+              {order.user?.firstName} {order.user?.lastName}
+            </td>
+            <td className="py-3 px-4 text-sm text-gray-700">
+              {order.items[0]?.sellerName} {/* Assuming first item's seller */}
+            </td>
+            <td className="py-3 px-4 text-sm text-gray-700">
+              ${order.items.reduce((sum, item) => sum + (item.priceSale * item.quantity), 0).toFixed(2)}
+            </td>
+            <td className="py-3 px-4">
+              <span className={`text-sm font-medium ${getStatusColor(order.DeliveryStatus)}`}>
+                {order.DeliveryStatus}
+              </span>
+            </td>
+            <td className="py-3 px-4 text-sm text-gray-700">{order.paymentMethod}</td>
+            <td className="py-3 px-4 text-sm text-gray-700">{order.PaymentStatus}</td>
+            <td className="py-3 px-4 text-sm text-gray-700">{order.Refund}</td>
+          </>
+        )}
+        <td className="py-3 px-4">
+          <div className="flex items-center gap-[.2cm]">
+            <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+              <Eye size={15} color="blue" />
+            </div>
+            <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+              <Download size={15} color="blueviolet" />
+            </div>
+            <div
+              className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer"
+              onClick={() => handleDelete(order._id)}
+            >
+              <Trash size={15} color="red" />
+            </div>
+          </div>
+        </td>
+      </tr>
+      {expandedOrders.includes(order._id) && isBelow1400 && (
+        <tr>
+          <td colSpan="10">
+            <table className="min-w-full bg-gray-100 p-4">
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Items</td>
+                  <td className="py-2 px-4">{order.items.length}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Customer</td>
+                  <td className="py-2 px-4">
+                    {order.user?.firstName} {order.user?.lastName}
                   </td>
                 </tr>
-                {expandedOrders.includes(order.id) && isBelow1400 && (
-                  <tr>
-                    <td colSpan="10">
-                      <table className="min-w-full bg-gray-100 p-4">
-                        <tbody>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Num. of Products</td>
-                            <td className="py-2 px-4">{order.products}</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Customer</td>
-                            <td className="py-2 px-4">{order.customer}</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Seller</td>
-                            <td className="py-2 px-4">{order.seller}</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Amount</td>
-                            <td className="py-2 px-4">{order.amount}</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Delivery Status</td>
-                            <td className="py-2 px-4">
-                              <span className={`font-medium ${getStatusColor(order.DeliveryStatus)}`}>
-                                {order.DeliveryStatus}
-                              </span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Payment Method</td>
-                            <td className="py-2 px-4">{order.paymentMethod}</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Payment Status</td>
-                            <td className="py-2 px-4">{order.paymentStatus}</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-4 font-semibold">Refund</td>
-                            <td className="py-2 px-4">{order.refund}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Seller</td>
+                  <td className="py-2 px-4">{order.items[0]?.sellerName}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Total</td>
+                  <td className="py-2 px-4">
+                    ${order.items.reduce((sum, item) => sum + (item.priceSale * item.quantity), 0).toFixed(2)}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Delivery Status</td>
+                  <td className="py-2 px-4">
+                    <span className={`font-medium ${getStatusColor(order.DeliveryStatus)}`}>
+                      {order.DeliveryStatus}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Payment Method</td>
+                  <td className="py-2 px-4">{order.paymentMethod}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Payment Status</td>
+                  <td className="py-2 px-4">{order.PaymentStatus}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 font-semibold">Refund</td>
+                  <td className="py-2 px-4">{order.Refund}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      )}
+    </React.Fragment>
+  ))}
+</tbody>
         </table>
         {showDeleteConfirmation && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 max-w-md w-full">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-gray-800">Delete Confirmation</h2>
+                <h2 className="text-xl font-bold text-gray-800">
+                  Delete Confirmation
+                </h2>
                 <button
                   className="text-gray-500 hover:text-gray-700"
                   onClick={cancelDelete}
@@ -399,12 +447,18 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
       </div>
       <div className="flex justify-between items-center mt-6">
         <div className="text-sm text-gray-500">
-          Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredOrders.length)} of {filteredOrders.length} entries
+          Showing {indexOfFirstItem + 1} to{" "}
+          {Math.min(indexOfLastItem, filteredOrders.length)} of{" "}
+          {filteredOrders.length} entries
         </div>
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
-};
+}
 
 export default LatestOrders;

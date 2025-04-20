@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import StatCard from "./StatCard";
 import { Line } from "react-chartjs-2";
 import {
@@ -10,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import apiInstance from "../../utils/axios";
 
 ChartJS.register(
   CategoryScale,
@@ -33,8 +35,29 @@ function SalesBreakdownItem({ color, label, value }) {
 }
 
 function SalesSection() {
-  const salesData = [500, 1000, 700, 1900, 1000, 1200, 1500, 1100, 2000, 2000, 2500];
-  const totalSales = salesData.reduce((acc, value) => acc + value, 0);
+  const [salesData, setSalesData] = useState([]);
+  const [totalSales, setTotalSales] = useState(0);
+
+  useEffect(() => {
+    const fetchSales = async () => {
+      const res = await apiInstance.get("/orders/list");
+      const orders = res.data;
+
+      const monthlyTotals = Array(12).fill(0);
+      orders.forEach(order => {
+        const date = new Date(order.createdAt);
+        const month = date.getMonth();
+        const total = order.items.reduce((acc, item) => acc + parseFloat(item.subtotal), 0);
+        monthlyTotals[month] += total;
+      });
+
+      const yearlyTotal = monthlyTotals.reduce((acc, val) => acc + val, 0);
+      setSalesData(monthlyTotals);
+      setTotalSales(yearlyTotal);
+    };
+
+    fetchSales();
+  }, []);
 
   const chartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -44,9 +67,9 @@ function SalesSection() {
         borderColor: "#1a237e",
         backgroundColor: "rgba(26, 35, 126, 0.1)",
         tension: 0.4,
-        fill: true, // Fill the area under the line
-        pointRadius: 0, // Remove data point dots
-        pointHoverRadius: 0, // Remove hover effect on data point dots
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 0,
       },
     ],
   };
@@ -54,44 +77,36 @@ function SalesSection() {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      },
+      legend: { display: false },
+      title: { display: false },
     },
     scales: {
       x: {
-        grid: {
-          display: false, // Remove vertical grid lines
-        },
+        grid: { display: false },
       },
       y: {
         beginAtZero: true,
-        grid: {
-          display: false, // Remove horizontal grid lines
-        },
+        grid: { display: false },
       },
     },
   };
 
+  const currentMonthIndex = new Date().getMonth();
+  const latestMonthSales = salesData[currentMonthIndex] || 0;
+  
   return (
     <div className="bg-cyan-50 rounded-lg shadow-sm p-5">
-      {/* Total Sales StatCard */}
       <StatCard
         title="Total Sales"
-        value={`${(totalSales / 1000).toFixed(1)}K`}
+        value={`₹${(totalSales / 1000).toFixed(1)}K`}
         color="#0095ff"
       />
 
-      {/* Sales This Month */}
       <div className="text-cyan-400 rounded-md p-4 mb-5">
         <h3 className="text-lg font-semibold">Sales this month</h3>
-        <div className="text-2xl font-bold">${salesData[salesData.length - 1].toFixed(3)}</div>
+        <div className="text-2xl font-bold">₹{latestMonthSales.toFixed(2)}</div>
       </div>
 
-      {/* Sales Stat */}
       <div className="mb-5">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-semibold">Sales Stat</h3>
@@ -101,10 +116,9 @@ function SalesSection() {
         </div>
       </div>
 
-      {/* Sales Breakdown */}
       <div>
-        <SalesBreakdownItem color="purple" label="In-house Sales" value="$0.000" />
-        <SalesBreakdownItem color="red" label="Sellers Sales" value="$0.000" />
+        <SalesBreakdownItem color="purple" label="In-house Sales" value="₹0.000" />
+        <SalesBreakdownItem color="red" label="Sellers Sales" value="₹0.000" />
       </div>
     </div>
   );

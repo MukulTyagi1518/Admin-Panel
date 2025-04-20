@@ -9,7 +9,7 @@ function SellerOrders() {
   return (
     <LatestOrders 
       customFilter={filterSellerOrders}
-      title="InHouse Orders"
+      title="Seller Orders"
     />
   );
 }

@@ -5,8 +5,7 @@ import { ChevronDown, X, Send, Check } from "lucide-react";
 
 const CustomNotification = () => {
   const { customers } = useCustomerContext();
-  const [selectedCustomers, setSelectedCustomers] = useState([]); // Store selected customers
-  const [isMultiSelect, setIsMultiSelect] = useState(false); // Toggle for multi-select mode
+  const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [notificationType, setNotificationType] = useState("");
   const [notificationContent, setNotificationContent] = useState("");
   const [link, setLink] = useState("");
@@ -19,7 +18,6 @@ const CustomNotification = () => {
   const customerDropdownRef = useRef(null);
   const typeDropdownRef = useRef(null);
 
-  // Notification types - could also be fetched from API
   const notificationTypes = [
     { id: 29, name: "SALE" },
     { id: 30, name: "Coupon Sale" },
@@ -28,7 +26,6 @@ const CustomNotification = () => {
     { id: 84, name: "admin" },
   ];
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -51,7 +48,6 @@ const CustomNotification = () => {
     };
   }, []);
 
-  // Reset status message after 5 seconds
   useEffect(() => {
     if (status.message) {
       const timer = setTimeout(() => {
@@ -73,42 +69,35 @@ const CustomNotification = () => {
     setSearchType("");
   };
 
-  // Add "Select All" and "Deselect All" functionality
   const handleSelectAll = () => {
-    setSelectedCustomers(filteredCustomers); // Select all filtered customers
+    setSelectedCustomers(filteredCustomers);
   };
 
   const handleDeselectAll = () => {
-    setSelectedCustomers([]); // Clear all selected customers
+    setSelectedCustomers([]);
   };
 
-  // Handle customer selection
-  const handleCustomerSelect = (customer) => {
-    setSelectedCustomers((prev) => {
-      const isSelected = prev.some((c) => c.id === customer.id);
-      return isSelected
-        ? prev.filter((c) => c.id !== customer.id) // Remove if already selected
-        : [...prev, customer]; // Add if not selected
-    });
-  };
+ // Replace with this simplified version
+const handleCustomerSelect = (customer) => {
+  setSelectedCustomers((prev) => {
+    const isSelected = prev.some((c) => c._id === customer._id);
+    return isSelected
+      ? prev.filter((c) => c._id !== customer._id)
+      : [...prev, customer];
+  });
+};
 
-  // Remove a selected customer
   const removeSelectedCustomer = (customerId) => {
-    setSelectedCustomers((prev) => prev.filter((c) => c.id !== customerId));
+    setSelectedCustomers((prev) => prev.filter((c) => c._id !== customerId));
   };
 
-  // Get label for selected customers
-  const getSelectedCustomersLabel = () => {
-    if (selectedCustomers.length === 0) return "Select a customer";
-    if (!isMultiSelect) return selectedCustomers[0].name;
-    return `${selectedCustomers.length} customer(s) selected`;
-  };
+// Replace with this simplified version
+const getSelectedCustomersLabel = () => {
+  if (selectedCustomers.length === 0) return "Select customers";
+  return `${selectedCustomers.length} customer(s) selected`;
+};
 
-  // Toggle multi-select mode
-  const toggleMultiSelect = () => {
-    setIsMultiSelect((prev) => !prev);
-    setSelectedCustomers([]); // Reset selection when toggling mode
-  };
+
 
   const handleNotificationTypeSelect = (typeId) => {
     setNotificationType(typeId);
@@ -141,7 +130,6 @@ const CustomNotification = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!notificationType) {
       setStatus({ type: "error", message: "Please select a notification type" });
       return;
@@ -166,7 +154,7 @@ const CustomNotification = () => {
         content: notificationContent,
         link: link || null,
         customers: selectedCustomers.map((customer) => ({
-          id: customer.id,
+          id: customer._id,
           name: customer.name,
           email: customer.email || null,
           phone: customer.phone || null,
@@ -180,7 +168,6 @@ const CustomNotification = () => {
         message: "Notification created and sending started!",
       });
 
-      // Reset form
       setSelectedCustomers([]);
       setNotificationType("");
       setNotificationContent("");
@@ -189,7 +176,7 @@ const CustomNotification = () => {
       console.error("Error sending notification:", error);
       setStatus({
         type: "error",
-        message: error || "Failed to send notification. Please try again.",
+        message: error?.message || "Failed to send notification. Please try again.",
       });
     } finally {
       setIsSending(false);
@@ -205,7 +192,6 @@ const CustomNotification = () => {
               Send Custom Notification
             </h3>
 
-            {/* Status Message */}
             {status.message && (
               <div
                 className={`mb-4 p-3 rounded-md ${
@@ -218,16 +204,18 @@ const CustomNotification = () => {
               </div>
             )}
 
-            {/* Customers Dropdown */}
             <div className="mb-6">
-              <label className="block text-sm font-bold text-gray-700 mb-2">
-                Customers
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-sm font-bold text-gray-700">
+                  Customers
+                </label>
+                
+              </div>
+              
               <div className="relative" ref={customerDropdownRef}>
                 <button
                   type="button"
-                  className="w-full flex justify-between items-center px-4 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full flex justify-between items-center px-4 py-2 text-sm bg-white border-solid border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   onClick={() => toggleDropdown("customer")}
                 >
                   <span className="truncate">{getSelectedCustomersLabel()}</span>
@@ -249,42 +237,43 @@ const CustomNotification = () => {
                         onChange={(e) => setSearchCustomer(e.target.value)}
                         autoFocus
                       />
-                      <div className="mt-2 flex justify-between">
-                        <button
-                          type="button"
-                          className="text-sm text-blue-600 hover:underline"
-                          onClick={handleSelectAll}
-                        >
-                          Select All
-                        </button>
-                        <button
-                          type="button"
-                          className="text-sm text-red-600 hover:underline"
-                          onClick={handleDeselectAll}
-                        >
-                          Deselect All
-                        </button>
-                      </div>
+                        <div className="mt-2 flex justify-between">
+                          <button
+                            type="button"
+                            className="text-sm text-blue-600 hover:underline"
+                            onClick={handleSelectAll}
+                          >
+                            Select All
+                          </button>
+                          <button
+                            type="button"
+                            className="text-sm text-red-600 hover:underline"
+                            onClick={handleDeselectAll}
+                          >
+                            Deselect All
+                          </button>
+                        </div>
                     </div>
                     <div className="max-h-48 overflow-y-auto">
                       {filteredCustomers.length > 0 ? (
                         filteredCustomers.map((customer) => (
                           <div
-                            key={customer.id}
+                            key={customer._id}
                             className={`px-4 py-2 cursor-pointer hover:bg-blue-50 ${
-                              selectedCustomers.some((c) => c.id === customer.id)
+                              selectedCustomers.some((c) => c._id === customer._id)
                                 ? "bg-blue-100"
                                 : ""
                             }`}
+                            onClick={() => handleCustomerSelect(customer)}
                           >
                             <div className="flex items-center">
                               <input
-                                type="checkbox"
+                                type={"checkbox"}
                                 checked={selectedCustomers.some(
-                                  (c) => c.id === customer.id
+                                  (c) => c._id === customer._id
                                 )}
                                 onChange={() => handleCustomerSelect(customer)}
-                                className="mr-2"
+                                onClick={(e) => e.stopPropagation()}
                               />
                               <div>
                                 <p className="text-sm font-medium text-gray-700">
@@ -306,40 +295,37 @@ const CustomNotification = () => {
                   </div>
                 )}
               </div>
-              </div>
 
-              {/* Selected Customers Display */}
               <div className="mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Selected Recipients ({selectedCustomers.length})
-                    </label>
-              {selectedCustomers.length > 0 ? (
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Selected Recipients ({selectedCustomers.length})
+                </label>
+                {selectedCustomers.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
                     {selectedCustomers.map((customer) => (
                       <div
-                        key={customer.id}
+                        key={customer._id}
                         className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center"
                       >
                         {customer.name}
                         <button
                           type="button"
                           className="ml-1 text-blue-600 hover:text-blue-800"
-                          onClick={() => removeSelectedCustomer(customer.id)}
+                          onClick={() => removeSelectedCustomer(customer._id)}
                         >
                           <X className="w-4 h-4" />
                         </button>
                       </div>
                     ))}
                   </div>
-              ) : (
-                <span className="text-gray-500">
-                  No recipients selected yet
-                </span>
-              )}
+                ) : (
+                  <span className="text-gray-500">
+                    No recipients selected yet
+                  </span>
+                )}
               </div>
             </div>
 
-            {/* Notification Type Dropdown */}
             <div className="mb-6">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Select Type
@@ -347,7 +333,7 @@ const CustomNotification = () => {
               <div className="relative" ref={typeDropdownRef}>
                 <button
                   type="button"
-                  className="w-full flex justify-between items-center px-4 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full flex justify-between items-center px-4 py-2 text-sm bg-white border-solid border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   onClick={() => toggleDropdown("type")}
                 >
                   <span className="truncate">{getSelectedTypeLabel()}</span>
@@ -409,7 +395,6 @@ const CustomNotification = () => {
               </div>
             </div>
 
-            {/* Notification Content */}
             <div className="mb-6">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Content..
@@ -427,7 +412,6 @@ const CustomNotification = () => {
               />
             </div>
 
-            {/* Link */}
             <div className="mb-6">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Link
@@ -441,7 +425,6 @@ const CustomNotification = () => {
               />
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-end">
               <button
                 type="submit"

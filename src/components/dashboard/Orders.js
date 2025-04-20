@@ -57,7 +57,7 @@ const Orders = () => {
   const [orderData, setOrderData] = useState({
     placed: 0,
     delivered: 0,
-    processed: 0,
+    pickedup: 0,
     pending: 0,
     shipped: 0,
   });
@@ -73,7 +73,7 @@ const Orders = () => {
         const statusCounts = {
           placed: 0,
           delivered: 0,
-          processed: 0,
+          pickedup: 0,
           pending: 0,
           shipped: 0,
         };
@@ -86,8 +86,8 @@ const Orders = () => {
             case "delivered":
               statusCounts.delivered++;
               break;
-            case "processed":
-              statusCounts.processed++;
+            case "picked up":
+              statusCounts.pickedup++;
               break;
             case "pending":
               statusCounts.pending++;
@@ -111,7 +111,7 @@ const Orders = () => {
   }, []);
 
   const pieChartData = {
-    labels: ["Placed", "Delivered", "Processed", "Pending", "Shipped"],
+    labels: ["Placed", "Delivered", "Picked Up", "Pending", "Shipped"],
     datasets: [
       {
         data: Object.values(orderData),
@@ -174,8 +174,8 @@ const Orders = () => {
         />
         <OrderStatusCard
           icon={<PackageIcon />}
-          label="Processed Order"
-          value={orderData.processed}
+          label="Picked Up Order"
+          value={orderData.pickedup}
           bgColor="bg-pink-100"
           textColor="text-pink-700"
           iconColor="text-pink-600"

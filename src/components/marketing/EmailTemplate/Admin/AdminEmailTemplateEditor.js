@@ -58,8 +58,10 @@ const AdminEmailTemplateEditor = () => {
     e.preventDefault();
     try {
       if (id) {
-        await apiInstance.put(`/adminemail/${id}`, adminTemplates);
+       const res= await apiInstance.put(`/adminemail/${id}`, adminTemplates);
         alert("Template updated successfully!");
+        console.log(res.data);
+        
       } else {
         await createAdminTemplate(adminTemplates);
         alert("Template created successfully!");

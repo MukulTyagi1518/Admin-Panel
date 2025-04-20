@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./FrequentlyBought.css";
 import { IoClose } from "react-icons/io5";
 import { useProductContext } from "../../productContex";
-import axios from "axios"
-import api from "../../utils/axios.js"
+import apiInstance from "../../utils/axios.js";
 import { useNavigate } from "react-router-dom";
 
 const FrequentlyBought = () => {
   const { productData, setProductData, setFetchProducts } = useProductContext();
   const [showModal, setShowModal] = useState(false);
   const [product, setproduct] = useState("");
-  const navigate = useNavigate()
+  const [allProducts, setAllProducts] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const categories = [
     {
@@ -35,15 +37,28 @@ const FrequentlyBought = () => {
     setProductData((prev) => ({
       ...prev,
       frequentlyBought: {
-        ...prev.frequentlyBought,
-        categories: [
-          ...(prev.frequentlyBought.categories || []), // Keep existing categories
-          e.target.value, // Add the new category
-        ],
+        ...(prev.frequentlyBought || {}),
+        category: e.target.value,
       },
     }));
   };
 
+  useEffect(() => {
+    const fetchProductsAndCategories = async () => {
+      try {
+        const productsRes = await apiInstance.get("/products"); // ✅ your endpoint may vary
+        const categoriesRes = await apiInstance.get(
+          "/categories/get-all-categories"
+        ); // ✅ your endpoint may vary
+        setAllProducts(productsRes.data.data);
+        setAllCategories(categoriesRes.data);
+      } catch (err) {
+        console.log("Error fetching products/categories:", err);
+      }
+    };
+
+    fetchProductsAndCategories();
+  }, []);
 
   const handleAddProduct = () => {
     if (product) {
@@ -51,13 +66,10 @@ const FrequentlyBought = () => {
         ...prev,
         frequentlyBought: {
           ...prev.frequentlyBought,
-          products: [
-            ...(prev.frequentlyBought.products || []),
-            product,
-          ],
+          products: [...(prev.frequentlyBought.products || []), product],
         },
       }));
-      setproduct(""); // Reset the selected product 
+      setproduct(""); // Reset the selected product
       setShowModal(false); // Close the modal
     }
   };
@@ -110,10 +122,19 @@ const FrequentlyBought = () => {
     formDataToSend.append("quantity", productData.quantity);
     formDataToSend.append("sku", productData.sku);
     formDataToSend.append("externalLink", productData.externalLink);
-    formDataToSend.append("externalLinkButtonText", productData.externalLinkButtonText);
-    formDataToSend.append("lowStockQuantityWarning", productData.lowStockQuantityWarning);
+    formDataToSend.append(
+      "externalLinkButtonText",
+      productData.externalLinkButtonText
+    );
+    formDataToSend.append(
+      "lowStockQuantityWarning",
+      productData.lowStockQuantityWarning
+    );
     formDataToSend.append("showStockQuantity", productData.showStockQuantity);
-    formDataToSend.append("showStockWithTextOnly", productData.showStockWithTextOnly);
+    formDataToSend.append(
+      "showStockWithTextOnly",
+      productData.showStockWithTextOnly
+    );
     formDataToSend.append("hideStock", productData.hideStock);
 
     // Append SEO Meta
@@ -122,7 +143,10 @@ const FrequentlyBought = () => {
     formDataToSend.append("metaImage", productData.metaImage);
 
     // Append Shipping Configuration
-    formDataToSend.append("shippingConfiguration", productData.shippingConfiguration)
+    formDataToSend.append(
+      "shippingConfiguration",
+      productData.shippingConfiguration
+    );
 
     // Append Tax & VAT
     formDataToSend.append("tax", productData.tax);
@@ -132,21 +156,25 @@ const FrequentlyBought = () => {
     formDataToSend.append("flashDeal", productData.flashDeal);
 
     // Append Frequently Bought
-    formDataToSend.append("frequentlyBought", productData.frequentlyBought);
+    formDataToSend.append(
+      "frequentlyBought",
+      JSON.stringify(productData.frequentlyBought)
+    );
 
-
+    
     try {
-      await api.post("/products/store", formDataToSend)
+      await apiInstance.post("/products/store", formDataToSend);
 
-      alert("Product added")
-      navigate('/products/all')
-      setFetchProducts(true)
+      alert("Product added");
+      navigate("/products/all");
+      setFetchProducts(true);
+    } catch (err) {
+      console.log(err);
     }
-    catch (err) {
-      console.log(err)
-    }
-
   };
+  const filteredProducts = allProducts.filter((prod) =>
+    prod.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="frequently-container">
       <h2 className="section-title">Frequently Bought</h2>
@@ -186,14 +214,10 @@ const FrequentlyBought = () => {
             onChange={handleCategoryChange}
           >
             <option value="">Choose Category</option>
-            {categories.map((group, index) => (
-              <optgroup key={index} label={group.label}>
-                {group.options.map((option, i) => (
-                  <option key={i} value={option.value}>
-                    -- {option.label}
-                  </option>
-                ))}
-              </optgroup>
+            {allCategories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
             ))}
           </select>
         </div>
@@ -205,11 +229,9 @@ const FrequentlyBought = () => {
           <div className="selected-products">
             <h3>Selected Products:</h3>
             <ul>
-              {productData.frequentlyBought.products.map(
-                (product, index) => (
-                  <li key={index}>{product}</li>
-                )
-              )}
+              {productData.frequentlyBought.products.map((product, index) => (
+                <li key={index}>{product}</li>
+              ))}
             </ul>
           </div>
         )}
@@ -237,16 +259,14 @@ const FrequentlyBought = () => {
               onChange={(e) => setproduct(e.target.value)}
             >
               <option value="">Select Product</option>
-              {categories.map((group, index) => (
-                <optgroup key={index} label={group.label}>
-                  {group.options.map((option, i) => (
-                    <option key={i} value={option.label}>
-                      -- {option.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
+              {Array.isArray(filteredProducts) &&
+                filteredProducts.map((prod) => (
+                  <option key={prod._id} value={prod._id}>
+                    {prod.name}
+                  </option>
+                ))}
             </select>
+
             <input
               type="text"
               className="search-input"
@@ -262,8 +282,12 @@ const FrequentlyBought = () => {
       )}
       {/* Buttons */}
       <div className="button-group">
-        <button className="btn-btn-grey" onClick={handleSubmit}>Save & Unpublish</button>
-        <button className="btn-btn-green" onClick={handleSubmit}>Save & Publish</button>
+        <button className="btn-btn-grey" onClick={handleSubmit}>
+          Save & Unpublish
+        </button>
+        <button className="btn-btn-green" onClick={handleSubmit}>
+          Save & Publish
+        </button>
       </div>
     </div>
   );

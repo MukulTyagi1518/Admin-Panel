@@ -72,16 +72,19 @@
 
 // export default TableRow
 
-
 import { useState } from "react";
-import { Download, EyeIcon, Trash2Icon, Plus, Minus, Trash, Eye } from "lucide-react";
+import {
+  Download,
+  Trash,
+  Eye,
+} from "lucide-react";
 import React from "react";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import {  FaEye, FaTrash } from "react-icons/fa";
 import ViewExpandData from "../ViewExpandData";
 
 function TableRow({ order }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const toggleExpanded = () => setIsExpanded(prev => !prev);
+  const toggleExpanded = () => setIsExpanded((prev) => !prev);
   return (
     <>
       {/* Main visible row */}
@@ -91,7 +94,10 @@ function TableRow({ order }) {
             {isExpanded ? <EyeIcon size={18} color="blue" /> : <EyeIcon size={18} color="blue" />}
           </button>
         </td> */}
-       <ViewExpandData isExpanded={isExpanded} toggleExpanded={toggleExpanded} />
+        <ViewExpandData
+          isExpanded={isExpanded}
+          toggleExpanded={toggleExpanded}
+        />
 
         <td className="px-2 py-3">
           <input type="checkbox" className="rounded" />
@@ -107,7 +113,9 @@ function TableRow({ order }) {
             />
             <div>
               <div className="font-medium text-sm">{order.product.name}</div>
-              <div className="text-xs text-gray-500">Qty: {order.product.quantity}</div>
+              <div className="text-xs text-gray-500">
+                Qty: {order.product.quantity}
+              </div>
             </div>
           </div>
         </td>
@@ -149,17 +157,18 @@ function TableRow({ order }) {
         <td className="px-6 py-3 hidden md:table-cell">{order.status}</td>
         <td className="px-2 py-3">
           <span
-            className={`px-2 py-1 text-xs rounded-full ${order.refundable ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-              }`}
+            className={`px-2 py-1 text-xs rounded-full ${
+              order.refundable
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
           >
             {order.refundable ? "Refundable" : "Non-Refundable"}
           </span>
         </td>
 
         <td className="px-6 py-3 hidden md:table-cell">
-
           <div className="flex gap-2">
-
             {/* <button className="btn8 text-green-500 pl-1">
               <FaEye />
             </button>
@@ -170,17 +179,15 @@ function TableRow({ order }) {
               <FaTrash />
             </button> */}
             <div className=" btn3 view-btn3 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
-                        <Eye size={15} color="blue" />
-                      </div>
-                      <div className=" btn3 edit-btn3 p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
-                        <Download size={15} color="blueviolet" />
-                      </div>
+              <Eye size={15} color="blue" />
+            </div>
+            <div className=" btn3 edit-btn3 p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
+              <Download size={15} color="blueviolet" />
+            </div>
 
-                      <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
-                        <Trash size={15} color="red" />
-                      </div>
-
-
+            <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+              <Trash size={15} color="red" />
+            </div>
           </div>
         </td>
       </tr>
@@ -193,24 +200,40 @@ function TableRow({ order }) {
         <tr className="md:hidden bg-gray-50">
           <td colSpan="4" className="px-4 py-3 text-sm">
             <div className="grid gap-2">
-              <div><strong>Preorder ID:</strong> {order.id}</div>
-              <div><strong>Created:</strong> {order.createdAt}</div>
-              <div><strong>Price:</strong> ${order.price.toLocaleString()}</div>
-              <div><strong>Prepayment:</strong> ${order.prepayment.toLocaleString()}</div>
-              <div><strong>Seller:</strong> {order.seller}</div>
-              <div><strong>Customer:</strong> {order.customer.name} ({order.customer.email})</div>
-              <div><strong>Status:</strong> {order.status}</div>
+              <div>
+                <strong>Preorder ID:</strong> {order.id}
+              </div>
+              <div>
+                <strong>Created:</strong> {order.createdAt}
+              </div>
+              <div>
+                <strong>Price:</strong> ${order.price.toLocaleString()}
+              </div>
+              <div>
+                <strong>Prepayment:</strong> $
+                {order.prepayment.toLocaleString()}
+              </div>
+              <div>
+                <strong>Seller:</strong> {order.seller}
+              </div>
+              <div>
+                <strong>Customer:</strong> {order.customer.name} (
+                {order.customer.email})
+              </div>
+              <div>
+                <strong>Status:</strong> {order.status}
+              </div>
               <div className="flex gap-2 mt-2">
                 <strong>Options:</strong>
                 <button className="btn8 text-green-500 pl-1">
-              <FaEye />
-            </button>
-            <button className="btn8 text-yellow-400 pl-1">
-              <Download />
-            </button>
-            <button className="btn8 text-pink-400 pl-1">
-              <FaTrash />
-            </button>
+                  <FaEye />
+                </button>
+                <button className="btn8 text-yellow-400 pl-1">
+                  <Download />
+                </button>
+                <button className="btn8 text-pink-400 pl-1">
+                  <FaTrash />
+                </button>
               </div>
             </div>
           </td>

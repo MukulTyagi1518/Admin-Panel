@@ -306,6 +306,12 @@ const AllDeliveryPartners = () => {
           >
             {window.innerWidth > 640 ? "View Orders" : "Orders"}
           </button>
+          <button
+            onClick={() => handleViewPartner(partner.id, partner.name)}
+            className="px-2 py-1 bg-green-500 text-white rounded text-xs sm:text-sm hover:bg-green-600"
+          >
+            {window.innerWidth > 640 ? "View Earnings" : "Earnings"}
+          </button>
         </div>
       ),
     },

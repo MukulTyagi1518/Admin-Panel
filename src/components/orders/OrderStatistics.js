@@ -21,7 +21,7 @@ const OrderStatistics = () => {
     { icon: FaBox, title: 'Total Orders', value: 0, color: 'bg-red-400' },
     { icon: FaClock, title: 'Pending', value: 0, color: 'bg-yellow-400' },
     { icon: FaCheck, title: 'Confirmed', value: 0, color: 'bg-green-400' },
-    { icon: FaTruck, title: 'Ongoing', value: 0, color: 'bg-blue-400' },
+    { icon: FaTruck, title: 'Picked Up', value: 0, color: 'bg-blue-400' },
     { icon: FaCheckDouble, title: 'Delivered', value: 0, color: 'bg-purple-400' },
     { icon: FaBan, title: 'Canceled', value: 0, color: 'bg-red-400' },
     { icon: FaUndo, title: 'Returned', value: 0, color: 'bg-blue-300' },
@@ -38,7 +38,7 @@ const OrderStatistics = () => {
           totalOrders: orders.length,
           pending: 0,
           confirmed: 0,
-          ongoing: 0,
+          pickedup: 0,
           delivered: 0,
           canceled: 0,
           returned: 0,
@@ -53,8 +53,8 @@ const OrderStatistics = () => {
             case 'confirmed':
               statusCounts.confirmed++;
               break;
-            case 'ongoing':
-              statusCounts.ongoing++;
+            case 'picked up':
+              statusCounts.pickedup++;
               break;
             case 'delivered':
               statusCounts.delivered++;
@@ -77,7 +77,7 @@ const OrderStatistics = () => {
           { icon: FaBox, title: 'Total Orders', value: statusCounts.totalOrders, color: 'bg-red-400' },
           { icon: FaClock, title: 'Pending', value: statusCounts.pending, color: 'bg-yellow-400' },
           { icon: FaCheck, title: 'Confirmed', value: statusCounts.confirmed, color: 'bg-green-400' },
-          { icon: FaTruck, title: 'Ongoing', value: statusCounts.ongoing, color: 'bg-blue-400' },
+          { icon: FaTruck, title: 'Picked Up', value: statusCounts.pickedup, color: 'bg-blue-400' },
           { icon: FaCheckDouble, title: 'Delivered', value: statusCounts.delivered, color: 'bg-purple-400' },
           { icon: FaBan, title: 'Canceled', value: statusCounts.canceled, color: 'bg-red-400' },
           { icon: FaUndo, title: 'Returned', value: statusCounts.returned, color: 'bg-blue-300' },
