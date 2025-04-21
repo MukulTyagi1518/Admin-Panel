@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import "./EditInhouse.css";
+import "./Editinhouse.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
 import { Link } from "react-router-dom"
 import ProductCategory from "../../components/ProductCategory";
 import { useParams } from "react-router-dom";
+import Switch from "../Switch";
 
 const EditInhouse = () => {
 
@@ -210,7 +211,7 @@ const EditInhouse = () => {
               <label>Refundable?</label>
             </div>
             <div className="refund">
-              <input
+              {/* <input
                 type="checkbox"
                 id="refundToggle"
                 className="custom-toggle"
@@ -223,13 +224,22 @@ const EditInhouse = () => {
                   }))
                 }}
               />
-              <label htmlFor="refundToggle" className="toggle-label"></label>
+              <label htmlFor="refundToggle" className="toggle-label"></label> */}
+              <Switch
+                              value={productData.refundable}
+                              onChangeFunc={() =>
+                                setProductData((prev) => ({
+                                  ...prev,
+                                  refundable: !prev.refundable,
+                                }))
+                              }
+                            />
             </div>
           </div>
 
 
           {/* Refund Note Section - Appears Only When Toggle is ON */}
-          {isRefundable && (
+          {productData.refundable && (
             <div className="refund-note">
               <label>Note (Add from preset)</label>
               <div className="refund-note-box">
@@ -245,7 +255,7 @@ const EditInhouse = () => {
           <div className="divider"></div>
           <div className="toggle-group">
             <label>Featured</label>
-            <input
+            {/* <input
               type="checkbox"
               id="featuredToggle"
               className="custom-toggle"
@@ -258,7 +268,19 @@ const EditInhouse = () => {
                 }))
               }}
             />
-            <label htmlFor="featuredToggle" className="toggle-label"></label>
+            <label htmlFor="featuredToggle" className="toggle-label"></label> */}
+            <Switch
+                          className="custom-toggle"
+                          value={isFeatured}
+                          onChangeFunc={() => {
+                            const newValue = !isFeatured;
+                            setIsFeatured(newValue);
+                            setProductData((prev) => ({
+                              ...prev,
+                              featured: newValue,
+                            }));
+                          }}
+                          />
             <p>If you enable this, this product will be granted as a featured product.</p>
           </div>
           <div className="toggle-group">

@@ -27,10 +27,10 @@ const OrderHeader = ({ onFilterChange, onSearch, currentFilters }) => {
       options: ["Mark as Delivered", "Mark as Pending", "Delete Selected"],
       currentValue: currentFilters.bulk || "Bulk Action"
     },
-    delivery: {
+    DeliveryStatus: {
       label: "Filter by Delivery",
-      options: ["All", "Pending", "Shipping", "Completed"],
-      currentValue: currentFilters.delivery
+      options: ["All", "Pending", "Shipping", "Delivered"],
+      currentValue: currentFilters.DeliveryStatus
     },
     payment: {
       label: "Filter by Payment",

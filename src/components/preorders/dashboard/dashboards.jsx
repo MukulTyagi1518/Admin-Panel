@@ -1,7 +1,11 @@
 import { MoveRightIcon, Plus } from "lucide-react"
 import "./dashboard.scss"
+import { Navigate, useNavigate } from "react-router-dom"
 
 export default function PreOrderDashboard() {
+
+    const navigate = useNavigate();
+
 
 
     const notifications = [
@@ -118,12 +122,16 @@ export default function PreOrderDashboard() {
                             </p>
                         </div>
                     </div>
-                    <div className="preOrderDashboardCard grayBorder">
+                    <div
+                        className="preOrderDashboardCard grayBorder cursor-pointer"
+                        onClick={() => navigate("/products/create")}
+                    >
                         <Plus size={150} color="gray" />
                         <p className="addNewProduct">
                             Add new preorder product
                         </p>
                     </div>
+
                 </div>
 
                 <div className="preOrderDashboardStats">

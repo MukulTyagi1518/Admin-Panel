@@ -197,7 +197,7 @@ const General = () => {
           ></div>
         </div>
 
-        <br />
+        <br /><br /><br />
         <div className="section">
           <h3>Refund</h3>
 
@@ -246,7 +246,7 @@ const General = () => {
             </div>
           )}
         </div>
-        <br />
+        <br /><br /> <br />
         {/* Status Section */}
         <div className="section">
           <h3>Status</h3>
@@ -315,7 +315,7 @@ const General = () => {
             <p>If you enable this, this product will be granted as a today's deal product.</p>
           </div>
 
-          <br />
+          <br /><br /><br />
           <h3>
             Flash Deal <span >(If you want to select this product as a flash deal, you can use it)</span>
           </h3>
@@ -377,6 +377,7 @@ const General = () => {
             </select>
           </div>
         </div>
+         <br /><br />
         <h3 className="heading">Vat & TAX</h3>
         <div className="divider"></div>
 
@@ -443,12 +444,21 @@ const General = () => {
 
         </div>
 
-        <div className="button-group">
-          <button className="btn-btn-gray">Save & Unpublish</button>
-          <Link to='/products/create/add' >
-            <button className="btn-btn-green">Save & Publish</button>
-          </Link>
-        </div>
+        <div className="flex gap-4 mt-9">
+  <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md shadow-gray-500 hover:bg-gray-400 transition">
+    Save & Unpublish
+  </button>
+  <Link to="/products/create/add">
+    <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-gray-700 hover:bg-blue-700 transition">
+      Save & Publish
+    </button>
+  </Link>
+</div>
+
+      </div>
+
+      <div className="pro3">
+        <ProductCategory />
       </div>
 
 
@@ -461,9 +471,7 @@ const General = () => {
 
 
 
-      <div className="pro3">
-        <ProductCategory />
-      </div>
+      
 
 
     </div>

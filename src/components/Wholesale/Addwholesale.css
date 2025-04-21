@@ -175,6 +175,7 @@
 
 .preOrderFaqLeft-new {
   padding: 0.5cm;
+ 
   /* border: 1px solid rgb(206, 206, 206); */
   /* border-radius: 5px; */
   width: 100%;
@@ -1018,9 +1019,13 @@ flex-direction: row;
         } }
 
 
-/* .button-group{
-  margin-top: 180%;
-} */
+.button-group-new{
+   display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
 
 .prerow-whole8{
    border: none !important;

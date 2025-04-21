@@ -84,14 +84,16 @@ export default function PreOrderNotification() {
                       <td>{n.name}</td>
                       <td>{n.defaultText}</td>
                       <td>
-                        <label className="switch">
+                        {/* <label className="switch">
                           <input
                             type="checkbox"
                             checked={n.status === "active"}
                             onChange={() => handleToggleStatus(n._id, n.status)}
                           />
                           <span className="slider"></span>
-                        </label>
+                        </label> */}
+                        <Switch  checked={n.status === "active"}
+                            onChange={() => handleToggleStatus(n._id, n.status)}/>
                       </td>
                       <td>
                         <Edit

@@ -39,30 +39,46 @@ const SeoMetaForm = () => {
       </div>
 
       <div className="form-group">
-        <label>Meta Image</label>
-        <div className="input-container">
-          <div className="PreProductInputDiv">
-            <label className="file-label">
-              Browse
+  <label className="text-sm font-semibold">Meta Image</label>
+  <div className="input-container">
+    <div className="PreProductInputDiv w-full">
+      <label className="file-label inline-block text-black-600 cursor-pointer">
+        Browse
+        <input
+          type="file"
+          className="file-input hidden"
+          onChange={(e) => { setMetaImage(e.target.files[0]) }}
+        />
+      </label>
+      <span className="file-name block text-gray-500 mt-2">
+        {metaImage?.name || "No file selected"}
+      </span>
+    </div>
+  </div>
+</div>
 
-              <input type="file" className="file-input" onChange={(e) => { setMetaImage(e.target.files[0]) }} />
-            </label>
-            <span className="file-name">{metaImage?.name}</span>
-          </div>
-        </div>
-      </div>
 
-      <div className="button-group">
-        <button className="btn-btn-gray">Save & Unpublish</button>
-        <Link to='/products/create/shipping'>
-          <button className="btn-btn-green" onClick={() => {
-            setProductData((prev) => ({
-              ...prev,
-              metaImage: metaImage
-            }))
-          }}>Save & Publish</button>
-        </Link>
-      </div>
+<div className="flex gap-4 mt-4 justify-end">
+  <button
+    className="bg-gray-200 text-gray-800 px-4 py-2 rounded shadow-md  hover:bg-gray-400 lg transition"
+  >
+    Save & Unpublish
+  </button>
+  <Link to="/products/create/shipping">
+    <button
+      className="bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700 hover:shadow-lg transition"
+      onClick={() => {
+        setProductData((prev) => ({
+          ...prev,
+          metaImage: metaImage,
+        }));
+      }}
+    >
+      Save & Publish
+    </button>
+  </Link>
+</div>
+
     </div>
   );
 };

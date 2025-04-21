@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Users } from "lucide-react";
 import StatCard from "./StatCard";
 
@@ -13,25 +14,45 @@ function SellerStatusItem({ color, label, value }) {
 }
 
 function SellerSection() {
-  const topSellers = [
-    { id: 1, avatar: "/seller1.png" },
-    { id: 2, avatar: "/seller2.png" },
-    { id: 3, avatar: "/seller3.png" },
-    { id: 4, avatar: "/seller4.png" },
-    { id: 5, avatar: "/seller5.png" },
-  ];
+  const [totalSellers, setTotalSellers] = useState(0);
+  const [approvedSellers, setApprovedSellers] = useState(0);
+  const [topSellers, setTopSellers] = useState([]);
+
+  useEffect(() => {
+    const fetchSellersData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/sellers");
+        const sellers = await response.json();
+
+        setTotalSellers(sellers.length);
+        const filteredSellers = sellers.filter((seller) => !seller.isBanned);
+        console.log(filteredSellers)
+        setApprovedSellers(filteredSellers.length);
+
+        const sortedSellers = filteredSellers
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 5);
+
+        setTopSellers(sortedSellers);
+      } catch (error) {
+        console.error("Error fetching sellers data:", error);
+      }
+    };
+
+    fetchSellersData();
+  }, []);
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-5">
       {/* Total Sellers StatCard */}
       <StatCard
         title="Total sellers"
-        value="14"
+        value={totalSellers}
         icon={<Users size={24} color="#ccc" aria-label="Total Sellers" />}
       />
 
       {/* Approved Sellers */}
-      <SellerStatusItem color="cyan" label="Approved Sellers" value="10" />
+      <SellerStatusItem color="cyan" label="Approved Sellers" value={approvedSellers} />
 
       {/* Top Sellers */}
       <SellerStatusItem color="yellow" label="Top Sellers" />
@@ -40,14 +61,17 @@ function SellerSection() {
       <div className="flex gap-2.5 mb-5">
         {topSellers.map((seller) => (
           <div
-            key={seller.id}
-            className="w-10 h-10 rounded-full overflow-hidden bg-[#f0f0f0]"
+            key={seller._id}
+            className="flex flex-col items-center w-16"
           >
-            <img
-              src={seller.avatar || "/placeholder.svg"}
-              alt="Seller"
-              className="w-full h-full object-cover"
-            />
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-[#f0f0f0]">
+              <img
+                src={seller.avatar || "/placeholder.svg"}
+                alt={seller.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-xs text-center mt-1">{seller.name}</span>
           </div>
         ))}
       </div>

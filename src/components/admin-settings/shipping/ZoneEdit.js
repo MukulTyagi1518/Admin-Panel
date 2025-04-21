@@ -64,10 +64,11 @@ const ZoneEdit = () => {
               <label htmlFor="country" className="block text-gray-600 text-sm font-medium mb-1">
                 Select Country
               </label>
-              <div className="relative">
+              <div className="relative ">
                 <select
                   id="country"
                   className=" p-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md appearance-none pr-10"
+
                   value={selectedCountry}
                   onChange={handleCountryChange}
                 >
@@ -82,7 +83,7 @@ const ZoneEdit = () => {
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
                   <svg
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 text-gray-400 mr-4"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"

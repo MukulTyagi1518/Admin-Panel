@@ -531,7 +531,7 @@ const WebsiteHeaderSettings = () => {
 
   return (
     <div className="p-4 sm:p-6 md:p-10">
-      <h1 className="text-2xl font-semibold mb-6">Website Header</h1>
+      <h1 className="text-2xl font-semibold mb-6 text-center">Website Header</h1>
       <div className="bg-white shadow-md rounded-xl p-6 w-full max-w-5xl mx-auto">
         <h2 className="text-lg font-semibold mb-4 border-b pb-2">Header Setting</h2>
 
@@ -672,7 +672,7 @@ const WebsiteHeaderSettings = () => {
         <div className="flex justify-end mt-4">
           <button
             onClick={handleSubmit}
-            className="bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700"
+            className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700"
           >
             Update
           </button>

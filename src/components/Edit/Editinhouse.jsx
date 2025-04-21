@@ -3,7 +3,7 @@ import "./EditInhouse.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
 import { Link, useParams } from "react-router-dom"
-import ProductCategory from "../../components/ProductCategory";
+import ProductCategory from "../ProductCategory";
 import Switch from "../Switch";
 
 const General = () => {
@@ -223,7 +223,15 @@ const General = () => {
                   }))
                 }}
                /> } */}
-               <Switch htmlFor="refundToggle" className="toggle-label-in"/>
+                             <Switch
+                                             value={productData.refundable}
+                                             onChangeFunc={() =>
+                                               setProductData((prev) => ({
+                                                 ...prev,
+                                                 refundable: !prev.refundable,
+                                               }))
+                                             }
+                                           />
               
               {/* <label  "></label> */}
             </div>
@@ -231,7 +239,7 @@ const General = () => {
 
 
           {/* Refund Note Section - Appears Only When Toggle is ON */}
-          {isRefundable && (
+          {productData.refundable && (
             <div className="refund-note">
               <label>Note (Add from preset)</label>
               <div className="refund-note-box">
@@ -260,20 +268,18 @@ const General = () => {
                 }))
               }}
             /> */}
-            <Switch 
-               type="checkbox"
-               id="featuredToggle"
-               className="custom-toggle"
-               checked={isFeatured}
-               htmlFor="featuredToggle" 
-               onChange={() => {
-                 setIsFeatured(!isFeatured)
-                 setProductData((prev) => ({
-                   ...prev,
-                   featured: !isFeatured ? true : false
-                 }))
-               }}
-            />
+             <Switch
+                          className="custom-toggle"
+                          value={isFeatured}
+                          onChangeFunc={() => {
+                            const newValue = !isFeatured;
+                            setIsFeatured(newValue);
+                            setProductData((prev) => ({
+                              ...prev,
+                              featured: newValue,
+                            }));
+                          }}
+                        />
             {/* <label className="toggle-label"></label> */}
             <p>If you enable this, this product will be granted as a featured product.</p>
           </div>
@@ -292,21 +298,19 @@ const General = () => {
                 }))
               }}
             /> */}
-            <Switch 
-            type="checkbox"
-            id="dealToggle"
-            className="custom-toggle"
-            checked={isTodaysDeal}
-            htmlFor="dealToggle"
-            onChange={() => {
-              setIsTodaysDeal(!isTodaysDeal)
-              setProductData((prev) => ({
-                ...prev,
-                todaysDeal: !isTodaysDeal ? true : false
-              }))
-            }}
-
-            />
+                        <Switch
+                          id="dealToggle"
+                          className="custom-toggle"
+                          value={isTodaysDeal}
+                          onChangeFunc={() => {
+                            const newValue = !isTodaysDeal;
+                            setIsTodaysDeal(newValue);
+                            setProductData((prev) => ({
+                              ...prev,
+                              todaysDeal: newValue,
+                            }));
+                          }}
+                        />
             {/* <label className="toggle-label"></label> */}
             <p>If you enable this, this product will be granted as a today's deal product.</p>
           </div>

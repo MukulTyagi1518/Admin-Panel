@@ -4,6 +4,7 @@ import "./preOrderProducts.scss";
 import Switch from "../../Switch";
 import React from "react";
 import FilterComponent from "../../FilterComponent";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const initialProducts = [
   {
@@ -54,12 +55,20 @@ const initialProducts = [
 
 export default function PreorderProducts() {
   const [products, setProducts] = useState(initialProducts);
+  const navigate = useNavigate();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [expandedRows, setExpandedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     price: "All",
   });
+
+ 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      navigate("/products/create");
+    }
+
   const [activeFilter, setActiveFilter] = useState("All"); // State to track the active filter
 
   const handleSelectAll = (isChecked) => {
@@ -109,6 +118,8 @@ export default function PreorderProducts() {
     setSearchTerm(term.toLowerCase());
   };
 
+  
+
   // Filter products based on the active filter
   const filteredProducts = products.filter((product) => {
     // Apply active filter
@@ -136,8 +147,8 @@ export default function PreorderProducts() {
     <div className="PreorderProducts ma10">
       <div className="preOrderProductsBox">
         <div className="preOrderProductsHeader">
-          <p className="allCustomersHead">All Preorder Products</p>
-          <button className="allCustomersButton preOrderHeaderButton">
+          <p className="allCustomersHead" >All Preorder Products</p>
+          <button className="allCustomersButton preOrderHeaderButton" onClick={handleSubmit}>
             Add New Product
           </button>
         </div>
@@ -351,7 +362,7 @@ export default function PreorderProducts() {
                           </div>
                         </td>
                       </tr>
-                      {expandedRows.includes(product.id) && (
+                      {/* {expandedRows.includes(product.id) && (
                         <tr className="responsive-expanded">
                           <td colSpan="10">
                             <div className="expanded-details">
@@ -427,7 +438,168 @@ export default function PreorderProducts() {
                             </div>
                           </td>
                         </tr>
-                      )}
+                      )} */}
+                    {/* {expandedRows.includes(product.id) && (
+  <tr className="responsive-expanded">
+    <td colSpan="10">
+      <div className="overflow-x-auto">
+        <table className="w-full bg-gray-100 p-4 table-auto">
+          <tbody>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words w-1/4">Product Details</td>
+              <td className="py-2 px-4 break-words">
+                {product.name}, {product.category}, {product.type}, {product.productCreated}
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words w-1/4">Price</td>
+              <td className="py-2 px-4 break-words">
+                {product.price} /pc, Pre Payment Needed: {product.prePaymentNeeded ? "Yes" : "No"}
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Discount</td>
+              <td className="py-2 px-4 break-words">{product.discount}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Availability</td>
+              <td className="py-2 px-4 break-words">{product.availability}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Orders</td>
+              <td className="py-2 px-4 break-words">
+                Preorder: {product.preorder}, Final Order: {product.finalOrder}
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Status</td>
+              <td className="py-2 px-4 break-words">
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center space-x-2">
+                    <span>Publish</span>
+                    <Switch
+                      value={product.publish}
+                      onChangeFunc={() => toggleProductStatus(product.id, "publish")}
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span>Feature</span>
+                    <Switch
+                      value={product.featured}
+                      onChangeFunc={() => toggleProductStatus(product.id, "featured")}
+                    />
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Seller</td>
+              <td className="py-2 px-4 break-words">{product.seller}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Min Purchase Qty</td>
+              <td className="py-2 px-4 break-words">{product.MinPurchaseQty} pc</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Refund</td>
+              <td className="py-2 px-4 break-words">{product.refund}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Rating</td>
+              <td className="py-2 px-4 break-words">{product.rating}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4 font-semibold break-words">Stock</td>
+              <td className="py-2 px-4 break-words">{product.stock}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </td>
+  </tr>
+)} */}
+{expandedRows.includes(product.id) && (
+  <tr className="responsive-expanded">
+    <td colSpan="10" className="p-0 m-0" >
+      <div className="overflow-x-auto w-full">
+        <table className="w-full bg-gray-100 table-fixed min-w-full">
+          <tbody>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words w-1/3">Product Details</td>
+              <td className="py-2 px-2 break-words">
+                {product.name}, {product.category}, {product.type}, {product.productCreated}
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words w-1/3">Price</td>
+              <td className="py-2 px-2 break-words">
+                {product.price} /pc, Pre Payment Needed: {product.prePaymentNeeded ? "Yes" : "No"}
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Discount</td>
+              <td className="py-2 px-2 break-words">{product.discount}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Availability</td>
+              <td className="py-2 px-2 break-words">{product.availability}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Orders</td>
+              <td className="py-2 px-2 break-words">
+                Preorder: {product.preorder}, Final Order: {product.finalOrder}
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Status</td>
+              <td className="py-2 px-2 break-words">
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center space-x-2">
+                    <span>Publish</span>
+                    <Switch
+                      value={product.publish}
+                      onChangeFunc={() => toggleProductStatus(product.id, "publish")}
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span>Feature</span>
+                    <Switch
+                      value={product.featured}
+                      onChangeFunc={() => toggleProductStatus(product.id, "featured")}
+                    />
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Seller</td>
+              <td className="py-2 px-2 break-words">{product.seller}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Min Purchase Qty</td>
+              <td className="py-2 px-2 break-words">{product.MinPurchaseQty} pc</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Refund</td>
+              <td className="py-2 px-2 break-words">{product.refund}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Rating</td>
+              <td className="py-2 px-2 break-words">{product.rating}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-2 font-semibold break-words">Stock</td>
+              <td className="py-2 px-2 break-words">{product.stock}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </td>
+  </tr>
+)}
+
+
+
                     </React.Fragment>
                   ))
                 ) : (

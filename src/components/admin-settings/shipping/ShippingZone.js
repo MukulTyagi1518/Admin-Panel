@@ -3,6 +3,7 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Switch from '../../Switch'; // Assuming you have a Switch component
 import { useNavigate } from 'react-router-dom';
 import DeleteConfirmation from '../../DeleteConfirmation';
+import { Edit, Trash } from 'lucide-react';
 
 const zonesData = [
   { id: 1, name: 'Costa Rica Area', status: true },
@@ -109,12 +110,20 @@ const ShippingZone = () => {
                     </button>
                   </td> */}
                   <td className="px-3 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                        <button className="text-blue-500 mr-2">
+                                        {/* <button className="text-blue-500 mr-2">
                                           <FiEdit  onClick={() => handleEdit(zone.id)}/>
                                         </button>
                                         <button className="text-red-500">
                                           <FiTrash2  onClick={() => openDeleteConfirmation(zone.id)} />
-                                        </button>
+                                        </button> */}
+                                        <button className=" p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer mr-2">
+                        <Edit onClick={() => handleEdit(zone.id)} color="orange" size={15} />
+                      </button>
+                      <button className=" p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                        <Trash onClick={() => openDeleteConfirmation(zone.id)} color="red" size={15}  />
+                      </button> 
+                                        
+
                                       </td>
                 </tr>
               ))}

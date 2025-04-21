@@ -3,7 +3,8 @@ import "./Sellerwholesale.css";
 import { FaEye, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Switch from "../Switch";
 import DeleteConfirmation from "../DeleteConfirmation";
-import { useNavigate } from "react-router-dom";
+import ViewExpandData from "../ViewExpandData";
+import { Edit, Eye, EyeIcon, Trash } from "lucide-react";
 
 const InhouseProduct = () => {
   const [products, setProducts] = useState([
@@ -202,15 +203,10 @@ const InhouseProduct = () => {
     setIsSellerDropdownOpen(!isSellerDropdownOpen);
   };
 
-    const selectSeller = (seller) => {
-        setSelectedSeller(seller);
-        setIsSellerDropdownOpen(false);
-    };
-    const navigate = useNavigate();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigate("/wholesale/add");
-    };
+  const selectSeller = (seller) => {
+    setSelectedSeller(seller);
+    setIsSellerDropdownOpen(false);
+  };
 
   const openDeleteConfirmation = (id) => {
     setAttributeToDeleteId(id);
@@ -239,7 +235,7 @@ const InhouseProduct = () => {
           <option value="">Bulk Action</option>
           <option value="">Delete Section </option>
         </select>
-        
+
         <select className="filter-dropdown">
           <option value="">All Seller</option>
           <option value="Sam">Sam</option>
@@ -262,8 +258,8 @@ const InhouseProduct = () => {
         <table>
           <thead>
             <tr>
-            
-            <th className="lg:hidden"></th>
+
+              <th className="lg:hidden"></th>
               <th>
                 <input type="checkbox" />
               </th>
@@ -283,12 +279,12 @@ const InhouseProduct = () => {
           <tbody>
             {products.map((product) => (
               <>
-                
+
 
                 <tr key={product.id}>
- 
-                <td className="lg:hidden">
-                <div
+
+                  <td className="lg:hidden">
+                    <div
                       className={`plus-icon ${product.expanded ? "rotate" : ""}`}
                       onClick={() =>
                         setProducts((prevProducts) =>
@@ -298,9 +294,21 @@ const InhouseProduct = () => {
                         )
                       }
                     >
-                      +
+                      <EyeIcon size={18} color="blue" />
                     </div>
 
+                    {/* <div>
+                      <ViewExpandData
+                        isExpanded={product.expanded}
+                        toggleExpanded={() =>
+                          setProducts((prevProducts) =>
+                            prevProducts.map((p) =>
+                              p.id === product.id ? { ...p, expanded: !p.expanded } : p
+                            )
+                          )
+                        }
+                      />
+                    </div> */}
                   </td>
 
                   <td>
@@ -339,43 +347,43 @@ const InhouseProduct = () => {
                   </td>
                   <td className="hide-on-small">{product.stock}</td>
                   <td className="hide-on-small">
-                  <label className="switch">
-                    <Switch
-                      value={product.deal}
-                      onChangeFunc={() => handleToggleChange(product.id, "deal")}
-                    />
+                    <label className="switch">
+                      <Switch
+                        value={product.deal}
+                        onChangeFunc={() => handleToggleChange(product.id, "deal")}
+                      />
                     </label>
 
                   </td>
                   <td className="hide-on-small">
-                  <label className="switch">
-                    <Switch
-                      value={product.published}
-                      onChangeFunc={() => handleToggleChange(product.id, "published")}
-                    />
+                    <label className="switch">
+                      <Switch
+                        value={product.published}
+                        onChangeFunc={() => handleToggleChange(product.id, "published")}
+                      />
                     </label>
 
                   </td>
                   <td className="hide-on-small">
-                  <label className="switch">
-                    <Switch
-                      value={product.approved}
-                      onChangeFunc={() => handleToggleChange(product.id, "approved")}
-                    />
+                    <label className="switch">
+                      <Switch
+                        value={product.approved}
+                        onChangeFunc={() => handleToggleChange(product.id, "approved")}
+                      />
                     </label>
 
                   </td>
                   <td className="hide-on-small">
-                  <label className="switch">
-                    <Switch
-                      value={product.featured}
-                      onChangeFunc={() => handleToggleChange(product.id, "featured")}
-                    />
+                    <label className="switch">
+                      <Switch
+                        value={product.featured}
+                        onChangeFunc={() => handleToggleChange(product.id, "featured")}
+                      />
                     </label>
 
                   </td>
                   <td className="hide-on-small ">
-                    <button className="btn5 view-btn5">
+                    {/* <button className="btn5 view-btn5">
                       <FaEye />
                     </button>
                     <button className="btn5 edit-btn5">
@@ -383,7 +391,17 @@ const InhouseProduct = () => {
                     </button>
                     <button className="btn5 delete-btn5">
                       <FaTrash onClick={() => openDeleteConfirmation(product.id)} />
-                    </button>
+                    </button> */}
+                       <div className=" btn4 view-btn4 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                           <Eye size={15} color="blue" />
+                                         </div>
+                                         <div className=" btn4 edit-btn4 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                                           <Edit size={15} color="orange" />
+                                         </div>
+                     
+                                         <div className="btn4 delete-btn4 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                           <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)} />
+                                         </div>
                   </td>
                 </tr>
 
@@ -417,37 +435,48 @@ const InhouseProduct = () => {
                         </div>
 
                         <div>
-                     
-                        Approved:
-                          
+
+                          Approved:
+
                           <Switch
                             value={product.approved}
                             onChangeFunc={() => handleToggleChange(product.id, "approved")}
                           />
-                          
+
                         </div>
                         <div>
-                        Featured:
+                          Featured:
                           <Switch
-                      value={product.featured}
-                      onChangeFunc={() => handleToggleChange(product.id, "featured")}
-                    />
+                            value={product.featured}
+                            onChangeFunc={() => handleToggleChange(product.id, "featured")}
+                          />
 
                         </div>
 
                         <div>
                           Options:
-                          <button className="btn5 view-btn5">
+                          {/* <button className="btn5 view-btn5">
                             <FaEye />
                           </button>
                           <button className="btn5 edit-btn5">
                             <FaEdit />
                           </button>
                           <button className="btn5 delete-btn5">
-                            {/* <div>Num of Sale: {product.info.sale} times</div> */}
+                            
                             <FaTrash onClick={() => openDeleteConfirmation(product.id)} />
-                          </button>
+                          </button> */}
+                            <div className=" btn4 view-btn4 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
+                                                <Eye size={15} color="blue" />
+                                              </div>
+                                              <div className=" btn4 edit-btn4 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
+                                                <Edit size={15} color="orange" />
+                                              </div>
+                          
+                                              <div className="btn4 delete-btn4 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                                                <Trash size={15} color="red" onClick={() => openDeleteConfirmation(product.id)} />
+                                              </div>
                         </div>
+
 
                       </div>
                     </td>

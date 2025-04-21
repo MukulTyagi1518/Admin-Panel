@@ -5,12 +5,13 @@ import { MdOutlineSettings } from "react-icons/md";
 import { useState } from "react";
 import DeleteConfirmation from "../DeleteConfirmation";
 import Switch from "../Switch";
+import ViewExpandData from "../ViewExpandData";
 
 export default function PreOrderReviews() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/wholesale/Addwholesale");
+    navigate("/wholesale/add");
   };
 
   const [expandedId, setExpandedId] = useState(null);
@@ -174,12 +175,20 @@ export default function PreOrderReviews() {
           </tbody>
         </table>
 
+
+        <div className="block md:hidden w-full px-4 py-2 font-semibold text-sm bg-gray-300 text-gray-600 rounded">
+  <div className="flex gap-5">
+    <span></span>
+    <span className="ml-4">#</span>
+    <span>Name</span>
+  </div>
+</div>
         {/* Mobile View */}
         <div className="block md:hidden w-full">
           {userData.map((user) => (
             <div key={user.id} className="border rounded-lg shadow-md mb-4 p-4">
               {/* Summary Row */}
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => toggleMobileView(user.id)}
@@ -190,7 +199,18 @@ export default function PreOrderReviews() {
                   <span className="font-semibold text-sm">{user.id}</span>
                   <span className="font-medium text-gray-800 text-sm">{user.prodName}</span>
                 </div>
-              </div>
+              </div> */}
+              <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+    <ViewExpandData
+      isExpanded={expandedId === user.id}
+      toggleExpanded={() => toggleMobileView(user.id)}
+    />
+    <span className="text-sm">{user.id}</span>
+    <span className="font-medium text-gray-800 text-sm">{user.prodName}</span>
+  </div>
+
+      </div>
 
               {/* Expanded Details */}
               {expandedId === user.id && (

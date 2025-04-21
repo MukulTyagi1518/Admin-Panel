@@ -55,7 +55,7 @@ const handleForm = (e) => {
         <div className="preOrderFaqLeft">
         <div className="addbtn">
                 <button className="add-brand-btn"  onClick={handleForm} >
-                            <Plus size={16} /> Add New FAQ
+                            <Plus size={16} /> Add New Attribute
                         </button>
                 </div>
           <div className="preOrderLeftUpper">

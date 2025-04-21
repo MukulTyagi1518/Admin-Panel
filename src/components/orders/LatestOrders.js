@@ -1,4 +1,3 @@
-
 import { Download, Eye, EyeIcon, Trash } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import OrderHeader from "./OrderHeader";
@@ -6,13 +5,13 @@ import Pagination from "../Pagination";
 import { useMediaQuery } from 'react-responsive';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useOrdersContext } from "../../context/ordersContext";
-
+import ViewExpandData from "../ViewExpandData";
+import axios from "axios";
+import apiInstance from "../../utils/axios";
 
 function LatestOrders({ customFilter, title = "Latest allOrders" }) {
 
-
   const { allOrders, setAllOrders } = useOrdersContext()
-
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,7 +21,7 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState(null);
   const [filters, setFilters] = useState({
-    delivery: "All",
+    DeliveryStatus: "All",
     payment: "All",
     date: "All",
     bulk: null
@@ -38,15 +37,15 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
   const filteredOrders = allOrders.filter(order => {
     // Search term filter
     const matchesSearch =
-      order.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.seller.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.deliveryStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.paymentStatus.toLowerCase().includes(searchTerm.toLowerCase());
+      order.code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.customer?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.seller?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.DeliveryStatus?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.paymentStatus?.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Delivery status filter
-    const matchesDelivery = filters.delivery === "All" ||
-      order.deliveryStatus === filters.delivery;
+    const matchesDelivery = filters.DeliveryStatus === "All" ||
+      order.DeliveryStatus === filters.DeliveryStatus;
 
     // Payment status filter
     const matchesPayment = filters.payment === "All" ||
@@ -128,7 +127,7 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
     setCurrentPage(pageNumber);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     setRoleToDelete(id);
     setShowDeleteConfirmation(true);
   };
@@ -136,8 +135,7 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
   const confirmDelete = async () => {
     try {
       setIsLoading(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await apiInstance.delete(`orders/${roleToDelete}`);
       setAllOrders(allOrders.filter(order => order.id !== roleToDelete));
       setShowDeleteConfirmation(false);
       setRoleToDelete(null);
@@ -189,11 +187,20 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-      // Unselect all
-      setSelectedOrders([]);
+      // Unselect all filtered rows
+      const updatedSelection = selectedOrders.filter(orderId => 
+        !filteredOrders.some(order => order.id === orderId)
+      );
+      setSelectedOrders(updatedSelection);
     } else {
-      // Select all
-      setSelectedOrders(allOrders.map(order => order.id));
+      // Select all filtered rows
+      const updatedSelection = [
+        ...selectedOrders,
+        ...filteredOrders
+          .filter(order => !selectedOrders.includes(order.id))
+          .map(order => order.id)
+      ];
+      setSelectedOrders(updatedSelection);
     }
     setIsAllSelected(!isAllSelected);
   };
@@ -201,17 +208,20 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
   const handleSelectOrder = (id) => {
     if (selectedOrders.includes(id)) {
       // Unselect the order
-      setSelectedOrders(selectedOrders.filter(orderId => orderId !== id));
+      const updatedSelection = selectedOrders.filter(orderId => orderId !== id);
+      setSelectedOrders(updatedSelection);
     } else {
       // Select the order
-      setSelectedOrders([...selectedOrders, id]);
+      const updatedSelection = [...selectedOrders, id];
+      setSelectedOrders(updatedSelection);
     }
   };
 
   useEffect(() => {
-    // Update the "Select All" checkbox state based on individual selections
-    setIsAllSelected(selectedOrders.length === allOrders.length);
-  }, [selectedOrders, allOrders]);
+    // Update "Select All" checkbox state based on filtered rows
+    const allFilteredSelected = filteredOrders.every(order => selectedOrders.includes(order.id));
+    setIsAllSelected(allFilteredSelected && filteredOrders.length > 0);
+  }, [selectedOrders, filteredOrders]);
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mx-auto">
@@ -248,7 +258,6 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Refund</th>
                 </>
               )}
-              {/* <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Refund</th> */}
               <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Actions</th>
             </tr>
           </thead>
@@ -258,9 +267,10 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
                 <tr className="border-b border-gray-100 hover:bg-gray-50">
                   {isBelow1400 && (
                     <td className="py-3 px-4">
-                      <button onClick={() => toggleOrderExpansion(order.id)}>
-                        {expandedOrders.includes(order.id) ? <FaMinus /> : <FaPlus />}
-                      </button>
+                      <ViewExpandData
+                        isExpanded={expandedOrders.includes(order.id)}
+                        toggleExpanded={() => toggleOrderExpansion(order.id)}
+                      />
                     </td>
                   )}
                   <td className="py-3 px-4">
@@ -273,27 +283,21 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
                   <td className="py-3 px-4 text-sm text-gray-700">{order.code}</td>
                   {!isBelow1400 && (
                     <>
-                      <td className="py-3 px-4 text-sm text-gray-500">{order.products}</td>
+                      <td className="py-3 px-4 text-sm text-gray-500">{order.totalItems}</td>
                       <td className="py-3 px-4 text-sm text-gray-700">{order.customer}</td>
                       <td className="py-3 px-4 text-sm text-gray-700">{order.seller}</td>
                       <td className="py-3 px-4 text-sm text-gray-700">{order.amount}</td>
                       <td className="py-3 px-4">
-                        <span className={`text-sm font-medium ${getStatusColor(order.deliveryStatus)}`}>
-                          {order.deliveryStatus}
+                        <span className={`text-sm font-medium ${getStatusColor(order.DeliveryStatus)}`}>
+                          {order.DeliveryStatus}
                         </span>
                       </td>
                       <td className="py-3 px-4 text-sm text-gray-700">{order.paymentMethod}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.paymentStatus}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td>
+                      <td className="py-3 px-4 text-sm text-gray-700">{order.PaymentStatus}</td>
+                      <td className="py-3 px-4 text-sm text-gray-700">{order.Refund}</td>
                     </>
                   )}
-                  {/* <td className="py-3 px-4 text-sm text-gray-700">{order.refund}</td> */}
                   <td className="py-3 px-4">
-                    {/* <div className="flex space-x-1">
-                      <Download className="text-green-400 hover:text-gray-500 cursor-pointer" />
-                      <Trash className="text-red-400 hover:text-gray-500 cursor-pointer" onClick={() => handleDelete(order.id)} />
-                      <EyeIcon className="text-cyan-400 hover:text-gray-600 cursor-pointer" />
-                    </div> */}
                     <div className="flex items-center gap-[.2cm]">
                       <div className="p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
                         <Eye size={15} color="blue" />
@@ -301,8 +305,10 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
                       <div className="p-[.2cm] bg-[#e8d8ff] w-fit rounded-[50%] cursor-pointer">
                         <Download size={15} color="blueviolet" />
                       </div>
-
-                      <div className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                      <div
+                        className="p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer"
+                        onClick={() => handleDelete(order.id)}
+                      >
                         <Trash size={15} color="red" />
                       </div>
                     </div>
@@ -332,8 +338,8 @@ function LatestOrders({ customFilter, title = "Latest allOrders" }) {
                           <tr>
                             <td className="py-2 px-4 font-semibold">Delivery Status</td>
                             <td className="py-2 px-4">
-                              <span className={`font-medium ${getStatusColor(order.deliveryStatus)}`}>
-                                {order.deliveryStatus}
+                              <span className={`font-medium ${getStatusColor(order.DeliveryStatus)}`}>
+                                {order.DeliveryStatus}
                               </span>
                             </td>
                           </tr>

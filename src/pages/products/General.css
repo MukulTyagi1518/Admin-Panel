@@ -3,6 +3,7 @@
     gap: 20px;
     padding: 20px;
     align-items: flex-start ;
+    /* padding-bottom:3px; */
   }
   
   
@@ -494,10 +495,11 @@
 }
 
 /* button */
-.button-group {
+.button-group-gereral {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
+
   }
   
   .btn {
@@ -508,9 +510,10 @@
     cursor: pointer;
   }
   
-  .btn-gray {
+  .btn-btn-gray {
     background: #e0e0e0;
     color: #333;
+    border-radius: 5px;
     font-weight: bold ;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -520,15 +523,23 @@
   
   .btn-gray:hover {
     background: #d6d6d6;
+
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-btn-green-ger:hover {
+    background: #3976ac;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
   }
   
-  .btn-green {
-    background: #28a745;
+  .btn-btn-green-ger {
+    background: #4b94d4;
+    padding: 5px;
     color: white;
-    border: 1px solid rgb(152, 218, 152);
+    border-radius: 5px;
+    border: 1px solid#4b94d4;
     transition: all 0.3s ease-in-out;
-    box-shadow: 3px 3px 8px rgba(77, 200, 84, 0.859);
+    box-shadow: 3px 3px 8px rgba(56, 56, 57, 0.908);
   }
   /* Main Editor Container */
 .editor-container {
@@ -649,10 +660,12 @@
         justify-content: flex-start;
     }
 
-    .button-group {
+    .button-group-ger {
         flex-direction: column;
         align-items: center;
         width: 100%;
+        margin-top: 50%; /* 100% of viewport height */
+    
     }
 
     .btn {

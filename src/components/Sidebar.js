@@ -175,7 +175,9 @@ const menuItems = [
         path: "/marketing/notification",
         subItems: [
           { name: "Settings", path: "/marketing/notification/settings" },
-          { name: "Notification Types", path: "/marketing/notification/types" }
+          { name: "Notification Types", path: "/marketing/notification/types" },
+          { name: "Custom Notification", path: "/marketing/notification/custom-notification" },
+          { name: "Custom Notification History", path: "/marketing/notification/custom-notification/history" }
         ]
       }
     ],
@@ -267,6 +269,7 @@ const menuItems = [
     icon: <PackageOpen size={20} />,
     subItems: [
       { name: "Registration Form", path: "/delivery/registration" },
+      { name: "All Delivery Partners", path: "/delivery/all" },
       { name: "Active Delivery Partners", path: "/delivery/active" },
       { name: "Inactive Delivery Partners", path: "/delivery/inactive" },
       { name: "Pending Delivery Partners", path: "/delivery/pending" },
