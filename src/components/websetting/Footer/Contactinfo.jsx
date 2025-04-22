@@ -75,7 +75,7 @@ export default function ContactInfo({handleFileChangefile,handleUpdate,fileName,
             <div className="text-right mt-3">
                 <button
                     onClick={handleUpdate}
-                    className="bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
+                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
                 >
                     Update
                 </button>
@@ -123,7 +123,7 @@ export default function ContactInfo({handleFileChangefile,handleUpdate,fileName,
             <div className="text-right mt-3">
                 <button
                     onClick={handleUpdate}
-                    className="bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
+                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
                 >
                     Update
                 </button>

@@ -4,6 +4,7 @@ import "./preOrderProducts.scss";
 import Switch from "../../Switch";
 import React from "react";
 import FilterComponent from "../../FilterComponent";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const initialProducts = [
   {
@@ -54,12 +55,20 @@ const initialProducts = [
 
 export default function PreorderProducts() {
   const [products, setProducts] = useState(initialProducts);
+  const navigate = useNavigate();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [expandedRows, setExpandedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     price: "All",
   });
+
+ 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      navigate("/products/create");
+    }
+
   const [activeFilter, setActiveFilter] = useState("All"); // State to track the active filter
 
   const handleSelectAll = (isChecked) => {
@@ -109,6 +118,8 @@ export default function PreorderProducts() {
     setSearchTerm(term.toLowerCase());
   };
 
+  
+
   // Filter products based on the active filter
   const filteredProducts = products.filter((product) => {
     // Apply active filter
@@ -136,8 +147,8 @@ export default function PreorderProducts() {
     <div className="PreorderProducts ma10">
       <div className="preOrderProductsBox">
         <div className="preOrderProductsHeader">
-          <p className="allCustomersHead">All Preorder Products</p>
-          <button className="allCustomersButton preOrderHeaderButton">
+          <p className="allCustomersHead" >All Preorder Products</p>
+          <button className="allCustomersButton preOrderHeaderButton" onClick={handleSubmit}>
             Add New Product
           </button>
         </div>

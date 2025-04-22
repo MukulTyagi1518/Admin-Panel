@@ -47,8 +47,8 @@ const Category = () => {
               <th>#</th>
               <th>Name</th>
               <th>Parent Category</th>
-              <th>Order Level</th>
-              <th>Level</th>
+              {/* <th>Order Level</th>
+              <th>Level</th> */}
               <th>Banner</th>
               <th>Icon</th>
               <th>Cover Image</th>
@@ -75,8 +75,8 @@ const Category = () => {
                   </td>
 
                   <td className="hide-on-small">{category.parentCategory}</td>
-                  <td className="hide-on-small">{category.orderLevel}</td>
-                  <td className="hide-on-small">{category.level}</td>
+                  {/* <td className="hide-on-small">{category.orderLevel}</td>
+                  <td className="hide-on-small">{category.level}</td> */}
                   <td className="hide-on-small">
                     <img
                       src={category.banner}

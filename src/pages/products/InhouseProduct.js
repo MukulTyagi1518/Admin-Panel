@@ -121,7 +121,7 @@ const InhouseProduct = () => {
     },
   ]);
 
-  
+
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpanded = () => setIsExpanded(prev => !prev);
   const handleBulkAction = (action) => {
@@ -158,12 +158,12 @@ const InhouseProduct = () => {
     setAttributeToDeleteId(id);
     setShowDeleteConfirmation(true);
   };
-  
+
   const closeDeleteConfirmation = () => {
     setAttributeToDeleteId(null);
     setShowDeleteConfirmation(false);
   };
-  
+
   const handleDelete = (id) => {
     // In a real application, you would make an API call here to delete the attribute
     console.log(`Deleting attribute with ID: ${id}`);
@@ -263,7 +263,7 @@ const InhouseProduct = () => {
                 {/* Main Row with Plus Icon */}
                 <tr key={product.id}>
                   <td>
-                  <div
+                    <div
                       className={`plus-icon ${product.expanded ? "" : ""
                         }`}
                       onClick={() =>
@@ -275,21 +275,21 @@ const InhouseProduct = () => {
                           )
                         )
                       }
-                      
+
                     >
-                      
+
                       {/* <ViewExpandData  isExpanded={isExpanded} toggleExpanded={toggleExpanded} /> */
                       }
-   <EyeIcon size={18} color="blue" />
-  
-                    
-                            
-                        
-                     
+                      <EyeIcon size={18} color="blue" />
+
+
+
+
+
                     </div>
 
                   </td>
-                  <td> 
+                  <td>
 
                     <input
                       type="checkbox"
@@ -315,7 +315,7 @@ const InhouseProduct = () => {
                     </div> */}
                   </td>
 
-                  
+
 
                   <td className="product-name  ">
                     <img
@@ -335,7 +335,7 @@ const InhouseProduct = () => {
                   <td className="hide-on-small">{product.stock}</td>
                   <td className="hide-on-small">
                     <label className="switch">
-                     
+
                       <Switch
                         value={product.deal}
                         onChangeFunc={() =>
@@ -396,16 +396,16 @@ const InhouseProduct = () => {
                       <FaTrash   onClick={() => openDeleteConfirmation(product.id)}/>
                     </button> */}
                     <div className=" btn3 view-btn3 p-[.1cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
-                        <Eye size={15} color="blue" />
-                      </div>
-                      <div className=" btn3 edit-btn3 p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
-                        <Edit size={15} color="orange" />
-                      </div>
+                      <Eye size={15} color="blue" />
+                    </div>
+                    <div className=" btn3 edit-btn3 p-[.1cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer"  onClick={() => navigate("/editinhouse")}>
+                      <Edit size={15} color="orange" />
+                    </div>
 
-                      <div className="btn3 delete-btn3 p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
-                        <Trash size={15} color="red" />
-                      </div>
-                     
+                    <div className="btn3 delete-btn3 p-[.1cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                      <Trash size={15} color="red" />
+                    </div>
+
                   </td>
                 </tr>
 
@@ -492,15 +492,19 @@ const InhouseProduct = () => {
                             <FaTrash  onClick={() => openDeleteConfirmation(product.id)} />
                           </button> */}
                           <div className=" btn3 view-btn3 p-[.2cm] bg-blue-100 w-fit rounded-[50%] cursor-pointer">
-                        <Eye size={15} color="blue" />
-                      </div>
-                      <div className=" btn3 edit-btn3 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer">
-                        <Edit size={15} color="orange" />
-                      </div>
+                            <Eye size={15} color="blue" />
+                          </div>
+                          <div
+                            className="btn3 edit-btn3 p-[.2cm] bg-[#fff4e0] w-fit rounded-[50%] cursor-pointer"
+                            onClick={() => navigate("/editinhouse")}
+                          >
+                            <Edit size={15} color="orange" />
+                          </div>
 
-                      <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
-                        <Trash size={15} color="red" />
-                      </div>
+
+                          <div className="btn3 delete-btn3 p-[.2cm] bg-red-100 w-fit rounded-[50%] cursor-pointer">
+                            <Trash size={15} color="red" />
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -512,13 +516,13 @@ const InhouseProduct = () => {
         </table>
       </div>
       {showDeleteConfirmation && (
-                <DeleteConfirmation
-                                    isOpen={showDeleteConfirmation}
-                    onConfirm={() => handleDelete(attributeToDeleteId)}
-                    onCancel={closeDeleteConfirmation}
-                   
-                />
-            )}
+        <DeleteConfirmation
+          isOpen={showDeleteConfirmation}
+          onConfirm={() => handleDelete(attributeToDeleteId)}
+          onCancel={closeDeleteConfirmation}
+
+        />
+      )}
     </div>
   );
 };

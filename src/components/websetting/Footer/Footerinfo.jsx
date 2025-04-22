@@ -36,7 +36,7 @@ export default function FooterInfo({title,setTitle,description,setDescription,ha
             <div className="text-right">
                 <button
                     onClick={handleUpdate}
-                    className="bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
+                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
                 >
                     Update
                 </button>

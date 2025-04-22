@@ -148,7 +148,7 @@ import Addpage from "./components/websetting/Addpage.jsx";
 import Editpage from "./components/websetting/Editpage.jsx";
 import Headerpage from "./components/websetting/Headerpage.jsx";
 
-import FooterWidget from "./components/websetting/Footerpage.jsx"
+import FooterWidget from "./components/websetting/footerpage.jsx"
 import Appeareance from "./components/websetting/Appearence.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
@@ -166,6 +166,7 @@ import Homesetting from "./components/Homesetting/Homesetting.jsx";
 import AllDeliveryPartners from "./components/delivery/AllDeliveryPartners.js";
 import OrderHistoryModal from "./components/delivery/component/OrderHistoryModal.js";
 import TotalEarningsModal from "./components/delivery/component/TotalEarningsModal.js";
+import AddFaq from "./pages/products/Addfaq.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -336,6 +337,8 @@ function App() {
                 <Route path="setting" element={<PreOrderSetting />} />
                 <Route path="notification" element={<PreOrderNotification />} />
                 <Route path="faq" element={<PreOrderFaq />} />
+                <Route path="addfaq" element={<AddFaq />} />
+
                 <Route path="dashboard" element={<PreOrderDashboard />} />
                 <Route path="all-orders" element={<AllOrders />} />
                 <Route path="inhouse-orders" element={<InHouseOrders />} />

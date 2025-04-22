@@ -21,6 +21,9 @@ export default function WholesaleCreate() {
 
     const [status, setStatus] = useState(true);
 
+ 
+    const [showModal, setShowModal] = useState(false);
+
     const [showShipping, setShowShipping] = useState(true);
     const [showRate, setShowRate] = useState(true);
     const [showMulitiply, setShowMulitiply] = useState(true);
@@ -41,6 +44,14 @@ export default function WholesaleCreate() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [productData, setProductData] = useState("");
     const navigate = useNavigate();
+
+   
+    const [showWarrantyModal, setShowWarrantyModal] = useState(false);
+    const [warrantyNoteInput, setWarrantyNoteInput] = useState("");
+
+  
+    const [showProductModal, setShowProductModal] = useState(false);
+    const [productName, setProductName] = useState("");
   
 
    
@@ -128,7 +139,7 @@ export default function WholesaleCreate() {
             <div className="preOrderFaqBox-new">
                 <div className="procol">
                     <div className="preOrderFaqLeft-new">
-                        <div className="border p-4 rounded">
+                        <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
                         <div className="">
                             <p className="allFaq">Product Information</p>
                             {/* <input type="text" placeholder="Type to search...." className="searchFaq" /> */}
@@ -192,7 +203,7 @@ export default function WholesaleCreate() {
                   
 
 
-                    <div className="pro-container">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h3 className="pro-heading">Product Images</h3>
                         <div className="seo-divider"></div>
                         {/* Gallery Images */}
@@ -228,7 +239,7 @@ export default function WholesaleCreate() {
                         </div>
                     </div>
                     {/* Product Videos  */}
-                    <div className="product-video-container">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h3 className="product-video-title">Product Videos</h3>
                         <div className="seo-divider"></div>
 
@@ -264,7 +275,7 @@ export default function WholesaleCreate() {
                         </div>
                     </div>
 
-                    <div className="product-price-container">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h3 className="product-price-title">Product price + stock</h3>
                         <div className="seo-divider"></div>
                         <div className="input-group">
@@ -301,7 +312,7 @@ export default function WholesaleCreate() {
                         </div>
                     </div>
                     {/* Description */}
-                    <div className="product-description-container">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h3 className="product-description-title">Product Description</h3>
                         <div className="seo-divider"></div>
 
@@ -319,7 +330,7 @@ export default function WholesaleCreate() {
                     {/* PDF */}
 
 
-                    <div className="pro-container">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h3 className="pro-heading">Product Images</h3>
                         <div className="seo-divider"></div>
 
@@ -339,7 +350,7 @@ export default function WholesaleCreate() {
                     
 
                     {/* SEO */}
-                    <div className="seo-container">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h2 className="seo-title">SEO Meta Tags</h2>
                         <div className="seo-divider"></div>
 
@@ -400,365 +411,413 @@ export default function WholesaleCreate() {
                         </div>
                     </div>
                     {/* refund */}
-                    <div className="refund-container-new">
-                        <h3 className="refund-title">Refund</h3>
-                        <div className="seo-divider"></div>
-                        <div className="refund-option">
-                            <span>Refundable?</span>
-                            <Switch
-                                value={isRefundable}
-                                onChangeFunc={() => setIsRefundable(!isRefundable)}
-                            />
-                        </div>
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+        <h3 className="refund-title text-lg font-semibold">Refund</h3>
+        <div className="seo-divider h-px bg-gray-200 my-4"></div>
 
-                        {/* Refund Note */}
-                        {isRefundable && (
-                            <div className="refund-note mt-4">
-                                <label className="note-label block mb-1 font-medium">Refund Note</label>
-                                <div className="note-box p-2 border border-gray-300 rounded-md cursor-pointer">
-                                    + Select Refund Note
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    {/* warrenty */}
-                    <div className="warranty-container-new">
-                        <h3 className="warranty-title">Warranty</h3>
-                        <div className="seo-divider"></div>
-                        <div className="warranty-option">
-                            <span>Warranty</span>
-                            <Switch
-                                value={isWarranty}
-                                onChangeFunc={() => setIsWarranty(!isWarranty)}
-                            />
-
-                        </div>
-
-                        {/* Conditional Warranty Inputs */}
-                        {isWarranty && (
-                            <>
-                                {/* Warranty Type Dropdown */}
-                                <div className="mt-4">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Warranty Type</label>
-                                    <select
-                                        value={warrantyType}
-                                        onChange={(e) => setWarrantyType(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 bg-white focus:outline-none"
-                                    >
-                                        <option value="">Select Warranty</option>
-                                        <option value="1 Year">1 Year</option>
-                                        <option value="2 Years">2 Years</option>
-                                        <option value="No Warranty">No Warranty</option>
-                                    </select>
-                                </div>
-
-                                {/* Warranty Note */}
-                                <div className="mt-4">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Warranty Note</label>
-                                    <div className="w-full px-4 py-2  border border-gray-300 text-center rounded-md text-sm text-gray-600 bg-gray-50 hover:bg-gray-100 cursor-pointer">
-                                        + Select Warranty Note
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                    </div>
-
-                    {/* Frequently */}
-                    <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-md p-4 mt-6 shadow-sm">
-                        <h3 className="text-lg font-semibold text-gray-800">Frequently Bought</h3>
-                        <div className="border-b border-gray-200 my-3"></div>
-
-                        {/* Radio Options */}
-                        <div className="flex flex-wrap gap-6 mt-3 text-sm font-medium text-gray-700">
-                            <label className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                    type="radio"
-                                    name="frequent"
-                                    value="product"
-                                    checked={selectedOption === "product"}
-                                    onChange={() => setSelectedOption("product")}
-                                    className="accent-blue-600 w-4 h-4"
-                                />
-                                <span className={selectedOption === "product" ? "font-semibold" : ""}>
-                                    Select Product
-                                </span>
-                            </label>
-
-                            <label className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                    type="radio"
-                                    name="frequent"
-                                    value="category"
-                                    checked={selectedOption === "category"}
-                                    onChange={() => setSelectedOption("category")}
-                                    className="accent-blue-600 w-4 h-4"
-                                />
-                                <span className={selectedOption === "category" ? " font-semibold" : ""}>
-                                    Select Category
-                                </span>
-                            </label>
-                        </div>
-
-                        {/* Category Dropdown */}
-                        {selectedOption === "category" && (
-                            <div className="mt-5 flex flex-wrap items-center gap-3">
-                                <label className="text-sm text-gray-700 font-medium">Category</label>
-                                <select
-                                    value={selectedCategory}
-                                    onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                >
-                                    <option value="">Select Category</option>
-                                    <option value="electronics">Electronics</option>
-                                    <option value="fashion">Fashion</option>
-                                    <option value="grocery">Grocery</option>
-                                    <option value="books">Books</option>
-                                </select>
-                            </div>
-                        )}
-
-                        {/* Add More Box - Show only for 'product' selection */}
-                        {selectedOption === "product" && (
-                            <div className="mt-6">
-                                <div className="w-full border border-dashed border-gray-300 rounded-md py-4 text-center text-gray-600 text-sm hover:bg-gray-50 cursor-pointer transition">
-                                    + Add More
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-                </div>
-
-                <div className="prerow-whole8">
-                    <div className="preOrderFaqRight-new">
-
-                        {/* <div className="preOrderFaqRightHead">
-                            <p className="allFaq">Product category</p>
-                        </div>
-
-                        <div className="faqForm">
-                            <label>Name</label>
-                            <input type="text" placeholder="Enter question" className="faqInp" />
-
-                            <label>Color Code</label>
-                            <input type="text" placeholder="Enter Code" className="faqInp" />
-
-                            <div className="inpSubBox">
-                                <input type="submit" value="Save" className="inpSub" />
-                            </div>
-                        </div> */}
-                       <div className="border p-5 rounded">
-                       <div className="preOrderFaqRightHead">
-                            <p className="allFaq">Product category</p>
-                        </div>
-                      
-                        <ProductCategory/>
-                        </div>
-                    {/* </div> */}
-                    {/* <div className="preOrderFaqRight-new mt-5">
-                        <div className="preOrderFaqRightHead  ">
-                            <p className="allFaq">Shipping Configuration</p>
-                        </div>
-
-                        <div className="faqForm">
-                            <div className=" flex items-center justify-between  w-full">
-                                <label className="text-black w-fit font-normal">Free Shipping</label>
-                                <button
-                                    onClick={() => setShowShipping(!showShipping)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showShipping ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showShipping ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-                            </div>
-                            <div className=" flex items-center justify-between w-full">
-                                <label className="text-black font-normal">Flat Rate</label>
-                                <button
-                                    onClick={() => setShowRate(!showRate)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showRate ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showRate ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-                            </div>
-                            <div className=" flex items-center justify-between w-full">
-                                <label className="text-black font-normal">Is Product Quantity Mulitiply</label>
-                                <button
-                                    onClick={() => setShowMulitiply(!showMulitiply)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showMulitiply ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showMulitiply ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-
-                            </div>
-                        </div>
-                    </div> */}
-                      <div className="preOrderFaqRight-new7 mt-5 border rounded">
-      <div className="preOrderFaqRightHead">
-        <p className="allFaq">Shipping Configuration</p>
-      </div>
-
-      <div className="faqForm">
-        <div className="flex items-center justify-between w-full">
-          <label className="text-black w-fit font-normal">Free Shipping</label>
-          <button
-            onClick={() => setShowShipping(!showShipping)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              showShipping ? 'bg-green-500' : 'bg-gray-300'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                showShipping ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-          </button>
+        <div className="refund-option flex items-center justify-between">
+          <span className="font-medium">Refundable?</span>
+          <Switch
+            value={isRefundable}
+            onChangeFunc={() => setIsRefundable(!isRefundable)}
+          />
         </div>
 
-        <div className="flex items-center justify-between w-full">
-          <label className="text-black font-normal">Flat Rate</label>
-          <button
-            onClick={() => setShowRate(!showRate)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              showRate ? 'bg-green-500' : 'bg-gray-300'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                showRate ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-            
-          </button>
-        </div>
-
-        {showRate && (
-          <div className="flex items-center  w-full" style={{ width: '100%' }}> {/* निश्चित चौड़ाई */}
-            <label className="text-black font-normal">Shipping cost</label>
-            <input
-              type="number"
-              value={shippingCost}
-              onChange={(e) => setShippingCost(e.target.value)}
-              className="border p-2 rounded flex-grow"
-            />
+        {/* Refund Note */}
+        {isRefundable && (
+          <div className="refund-note mt-4">
+            <label className="note-label block mb-1 font-medium">Refund Note</label>
+            <div
+              className="note-box p-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50"
+              onClick={() => setShowModal(true)}
+            >
+              + Select Refund Note
+            </div>
           </div>
         )}
+      </div>
 
-        <div className="flex items-center justify-between w-full">
-          <label className="text-black font-normal">Is Product Quantity Mulitiply</label>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative">
+            <h2 className="text-lg font-semibold mb-4">Select Refund Note</h2>
+
+            {/* Form Fields */}
+            <textarea
+              className="w-full border border-gray-300 rounded-md p-2 mb-4"
+              rows={4}
+              placeholder="Write your refund note..."
+            />
+
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Save
+              </button>
+            </div>
+
+            {/* Close icon (optional) */}
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              onClick={() => setShowModal(false)}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
+                    {/* warrenty */}
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+  <h3 className="warranty-title text-lg font-semibold">Warranty</h3>
+  <div className="seo-divider h-px bg-gray-200 my-4"></div>
+
+  <div className="warranty-option flex items-center justify-between">
+    <span className="font-medium">Warranty</span>
+    <Switch
+      value={isWarranty}
+      onChangeFunc={() => setIsWarranty(!isWarranty)}
+    />
+  </div>
+
+  {/* Conditional Warranty Inputs */}
+  {isWarranty && (
+    <>
+      {/* Warranty Type Dropdown */}
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Warranty Type</label>
+        <select
+          value={warrantyType}
+          onChange={(e) => setWarrantyType(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 bg-white focus:outline-none"
+        >
+          <option value="">Select Warranty</option>
+          <option value="1 Year">1 Year</option>
+          <option value="2 Years">2 Years</option>
+          <option value="No Warranty">No Warranty</option>
+        </select>
+      </div>
+
+      {/* Warranty Note Trigger */}
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Warranty Note</label>
+        <div className="flex justify-center mt-4">
+        <button
+  onClick={() => setShowWarrantyModal(true)}
+  className="note-box w-full p-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 text-center text-gray-700 font-medium"
+>
+  + Add
+</button>
+
+</div>
+
+
+
+      </div>
+    </>
+  )}
+
+  {/* Warranty Note Modal */}
+  {showWarrantyModal && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+        <h4 className="text-lg font-semibold mb-4">Enter Warranty Note</h4>
+        <textarea
+          value={warrantyNoteInput}
+          onChange={(e) => setWarrantyNoteInput(e.target.value)}
+          rows={4}
+          placeholder="Type your warranty note here..."
+          className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <div className="mt-4 flex justify-end space-x-2">
           <button
-            onClick={() => setShowMulitiply(!showMulitiply)}
+            onClick={() => setShowWarrantyModal(false)}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              setShowWarrantyModal(false);
+              // Handle saving logic here
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Save
+          </button>
+        </div>
+        <button
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
+          onClick={() => setShowWarrantyModal(false)}
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+
+                    {/* Frequently */}
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+            <h3 className="text-lg font-semibold text-gray-800">Frequently Bought</h3>
+            <div className="border-b border-gray-200 my-3"></div>
+
+            {/* Radio Options */}
+            <div className="flex flex-wrap gap-6 mt-3 text-sm font-medium text-gray-700">
+                <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="frequent"
+                        value="product"
+                        checked={selectedOption === "product"}
+                        onChange={() => setSelectedOption("product")}
+                        className="accent-blue-600 w-4 h-4"
+                    />
+                    <span className={selectedOption === "product" ? "font-semibold" : ""}>
+                        Select Product
+                    </span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="frequent"
+                        value="category"
+                        checked={selectedOption === "category"}
+                        onChange={() => setSelectedOption("category")}
+                        className="accent-blue-600 w-4 h-4"
+                    />
+                    <span className={selectedOption === "category" ? " font-semibold" : ""}>
+                        Select Category
+                    </span>
+                </label>
+            </div>
+
+            {/* Category Dropdown */}
+            {selectedOption === "category" && (
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                    <label className="text-sm text-gray-700 font-medium">Category</label>
+                    <select
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    >
+                        <option value="">Select Category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="grocery">Grocery</option>
+                        <option value="books">Books</option>
+                    </select>
+                </div>
+            )}
+
+            {/* Add More Box */}
+            {selectedOption === "product" && (
+                <div className="mt-6">
+                    <div
+                        onClick={() => setShowProductModal(true)}
+                        className="w-full border border-dashed border-gray-300 rounded-md py-4 text-center text-gray-600 text-sm hover:bg-gray-50 cursor-pointer transition"
+                    >
+                        + Add More
+                    </div>
+                </div>
+            )}
+
+            {/* Add Product Modal */}
+            {showProductModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+                        <h4 className="text-lg font-semibold mb-4">Add Product</h4>
+                        <input
+                            type="text"
+                            value={productName}
+                            onChange={(e) => setProductName(e.target.value)}
+                            placeholder="Enter product name"
+                            className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <div className="mt-4 flex justify-end space-x-2">
+                            <button
+                                onClick={() => setShowProductModal(false)}
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={() => {
+                                    // Handle saving the product
+                                    setShowProductModal(false);
+                                    setProductName("");
+                                }}
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            >
+                                Save
+                            </button>
+                        </div>
+                        <button
+                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                            onClick={() => setShowProductModal(false)}
+                        >
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+                </div>
+                </div>
+                <div className="p-5 space-y-6">
+      {/* Product Category */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 ">
+        <div className="preOrderFaqRightHead">
+          <p className="allFaq">Product category</p>
+        </div>
+        <ProductCategory />
+      </div>
+
+      {/* Shipping Configuration */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+        <div className="preOrderFaqRightHead mb-4">
+          <p className="allFaq">Shipping Configuration</p>
+        </div>
+
+        <div className="faqForm space-y-4">
+          {/* Free Shipping */}
+          <div className="flex items-center justify-between w-full">
+            <label className="text-black w-fit font-normal">Free Shipping</label>
+            <button
+              onClick={() => setShowShipping(!showShipping)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                showShipping ? 'bg-green-500' : 'bg-gray-300'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  showShipping ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Flat Rate */}
+          <div className="flex items-center justify-between w-full">
+            <label className="text-black font-normal">Flat Rate</label>
+            <button
+              onClick={() => setShowRate(!showRate)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                showRate ? 'bg-green-500' : 'bg-gray-300'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  showRate ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Shipping Cost input */}
+          {showRate && (
+            <div className="flex items-center w-full gap-4">
+              <label className="text-black font-normal w-1/3">Shipping cost</label>
+              <input
+                type="number"
+                value={shippingCost}
+                onChange={(e) => setShippingCost(e.target.value)}
+                className="border p-2 rounded w-2/3"
+              />
+            </div>
+          )}
+
+          {/* Multiply Quantity */}
+          <div className="flex items-center justify-between w-full">
+            <label className="text-black font-normal">Is Product Quantity Multiply</label>
+            <button
+              onClick={() => setShowMulitiply(!showMulitiply)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                showMulitiply ? 'bg-green-500' : 'bg-gray-300'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  showMulitiply ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Low Stock Quantity Warning */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Low Stock Quantity Warning</h2>
+        <div className="mt-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            className="w-full px-4 py-2 pb-4 border border-gray-300 rounded-md focus:outline-none text-gray-700"
+          />
+        </div>
+      </div>
+
+      {/* Stock Visibility State */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Stock Visibility State</h2>
+        <div className="space-y-4">
+          {[
+            { label: 'Show Stock Quantity', state: showQuantity, setter: setShowQuantity },
+            { label: 'Show Stock With Text Only', state: showTextOnly, setter: setShowTextOnly },
+            { label: 'Hide Stock', state: hideStock, setter: setHideStock },
+          ].map(({ label, state, setter }) => (
+            <div className="flex items-center justify-between" key={label}>
+              <span className="text-gray-700">{label}</span>
+              <button
+                onClick={() => setter(!state)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  state ? 'bg-green-500' : 'bg-gray-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    state ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cash On Delivery */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
+        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Cash On Delivery</h2>
+        <div className="flex items-center justify-between">
+          <span className="text-gray-700">Status</span>
+          <button
+            onClick={() => setShowStatus(!showStatus)}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              showMulitiply ? 'bg-green-500' : 'bg-gray-300'
+              showStatus ? 'bg-green-500' : 'bg-gray-300'
             }`}
           >
             <span
               className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                showMulitiply ? 'translate-x-6' : 'translate-x-1'
+                showStatus ? 'translate-x-6' : 'translate-x-1'
               }`}
             />
           </button>
         </div>
       </div>
-    </div>
-                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-4 ">
-                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Low Stock Quantity Warning</h2>
-
-                        <div className="mt-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
-                            <input
-                                type="number"
-                                min="1"
-                                value={quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
-                                className="w-full px-4 py-2 pb-4 border border-gray-300 rounded-md focus:outline-none text-gray-700"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6  pb-8">
-                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
-                            Stock Visibility State
-                        </h2>
-
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-700">Show Stock Quantity</span>
-                                <button
-                                    onClick={() => setShowQuantity(!showQuantity)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showQuantity ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showQuantity ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-700">Show Stock With Text Only</span>
-                                <button
-                                    onClick={() => setShowTextOnly(!showTextOnly)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showTextOnly ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showTextOnly ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-700">Hide Stock</span>
-                                <button
-                                    onClick={() => setHideStock(!hideStock)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${hideStock ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${hideStock ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
-                        <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
-                            Cash On Delivery
-                        </h2>
-
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <span className="text-gray-700">Status</span>
-                                <button
-                                    onClick={() => setShowStatus(!showStatus)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showStatus ? "bg-green-500" : "bg-gray-300"
-                                        }`}
-                                >
-                                    <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showStatus ? "translate-x-6" : "translate-x-1"
-                                            }`}
-                                    />
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                    {/* <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
                             Featured
                         </h2>
@@ -779,9 +838,9 @@ export default function WholesaleCreate() {
                             </div>
 
                         </div>
+                        
                     </div>
-
-                    <div className="max-w-xl w-full mx-auto mt-2 rounded-md  border border-gray-300 p-6 pb-8">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">
                             Todays Deal
                         </h2>
@@ -802,10 +861,10 @@ export default function WholesaleCreate() {
 
                         </div>
                     </div>
-                    <div className="w-full max-w-xl mx-auto  border border-gray-300 rounded-md p-4 mt-4 pb-8">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Flash Deal</h2>
 
-                        
+                        {/* Flash Title */}
                         <div className="mt-4">
                             <label className="block text-sm  font-normal text-gray-700 mb-1">Add To Flash</label>
                             <select
@@ -821,8 +880,6 @@ export default function WholesaleCreate() {
                                 <option value="flash2">Flash Sale</option>
                             </select>
                         </div>
-
-                        
                         <div className="mt-4">
                             <label className="block text-sm font-normal text-gray-700 mb-1">Discount</label>
                             <input
@@ -833,7 +890,7 @@ export default function WholesaleCreate() {
                             />
                         </div>
 
-                        
+                        {/* Discount Type Dropdown */}
                         <div className="mt-4">
                             <label className="block text-sm font-normal text-gray-700 mb-2">Discount Type</label>
                             <select
@@ -845,10 +902,11 @@ export default function WholesaleCreate() {
                                 <option value="flat">Flat</option>
                                 <option value="percent">Percent</option>
                             </select>
-                        </div>
-
-                    </div> */}
-                    <div className="w-full max-w-xl mx-auto border border-gray-300 rounded-md p-4 mt-4">
+                       
+                    </div>
+                  
+               </div>
+               <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Estimate Shipping Time</h2>
 
                         <div className="mt-4">
@@ -867,8 +925,7 @@ export default function WholesaleCreate() {
                             </div>
                         </div>
                     </div>
-
-                    <div className="w-full max-w-xl mx-auto border border-gray-300 rounded-md p-4 mt-4">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Vat & TAX</h2>
 
                         {/* Tax Section */}
@@ -914,24 +971,33 @@ export default function WholesaleCreate() {
                                 </select>
                             </div>
                         </div>
+                        
                     </div>
-                    {/* <div className="button-group">
+                </div>
+               </div>
+               {/* <div className="button-group-new">
                       <button className="btn-btn-gray">Save & Unpublish</button>
                       <Link to='/products/create/add' >
                         <button className="btn-btn-green">Save & Publish</button>
                       </Link>
                     </div> */}
-                    </div>
-                </div>
-                
-
-            </div>
-            <div className="button-group">
-                      <button className="btn-btn-gray">Save & Unpublish</button>
+                    <div className="flex gap-4 mt-4 justify-end">
+                      <button
+                        className="bg-gray-200 text-gray-800 px-4 py-2 rounded shadow-md  hover:bg-gray-400 lg transition"
+                        onClick={() => handleSubmit(false)}
+                      >
+                        Save & Unpublish
+                      </button>
                       <Link to='/products/create/add' >
-                        <button className="btn-btn-green">Save & Publish</button>
+                        <button
+                          className="bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700 hover:shadow-lg transition"
+                          onClick={() => handleSubmit(true)}
+                        >
+                          Save & Publish
+                        </button>
                       </Link>
                     </div>
-        </div>
-    )
-}
+             </div>
+   
+  );
+};

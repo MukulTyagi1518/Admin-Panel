@@ -672,7 +672,7 @@ const WebsiteHeaderSettings = () => {
         <div className="flex justify-end mt-4">
           <button
             onClick={handleSubmit}
-            className="bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700"
+            className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700"
           >
             Update
           </button>

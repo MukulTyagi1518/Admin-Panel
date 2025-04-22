@@ -39,134 +39,157 @@ const ProductMediaForm = () => {
   return (
 
     <div className="form-container">
-      <h2 className="form-title">Product Files & Media</h2>
-      <div className="divider"></div>
-
-      <div className="form-group">
-        <label>Gallery Images</label>
-        <div className="input-container">
-
-          <div className="PreProductInputDiv">
-            <label className="file-label">
-              Browse
-
-              <input type="file" className="file-input" multiple onChange={handleGalleryChange} />
-            </label>
-            <span className="file-name">{galleryImgs.length} files selected</span>
-          </div>
-          <p className="description">
-            These images are visible in the product details page gallery. Minimum dimensions required: 900px width X 900px height.
-          </p>
+    <h2 className="form-title">Product Files & Media</h2>
+    <div className="divider"></div>
+  
+    {/* Gallery Images */}
+    <div className="form-group">
+      <label>Gallery Images</label>
+      <div className="input-container">
+        <div className="flex items-center gap-4">
+          <label className="cursor-pointer bg-blue-100 text-blue-700 px-4 py-2 rounded-md font-medium hover:bg-blue-200 transition">
+            Browse
+            <input
+              type="file"
+              className="hidden"
+              multiple
+              onChange={handleGalleryChange}
+            />
+          </label>
+          <span className="text-gray-600 text-sm">{galleryImgs.length} files selected</span>
         </div>
+        <p className="text-sm text-gray-500 mt-2">
+          These images are visible in the product details page gallery. Minimum dimensions required: 900px width X 900px height.
+        </p>
       </div>
-
-      {
-        galleryImgs && galleryImgs.length > 0 ?
-          <div className="form-group">
-            <label>Selected Images</label>
-            <div className="input-container">
-
-              <div className="flex flex-row gap-[.2cm]">
-                {
-                  galleryImgs.map((g, i) => (
-                    <div className="relative ">
-                      <img src={URL.createObjectURL(g)} key={i} alt="gallery images" className="w-[4cm] flex-shrink-0 " />
-                      <div className="p-[.2cm] rounded-[50%] bg-blue-100 w-fit absolute top-0  ">
-                        <X size={16} color="blue" />
-                      </div>
-                    </div>
-                  ))
-                }
+    </div>
+  
+    {/* Selected Images */}
+    {galleryImgs && galleryImgs.length > 0 && (
+      <div className="form-group">
+        <label>Selected Images</label>
+        <div className="input-container">
+          <div className="flex flex-row flex-wrap gap-3">
+            {galleryImgs.map((g, i) => (
+              <div className="relative w-[4cm] h-[4cm]" key={i}>
+                <img
+                  src={URL.createObjectURL(g)}
+                  alt="gallery"
+                  className="w-full h-full object-cover rounded"
+                />
+                <div className="p-1 rounded-full bg-blue-100 absolute top-1 right-1">
+                  <X size={16} color="blue" />
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-          : null
+        </div>
+      </div>
+    )}
+  
+    {/* Thumbnail Image */}
+    <div className="form-group">
+      <label>Thumbnail Image</label>
+      <div className="input-container">
+        <div className="flex items-center gap-4">
+          <label className="cursor-pointer bg-blue-100 text-blue-700 px-4 py-2 rounded-md font-medium hover:bg-blue-200 transition">
+            Browse
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleThumbnailChange}
+            />
+          </label>
+          <span className="text-gray-600 text-sm">{thumbnailImage?.name}</span>
+        </div>
+        <p className="text-sm text-gray-500 mt-2">
+          This image is visible in all product boxes. Minimum dimensions required: 195px width X 195px height.
+        </p>
+      </div>
+    </div>
+  
+    {/* Video Provider */}
+    <div className="form-group">
+      <label>Video Provider</label>
+      <div className="input-container">
+        <select
+          className="w-full border border-gray-300 rounded px-3 py-2 text-gray-700"
+          value={productData.videoProvider}
+          onChange={(e) =>
+            setProductData((prev) => ({
+              ...prev,
+              videoProvider: e.target.value,
+            }))
+          }
+        >
+          <option value="Youtube">Youtube</option>
+          <option value="Vimeo">Vimeo</option>
+          <option value="Dailymotion">Dailymotion</option>
+        </select>
+      </div>
+    </div>
+  
+    {/* Video Link */}
+    <div className="form-group">
+      <label>Video Link</label>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Video Link"
+          value={productData.videoLink}
+          onChange={(e) =>
+            setProductData((prev) => ({
+              ...prev,
+              videoLink: e.target.value,
+            }))
+          }
+          className="w-full border border-gray-300 rounded px-3 py-2 text-gray-700"
+        />
+        <p className="text-sm text-gray-500 mt-2">
+          Use a proper link without extra parameters. Don't use short share links or embedded iframe code.
+        </p>
+      </div>
+    </div>
+  
+    {/* PDF Specification */}
+    <div className="form-group">
+      <label>PDF Specification</label>
+      <div className="input-container">
+        <div className="flex items-center gap-4">
+          <label className="cursor-pointer bg-blue-100 text-blue-700 px-4 py-2 rounded-md font-medium hover:bg-blue-200 transition">
+            Browse
+            <input
+              type="file"
+              className="hidden"
+              onChange={handlePdfSpecificationChange}
+            />
+          </label>
+          <span className="text-gray-600 text-sm">{pdfSpecification?.name}</span>
+        </div>
+      </div>
+    </div>
+  
+    {/* Buttons */}
+    <div className="button-group flex justify-end mt-6 ml-auto">
+  <Link to="/products/create/price-stock">
+    <button
+      className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
+      onClick={() =>
+        setProductData((prev) => ({
+          ...prev,
+          galleryImages: galleryImgs,
+          thumbnailImage: thumbnailImage,
+          pdfSpecification: pdfSpecification,
+        }))
       }
+    >
+      Save & Publish
+    </button>
+  </Link>
+</div>
 
-
-      <div className="form-group">
-        <label>Thumbnail Image</label>
-        <div className="input-container">
-          <div className="PreProductInputDiv">
-            <label className="file-label">
-              Browse
-
-              <input type="file" className="file-input" onChange={handleThumbnailChange} />
-            </label>
-            <span className="file-name">{thumbnailImage?.name}</span>
-          </div>
-          <p className="description">
-            This image is visible in all product boxes. Minimum dimensions required: 195px width X 195px height.
-          </p>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>Video Provider</label>
-        <div className="input-container">
-          <select className="dropdown" value={productData.videoProvider} onChange={(e) => {
-            setProductData((prev) => ({
-              ...prev,
-              videoProvider: e.target.value
-            }))
-          }}>
-            <option value="Youtube">Youtube</option>
-            <option value="Vimeo">Vimeo</option>
-            <option value="Dailymotion">Dailymotion</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>Video Link</label>
-        <div className="input-container">
-          <input type="text" placeholder="Video Link" value={productData.videoLink} onChange={(e) => {
-            setProductData((prev) => ({
-              ...prev,
-              videoLink: e.target.value
-            }))
-          }} className="text-input" />
-          <p className="description">
-            Use a proper link without extra parameters. Don't use short share links or embedded iframe code.
-          </p>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>PDF Specification</label>
-        <div className="input-container">
-          <div className="PreProductInputDiv">
-            <label className="file-label">
-              Browse
-
-              <input type="file" className="file-input" onChange={handlePdfSpecificationChange} />
-            </label>
-            <span className="file-name">{pdfSpecification?.name}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="button-group">
-        <button className="btn-btn-gray">Save & Unpublish</button>
-        <Link to='/products/create/price-stock' >
-          <button className="btn-btn-green" onClick={async () => {
-
-
-
-
-
-
-
-            setProductData((prev) => ({
-              ...prev,
-              galleryImages: galleryImgs,
-              thumbnailImage: thumbnailImage,
-              pdfSpecification: pdfSpecification
-            }));
-          }} >Save & Publish</button>
-        </Link>
-      </div>
-    </div >
+  </div>
+  
   );
 };
 

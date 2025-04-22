@@ -166,7 +166,7 @@ const CategoryDiscountTable = () => {
                     </div>
                   </td>
                   <td>
-                    <label className="switch">
+                    {/* <label className="switch">
                       <input
                         type="checkbox"
                         checked={c.sallerProduct}
@@ -175,7 +175,8 @@ const CategoryDiscountTable = () => {
                         }}
                       />
                       <span className="slider round"></span>
-                    </label>
+                    </label> */}
+                    <Switch className="pl-5"/>
                   </td>
                   <td>
                     <button

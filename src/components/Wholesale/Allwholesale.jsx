@@ -11,7 +11,7 @@ export default function PreOrderReviews() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/wholesale/Addwholesale");
+    navigate("/wholesale/add");
   };
 
   const [expandedId, setExpandedId] = useState(null);

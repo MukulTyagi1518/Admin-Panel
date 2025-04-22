@@ -5,6 +5,7 @@ import Switch from "../Switch";
 import DeleteConfirmation from "../DeleteConfirmation";
 import ViewExpandData from "../ViewExpandData";
 import { Edit, Eye, EyeIcon, Trash } from "lucide-react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const InhouseProduct = () => {
   const [products, setProducts] = useState([
@@ -134,6 +135,8 @@ const InhouseProduct = () => {
   const itemsPerPage = 5; // Adjust as needed
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
+  
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
@@ -233,11 +236,16 @@ const InhouseProduct = () => {
     setIsSellerDropdownOpen(false);
   };
 
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/wholesale/add");}
+
   return (
     <div className="product-container4">
       <div className="header">
         <div className="text-[20px]">All wholesale products</div>
-        <button className="add-btn">Add New wholesale product</button>
+        <button className="add-btn" onClick={handleSubmit}>+Add New wholesale product</button>
       </div>
       <div className="filter-options">
         <select className="filter-dropdown">

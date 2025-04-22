@@ -61,201 +61,190 @@ export default function PreOrderSetting() {
     };
 
     return (
-        <div className="PreOrderSetting ma10">
+        <div className="mx-auto my-10 space-y-10 max-w-[700px]">
 
-            {/* Seller Commission */}
-            <div className="preOrderSettingBox">
-                <div className="preOrderBoxHead">
-                    <p className="preOrderBoxHeadText">PreOrder Seller Commission</p>
-                </div>
-                <div className="preOrderBoxLower">
-                    <div className="productBoxLowerdiv">
-                        <p className="productBoxLowerText">PreOrder Product for Seller</p>
-                        <label className="switch">
-                            {/* <input
-                                type="checkbox"
-                                checked={commission.status}
-                                onChange={(e) => setCommission({ ...commission, status: e.target.checked })}
-                            />
-                            <span className="slider"></span> */}
-                            <Switch
-  value={commission.status}
-  onChangeFunc={(e) =>
-    setCommission({ ...commission, status: e.target.checked })
-  }
-/>
-
-                        </label>
-                    </div>
-                    <div className="productBoxLowerdiv">
-                        <p className="productBoxLowerText">PreOrder Seller Commission</p>
-                        <div className="PreProductInputDiv">
-                            <input
-                                type="number"
-                                className="dicountInp"
-                                value={commission.amount}
-                                onChange={(e) => setCommission({ ...commission, amount: e.target.value })}
-                            />
-                            <p className="percentDiscount">%</p>
-                        </div>
-                    </div>
-                    <div className="updateButtonBox">
-                        <button
-                            className="updatePreOrderSetting"
-                            onClick={() =>
-                                handleUpdate("Seller Commission", {
-                                    sellerCommissionAmount: commission.amount,
-                                    sellerCommissionStatus: commission.status ? "active" : "inactive",
-                                })
-                            }
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
+        {/* Seller Commission */}
+        <div className="border rounded-xl shadow p-6 bg-white">
+          <h2 className="text-lg font-semibold mb-4">PreOrder Seller Commission</h2>
+          <div className="border-b-2 mb-4"></div>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <p className="text-sm font-medium">PreOrder Product for Seller</p>
+              <Switch
+                value={commission.status}
+                onChangeFunc={(e) =>
+                  setCommission({ ...commission, status: e.target.checked })
+                }
+              />
             </div>
-
-            {/* Marketing Image and Flat Rate */}
-            <div className="preOrderSettingBox">
-                <div className="preOrderBoxHead">
-                    <p className="preOrderBoxHeadText">PreOrder Settings</p>
-                </div>
-                <div className="preOrderBoxLower">
-                    <div className="productBoxLowerdiv">
-                        <p className="productBoxLowerText">Image for Product Marketing</p>
-                        <div className="PreProductInputDiv">
-                            <label className="file-label">
-                                Browse
-                                <input
-                                    type="file"
-                                    className="file-input"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        setMarketingImage({
-                                            name: file.name,
-                                            src: URL.createObjectURL(file),
-                                            file,
-                                        });
-                                    }}
-                                />
-                            </label>
-                            <span className="file-name">{marketingImage.name}</span>
-                        </div>
-                    </div>
-                    <div className="productBoxLowerdiv">
-                        <p className="productBoxLowerText">Product Flat Rate Shipping</p>
-                        <div className="PreProductInputDiv">
-                            <input
-                                type="number"
-                                className="rateInput"
-                                value={flatRate}
-                                onChange={(e) => setFlatRate(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className="updateButtonBox">
-                        <button
-                            className="updatePreOrderSetting"
-                            onClick={() =>
-                                handleUpdate("Marketing & Shipping", { flatRateShipping: flatRate }, {
-                                    marketingImage: marketingImage.file,
-                                })
-                            }
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
+            <div className="flex justify-between items-center">
+              <p className="text-sm font-medium">PreOrder Seller Commission</p>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  className="border rounded px-3 py-1 w-24"
+                  value={commission.amount}
+                  onChange={(e) =>
+                    setCommission({ ...commission, amount: e.target.value })
+                  }
+                />
+                <span className="text-sm font-medium">%</span>
+              </div>
             </div>
-
-            {/* PreOrder Instructions */}
-            <div className="preOrderSettingBox">
-                <div className="preOrderBoxHead">
-                    <p className="preOrderBoxHeadText">PreOrder Instructions</p>
-                </div>
-                <div className="preOrderBoxLower">
-                    <div className="productBoxLowerdiv editorBox">
-                        <p className="productBoxLowerText">Preorder Request Instructions</p>
-                        <textarea
-                            className="editor-container"
-                            value={preorderInstructions}
-                            onChange={(e) => setPreorderInstructions(e.target.value)}
-                        ></textarea>
-                    </div>
-                    <div className="updateButtonBox">
-                        <button
-                            className="updatePreOrderSetting"
-                            onClick={() => handleUpdate("PreOrder Instructions", { preorderInstructions })}
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
+            <div className="text-right">
+              <button
+                className="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-700 transition"
+                onClick={() =>
+                  handleUpdate("Seller Commission", {
+                    sellerCommissionAmount: commission.amount,
+                    sellerCommissionStatus: commission.status ? "active" : "inactive",
+                  })
+                }
+              >
+                Update
+              </button>
             </div>
-
-            {/* Payment Instructions and QR */}
-            <div className="preOrderSettingBox">
-                <div className="preOrderBoxHead">
-                    <p className="preOrderBoxHeadText">Payment Instructions</p>
-                </div>
-                <div className="preOrderBoxLower">
-                    <div className="productBoxLowerdiv">
-                        <p className="productBoxLowerText">Image For Payment QR Code</p>
-                        <div className="PreProductInputDiv">
-                            <label className="file-label">
-                                Browse
-                                <input
-                                    type="file"
-                                    className="file-input"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        setQrCode({
-                                            name: file.name,
-                                            src: URL.createObjectURL(file),
-                                            file,
-                                        });
-                                    }}
-                                />
-                            </label>
-                            <span className="file-name">{qrCode.name}</span>
-                        </div>
-                    </div>
-                    <div className="productBoxLowerdiv">
-                        <div className="productBoxLowerText"></div>
-                        <div className="qrcode">
-                            {qrCode.src && <img src={qrCode.src} alt="" className="qrcodeimg" />}
-                            {qrCode.src && (
-                                <div
-                                    onClick={() => setQrCode({ name: "Choose file", src: "", file: null })}
-                                    className="crossImg"
-                                >
-                                    <X size={18} color="blue" />
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className="productBoxLowerdiv editorBox">
-                        <p className="productBoxLowerText">Payment Instructions</p>
-                        <textarea
-                            className="editor-container"
-                            value={paymentInstructions}
-                            onChange={(e) => setPaymentInstructions(e.target.value)}
-                        ></textarea>
-                    </div>
-                    <div className="updateButtonBox">
-                        <button
-                            className="updatePreOrderSetting"
-                            onClick={() =>
-                                handleUpdate("Payment", { paymentInstructions }, {
-                                    paymentQRCode: qrCode.file,
-                                })
-                            }
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      
+        {/* Marketing Image and Flat Rate */}
+        <div className="border rounded-xl shadow p-6 bg-white">
+          <h2 className="text-lg font-semibold mb-4">PreOrder Settings</h2>
+          <div className="border-b-2 mb-4"></div>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm font-medium mb-1">Image for Product Marketing</p>
+
+              <div className="flex items-center gap-3">
+                <label className="cursor-pointer bg-gray-100 border px-3 py-1 rounded hover:bg-gray-200 transition">
+                  Browse
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      setMarketingImage({
+                        name: file.name,
+                        src: URL.createObjectURL(file),
+                        file,
+                      });
+                    }}
+                  />
+                </label>
+                <span className="text-sm">{marketingImage.name}</span>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm font-medium mb-1">Product Flat Rate Shipping</p>
+              <input
+                type="number"
+                className="border rounded px-3 py-1 w-full"
+                value={flatRate}
+                onChange={(e) => setFlatRate(e.target.value)}
+              />
+            </div>
+            <div className="text-right">
+              <button
+                className="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-700 transition"
+                onClick={() =>
+                  handleUpdate("Marketing & Shipping", { flatRateShipping: flatRate }, {
+                    marketingImage: marketingImage.file,
+                  })
+                }
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      
+        {/* PreOrder Instructions */}
+        <div className="border rounded-xl shadow p-6 bg-white">
+          <h2 className="text-lg font-semibold mb-4">PreOrder Instructions</h2>
+          <div className="border-b-2 mb-4"></div>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm font-medium mb-1">Preorder Request Instructions</p>
+              <textarea
+                className="w-full border rounded p-3 min-h-[120px]"
+                value={preorderInstructions}
+                onChange={(e) => setPreorderInstructions(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="text-right">
+              <button
+                className="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-700 transition"
+                onClick={() =>
+                  handleUpdate("PreOrder Instructions", { preorderInstructions })
+                }
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      
+        {/* Payment Instructions and QR */}
+        <div className="border rounded-xl shadow p-6 bg-white">
+          <h2 className="text-lg font-semibold mb-4">Payment Instructions</h2>
+          <div className="border-b-2 mb-4"></div>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm font-medium mb-2">Image For Payment QR Code</p>
+              <div className="flex items-center gap-3">
+                <label className="cursor-pointer bg-gray-100 border px-3 py-1 rounded hover:bg-gray-200 transition">
+                  Browse
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      setQrCode({
+                        name: file.name,
+                        src: URL.createObjectURL(file),
+                        file,
+                      });
+                    }}
+                  />
+                </label>
+                <span className="text-sm">{qrCode.name}</span>
+              </div>
+            </div>
+            {qrCode.src && (
+              <div className="relative w-32 h-32">
+                <img src={qrCode.src} alt="" className="w-full h-full object-contain" />
+                <div
+                  onClick={() => setQrCode({ name: "Choose file", src: "", file: null })}
+                  className="absolute top-1 right-1 bg-white p-1 rounded-full shadow cursor-pointer"
+                >
+                  <X size={18} color="blue" />
+                </div>
+              </div>
+            )}
+            <div>
+              <p className="text-sm font-medium mb-1">Payment Instructions</p>
+              <textarea
+                className="w-full border rounded p-3 min-h-[120px]"
+                value={paymentInstructions}
+                onChange={(e) => setPaymentInstructions(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="text-right">
+              <button
+                className="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-700 transition"
+                onClick={() =>
+                  handleUpdate("Payment", { paymentInstructions }, {
+                    paymentQRCode: qrCode.file,
+                  })
+                }
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      
     );
 }

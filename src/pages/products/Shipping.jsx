@@ -135,12 +135,23 @@ const ShippingConfig = () => {
         </div>
       </div>
 
-      <div className="button-group-ship">
-        <button className="btn-btn-grey" onClick={() => handleSubmit(false)}>Save & Unpublish</button>
-        <Link to='/products/create/warranty'>
-          <button className="btn-btn-green" onClick={() => handleSubmit(true)}>Save & Publish</button>
-        </Link>
-      </div>
+      <div className="flex gap-4 mt-4 justify-end">
+  <button
+    className="bg-gray-200 text-gray-800 px-4 py-2 rounded shadow-md  hover:bg-gray-400 lg transition"
+    onClick={() => handleSubmit(false)}
+  >
+    Save & Unpublish
+  </button>
+  <Link to="/products/create/warranty">
+    <button
+      className="bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700 hover:shadow-lg transition"
+      onClick={() => handleSubmit(true)}
+    >
+      Save & Publish
+    </button>
+  </Link>
+</div>
+
     </div>
   );
 };

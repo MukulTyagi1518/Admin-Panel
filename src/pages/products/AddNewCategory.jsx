@@ -120,10 +120,11 @@ const AddNewCategory = () => {
 
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Category Information</h1>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-5 overflow-y-auto max-h-[calc(100vh-80px)]">
+    <h1 className="text-2xl font-bold text-gray-800 mb-6">Category Information</h1>
+  
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Name */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -139,7 +140,7 @@ const AddNewCategory = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
+  
         {/* Type */}
         <div>
           <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
@@ -159,7 +160,7 @@ const AddNewCategory = () => {
             ))}
           </select>
         </div>
-
+  
         {/* Parent Category */}
         <div>
           <label htmlFor="parentCategory" className="block text-sm font-medium text-gray-700 mb-1">
@@ -178,7 +179,7 @@ const AddNewCategory = () => {
             ))}
           </select>
         </div>
-
+  
         {/* Ordering Number */}
         <div>
           <label htmlFor="orderingNumber" className="block text-sm font-medium text-gray-700 mb-1">
@@ -193,11 +194,11 @@ const AddNewCategory = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
+  
         {/* Banner */}
         <div>
           <label htmlFor="banner" className="block text-sm font-medium text-gray-700 mb-1">
-            Banner <span className="text-xs text-gray-500">(Minimum dimensions: 150px × 150px)</span>
+            Banner <span className="text-xs text-gray-500">(Min: 150px × 150px)</span>
           </label>
           <input
             type="file"
@@ -213,11 +214,11 @@ const AddNewCategory = () => {
             </div>
           )}
         </div>
-
+  
         {/* Icon */}
         <div>
           <label htmlFor="icon" className="block text-sm font-medium text-gray-700 mb-1">
-            Icon <span className="text-xs text-gray-500">(Minimum dimensions: 16px × 16px)</span>
+            Icon <span className="text-xs text-gray-500">(Min: 16px × 16px)</span>
           </label>
           <input
             type="file"
@@ -233,11 +234,11 @@ const AddNewCategory = () => {
             </div>
           )}
         </div>
-
+  
         {/* Cover Image */}
         <div>
           <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 mb-1">
-            Cover Image <span className="text-xs text-gray-500">(Minimum dimensions: 260px × 260px)</span>
+            Cover Image <span className="text-xs text-gray-500">(Min: 260px × 260px)</span>
           </label>
           <input
             type="file"
@@ -253,10 +254,10 @@ const AddNewCategory = () => {
             </div>
           )}
         </div>
-
+  
         {/* Meta Title */}
         <div>
-          <label htmlFor="metaTitle" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="metaTitle" className="block text-sm font-medium text-gray-700 mt-5">
             Meta Title
           </label>
           <input
@@ -268,7 +269,7 @@ const AddNewCategory = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
+  
         {/* Meta Description */}
         <div>
           <label htmlFor="metaDescription" className="block text-sm font-medium text-gray-700 mb-1">
@@ -283,7 +284,7 @@ const AddNewCategory = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
+  
         {/* Filtering Attributes */}
         <div>
           <label htmlFor="filteringAttributes" className="block text-sm font-medium text-gray-700 mb-1">
@@ -303,18 +304,21 @@ const AddNewCategory = () => {
           </select>
           <p className="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple options</p>
         </div>
+      </div>
+  
+      {/* Submit Button */}
+      <div className="flex justify-end mt-4">
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Save Category
+        </button>
+      </div>
+    </form>
+  </div>
+  
 
-        {/* Submit Button */}
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Save Category
-          </button>
-        </div>
-      </form>
-    </div>
   );
 };
 

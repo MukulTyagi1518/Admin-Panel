@@ -195,7 +195,7 @@ const ProductCategory = () => {
     
    
 
-     <div>
+     <div className="bg-white p-6 rounded-2xl  mt-4">
          {/* Right Side - Table-like Category Section */}
       <div className="category-container">
         <h3 className="mb-3">Product Category</h3>
