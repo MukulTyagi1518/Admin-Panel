@@ -1,21 +1,28 @@
-import React, { useState } from "react";
-import Dropdown from "../Dropdown";
-import ProductTable from "./ProductTable";
+
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Dropdown from "../Dropdown"; // Make sure this exists and works
+import ProductTable from "./ProductTable"; // Make sure this exists and supports expected props
 
 function InhouseProductSale() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-    const [selectedOption, setSelectedOption] = useState(null); // Track selected option
-  
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [productSales, setProductSales] = useState([]); // API data
+  const [loading, setLoading] = useState(true);
+
   const itemsPerPage = 10;
 
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
+
   const handleSelectOption = (option) => {
     setSelectedOption(option);
-    setOpenDropdown(null); // Close dropdown after selection
+    setOpenDropdown(null);
   };
+
   const dropdowns = {
     bulk: {
       label: selectedOption || "Choose a category",
@@ -23,29 +30,35 @@ function InhouseProductSale() {
     },
   };
 
-  const inhouseProductSales = [
-    { id: 1, name: "Disney Men's Mickey and Friends Button Down Shirt", sales: 32 },
-    { id: 2, name: "Women's Plain Dress One Piece for Girls", sales: 29 },
-    { id: 3, name: "Like Dreams Large Sherpa Tote Bag, Inner Pocket Vegan Leather, Large Tote Hand bags for Women", sales: 26 },
-    { id: 4, name: "Insight Cosmetics 3D Highlighter", sales: 21 },
-    { id: 5, name: "Nescafé Clasico, Dark Roast Instant Coffee Jar, 10.5 oz", sales: 15 },
-    { id: 6, name: "Microsoft - Xbox Series X 1TB Console", sales: 11 },
-    // Add more products as needed
-  ];
+  // Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/inhouse-sale-report");
+        console.log("Fetched Data:", res.data.data);
+        setProductSales(res.data.data || []);
+      } catch (err) {
+        console.error("Error fetching product sales:", err);
+        setProductSales([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-  // Define table columns
   const columns = [
     {
       header: "#",
-      accessor: (_, index) => index + 1,
+      accessor: (_, index) => (currentPage - 1) * itemsPerPage + index + 1,
     },
     {
       header: "Product Name",
-      accessor: (item) => item.name,
+      accessor: (item) => item.productName || "N/A",
     },
     {
       header: "Num of Sale",
-      accessor: (item) => item.sales,
+      accessor: (item) => item.numOfSale ?? 0,
     },
   ];
 
@@ -73,8 +86,7 @@ function InhouseProductSale() {
                 options={options}
                 isOpen={openDropdown === key}
                 onToggle={() => toggleDropdown(key)}
-                onSelect={handleSelectOption} // Pass the select handler
-
+                onSelect={handleSelectOption}
               />
             ))}
             <div className="flex">
@@ -85,15 +97,19 @@ function InhouseProductSale() {
           </div>
         </div>
 
-         <ProductTable
-                  columns={columns}
-                  data={inhouseProductSales}
-                  currentPage={currentPage}
-                  itemsPerPage={itemsPerPage}
-                  onPageChange={handlePageChange}
-                />
-
-      
+        {loading ? (
+          <p className="text-center text-gray-600 py-10">Loading...</p>
+        ) : productSales.length === 0 ? (
+          <p className="text-center text-red-500 py-10">No data found.</p>
+        ) : (
+          <ProductTable
+            columns={columns}
+            data={productSales}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
       </div>
     </>
@@ -101,6 +117,3 @@ function InhouseProductSale() {
 }
 
 export default InhouseProductSale;
-
-
-

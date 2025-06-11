@@ -124,7 +124,7 @@ export default function PreOrderDashboard() {
                     </div>
                     <div
                         className="preOrderDashboardCard grayBorder cursor-pointer"
-                        onClick={() => navigate("/products/create")}
+                        onClick={() => navigate("/preorder/addpreorder")}
                     >
                         <Plus size={150} color="gray" />
                         <p className="addNewProduct">

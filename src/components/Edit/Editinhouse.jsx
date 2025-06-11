@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import "./EditInhouse.css";
 import { useProductContext } from "../../productContex";
 import { X } from "lucide-react"
-import { Link, useParams } from "react-router-dom"
+import { Link  } from "react-router-dom"
 import ProductCategory from "../ProductCategory";
 import Switch from "../Switch";
 
 const General = () => {
 
-  const { id } = useParams(); // Get the product ID from URL
+   // Get the product ID from URL
     
-  const [description, setDescription] = useState("");
-  const [isRefundable, setIsRefundable] = useState(false);
+ 
+  // const [isRefundable, setIsRefundable] = useState(false);
   const [isFeatured, setIsFeatured] = useState(false);
   const [isTodaysDeal, setIsTodaysDeal] = useState(false);
-  const [flashTitle, setFlashTitle] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [discountType, setDiscountType] = useState("");
-  const [tax, setTax] = useState(0);
-  const [taxType, setTaxType] = useState("flat");
-  const [vat, setVat] = useState(0);
-  const [vatType, setVatType] = useState("flat");
-  const [content, setContent] = useState("");
+  // const [flashTitle, setFlashTitle] = useState("");
+  // const [discount, setDiscount] = useState(0);
+  // const [discountType, setDiscountType] = useState("");
+  // const [tax, setTax] = useState(0);
+  // const [taxType, setTaxType] = useState("flat");
+  // const [vat, setVat] = useState(0);
+  // const [vatType, setVatType] = useState("flat");
+  // const [content, setContent] = useState("");
   const [tagInput, setTagInput] = useState("");
   // const [showHotCategories, setShowHotCategories] = useState(false);
 

@@ -25,6 +25,7 @@ import Footerbottom from "./Footer/Footerbottom";
 import Socialwidget from "./Footer/Socialwidget";
 import Downloadapp from "./Footer/Downloadapp";
 import Paymentwidget from "./Footer/Paymentwidget";
+import { Socialingo } from "./Footer/Socialingo";
 
 const FooterWidget = () => {
     const [title, setTitle] = useState("");
@@ -117,7 +118,10 @@ const FooterWidget = () => {
                <FooterInfo title={title} setTitle={setTitle} description={description} setDescription={setDescription} handleUpdate={handleUpdate}/>
                
                 {/* Contact Info Widget */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <ContactInfo  handleUpdate={handleUpdate} handleFileChangefile={handleFileChangefile} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/>
+                <Socialingo/>
+                </div>
                
                 {/* Link Widget One */}
                <Linkwidgetone handleUpdate={handleUpdate} handleChange={handleChange} handleAddLink={handleAddLink} handleRemoveLink={handleRemoveLink} links={links} X={X}/>

@@ -5,14 +5,13 @@ import React, { useState } from "react";
 import "./ReviewDetails.css";
 
 function ReviewDetails() {
-  const [activeTab, setActiveTab] = useState("reviews");
+  const [activeTab] = useState("reviews");
   const [isPublished, setIsPublished] = useState(true); // Switch state
-  const [selectedState, setSelectedState] = useState(""); // State filter
-  const [selectedDistrict, setSelectedDistrict] = useState(""); // District filter
+ 
 
-  const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
-  };
+  // const handleTabClick = (tabName) => {
+  //   setActiveTab(tabName);
+  // };
 
   // Toggle Switch Handler
   const togglePublished = () => {
@@ -20,43 +19,43 @@ function ReviewDetails() {
   };
 
   // States and Districts Data
-  const states = [
-    "Select State",
-    "Andhra Pradesh",
-    "Bihar",
-    "Delhi",
-    "Gujarat",
-    "Karnataka",
-    "Maharashtra",
-    "Punjab",
-    "Rajasthan",
-    "Tamil Nadu",
-    "Uttar Pradesh",
-    "West Bengal",
-  ];
+  // const states = [
+  //   "Select State",
+  //   "Andhra Pradesh",
+  //   "Bihar",
+  //   "Delhi",
+  //   "Gujarat",
+  //   "Karnataka",
+  //   "Maharashtra",
+  //   "Punjab",
+  //   "Rajasthan",
+  //   "Tamil Nadu",
+  //   "Uttar Pradesh",
+  //   "West Bengal",
+  // ];
 
-  const districts = {
-    "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur"],
-    Bihar: ["Patna", "Gaya", "Bhagalpur"],
-    Delhi: ["New Delhi", "North Delhi", "South Delhi"],
-    Gujarat: ["Ahmedabad", "Surat", "Vadodara"],
-    Karnataka: ["Bengaluru", "Mysuru", "Mangaluru"],
-    Maharashtra: ["Mumbai", "Pune", "Nagpur"],
-    Punjab: ["Amritsar", "Ludhiana", "Jalandhar"],
-    Rajasthan: ["Jaipur", "Jodhpur", "Udaipur"],
-    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
-    "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi"],
-    "West Bengal": ["Kolkata", "Darjeeling", "Siliguri"],
-  };
+  // const districts = {
+  //   "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur"],
+  //   Bihar: ["Patna", "Gaya", "Bhagalpur"],
+  //   Delhi: ["New Delhi", "North Delhi", "South Delhi"],
+  //   Gujarat: ["Ahmedabad", "Surat", "Vadodara"],
+  //   Karnataka: ["Bengaluru", "Mysuru", "Mangaluru"],
+  //   Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+  //   Punjab: ["Amritsar", "Ludhiana", "Jalandhar"],
+  //   Rajasthan: ["Jaipur", "Jodhpur", "Udaipur"],
+  //   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+  //   "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi"],
+  //   "West Bengal": ["Kolkata", "Darjeeling", "Siliguri"],
+  // };
 
-  const handleStateChange = (e) => {
-    setSelectedState(e.target.value);
-    setSelectedDistrict(""); // Reset district when state changes
-  };
+  // const handleStateChange = (e) => {
+  //   setSelectedState(e.target.value);
+  //   setSelectedDistrict(""); // Reset district when state changes
+  // };
 
-  const handleDistrictChange = (e) => {
-    setSelectedDistrict(e.target.value);
-  };
+  // const handleDistrictChange = (e) => {
+  //   setSelectedDistrict(e.target.value);
+  // };
 
   return (
     <div className="review-detail-container p-5">

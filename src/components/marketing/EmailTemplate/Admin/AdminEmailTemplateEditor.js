@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import apiInstance from "../../../../utils/axios";
+// import axios from "../../../../utils/axios";
+import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
 import { EditorPageHeader } from "../EditorComponents/EditorPageHeader";
@@ -25,7 +26,7 @@ const AdminEmailTemplateEditor = () => {
       const fetchAdminTemplate = async () => {
         try {
           setLoading(true);
-          const { data } = await apiInstance.get(`/adminemail/${id}`);
+          const { data } = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/adminemail/${id}`);
           setAdminTemplates(data);
         } catch (error) {
           console.error("Error fetching template:", error);
@@ -50,15 +51,15 @@ const AdminEmailTemplateEditor = () => {
     }
   };
 
-  const applyFormatting = (command) => {
-    document.execCommand(command, false, null);
-  };
+  // const applyFormatting = (command) => {
+  //   document.execCommand(command, false, null);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (id) {
-       const res= await apiInstance.put(`/adminemail/${id}`, adminTemplates);
+       const res= await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/adminemail/${id}`, adminTemplates);
         alert("Template updated successfully!");
         console.log(res.data);
         

@@ -42,7 +42,7 @@ export default function SellerForm() {
 
     try {
       // Replace with your actual POST API endpoint
-      const response = await axios.post('http://localhost:5000/api/seller-verification/create', formDataToSend, {
+      const response = await axios.post('https://e-commerce-backend-1-0.onrender.com/api/seller-verification/create', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

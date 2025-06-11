@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
 import { TrendingUp } from 'lucide-react';
-import apiInstance from '../../utils/axios';
+import axios from 'axios';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
@@ -14,7 +14,7 @@ function Payouts() {
   useEffect(() => {
     const fetchPayouts = async () => {
       try {
-        const response = await apiInstance.get('/payouts');
+        const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/payouts');
         setPayouts(response.data);
         setLoading(false);
       } catch (err) {

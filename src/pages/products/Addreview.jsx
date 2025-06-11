@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Addreview.css";
-import apiInstance from "../../utils/axios"; // Import axios for API calls
+import axios from "axios"; // Import axios for API calls
 
 import { DataTable } from "../../components/marketing/EmailTemplate/MainPageComponents/DataTable";
 
@@ -22,7 +22,7 @@ const CustomReviewForm = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await apiInstance.get("/categories/Get-all-categories");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/categories/Get-all-categories");
         console.log("Categories API Response:", response.data); // Debugging log
         if (response.data && Array.isArray(response.data)) {
           setCategories(response.data); // Ensure the response is an array
@@ -36,7 +36,7 @@ const CustomReviewForm = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await apiInstance.get("/products/");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/products/");
         console.log("Products API Response:", response.data); // Debugging log
         setProducts(response.data.data); // Assuming the API returns products in `data.data`
       } catch (error) {
@@ -111,7 +111,7 @@ const CustomReviewForm = () => {
         }
       });
 
-      const response = await apiInstance.post("productreviews/create-bulk", formData, {
+      const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/productreviews/create-bulk", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

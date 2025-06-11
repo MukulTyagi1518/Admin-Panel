@@ -3,7 +3,7 @@ import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function Homesetting() {
-    const navigate = useNavigate();
+   
     const location = useLocation();
     const [activeTab, setActiveTab] = useState("homeslider");
 

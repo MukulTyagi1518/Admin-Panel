@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import apiInstance from "../../../../utils/axios";
+import axios from "axios";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
 import { TextEditor } from "../EditorComponents/TextEditor";
 import { EditorPageHeader } from "../EditorComponents/EditorPageHeader";
@@ -26,7 +26,7 @@ const CommonEmailTemplateEditor = () => {
       const fetchCommonTemplates = async () => {
         try {
           setLoading(true);
-          const { data } = await apiInstance.get(`/common-templates/${id}`);
+          const { data } = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/common-templates/${id}`);
           setCommonTemplates(data);
         } catch (error) {
           console.error("Error fetching template:", error);
@@ -61,7 +61,7 @@ const CommonEmailTemplateEditor = () => {
 
     try {
       if (id) {
-        await apiInstance.put(`/common-templates/${id}`, commonTemplates);
+        await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/common-templates/${id}`, commonTemplates);
         alert("Template updated successfully!");
       } else {
         await createCommonTemplate(commonTemplates);

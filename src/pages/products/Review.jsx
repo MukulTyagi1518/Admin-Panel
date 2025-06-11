@@ -3,7 +3,7 @@ import { Eye, Trash } from "lucide-react";
 import "./Review.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 export default function PreOrderReviews() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function PreOrderReviews() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await apiInstance.get("/productreviews");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/productreviews");
         setReviews(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);

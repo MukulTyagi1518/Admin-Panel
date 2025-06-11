@@ -1,9 +1,9 @@
-import apiInstance from '../utils/axios';
+import axios from 'axios';
 
 export const newsletterService = {
   saveNewsletter: async (newsletterData) => {
     try {
-      const response = await apiInstance.post('/newsletter', newsletterData);
+      const response = await axios.post('https://e-commerce-backend-1-0.onrender.com/api/newsletter', newsletterData);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -11,7 +11,7 @@ export const newsletterService = {
   },
   getAllNewsletters: async () => {
     try {
-      const response = await apiInstance.get('/newsletter');
+      const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/newsletter');
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -19,7 +19,7 @@ export const newsletterService = {
   },
   getNewsletterById: async (id) => {
     try {
-      const response = await apiInstance.get(`/newsletter/${id}`);
+      const response = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/newsletter/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -27,7 +27,7 @@ export const newsletterService = {
   },
   updateNewsletter: async (id, newsletterData) => {
     try {
-      const response = await apiInstance.put(`/newsletter/${id}`, newsletterData);
+      const response = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/newsletter/${id}`, newsletterData);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -35,7 +35,7 @@ export const newsletterService = {
   },
   deleteNewsletter: async (id) => {
     try {
-      const response = await apiInstance.delete(`/newsletter/${id}`);
+      const response = await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/newsletter/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;

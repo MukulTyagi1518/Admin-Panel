@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./category.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useCategoryContext } from "../../categoryContext";
-import api from "../../utils/axios";
+ import axios from "axios";
 import { Link } from "react-router-dom";
 import CategoryEdit from "./CategoryEdit";
 
@@ -17,7 +17,7 @@ const Category = () => {
   };
 
   const handleDeleteCategory = async (id) => {
-    await api.delete(`categories/Delete-category/${id}`);
+    await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/categories/Delete-category/${id}`);
     setCategoryData((prevData) => prevData.filter((c) => c._id !== id));
     alert("Category deleted!!");
   };

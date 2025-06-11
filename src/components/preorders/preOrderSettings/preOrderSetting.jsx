@@ -20,7 +20,7 @@ export default function PreOrderSetting() {
     // Fetch settings on mount
     useEffect(() => {
         const fetchSettings = async () => {
-            const res = await axios.get("http://localhost:5000/api/preorder-setting");
+            const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/preorder-setting");
             if (res.data && res.data.length > 0) {
                 const data = res.data[0];
                 setPreOrderId(data._id);
@@ -50,7 +50,7 @@ export default function PreOrderSetting() {
         }
 
         try {
-            await axios.put(`http://localhost:5000/api/preorder-setting/${preOrderId}`, formData, {
+            await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/preorder-setting/${preOrderId}`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             alert(`${field} updated successfully`);

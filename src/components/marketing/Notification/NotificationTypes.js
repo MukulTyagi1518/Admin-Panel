@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiInstance from '../../../utils/axios';
+import axios from 'axios';
 import {  Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const NotificationTypes = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await apiInstance.get("/notification");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/notification");
         console.log(response.data)
         setNotificationTypes(response.data);
       } catch (error) {
@@ -55,7 +55,7 @@ const NotificationTypes = () => {
     if (newNotification.image) formData.append('image', newNotification.image);
 
     try {
-      const response = await apiInstance.post('/notification', formData);
+      const response = await axios.post('https://e-commerce-backend-1-0.onrender.com/api/notification', formData);
       setNotificationTypes([...notificationTypes, response.data.notification]);
       setNewNotification({
         type: '',
@@ -73,7 +73,7 @@ const NotificationTypes = () => {
     const updatedStatus = notification.status === 'active' ? 'inactive' : 'active';
 
     try {
-      const response = await apiInstance.put(`/notification/${id}`, { status: updatedStatus });
+      const response = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/notification/${id}`, { status: updatedStatus });
       setNotificationTypes(notificationTypes.map(item =>
         item.id === id ? response.data.notification : item
       ));
@@ -86,7 +86,7 @@ const NotificationTypes = () => {
     try {
       console.log('Deleting notification with id:', id); // Debugging log
       
-      const response=await apiInstance.delete(`/notification/${id}`);
+      const response=await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/notification/${id}`);
       setNotificationTypes(notificationTypes.filter(item => item._id !== id));
       return response.data;
 

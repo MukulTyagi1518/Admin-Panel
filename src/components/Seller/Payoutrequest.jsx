@@ -116,7 +116,7 @@ export default function SellerWithdrawRequest() {
   useEffect(() => {
     const fetchWithdrawRequests = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/payout-requests"); // Replace with your API URL
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/payout-requests"); // Replace with your API URL
         setRequests(response.data);
       } catch (error) {
         console.error("Error fetching withdrawal requests:", error);

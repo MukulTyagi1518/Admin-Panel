@@ -1,11 +1,11 @@
 // src/services/notificationService.js
-import apiInstance from "../utils/axios";
+import axios from "axios";
 
 export const notificationService = {
   sendCustomNotification: async (payload) => {
     try {
-      const response = await apiInstance.post(
-        "/customnotification",
+      const response = await axios.post(
+        "https://e-commerce-backend-1-0.onrender.com/api/customnotification",
         payload
       );
       return response.data;
@@ -16,8 +16,8 @@ export const notificationService = {
 
   getCustomNotification: async () => {
     try {
-      const response = await apiInstance.get(
-        "/customnotification"
+      const response = await axios.get(
+        "https://e-commerce-backend-1-0.onrender.com/api/customnotification"
       );
       return response.data;
     } catch (error) {
@@ -27,8 +27,8 @@ export const notificationService = {
 
   getCustomNotificationById: async (id) => {
     try {
-      const response = await apiInstance.get(
-        `/customnotification/${id}`
+      const response = await axios.get(
+        `https://e-commerce-backend-1-0.onrender.com/api/customnotification/${id}`
       );
       return response.data;
     } catch (error) {

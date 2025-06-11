@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useCategoryContext } from "../../categoryContext";
-import api from "../../utils/axios";
+import axios from "axios";
 import mongoose from "mongoose";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -110,7 +110,7 @@ const CategoryEdit = () => {
 
 
 
-      await api.put(`categories/Update-category/${id}`, formDataToSend);
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/categories/Update-category/${id}`, formDataToSend);
 
 
       alert("Category updated successfully!");

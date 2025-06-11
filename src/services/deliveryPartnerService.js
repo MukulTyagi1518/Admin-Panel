@@ -1,11 +1,11 @@
-import apiInstance from "../utils/axios";
+import axios from "axios";
 
 const DeliveryPartnerService = {
   // Register a new delivery partner
   register: async (formData) => {
     try {
-      const response = await apiInstance.post(
-        "/delivery-partner/register",
+      const response = await axios.post(
+        "https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/register",
         formData
       );
       return response.data;
@@ -17,7 +17,7 @@ const DeliveryPartnerService = {
   // Get all delivery partners
   getAll: async () => { 
     try {
-      const response = await apiInstance.get("/delivery-partner/");
+      const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/");
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -27,7 +27,7 @@ const DeliveryPartnerService = {
   // Get pending delivery partners
   getPending: async () => {
     try {
-      const response = await apiInstance.get("/delivery-partner/pending");
+      const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/pending");
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -37,7 +37,7 @@ const DeliveryPartnerService = {
   // Get a single delivery partner by ID
   getById: async (id) => {
     try {
-      const response = await apiInstance.get(`/delivery-partner/${id}`);
+      const response = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -47,8 +47,8 @@ const DeliveryPartnerService = {
   // Update a delivery partner
   update: async (id, updates) => {
     try {
-      const response = await apiInstance.put(
-        `/delivery-partner/${id}`,
+      const response = await axios.put(
+        `https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/${id}`,
         updates
       );
       return response.data;
@@ -73,7 +73,7 @@ const DeliveryPartnerService = {
   // Delete a delivery partner
   delete: async (id) => {
     try {
-      const response = await apiInstance.delete(`/delivery-partner/${id}`);
+      const response = await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -83,7 +83,7 @@ const DeliveryPartnerService = {
   // Approve a delivery partner
   approve: async (id) => {
     try {
-      const response = await apiInstance.put(`/delivery-partner/approve/${id}`);
+      const response = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/approve/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -93,7 +93,7 @@ const DeliveryPartnerService = {
   // Reject a delivery partner
   reject: async (id) => {
     try {
-      const response = await apiInstance.put(`/delivery-partner/reject/${id}`);
+      const response = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/delivery-partner/reject/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;

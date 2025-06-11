@@ -1,11 +1,11 @@
-import apiInstance from "../utils/axios";
-
+//import axios from "../utils/axios";
+import axios from "axios";
 export const AdminSettingsService = {
 
-    // VAT and Tax
+    // VAT and TaxH
 
     createVatTax: async (name) => {
-        await apiInstance.post('/vatTax/create', {
+        await axios.post('https://e-commerce-backend-1-0.onrender.com/api/vatTax/create', {
             name
         })
             .then(() => {
@@ -16,12 +16,12 @@ export const AdminSettingsService = {
             })
     },
     getVatTax: async (setTaxData, fetchVatTaxes, setFetchVatTaxes) => {
-        const response = await apiInstance.get('/vatTax/getAll');
+        const response = await axios.get('/vatTax/getAll');
         setTaxData(response.data.data)
         setFetchVatTaxes(false)
     },
     updateVatTax: async (id, name, status) => {
-        await apiInstance.patch('/vatTax/update', {
+        await axios.patch('https://e-commerce-backend-1-0.onrender.com/api/vatTax/update', {
             id,
             name,
             status: !status
@@ -31,7 +31,7 @@ export const AdminSettingsService = {
             })
     },
     deleteVatTax: async (name) => {
-        await apiInstance.delete('/vatTax/delete', {
+        await axios.delete('https://e-commerce-backend-1-0.onrender.com/api/vatTax/delete', {
             data: { name }
         })
             .catch((err) => {

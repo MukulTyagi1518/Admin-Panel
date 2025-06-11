@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiInstance from '../../../utils/axios';
+import axios from 'axios';
 
 const NotificationTypeEdit = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const NotificationTypeEdit = () => {
   useEffect(() => {
     const fetchNotificationType = async () => {
       try {
-        const response = await apiInstance.get(`/notification/${id}`);
+        const response = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/notification/${id}`);
         const data = response.data;
         setFormData({
           name: data.type,
@@ -68,7 +68,7 @@ const NotificationTypeEdit = () => {
     }
 
     try {
-      await apiInstance.put(`/notification/${id}`, formDataToSend);
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/notification/${id}`, formDataToSend);
       setSuccess('Notification type updated successfully!');
       navigate('/notification/types')
     } catch (err) {

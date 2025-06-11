@@ -1,9 +1,9 @@
-import axios from "axios";
+// import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "./firebase";
-import api from "./utils/axios"
-
+// import api from "./utils/axios"
+import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 
 const AdminContext = createContext();
@@ -36,8 +36,8 @@ export const AdminProvider = ({ children }) => {
         try {
 
 
-          const response = await api.post(
-            "/admin/check-admin",
+          const response = await axios.post(
+            "https://e-commerce-backend-1-0.onrender.com/api/admin/check-admin",
             {
               email: adminData.email,
             }
@@ -59,7 +59,7 @@ export const AdminProvider = ({ children }) => {
     };
 
     fetchUser();
-  }, [admin]);
+  }, [adminData.email , admin]);
 
   return (
     <AdminContext.Provider value={{ admin, setAdmin, adminData, setAdminData }}>

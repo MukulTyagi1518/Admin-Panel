@@ -212,7 +212,7 @@
 }
 
 .toggle-label::before {
-    content: "";
+    
     position: absolute;
     width: 18px;
     height: 18px;

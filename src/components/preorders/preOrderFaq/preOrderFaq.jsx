@@ -22,7 +22,7 @@ export default function PreOrderFaq() {
 
   const fetchFaqs = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/faq");
+      const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/faq");
       setFaqs(res.data);
     } catch (err) {
       console.error("Error fetching FAQs:", err);
@@ -38,7 +38,7 @@ export default function PreOrderFaq() {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/faq", {
+      const res = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/faq", {
         question,
         answer,
       });
@@ -52,7 +52,7 @@ export default function PreOrderFaq() {
 
   const handleToggleStatus = async (id, currentStatus) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/faq/${id}/status`, {
+      const res = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/faq/${id}/status`, {
         status: !currentStatus,
       });
       setFaqs((prev) =>
@@ -91,7 +91,7 @@ export default function PreOrderFaq() {
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/faq/${editingFaq._id}`,
+        `https://e-commerce-backend-1-0.onrender.com/api/faq/${editingFaq._id}`,
         { question, answer }
       );
       setFaqs((prev) =>

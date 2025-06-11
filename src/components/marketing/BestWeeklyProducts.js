@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TrendingUp, Star } from 'lucide-react';
 import ProductTable from '../reports/ProductTable';
-import apiInstance from "../../utils/axios"
+import axios from "axios"
 
 const BestWeeklyProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,7 +13,7 @@ const BestWeeklyProducts = () => {
   useEffect(() => {
     const fetchWeeklyProducts = async () => {
       try {
-        const response = await apiInstance.get('/weekly-product');
+        const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/weekly-product');
         const transformedData = response.data.map(product => ({
           id: product._id,
           product: product.productName,

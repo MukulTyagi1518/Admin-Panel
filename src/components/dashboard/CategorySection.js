@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Grid } from "lucide-react";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 // Mapping for category colors
 const colorMap = {
@@ -17,7 +17,7 @@ function CategorySection() {
     // Fetch total categories and top 3 categories from the backend
     const fetchCategories = async () => {
       try {
-        const response = await apiInstance.get("/categories/summary");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/categories/summary");
         setTotalCategories(response.data.totalCategories);
 
 

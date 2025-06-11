@@ -94,7 +94,7 @@ const Payout = () => {
   useEffect(() => {
     const fetchPayouts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/payouts"); // Replace with your API URL
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/payouts"); // Replace with your API URL
         setPayments(response.data);
       } catch (error) {
         console.error("Error fetching payout data:", error);

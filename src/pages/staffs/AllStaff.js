@@ -16,7 +16,7 @@ const AllStaff = () => {
   useEffect(() => {
     const fetchStaffs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/staff/staff");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/staff/staff");
         setStaffsData(response.data);
       } catch (error) {
         console.error("Failed to fetch staff data:", error);
@@ -51,7 +51,7 @@ const AllStaff = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/staff/${staffId}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/staff/${staffId}`);
       setStaffsData((prev) => prev.filter((staff) => staff._id !== staffId));
     } catch (error) {
       console.error("Failed to delete staff:", error);

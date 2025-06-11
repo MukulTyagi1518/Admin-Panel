@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Image as ImageIcon, Plus, X, Clock, Star, Link as LinkIcon } from 'lucide-react';
-import apiInstance from '../../../utils/axios';
+import { ArrowLeft, Image as ImageIcon,  X, Clock,  Link as LinkIcon } from 'lucide-react';
+import axios from 'axios';
 
 const FlashDealCreate = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const FlashDealCreate = () => {
   // useEffect(() => {
   //   const fetchProducts = async () => {
   //     try {
-  //       const response = await apiInstance.get('/products');
+  //       const response = await axios.get('/products');
   //       setProducts(response.data);
   //     } catch (err) {
   //       console.error('Error fetching products:', err);
@@ -83,7 +83,7 @@ const FlashDealCreate = () => {
       data.append('pageLink', formData.pageLink);
       formData.products.forEach(product => data.append('products[]', product));
 
-       const response=await apiInstance.post('/flash-deals', data);
+       const response=await axios.post('https://e-commerce-backend-1-0.onrender.com/api/flash-deals', data);
 
       if (response.status === 201) {
         navigate('marketing/flash-deal');

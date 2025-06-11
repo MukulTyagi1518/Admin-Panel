@@ -206,7 +206,7 @@ const RejectedRequests = () => {
   useEffect(() => {
     const fetchRejected = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/refund/refunds/rejected"); // Replace with your actual endpoint
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/refund/refunds/rejected"); // Replace with your actual endpoint
         setRequests(res.data);
       } catch (err) {
         setError("Failed to load rejected requests.");

@@ -16,7 +16,7 @@ const ShippingState = () => {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/shippingState/get");
+        const response = await fetch("https://e-commerce-backend-1-0.onrender.com/api/shippingState/get");
   
         // Ensure the response is valid before parsing
         if (!response.ok) {
@@ -55,7 +55,7 @@ const ShippingState = () => {
     const stateData = { name: newState.name, country: newState.country };
 
     try {
-      const response = await fetch("http://localhost:5000/api/shippingState/create", {
+      const response = await fetch("https://e-commerce-backend-1-0.onrender.com/api/shippingState/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

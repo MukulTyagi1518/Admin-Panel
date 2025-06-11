@@ -6,12 +6,12 @@ import {
   Trash2,
   UserPlus,
 } from "lucide-react";
-import "./allCustomers.scss";
+import "./allCustomers.css";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import CreateNewCustomer from "./CreateNewCustomer";
 import { useNavigate } from "react-router-dom";
-import apiInstance from "../../../utils/axios";
+// import axios from "../../../utils/axios";
 import { useCustomerContext } from "../../../context/customerContext";
 import FilterComponent from "../../../components/FilterComponent"; // Import FilterComponent
 
@@ -84,7 +84,7 @@ export default function AllCustomers() {
 
   const handleBlockUser = async (userId) => {
     try {
-      await apiInstance.patch(`/user1/block/${userId}`);
+      await axios.patch(`https://e-commerce-backend-1-0.onrender.com/api/user1/block/${userId}`);
       setFetchCustomers(true);
       alert("Customer Blocked");
     } catch (error) {
@@ -93,7 +93,7 @@ export default function AllCustomers() {
   };
   const handleUnblockUser = async (userId) => {
     try {
-      await apiInstance.patch(`/user1/unblock/${userId}`);
+      await axios.patch(`https://e-commerce-backend-1-0.onrender.com/api/user1/unblock/${userId}`);
       setFetchCustomers(true);
       alert("Customer Unblocked");
     } catch (error) {
@@ -103,7 +103,7 @@ export default function AllCustomers() {
 
   const deleteCustomer = async (id) => {
     try {
-      await apiInstance.delete(`/user1/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/user1/${id}`);
       setFetchCustomers(true);
       alert("Customer Deleted");
     } catch (error) {
@@ -114,11 +114,11 @@ export default function AllCustomers() {
   const handleVerifyToggle = async (id, verificationStatus) => {
     try {
       if (verificationStatus) {
-        await apiInstance.patch(`/user1/unverify/${id}`);
+        await axios.patch(`https://e-commerce-backend-1-0.onrender.com/api/user1/unverify/${id}`);
         alert("Customer Unverified");
         setFetchCustomers(true);
       } else {
-        await apiInstance.patch(`/user1/verify/${id}`);
+        await axios.patch(`https://e-commerce-backend-1-0.onrender.com/api/user1/verify/${id}`);
         alert("Customer Verified");
         setFetchCustomers(true);
       }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const AttributeForm = () => {
-    const { id } = useParams();
+    // const { id } = useParams();
     const [activeTab, setActiveTab] = useState("English");
     const [formData, setFormData] = useState({
         English: "",

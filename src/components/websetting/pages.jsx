@@ -84,7 +84,7 @@ export default function WebsitePagesTable() {
   useEffect(() => {
     const fetchPages = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/websetpage");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/websetpage");
         console.log("Fetched Pages:", res.data);
         setPages(res.data); // ✅ directly set as array
       } catch (error) {
@@ -102,7 +102,7 @@ export default function WebsitePagesTable() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this page?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/websetpage/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/websetpage/${id}`);
       setPages((prev) => prev.filter((p) => p._id !== id));
     } catch (error) {
       console.error("Error deleting page:", error);

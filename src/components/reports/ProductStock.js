@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+
+
+
+
+import React, { useEffect, useState } from "react";
 import Dropdown from "../Dropdown";
-import ProductTable4 from "./ProductTable4";
+import ProductTable from "./ProductTable";
+import axios from "axios";
 
 function ProductStock() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedOption, setSelectedOption] = useState(null); // Track selected option
-
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [productStock, setProductStock] = useState([]); // fetched data
   const itemsPerPage = 10;
 
   const toggleDropdown = (dropdown) => {
@@ -15,23 +20,34 @@ function ProductStock() {
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
-    setOpenDropdown(null); // Close dropdown after selection
+    setOpenDropdown(null);
   };
+
   const dropdowns = {
     bulk: {
-      label: selectedOption || "Choose a category", // Show selected option or default label
+      label: selectedOption || "Choose a category",
       options: ["Mark as Delivered", "Mark as Pending", "Delete Selected"],
     },
   };
 
-  const productStock = [
-    { productName: "Disney Men's Mickey and Friends Button Down Shirt", productStock: 32 },
-    { productName: "Disney Men's Mickey and Friends Button Down Shirt", productStock: 32 },
-    { productName: "Disney Men's Mickey and Friends Button Down Shirt", productStock: 32 },
-    { productName: "Disney Men's Mickey and Friends Button Down Shirt", productStock: 32 },
-  ];
+  // Fetch product stock data from API
+  useEffect(() => {
+    const fetchProductStock = async () => {
+      try {
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/product-stock-report");
+        const formattedData = response.data.map(item => ({
+          productName: item.productName,
+          productStock: item.stock,
+        }));
+        setProductStock(formattedData);
+      } catch (error) {
+        console.error("Error fetching product stock:", error);
+      }
+    };
 
-  // Define table columns
+    fetchProductStock();
+  }, []);
+
   const columns = [
     {
       header: "Product Name",
@@ -50,7 +66,7 @@ function ProductStock() {
   return (
     <>
       <h1 className="text-xl font-bold text-gray-800 m-5">
-      Product wise stock report
+        Product wise stock report
       </h1>
       <div className="bg-white p-3 shadow-sm mb-6 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
         <div className="flex flex-col mb-3 md:flex-row md:items-center border-b">
@@ -63,8 +79,7 @@ function ProductStock() {
                 options={options}
                 isOpen={openDropdown === key}
                 onToggle={() => toggleDropdown(key)}
-                onSelect={handleSelectOption} // Pass the select handler
-
+                onSelect={handleSelectOption}
               />
             ))}
             <div className="flex">
@@ -75,15 +90,13 @@ function ProductStock() {
           </div>
         </div>
 
-         <ProductTable4
-                  columns={columns}
-                  data={productStock}
-                  currentPage={currentPage}
-                  itemsPerPage={itemsPerPage}
-                  onPageChange={handlePageChange}
-                />
-
-      
+        <ProductTable
+          columns={columns}
+          data={productStock}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </>
   );

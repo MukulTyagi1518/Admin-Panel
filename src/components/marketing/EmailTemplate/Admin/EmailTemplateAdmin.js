@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
-import apiInstance from "../../../../utils/axios";
+import axios from "axios";
 import { Mail } from "lucide-react";
 import { StatusToggle } from "../MainPageComponents/StatusToggle";
 import { ActionButtons } from "../MainPageComponents/ActionButtons";
@@ -20,7 +20,7 @@ const EmailTemplateAdmin = () => {
   const toggleStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
     try {
-      await apiInstance.put(`/adminemail/${id}`, { status: newStatus });
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/adminemail/${id}`, { status: newStatus });
       setAdminTemplates((prev) =>
         prev.map((template) =>
           template._id === id ? { ...template, status: newStatus } : template
@@ -33,7 +33,7 @@ const EmailTemplateAdmin = () => {
 
   const deleteTemplate = async (id) => {
     try {
-      await apiInstance.delete(`/adminemail/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/adminemail/${id}`);
       setAdminTemplates((prev) => prev.filter((template) => template._id !== id));
     } catch (error) {
       console.error("Error deleting template:", error);

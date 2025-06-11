@@ -171,7 +171,7 @@ export default function Permissions() {
         permissions: selectedPermissions,
       };
 
-      const response = await axios.post("http://localhost:5000/api/role/add", payload);
+      const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/role/add", payload);
       console.log("Saved:", response.data);
       alert("Role created successfully!");
     } catch (error) {
@@ -536,7 +536,7 @@ export default function Permissions() {
 //         permissions: selectedPermissions,
 //       };
 
-//       const response = await axios.post("http://localhost:5000/api/role/add", payload);
+//       const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/role/add", payload);
 //       console.log("Saved:", response.data);
 //       alert("Role created successfully!");
 //     } catch (error) {

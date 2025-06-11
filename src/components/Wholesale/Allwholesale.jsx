@@ -2,11 +2,12 @@ import { Edit, Trash } from "lucide-react";
 import "./Allwholesale.css";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineSettings } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DeleteConfirmation from "../DeleteConfirmation";
 import Switch from "../Switch";
 import ViewExpandData from "../ViewExpandData";
-
+// import axios from "../../utils/axios";
+import axios from "axios";
 export default function PreOrderReviews() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -18,35 +19,60 @@ export default function PreOrderReviews() {
   const [editingUser, setEditingUser] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [attributeToDeleteId, setAttributeToDeleteId] = useState(null);
-  const [userData, setUserData] = useState([
-    {
-      id: 1,
-      prodName: "Little Tikes Street Burner Ride-On",
-      productOwner: "Ketaki",
-      info: { NumofSale: "0 times", BasePrice: "$25.000", Rating: "0" },
-      totalstock: "Low",
-      todaysdeal: true,
-      published: true,
-      featured: true,
-    },
-    {
-      id: 2,
-      prodName: "Mens Zip Up Hoodie Winter Jacket",
-      productOwner: "Ketaki",
-      info: { NumofSale: "0 times", BasePrice: "$25.000", Rating: "0" },
-      totalstock: "Low",
-      todaysdeal: true,
-      published: true,
-      featured: true,
-    },
-  ]);
+  const [userData, setUserData] = useState([]);
 
-  const handleToggleChange = (id, field) => {
+  useEffect(() => {
+    // Simulate API call
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/wholesaleProduct/getall`);
+        if (response.data.success) {
+          const products = response.data.data.map((item, index) => ({
+            id: index + 1,
+            prodId: item._id,
+            productName: item.productName,
+            productOwner: "Admin", // Replace with actual owner if available
+            info: {
+              NumofSale: "0 times", // Default/fallback
+              BasePrice: `$${item.unitPrice.toFixed(2)}`,
+              Rating: "0", // Placeholder
+            },
+            totalstock:
+              item.quantity < item.lowStockWarning ? "Low" : "In Stock",
+            todaysdeal: item.flashDeal?.isActive || false,
+            published: true, // Placeholder if API doesn’t provide it
+            featured: false, // Placeholder
+          }));
+          setUserData(products);
+        }
+      } catch (err) {
+        console.error("Failed to fetch wholesale products:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleToggleChange = async (prodId, field) => {
+    const product = userData.find((u) => u.prodId === prodId);
+    if (!product) return;
+
+    const newValue = !product[field];
+
+    // Optimistically update UI
     setUserData((prevUser) =>
       prevUser.map((user) =>
-        user.id === id ? { ...user, [field]: !user[field] } : user
+        user.prodId === prodId ? { ...user, [field]: newValue } : user
       )
     );
+
+    try {
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/wholesaleProduct/update/${prodId}`, {
+        flashDealIsActive: newValue.toString(), // Ensure string "true"/"false"
+      });
+    } catch (err) {
+      console.error("Failed to update flash deal status:", err);
+    }
   };
 
   const handleEditChange = (field, value) => {
@@ -62,20 +88,60 @@ export default function PreOrderReviews() {
     }
   };
 
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-    setUserData((prev) =>
-      prev.map((u) => (u.id === editingUser.id ? editingUser : u))
-    );
-    setEditingUser(null);
+
+    try {
+      const formData = new FormData();
+
+      // Append editable fields from editingUser
+      for (const key in editingUser) {
+        formData.append(key, editingUser[key]);
+      }
+
+      const { data } = await axios.put(
+        `https://e-commerce-backend-1-0.onrender.com/api/wholesaleProduct/update/${editingUser.prodId}`, // <-- use prodId
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+console.log("Product updated successfully:", data);
+      // Update local userData state with updated product
+      setUserData((prev) =>
+        prev.map((u) =>
+          u.prodId === editingUser.prodId
+            ? {
+                ...u,
+                ...editingUser,
+                // Optional: update calculated fields like totalstock again
+                totalstock:
+                  editingUser.quantity < editingUser.lowStockWarning
+                    ? "Low"
+                    : "In Stock",
+                todaysdeal: editingUser.flashDealIsActive || false,
+              }
+            : u
+        )
+      );
+
+      setEditingUser(null);
+    } catch (error) {
+      console.error(
+        "Failed to update product:",
+        error.response?.data?.message || error.message
+      );
+    }
   };
 
   const toggleMobileView = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  const openDeleteConfirmation = (id) => {
-    setAttributeToDeleteId(id);
+  const openDeleteConfirmation = (prodId) => {
+    setAttributeToDeleteId(prodId);
     setShowDeleteConfirmation(true);
   };
 
@@ -84,12 +150,23 @@ export default function PreOrderReviews() {
     setShowDeleteConfirmation(false);
   };
 
-  const handleDelete = (id) => {
-    // In a real application, you would make an API call here to delete the attribute
-    console.log(`Deleting attribute with ID: ${id}`);
-    // After successful deletion, you would likely update the 'attributes' state
-    closeDeleteConfirmation();
-  }
+  const handleDelete = async (prodId) => {
+    try {
+      const { data } = await axios.delete(
+        `https://e-commerce-backend-1-0.onrender.com/api/wholesaleProduct/delete/${prodId}`
+      );
+      console.log(data.message);
+      setUserData((prev) => prev.filter((item) => item.prodId !== prodId));
+    } catch (error) {
+      console.error(
+        "Delete failed:",
+        error.response?.data?.message || error.message
+      );
+    } finally {
+      closeDeleteConfirmation();
+    }
+  };
+
   return (
     <div className="productQueriesBox ma10">
       <div className="product-table">
@@ -119,7 +196,7 @@ export default function PreOrderReviews() {
             {userData.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
-                <td className="prodNameQuery">{user.prodName}</td>
+                <td className="prodNameQuery">{user.productName}</td>
                 <td>{user.productOwner}</td>
                 <td>
                   <p>Num of Sale: {user.info.NumofSale}</p>
@@ -133,27 +210,30 @@ export default function PreOrderReviews() {
                                         <span className="slider"></span> */}
                     <Switch
                       value={user.todaysdeal}
-                      onChangeFunc={() => handleToggleChange(user.id, "todaysdeal")}
+                      onChangeFunc={() =>
+                        handleToggleChange(user.prodId, "todaysdeal")
+                      }
                     />
-
                   </label>
                 </td>
                 <td>
                   <label className="switch">
                     <Switch
                       value={user.published}
-                      onChangeFunc={() => handleToggleChange(user.id, "published")}
+                      onChangeFunc={() =>
+                        handleToggleChange(user.prodId, "published")
+                      }
                     />
-
                   </label>
                 </td>
                 <td>
                   <label className="switch">
                     <Switch
                       value={user.featured}
-                      onChangeFunc={() => handleToggleChange(user.id, "featured")}
+                      onChangeFunc={() =>
+                        handleToggleChange(user.prodId, "featured")
+                      }
                     />
-
                   </label>
                   {/* <Switch/>  */}
                 </td>
@@ -162,11 +242,19 @@ export default function PreOrderReviews() {
                     <div className="action">
                       <MdOutlineSettings color="blue" size={18} />
                     </div>
-                    <div className="action" onClick={() => setEditingUser(user)}>
-                      <Edit color="blue" size={18} />
+                    <div className="action">
+                      <Edit
+                        color="blue"
+                        size={18}
+                        onClick={() => setEditingUser(user)}
+                      />
                     </div>
                     <div className="action">
-                      <Trash color="blue" size={18} onClick={() => openDeleteConfirmation(user.id)} />
+                      <Trash
+                        color="blue"
+                        size={18}
+                        onClick={() => openDeleteConfirmation(user.prodId)}
+                      />
                     </div>
                   </div>
                 </td>
@@ -175,14 +263,13 @@ export default function PreOrderReviews() {
           </tbody>
         </table>
 
-
         <div className="block md:hidden w-full px-4 py-2 font-semibold text-sm bg-gray-300 text-gray-600 rounded">
-  <div className="flex gap-5">
-    <span></span>
-    <span className="ml-4">#</span>
-    <span>Name</span>
-  </div>
-</div>
+          <div className="flex gap-5">
+            <span></span>
+            <span className="ml-4">#</span>
+            <span>Name</span>
+          </div>
+        </div>
         {/* Mobile View */}
         <div className="block md:hidden w-full">
           {userData.map((user) => (
@@ -201,64 +288,79 @@ export default function PreOrderReviews() {
                 </div>
               </div> */}
               <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-    <ViewExpandData
-      isExpanded={expandedId === user.id}
-      toggleExpanded={() => toggleMobileView(user.id)}
-    />
-    <span className="text-sm">{user.id}</span>
-    <span className="font-medium text-gray-800 text-sm">{user.prodName}</span>
-  </div>
-
-      </div>
+                <div className="flex items-center gap-2">
+                  <ViewExpandData
+                    isExpanded={expandedId === user.id}
+                    toggleExpanded={() => toggleMobileView(user.id)}
+                  />
+                  <span className="text-sm">{user.id}</span>
+                  <span className="font-medium text-gray-800 text-sm">
+                    {user.productName}
+                  </span>
+                </div>
+              </div>
 
               {/* Expanded Details */}
               {expandedId === user.id && (
                 <div className="mt-4 space-y-2 text-sm  w-full">
                   <div className="flex">
-                    <span className="font-medium text-gray-600 mr-2">Added By:</span>
+                    <span className="font-medium text-gray-600 mr-2">
+                      Added By:
+                    </span>
                     <span>{user.productOwner}</span>
                   </div>
                   <div className="flex ">
-                    <span className="font-medium text-gray-600 mr-2">Num of Sale:</span>
+                    <span className="font-medium text-gray-600 mr-2">
+                      Num of Sale:
+                    </span>
                     <span>{user.info.NumofSale}</span>
                   </div>
                   <div className="flex ">
-                    <span className="font-medium text-gray-600 mr-2">Base Price:</span>
+                    <span className="font-medium text-gray-600 mr-2">
+                      Base Price:
+                    </span>
                     <span>{user.info.BasePrice}</span>
                   </div>
                   <div className="flex ">
-                    <span className="font-medium text-gray-600 mr-2">Rating:</span>
+                    <span className="font-medium text-gray-600 mr-2">
+                      Rating:
+                    </span>
                     <span>{user.info.Rating}</span>
                   </div>
                   <div className="flex ">
-                    <span className="font-medium text-gray-600">Total Stock:</span>
+                    <span className="font-medium text-gray-600">
+                      Total Stock:
+                    </span>
                     <span>{user.totalstock}</span>
                   </div>
 
                   {/* Toggle Switches */}
                   <div className="flex items-center">
-                    <span className="font-medium text-gray-600">Today's Deal:</span>
+                    <span className="font-medium text-gray-600">
+                      Today's Deal:
+                    </span>
 
                     <label className="inline-flex items-center cursor-pointer  ml-3">
                       <Switch
                         value={user.todaysdeal}
-                        onChangeFunc={() => handleToggleChange(user.id, "todaysdeal")}
+                        onChangeFunc={() =>
+                          handleToggleChange(user.id, "todaysdeal")
+                        }
                       />
-
-
                     </label>
                   </div>
 
                   <div className="flex items-center">
-                    <span className="font-medium text-gray-600">Published:</span>
+                    <span className="font-medium text-gray-600">
+                      Published:
+                    </span>
                     <label className="inline-flex items-center cursor-pointer  ml-3">
                       <Switch
                         value={user.published}
-                        onChangeFunc={() => handleToggleChange(user.id, "published")}
+                        onChangeFunc={() =>
+                          handleToggleChange(user.id, "published")
+                        }
                       />
-
-                      
                     </label>
                   </div>
 
@@ -267,9 +369,10 @@ export default function PreOrderReviews() {
                     <label className="inline-flex items-center cursor-pointer  ml-3">
                       <Switch
                         value={user.featured}
-                        onChangeFunc={() => handleToggleChange(user.id, "featured")}
+                        onChangeFunc={() =>
+                          handleToggleChange(user.id, "featured")
+                        }
                       />
-
                     </label>
                   </div>
                 </div>
@@ -277,9 +380,6 @@ export default function PreOrderReviews() {
             </div>
           ))}
         </div>
-
-
-
       </div>
 
       {/* Edit Modal */}
@@ -289,8 +389,8 @@ export default function PreOrderReviews() {
             <h2>Edit Product</h2>
             <input
               type="text"
-              value={editingUser.prodName}
-              onChange={(e) => handleEditChange("prodName", e.target.value)}
+              value={editingUser.productName}
+              onChange={(e) => handleEditChange("productName", e.target.value)}
               placeholder="Product Name"
             />
             <input
@@ -302,7 +402,9 @@ export default function PreOrderReviews() {
             <input
               type="text"
               value={editingUser.info.BasePrice}
-              onChange={(e) => handleEditChange("info.BasePrice", e.target.value)}
+              onChange={(e) =>
+                handleEditChange("info.BasePrice", e.target.value)
+              }
               placeholder="Base Price"
             />
             <input
@@ -313,17 +415,19 @@ export default function PreOrderReviews() {
             />
             <div className="form-buttons">
               <button type="submit">Save</button>
-              <button type="button" onClick={() => setEditingUser(null)}>Cancel</button>
+              <button type="button" onClick={() => setEditingUser(null)}>
+                Cancel
+              </button>
             </div>
           </form>
         </div>
       )}
+      {/* Delete Confirmation */}
       {showDeleteConfirmation && (
         <DeleteConfirmation
           isOpen={showDeleteConfirmation}
           onConfirm={() => handleDelete(attributeToDeleteId)}
           onCancel={closeDeleteConfirmation}
-
         />
       )}
     </div>

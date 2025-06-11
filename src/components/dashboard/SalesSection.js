@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -40,7 +40,7 @@ function SalesSection() {
 
   useEffect(() => {
     const fetchSales = async () => {
-      const res = await apiInstance.get("/orders/list");
+      const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/orders/list");
       const orders = res.data;
 
       const monthlyTotals = Array(12).fill(0);

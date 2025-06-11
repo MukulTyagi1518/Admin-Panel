@@ -53,7 +53,7 @@ function Supports() {
   useEffect(() => {
     if (queryId) {
       axios
-        .get(`http://localhost:5000/api/productquery/${queryId}`)
+        .get(`https://e-commerce-backend-1-0.onrender.com/api/productquery/${queryId}`)
         .then((res) => {
           setQueryData(res.data.data);
           setReply(res.data.data.reply || "");
@@ -69,7 +69,7 @@ function Supports() {
     if (!reply.trim()) return alert("Reply cannot be empty");
 
     axios
-      .put(`http://localhost:5000/api/productquery/${queryId}`, {
+      .put(`https://e-commerce-backend-1-0.onrender.com/api/productquery/${queryId}`, {
         reply,
       })
       .then((res) => {

@@ -1,7 +1,8 @@
 import axios from "axios"
 
 const apiInstance = axios.create({
-    baseURL: "http://localhost:5000/api",
+    // baseURL: "https://e-commerce-backend-1-0.onrender.com/api",
+    baseURL: "https://e-commerce-backend-1-0.onrender.com/api",
     withCredentials: true
 })
 

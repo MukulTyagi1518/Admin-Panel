@@ -12,7 +12,7 @@ const SellerCommission = () => {
   const [isActive, setIsActive] = useState(true);
   const [commissionId, setCommissionId] = useState(null);
 
-  const API_URL = "http://localhost:5000/api/seller-commission";
+  const API_URL = "https://e-commerce-backend-1-0.onrender.com/api/seller-commission";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -139,10 +139,10 @@ const SellerCommission = () => {
           <ul className="text-sm space-y-2 mt-3">
             <li>1. If the Commission Type is Fixed Rate, 25% of seller product price will be deducted.</li>
             <li>
-              2. If the Commission Type is Seller Based, set commission percentage <a href="#" className="text-blue-500">Here</a>.
+              2. If the Commission Type is Seller Based, set commission percentage <a href="/" className="text-blue-500">Here</a>.
             </li>
             <li>
-              3. If the Commission Type is Category Based, set commission percentage <a href="#" className="text-blue-500">Here</a>.
+              3. If the Commission Type is Category Based, set commission percentage <a href="/" className="text-blue-500">Here</a>.
             </li>
           </ul>
         </div>

@@ -540,7 +540,7 @@
 //     useEffect(() => {
 //         async function fetchRole() {
 //             try {
-//                 const res = await axios.get(`http://localhost:5000/api/role/${id}`);
+//                 const res = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/role/${id}`);
 //                 const { name, permissions } = res.data;
 //                 setRoleName(name);
 //                 setToggles(permissions);
@@ -557,7 +557,7 @@
 
 //     const handleSave = async () => {
 //         try {
-//             const res = await axios.put(`http://localhost:5000/api/role/${id}`, {
+//             const res = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/role/${id}`, {
 //                 name: roleName,
 //                 permissions: toggles,
 //             });
@@ -786,7 +786,7 @@ export default function Edit() {
   useEffect(() => {
     async function fetchRole() {
       try {
-        const res = await axios.get(`http://localhost:5000/api/role/${id}`);
+        const res = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/role/${id}`);
         const { name, permissions } = res.data;
 
         setRoleName(name);
@@ -805,7 +805,7 @@ export default function Edit() {
 
   const handleSave = async () => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/role/${id}`, {
+      const res = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/role/${id}`, {
         name: roleName,
         permissions: toggles,
       });

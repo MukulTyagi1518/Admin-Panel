@@ -25,7 +25,6 @@ const ShippingCountries = () => {
       setExpandedRows([...expandedRows, index]);
     }
   };
-
   const handleToggle = (index) => {
     const updatedList = [...countryList];
     updatedList[index].showHide = !updatedList[index].showHide;

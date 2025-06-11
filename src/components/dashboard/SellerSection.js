@@ -23,7 +23,7 @@ function SellerSection() {
   useEffect(() => {
     const fetchSellersData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/sellers");
+        const response = await fetch("https://e-commerce-backend-1-0.onrender.com/api/sellers");
         const sellers = await response.json();
 
         setTotalSellers(sellers.length);

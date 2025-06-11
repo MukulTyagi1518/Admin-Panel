@@ -215,6 +215,7 @@ const menuItems = [
       { name: "Page", path: "/web-settings/page" },
 
       { name: "Apearence", path: "/web-settings/apearence" },
+      {name:"Contact-Us", path:"/contact-us"},
     ],
     path: "/web-settings",
   },

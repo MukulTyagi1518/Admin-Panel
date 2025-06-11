@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Download, Plus, Star } from "lucide-react";
+import {  Star } from "lucide-react";
 import ProductTable from "./ProductTable";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 
 const BestSellerProducts = () => {
@@ -27,7 +27,7 @@ const BestSellerProducts = () => {
   useEffect(() => {
     const fetchSellerProducts = async () => {
       try {
-        const response = await apiInstance.get('/best-seller-product');
+        const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/best-seller-product');
         const transformedData = response.data.map(product => ({
           id: product._id,
           product: product.productName,

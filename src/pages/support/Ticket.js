@@ -155,7 +155,7 @@ const Ticket = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/tickets/getall"); // <-- Replace with your actual API base URL
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/tickets/getall"); // <-- Replace with your actual API base URL
         setTickets(response.data.data);
       } catch (error) {
         console.error("Error fetching tickets:", error);

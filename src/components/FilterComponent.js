@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Dropdown from "./Dropdown";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 
 const FilterComponent = ({
   title = "All Items",

@@ -1,8 +1,10 @@
-// import React from 'react';
-// import ImageUpload from './ImageUpload';
-// import ImageUploadGroup from "./useImageUploadGroup";
 
-// // Main Component
+// import React from "react";
+// import InfoBox from "./InfoBox";
+// import Button from "./Button";
+// import useImageUpload from "./useImageUploadGroup";
+// import ImageUploadGroup from "./ImageUpload";
+
 // function PreorderBanner1() {
 //   const {
 //     imageGroups,
@@ -10,53 +12,85 @@
 //     removeImage,
 //     addNewGroup,
 //     removeGroup,
-//   } = ImageUpload([{ images: [] }], 3);
+//   } = useImageUpload([{ images: [] }], 3); // Max 3 groups
 
-//   const handleSave = () => {
-//     console.log('Saved data:', imageGroups);
-//     alert('Data saved successfully!');
+//   const handleSave = async () => {
+//     try {
+//       const formData = new FormData();
+
+//       imageGroups.forEach((group) => {
+//         group.images.forEach((img) => {
+//           formData.append("images", img.file); 
+//         });
+//       });
+
+//       const response = await fetch(
+//         "https://e-commerce-backend-1-0.onrender.com/api/preorderbanner/create",
+//         {
+//           method: "POST",
+//           body: formData,
+//         }
+//       );
+
+//       const result = await response.json();
+//       if (response.ok) {
+//         alert("Banners saved successfully!");
+//         console.log("Server response:", result);
+//       } else {
+//         alert(result.message || "Failed to save banners.");
+//       }
+//     } catch (error) {
+//       console.error("Error saving banners:", error);
+//       alert("Something went wrong while saving banners!");
+//     }
 //   };
 
 //   return (
-//     <div className="p-4 max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-sm border border-gray-100">
-//       <h4 className="text-sm font-medium text-gray-700 mb-1">Banner & Links (Max 3)</h4>
-//       <p className="text-xs text-gray-500 mb-2">Minimum dimensions required: 1370px width X 360px height.</p>
-      
-//       {imageGroups.map((group, groupIndex) => (
-//         <ImageUploadGroup
-//           key={groupIndex}
-//           group={group}
-//           groupIndex={groupIndex}
-//           onImageUpload={handleImageUpload}
-//           onRemoveImage={removeImage}
-//           onRemoveGroup={removeGroup}
-//         />
-//       ))}
+//     <>
+//       <InfoBox
+//         title="Banner & Links (Max 3)"
+//         description="Minimum dimensions required: 436px width X 436px height."
+//       />
+//       <div className="p-4 max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+//         {imageGroups.map((group, groupIndex) => (
+//           <ImageUploadGroup
+//             key={groupIndex}
+//             group={group}
+//             groupIndex={groupIndex}
+//             onImageUpload={handleImageUpload}
+//             onRemoveImage={removeImage}
+//             onRemoveGroup={removeGroup}
+//           />
+//         ))}
 
-//       <div className="flex justify-center mt-4 space-x-3">
-//         <button
-//           onClick={addNewGroup}
-//           className="text-white bg-blue-500 hover:bg-blue-600 rounded-md py-1.5 px-4 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
-//         >
-//           Add New Group
-//         </button>
-//         <button
-//           onClick={handleSave}
-//           className="text-white bg-green-500 hover:bg-green-600 rounded-md py-1.5 px-4 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
-//         >
-//           Save
-//         </button>
+//         <div className="flex justify-center mt-4 space-x-3">
+//           <Button
+//             onClick={addNewGroup}
+//             className="bg-blue-500 hover:bg-blue-600 focus:ring-blue-400"
+//           >
+//             Add New 
+//           </Button>
+//           <Button
+//             onClick={handleSave}
+//             className="bg-green-500 hover:bg-green-600 focus:ring-green-400"
+//           >
+//             Save
+//           </Button>
+//         </div>
 //       </div>
-//     </div>
+//     </>
 //   );
 // }
 
 // export default PreorderBanner1;
+
+
 import React from "react";
 import InfoBox from "./InfoBox";
 import Button from "./Button";
 import useImageUpload from "./useImageUploadGroup";
 import ImageUploadGroup from "./ImageUpload";
+import { CheckCircle, XCircle } from "lucide-react"; // Adding icons for visual feedback
 
 function PreorderBanner1() {
   const {
@@ -73,12 +107,12 @@ function PreorderBanner1() {
 
       imageGroups.forEach((group) => {
         group.images.forEach((img) => {
-          formData.append("images", img.file); 
+          formData.append("images", img.file);
         });
       });
 
       const response = await fetch(
-        "http://localhost:5000/api/preorderbanner/create",
+        "https://e-commerce-backend-1-0.onrender.com/api/preorderbanner/create",
         {
           method: "POST",
           body: formData,
@@ -99,39 +133,61 @@ function PreorderBanner1() {
   };
 
   return (
-    <>
-      <InfoBox
-        title="Banner & Links (Max 3)"
-        description="Minimum dimensions required: 436px width X 436px height."
-      />
-      <div className="p-4 max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+    <div className="flex flex-col items-center py-8 space-y-6 bg-gray-100 min-h-screen">
+      {/* Info Box Section */}
+      <div className="text-center p-4 bg-white shadow-lg rounded-xl w-full max-w-2xl">
+        <InfoBox
+          title="Banner & Links (Max 3)"
+          description="Minimum dimensions required: 436px width X 436px height."
+        />
+      </div>
+
+      {/* Image Upload Section */}
+      <div className="p-8 bg-white shadow-2xl rounded-3xl w-full max-w-2xl border border-gray-200">
+        {/* Image Groups */}
         {imageGroups.map((group, groupIndex) => (
-          <ImageUploadGroup
+          <div
             key={groupIndex}
-            group={group}
-            groupIndex={groupIndex}
-            onImageUpload={handleImageUpload}
-            onRemoveImage={removeImage}
-            onRemoveGroup={removeGroup}
-          />
+            className="mb-8 bg-gray-50 p-6 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+          >
+            <div className="relative">
+              <ImageUploadGroup
+                group={group}
+                groupIndex={groupIndex}
+                onImageUpload={handleImageUpload}
+                onRemoveImage={removeImage}
+                onRemoveGroup={removeGroup}
+              />
+              {/* Remove Group Button */}
+              <button
+                onClick={() => removeGroup(groupIndex)}
+                className="absolute top-2 right-2 text-red-600 hover:text-red-700 focus:outline-none transform transition-all duration-200 hover:scale-110"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
         ))}
 
-        <div className="flex justify-center mt-4 space-x-3">
+        {/* Add New Group and Save Buttons */}
+        <div className="flex justify-between space-x-6">
           <Button
             onClick={addNewGroup}
-            className="bg-blue-500 hover:bg-blue-600 focus:ring-blue-400"
+            className="flex items-center space-x-2 bg-blue-600 text-white py-2 px-4 rounded-full text-lg shadow-md hover:bg-blue-700 hover:scale-105 transition-all duration-300"
           >
-            Add New 
+            <span>Add New Group</span>
           </Button>
+
           <Button
             onClick={handleSave}
-            className="bg-green-500 hover:bg-green-600 focus:ring-green-400"
+            className="flex items-center space-x-2 bg-green-600 text-white py-2 px-4 rounded-full text-lg shadow-md hover:bg-green-700 hover:scale-105 transition-all duration-300"
           >
-            Save
+            <CheckCircle className="w-6 h-6" />
+            <span>Save</span>
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

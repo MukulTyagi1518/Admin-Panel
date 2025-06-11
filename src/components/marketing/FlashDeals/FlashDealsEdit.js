@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Save, Upload, X } from 'lucide-react';
-import apiInstance from '../../../utils/axios';
+import axios from 'axios';
 
 const FlashDealEdit = () => {
   const { id } = useParams();
@@ -24,7 +24,7 @@ const FlashDealEdit = () => {
   useEffect(() => {
     const fetchFlashDeal = async () => {
       try {
-        const response = await apiInstance.get(`flash-deals/${id}`);
+        const response = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/flash-deals/${id}`);
         const deal = response.data;
         
         setFormData({
@@ -134,7 +134,7 @@ const FlashDealEdit = () => {
         requestData = formattedData;
       }
 
-      await apiInstance.put(`flash-deals/${id}`, requestData);
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/flash-deals/${id}`, requestData);
 
       alert('Flash deal updated successfully!');
       navigate('/marketing/flash-deal');

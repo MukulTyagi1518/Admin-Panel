@@ -1,6 +1,6 @@
 // AddNewColor.js
 import React, { useState, useRef } from "react";
-import apiInstance from "../../utils/axios"; // Adjust path as needed
+import axios from "axios"; // Adjust path as needed
 import './AddNewColor.css'
 
 
@@ -38,7 +38,7 @@ export default function AddNewColor({ onColorAdded }) {
 
     const handleSubmit = async () => {
         try {
-            await apiInstance.post("/colors/create", formData);
+            await axios.post("https://e-commerce-backend-1-0.onrender.com/api/colors/create", formData);
             alert("New color added");
             setFormData({
                 name: "",

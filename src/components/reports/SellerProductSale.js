@@ -1,42 +1,47 @@
-import React, { useState } from 'react';
-import ProductTable3 from './ProductTable3';
+
+
+import React, { useState, useEffect } from 'react';
+import ProductTable from './ProductTable';
 import Dropdown from '../Dropdown';
+import axios from 'axios';
 
 function SellerProductSale() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-    const [selectedOption, setSelectedOption] = useState(null); // Track selected option
-  
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [sellerProductSales, setSellerProductSales] = useState([]);
+
   const itemsPerPage = 10;
+
+  
+  useEffect(() => {
+    const fetchSales = async () => {
+      try {
+        const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/seller-sale-report'); // Change to your actual endpoint
+        setSellerProductSales(response.data); // directly use response.data
+      } catch (error) {
+        console.error('Error fetching seller sales data:', error);
+      }
+    };
+
+    fetchSales();
+  }, []);
 
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
+
   const handleSelectOption = (option) => {
     setSelectedOption(option);
-    setOpenDropdown(null); // Close dropdown after selection
+    setOpenDropdown(null);
   };
+
   const dropdowns = {
     bulk: {
-      label: selectedOption ||"Choose status",
+      label: selectedOption || "Choose status",
       options: ["Approved", "Not Approved"],
     },
   };
-
-  const sellerProductSales = [
-    { sellerName: "B", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "A", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "B", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "A", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "B", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "A", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "B", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "A", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "B", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "A", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "B", shopName: "--", productSale: 32, orderAmount: 30 },
-    { sellerName: "A", shopName: "--", productSale: 32, orderAmount: 30 },
-  ];
 
   const columns = [
     {
@@ -49,7 +54,7 @@ function SellerProductSale() {
     },
     {
       header: "Number of Product Sale",
-      accessor: (item) => item.productSale,
+      accessor: (item) => item.numOfProductSale,
     },
     {
       header: "Order Amount",
@@ -63,11 +68,8 @@ function SellerProductSale() {
 
   return (
     <>
-      {/* <h1 className="text-xl font-bold text-gray-800 m-5">
+      <h1 className="text-xl font-bold text-gray-800 m-5">
         Seller Based Selling Report
-      </h1> */}
-      <h1 className="text-xl font-bold text-gray-800 m-8 text-center ">
-      Seller Based Selling Report
       </h1>
       <div className="bg-white p-3 shadow-lg rounded-lg mb-6 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
         <div className="flex flex-col mb-3 md:flex-row md:items-center border-b">
@@ -80,8 +82,7 @@ function SellerProductSale() {
                 options={options}
                 isOpen={openDropdown === key}
                 onToggle={() => toggleDropdown(key)}
-                onSelect={handleSelectOption} // Pass the select handler
-
+                onSelect={handleSelectOption}
               />
             ))}
             <div className="flex">
@@ -92,7 +93,7 @@ function SellerProductSale() {
           </div>
         </div>
 
-        <ProductTable3
+        <ProductTable
           columns={columns}
           data={sellerProductSales}
           currentPage={currentPage}
@@ -105,4 +106,3 @@ function SellerProductSale() {
 }
 
 export default SellerProductSale;
-

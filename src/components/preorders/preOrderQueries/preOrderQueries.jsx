@@ -13,7 +13,7 @@ export default function PreOrderQueries() {
   useEffect(() => {
     const fetchQueries = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/preorder-queries");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/preorder-queries");
         console.log("Fetched queries:", res.data); // ✅ Confirm it's an array
 
         // Check if the response is an array or object
@@ -36,7 +36,7 @@ export default function PreOrderQueries() {
     if (!replyText.trim()) return;
 
     try {
-      await axios.put(`http://localhost:5000/api/preorder-queries/${id}/reply`, {
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/preorder-queries/${id}/reply`, {
         reply: replyText,
         status: "Replied",
       });

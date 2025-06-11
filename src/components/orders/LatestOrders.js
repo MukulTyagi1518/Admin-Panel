@@ -5,7 +5,7 @@ import Pagination from "../Pagination";
 import { useMediaQuery } from "react-responsive";
 import { useOrdersContext } from "../../context/ordersContext";
 import ViewExpandData from "../ViewExpandData";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 function LatestOrders({ customFilter = null, title = "Latest allOrders" }) {
   const { allOrders, setAllOrders } = useOrdersContext();
@@ -143,7 +143,7 @@ function LatestOrders({ customFilter = null, title = "Latest allOrders" }) {
   const confirmDelete = async () => {
     try {
       setIsLoading(true);
-      await apiInstance.delete(`orders/delete/${roleToDelete}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/orders/delete/${roleToDelete}`);
       setAllOrders((prev) =>
         prev.filter((order) => order._id !== roleToDelete)
       );

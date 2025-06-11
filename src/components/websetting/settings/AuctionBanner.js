@@ -72,7 +72,7 @@ function AuctionBanner() {
     formData.append("image", firstImage);
 
     try {
-      const response = await fetch("http://localhost:5000/api/Auctionbanner/create", {
+      const response = await fetch("https://e-commerce-backend-1-0.onrender.com/api/Auctionbanner/create", {
         method: "POST",
         body: formData,
       });

@@ -135,7 +135,7 @@ const ApprovedRequestTable = () => {
   useEffect(() => {
     const fetchApprovedRequests = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/refund/refunds/approved"); // 🔁 Replace with actual endpoint
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/refund/refunds/approved"); // 🔁 Replace with actual endpoint
         console.log("API Response:", response.data); // ✅ Debugging
         setApprovedRequests(response.data); // If the API returns { data: [...] }, use response.data.data
       } catch (err) {

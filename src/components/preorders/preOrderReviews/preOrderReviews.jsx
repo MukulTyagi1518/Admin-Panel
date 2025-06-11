@@ -16,7 +16,7 @@ export default function PreOrderReviews() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/preorder-reviews");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/preorder-reviews");
         if (Array.isArray(res.data)) {
           setReviews(res.data);
         } else {

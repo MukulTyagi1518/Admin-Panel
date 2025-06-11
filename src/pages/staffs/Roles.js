@@ -21,7 +21,7 @@ const Roles = () => {
 
   const fetchRoles = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/role");
+      const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/role");
 
       if (Array.isArray(response.data)) {
         setRoles(response.data);
@@ -48,7 +48,7 @@ const Roles = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/role/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/role/${id}`);
       alert("Role deleted successfully!");
       fetchRoles(); // Re-fetch roles after delete
     } catch (error) {

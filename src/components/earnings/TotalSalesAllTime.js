@@ -8,7 +8,7 @@ import {
   PointElement,
 } from "chart.js";
 import { TrendingUp } from "lucide-react";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
@@ -31,7 +31,7 @@ function TotalSalesAllTime() {
 
   useEffect(() => {
     const fetchSales = async () => {
-      const res = await apiInstance.get("/orders/list"); // ✅ update URL as per your backend
+      const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/orders/list"); // ✅ update URL as per your backend
       const orders = res.data;
 
       const monthlyTotals = Array(12).fill(0);

@@ -1,26 +1,34 @@
-import React, { useState } from "react";
-import ProductTable2 from "./ProductTable2";
+
+
+
+
+import React, { useEffect, useState } from "react";
+import ProductTable from "./ProductTable";
 import Dropdown from "../Dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 function CommissionHistory() {
+  const [commissionHistory, setCommissionHistory] = useState([]);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-    const [selectedOption, setSelectedOption] = useState(null); // Track selected option
-  
+  const [selectedOption, setSelectedOption] = useState(null);
+
   const itemsPerPage = 10;
 
+  // Toggle dropdown
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
-    setOpenDropdown(null); // Close dropdown after selection
+    setOpenDropdown(null);
   };
+
   const handleDateChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -38,50 +46,25 @@ function CommissionHistory() {
     },
   };
 
-  const commissionHistory = [
-    {
-      id: 1,
-      orderCode: 11,
-      adminCommission: 32,
-      sellerEarning: 22,
-      createdAt: new Date(),
-    },
-    {
-      id: 2,
-      orderCode: 12,
-      adminCommission: 29,
-      sellerEarning: 19,
-      createdAt: new Date(),
-    },
-    {
-      id: 3,
-      orderCode: 13,
-      adminCommission: 26,
-      sellerEarning: 16,
-      createdAt: new Date(),
-    },
-    {
-      id: 4,
-      orderCode: 14,
-      adminCommission: 21,
-      sellerEarning: 11,
-      createdAt: new Date(),
-    },
-    {
-      id: 5,
-      orderCode: 15,
-      adminCommission: 15,
-      sellerEarning: 10,
-      createdAt: new Date(),
-    },
-    {
-      id: 6,
-      orderCode: 16,
-      adminCommission: 11,
-      sellerEarning: 8,
-      createdAt: new Date(),
-    },
-  ];
+  // API Call to fetch data
+  useEffect(() => {
+    const fetchCommissionHistory = async () => {
+      try {
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/commisionhistory"); // Update with your actual API route
+        setCommissionHistory(res.data.data || []);
+      } catch (err) {
+        console.error("Error fetching commission history:", err);
+      }
+    };
+
+    fetchCommissionHistory();
+  }, []);
+
+  const filteredData = commissionHistory.filter((item) => {
+    if (!startDate || !endDate) return true;
+    const itemDate = new Date(item.createdAt);
+    return itemDate >= startDate && itemDate <= endDate;
+  });
 
   const columns = [
     {
@@ -93,25 +76,20 @@ function CommissionHistory() {
       accessor: (item) => item.orderCode,
     },
     {
-      header: "Admin Commission",
-      accessor: (item) => `$${item.adminCommission}`,
+      header: "Admin Commission (INR)",
+      accessor: (item) => `₹${item.adminCommission.toLocaleString("en-IN")}`,
     },
     {
-      header: "Seller Earning",
-      accessor: (item) => `$${item.sellerEarning}`,
+      header: "Seller Earning (INR)",
+      accessor: (item) => `₹${item.sellerEarning.toLocaleString("en-IN")}`,
     },
+    
     {
       header: "Created At",
-      accessor: (item) => item.createdAt.toLocaleDateString(),
+      accessor: (item) =>
+        new Date(item.createdAt).toLocaleDateString("en-GB"),
     },
   ];
-
-
-  const filteredData = commissionHistory.filter((item) => {
-    if (!startDate || !endDate) return true;
-    const itemDate = new Date(item.createdAt);
-    return itemDate >= startDate && itemDate <= endDate;
-  });
 
   return (
     <>
@@ -123,7 +101,7 @@ function CommissionHistory() {
       </h1>
       <div className="bg-white p-3 shadow-lg rounded-lg mb-6 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
         <div className="flex flex-col mb-3 md:flex-row md:items-center md:justify-between border-b">
-          <h1 className="text-base text-gray-800 m-5">Commission History</h1>{" "}
+          <h1 className="text-base text-gray-800 m-5">Commission History</h1>
           <div className="flex flex-wrap gap-4 items-center">
             {Object.entries(dropdowns).map(([key, { label, options }]) => (
               <Dropdown
@@ -132,7 +110,7 @@ function CommissionHistory() {
                 options={options}
                 isOpen={openDropdown === key}
                 onToggle={() => toggleDropdown(key)}
-                onSelect={handleSelectOption} // Pass the select handler
+                onSelect={handleSelectOption}
               />
             ))}
 
@@ -148,12 +126,16 @@ function CommissionHistory() {
               />
             </div>
 
-            <button className="px-6 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600">
+            <button
+              className="px-6 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600"
+              onClick={() => setCurrentPage(1)} // reset to first page on filter
+            >
               Filter
             </button>
           </div>
         </div>
-        <ProductTable2
+
+        <ProductTable
           columns={columns}
           data={filteredData}
           currentPage={currentPage}

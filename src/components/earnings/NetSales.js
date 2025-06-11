@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 // Register ChartJS once globally
 ChartJS.register(
@@ -39,7 +39,7 @@ const NetSales = () => {
   useEffect(() => {
     const fetchCommission = async () => {
       try {
-        const res = await apiInstance.get("/seller-commission");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/seller-commission");
         const commissionData = res.data[0];
         if (commissionData?.fixedCommissionRate?.sellerCommission) {
           setCommissionPercent(commissionData.fixedCommissionRate.sellerCommission / 100);
@@ -52,7 +52,7 @@ const NetSales = () => {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const res = await apiInstance.get("/orders/list");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/orders/list");
         setOrders(res.data);
         calculateSales(res.data);
       } catch (err) {
@@ -64,13 +64,13 @@ const NetSales = () => {
 
     fetchCommission();
     fetchOrders();
-  }, []);
+  },[calculateSales] );
 
   useEffect(() => {
     if (orders.length > 0) {
       calculateSales(orders);
     }
-  }, [timeFilter, orders, commissionPercent]);
+  }, [timeFilter, orders, commissionPercent, calculateSales]);
 
   const calculateSales = (ordersData) => {
     let filteredOrders = [...ordersData];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { EyeIcon, Minus, Plus } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 
 const ViewExpandData = ({ isExpanded, toggleExpanded }) => {
   return (

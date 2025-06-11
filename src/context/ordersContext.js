@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import apiInstance from "../utils/axios.js"
+import axios from "axios";
 
 const OrdersContext = createContext()
 
@@ -11,7 +11,7 @@ export default function OrdersProvider({ children }) {
 
     useEffect(() => {
         const fetchOrders = async () => {
-            const response = await apiInstance.get('/orders/list')
+            const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/orders/list')
             setAllOrders(response.data)
             setFetchOrdersData(false)
         }

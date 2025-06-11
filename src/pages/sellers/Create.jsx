@@ -39,7 +39,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import apiInstance from "../../utils/axios"; // Import axios instance
+import axios from "axios"; // Import axios instance
 import "./Create.css";
 
 const Create = () => {
@@ -66,7 +66,7 @@ const Create = () => {
     setError(null);
 
     try {
-      const response = await apiInstance.post("/sellers", formData);
+      const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/sellers", formData);
       console.log("Seller added successfully:", response.data);
 
       // Redirect to All Sellers page

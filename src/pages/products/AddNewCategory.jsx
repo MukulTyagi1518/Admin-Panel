@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import api from "../../utils/axios"
+// import api from "../../utils/axios"
+ import axios from 'axios';
 import { useCategoryContext } from '../../categoryContext';
 
 const AddNewCategory = () => {
@@ -98,7 +99,7 @@ const AddNewCategory = () => {
       });
 
       // API Call
-      await api.post('/categories/Create-new-category', formDataToSend, {
+      await axios.post('https://e-commerce-backend-1-0.onrender.com/api/categories/Create-new-category', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

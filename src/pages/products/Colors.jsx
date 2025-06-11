@@ -1,7 +1,7 @@
 import "./Colors.css";
 import { useState, useEffect, useRef } from "react";
 import { Edit, Trash ,Plus} from "lucide-react";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AddNewColor from "./AddNewColor";
 
@@ -34,7 +34,7 @@ export default function PreOrderFaq() {
 
     const fetchColorsData = async () => {
         try {
-            const response = await apiInstance.get('colors/getall');
+            const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/colors/getall');
             setColorsData(response.data)
         }
         catch (err) {
@@ -59,7 +59,7 @@ export default function PreOrderFaq() {
 
 
     const deleteColor = async (id) => {
-        await apiInstance.delete(`colors/delete/${id}`)
+        await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/colors/delete/${id}`)
         alert("Color deleted.")
         fetchColorsData();
     }

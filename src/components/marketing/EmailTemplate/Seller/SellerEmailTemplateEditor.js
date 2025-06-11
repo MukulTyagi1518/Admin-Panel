@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import apiInstance from "../../../../utils/axios";
+import axios from "axios";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
 import { EditorPageHeader } from "../EditorComponents/EditorPageHeader";
 import { TemplateFormFields } from "../EditorComponents/TemplateFormFields";
@@ -25,7 +25,7 @@ const SellerEmailTemplateEditor = () => {
       const fetchSellerTemplate = async () => {
         try {
           setLoading(true);
-          const { data } = await apiInstance.get(`/seller-templates/${id}`);
+          const { data } = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/seller-templates/${id}`);
           setSellerTemplates(data);
         } catch (error) {
           console.error("Error fetching template:", error);
@@ -57,7 +57,7 @@ const SellerEmailTemplateEditor = () => {
 
     try {
       if (id) {
-        await apiInstance.put(`/seller-templates/${id}`, sellerTemplates);
+        await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/seller-templates/${id}`, sellerTemplates);
         alert("Template updated successfully!");
       } else {
         await createSellerTemplate(sellerTemplates);

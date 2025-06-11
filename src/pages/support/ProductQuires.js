@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Conversation.css";
 import { FaPlus, FaEye, FaTrash } from "react-icons/fa";
-import DeleteConfirmation from "../../components/DeleteConfirmation";
-import ViewExpandData from "../../components/ViewExpandData";
 
 const Conversation = () => {
   const [expandedRows, setExpandedRows] = useState({});
@@ -14,7 +12,7 @@ const Conversation = () => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/productconversation");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/productconversation");
         setConversations(res.data.data);
       } catch (err) {
         console.error("Error fetching conversations", err);
@@ -29,7 +27,7 @@ const Conversation = () => {
 
   const handleView = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/productconversation/${id}`);
+      const res = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/productconversation/${id}`);
       setSelectedConversation(res.data.data);
       setShowModal(true);
     } catch (err) {
@@ -40,7 +38,7 @@ const Conversation = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this conversation?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/http://localhost:5000/api/productconversation/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/https://e-commerce-backend-1-0.onrender.com/api/productconversation/${id}`);
       setConversations(conversations.filter((c) => c._id !== id));
     } catch (err) {
       console.error("Error deleting conversation", err);

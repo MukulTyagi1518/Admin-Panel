@@ -50,7 +50,7 @@ const Contact = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/contacts/getall");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/contacts/getall");
         setContacts(res.data.data);
       } catch (error) {
         console.error("Error fetching contacts:", error);
@@ -68,7 +68,7 @@ const Contact = () => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/contacts/update/${id}`, { reply });
+      const res = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/contacts/update/${id}`, { reply });
       const updatedList = contacts.map((c) => (c._id === id ? res.data.data : c));
       setContacts(updatedList);
       alert("Reply sent!");
@@ -83,7 +83,7 @@ const Contact = () => {
     if (!window.confirm("Are you sure you want to delete this contact?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/contacts/delete/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/contacts/delete/${id}`);
       setContacts(contacts.filter((c) => c._id !== id));
       alert("Contact deleted.");
     } catch (error) {

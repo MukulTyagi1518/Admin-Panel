@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -37,7 +37,7 @@ const PayoutsByCategory = () => {
     const fetchPayouts = async () => {
       try {
         setLoading(true);
-        const res = await apiInstance.get("/payouts");
+        const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/payouts");
         setPayouts(res.data);
         calculatePayouts(res.data);
       } catch (err) {
@@ -48,7 +48,7 @@ const PayoutsByCategory = () => {
     };
 
     fetchPayouts();
-  }, []);
+  }, );
 
   useEffect(() => {
     if (payouts.length > 0) {

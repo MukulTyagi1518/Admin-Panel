@@ -10,7 +10,7 @@ import {
   ListOrdered,
 } from "lucide-react";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
-import apiInstance from "../../../../utils/axios";
+import axios from "axios";
 
 const CustomerEmailTemplateEditor = () => {
   const { id } = useParams();
@@ -30,7 +30,7 @@ const CustomerEmailTemplateEditor = () => {
       const fetchCustomerTemplate = async () => {
         try {
           setLoading(true);
-          const { data } = await apiInstance.get(`/customer-templates/${id}`);
+          const { data } = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/customer-templates/${id}`);
           setCustomerTemplates(data);
         } catch (error) {
           console.error("Error fetching template:", error);
@@ -67,7 +67,7 @@ const CustomerEmailTemplateEditor = () => {
     e.preventDefault();
     try {
       if (id) {
-        await apiInstance.put(`/customer-templates/${id}`, customerTemplates);
+        await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/customer-templates/${id}`, customerTemplates);
         alert("Template updated successfully!");
       } else {
         await createCustomerTemplate(customerTemplates);

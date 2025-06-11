@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CategoryBased.css";
 import { useCategoryContext } from "../../categoryContext"; // Adjust import path as needed
-import api from "../../utils/axios"
+import axios from "axios"
 import Switch from "../../components/Switch";
 
 
@@ -63,7 +63,7 @@ const CategoryDiscountTable = () => {
   const handleSetDiscount = async (id) => {
     categoryData.map(async (c) => {
       if (c._id === id) {
-        await api.put(`categories/category-based-discount/${id}`, {
+        await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/categories/category-based-discount/${id}`, {
           discount: c.discount,
           discountDateRange: c.discountDateRange,
           sallerProduct: c.sallerProduct,

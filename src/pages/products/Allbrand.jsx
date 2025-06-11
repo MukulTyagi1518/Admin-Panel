@@ -2,7 +2,7 @@
 import { Delete, Edit, Trash, Plus } from "lucide-react"
 import "./Allbrand.css"
 import { useEffect, useState } from "react";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function AllBrands() {
@@ -61,7 +61,7 @@ export default function AllBrands() {
     const [brands, setBrands] = useState([])
 
     const fetchBrands = async () => {
-        const response = await apiInstance.get('/brands/getall')
+        const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/brands/getall')
         console.log(response.data.data)
         setBrands(response.data.data || [])
     }
@@ -92,7 +92,7 @@ export default function AllBrands() {
             }
 
 
-            await apiInstance.post("/brands/create", formDataToSend, {
+            await axios.post("https://e-commerce-backend-1-0.onrender.com/api/brands/create", formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -108,7 +108,7 @@ export default function AllBrands() {
 
     const DeleteBrand = async (id) => {
         try {
-            await apiInstance.delete(`/brands/delete/${id}`);
+            await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/brands/delete/${id}`);
             fetchBrands();
             alert("Brand deleted!!")
         }

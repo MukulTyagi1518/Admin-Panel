@@ -11,7 +11,7 @@ const TopSellerAndProducts = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/productreviews");
+        const response = await fetch("https://e-commerce-backend-1-0.onrender.com/api/productreviews");
         const data = await response.json();
         const sortedProducts = [...data].sort((a, b) => b.rating - a.rating);
         setAllProducts(sortedProducts);

@@ -8,7 +8,8 @@ import { PageHeader } from "../MainPageComponents/PageHeader";
 import { DataTable } from "../MainPageComponents/DataTable";
 import Pagination from "../../../Pagination";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
-import apiInstance from "../../../../utils/axios";
+// import axios from "../../../../utils/axios";
+import axios from "axios";
 const EmailTemplateCommon = () => {
   const {commonTemplates, setCommonTemplates,loading} = useEmailTemplates();
 
@@ -20,7 +21,7 @@ const EmailTemplateCommon = () => {
   const toggleStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
     try {
-      await apiInstance.put(`/common-templates/${id}`, { status: newStatus });
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/common-templates/${id}`, { status: newStatus });
       setCommonTemplates((prev) =>
         prev.map((template) =>
           template._id === id ? { ...template, status: newStatus } : template
@@ -32,7 +33,7 @@ const EmailTemplateCommon = () => {
   };
   const deleteTemplate = async (id) => {
     try {
-      await apiInstance.delete(`/common-templates/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/common-templates/${id}`);
       setCommonTemplates((prev) =>
         prev.filter((template) => template._id !== id)
       );

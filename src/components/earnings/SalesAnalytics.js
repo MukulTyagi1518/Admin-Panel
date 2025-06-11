@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
-import apiInstance from '../../utils/axios';
+import axios from 'axios';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip);
 
@@ -13,7 +13,7 @@ const SalesAnalytics = () => {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await apiInstance.get('/orders/list');
+        const response = await axios.get('https://e-commerce-backend-1-0.onrender.com/api/orders/list');
         setSales(response.data);
         setLoading(false);
       } catch (err) {

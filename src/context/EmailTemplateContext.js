@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import apiInstance from "../utils/axios";
+import axios from "axios";
 
 const EmailTemplateContext = createContext();
 
@@ -13,7 +13,7 @@ export const EmailTemplateProvider = ({ children }) => {
   // Fetch Admin Email Templates
   const fetchAdminTemplates = async () => {
     try {
-      const { data } = await apiInstance.get("/adminemail");
+      const { data } = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/adminemail");
       setAdminTemplates(data); 
     } catch (error) {
       console.error("Error fetching admin templates:", error);
@@ -22,7 +22,7 @@ export const EmailTemplateProvider = ({ children }) => {
 
   const createAdminTemplate = async (template) => {
     try {
-      const { data } = await apiInstance.post("/adminemail", template);
+      const { data } = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/adminemail", template);
       setAdminTemplates((prev) => [...prev, data]); 
     } catch (error) {
       console.error("Error creating template:", error);
@@ -32,7 +32,7 @@ export const EmailTemplateProvider = ({ children }) => {
   // Fetch Seller Email Templates
   const fetchSellerTemplates = async () => {
     try {
-      const { data } = await apiInstance.get("/seller-templates");
+      const { data } = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/seller-templates");
       setSellerTemplates(data); 
     } catch (error) {
       console.error("Error fetching seller templates:", error);
@@ -41,7 +41,7 @@ export const EmailTemplateProvider = ({ children }) => {
 
   const createSellerTemplate = async (template) => {
     try {
-      const { data } = await apiInstance.post("/seller-templates", template);
+      const { data } = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/seller-templates", template);
       setSellerTemplates((prev) => [...prev, data]);
     } catch (error) {
       console.error("Error creating seller template:", error);
@@ -51,7 +51,7 @@ export const EmailTemplateProvider = ({ children }) => {
   // Fetch Customer Email Templates
   const fetchCustomerTemplates = async () => {
     try {
-      const { data } = await apiInstance.get("/customer-templates");
+      const { data } = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/customer-templates");
       setCustomerTemplates(data); 
     } catch (error) {
       console.error("Error fetching customer templates:", error);
@@ -60,7 +60,7 @@ export const EmailTemplateProvider = ({ children }) => {
 
   const createCustomerTemplate = async (template) => {
     try {
-      const { data } = await apiInstance.post("/customer-templates", template);
+      const { data } = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/customer-templates", template);
       setCustomerTemplates((prev) => [...prev, data]);
     } catch (error) {
       console.error("Error creating customer template:", error);
@@ -70,7 +70,7 @@ export const EmailTemplateProvider = ({ children }) => {
   // Fetch Common Email Templates
   const fetchCommonTemplates = async () => {
     try {
-      const { data } = await apiInstance.get("/common-templates");
+      const { data } = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/common-templates");
       setCommonTemplates(data); 
     } catch (error) {
       console.error("Error fetching common templates:", error);
@@ -79,7 +79,7 @@ export const EmailTemplateProvider = ({ children }) => {
 
   const createCommonTemplate = async (template) => {
     try {
-      const { data } = await apiInstance.post("/common-templates", template);
+      const { data } = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/common-templates", template);
       setCommonTemplates((prev) => [...prev, data]);
     } catch (error) {
       console.error("Error creating common template:", error);

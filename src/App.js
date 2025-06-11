@@ -99,7 +99,7 @@ import Physical from "./pages/products/Sellerproduct/Physical.jsx";
 import Digital from "./pages/products/Sellerproduct/Digital.jsx";
 import Commision from "./components/Seller/Commision.jsx";
 import Ticket from "./pages/support/Ticket.js";
-import ProductQuires from "./pages/support/ProductQuires.js";
+// import ProductQuires from "./pages/support/ProductQuires.js";
 import Conversation from "./pages/support/ProductQuires.js";
 import Queries from "./pages/support/Queries.js";
 import Contact from "./pages/support/Contact.js";
@@ -148,7 +148,7 @@ import Addpage from "./components/websetting/Addpage.jsx";
 import Editpage from "./components/websetting/Editpage.jsx";
 import Headerpage from "./components/websetting/Headerpage.jsx";
 
-import FooterWidget from "./components/websetting/footerpage.jsx"
+import FooterWidget from "./components/websetting/FooterPage.jsx"
 import Appeareance from "./components/websetting/Appearence.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
@@ -167,7 +167,13 @@ import AllDeliveryPartners from "./components/delivery/AllDeliveryPartners.js";
 import OrderHistoryModal from "./components/delivery/component/OrderHistoryModal.js";
 import TotalEarningsModal from "./components/delivery/component/TotalEarningsModal.js";
 import AddFaq from "./pages/products/Addfaq.jsx";
-
+import Addpreorder from "./components/preorders/addpreOrder/addpreorder.jsx"
+import AboutUsEditor from "./components/Contenrmangement/Aboutus.js"
+import ReturnEditor from "./components/Contenrmangement/Returnrefund.js";
+import PrivacyEditor from "./components/Contenrmangement/Privacypolicy.js";
+import TermsEditor from "./components/Contenrmangement/Termscondition.js";
+import ContactUs from "./components/websetting/ContactUs.jsx" 
+import AdminChat from "./components/AdminChat.js"
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -325,6 +331,8 @@ function App() {
 
               <Route path="/preorder">
                 <Route path="product" element={<PreorderProducts />} />
+               
+      <Route path="addpreorder" element={<Addpreorder />} />
                 <Route path="queries" element={<PreOrderQueries />} />
                 <Route path="queries">
                   <Route path="queriesdetail" element={<QueriesDetail />} />
@@ -343,6 +351,7 @@ function App() {
                 <Route path="all-orders" element={<AllOrders />} />
                 <Route path="inhouse-orders" element={<InHouseOrders />} />
                 <Route path="seller-orders" element={<SellerOrders />} />
+                
 
                 <Route
                   path="delayed-prepayment-orders"
@@ -456,7 +465,10 @@ function App() {
                   <Route path="custom-notification/history" element={<CustomNotificationHistory />} />
                 </Route>
               </Route>
-
+<Route path="/aboutus" element={<AboutUsEditor />} />
+<Route path="/terms" element={<TermsEditor />} />
+<Route path="/return" element={<ReturnEditor />} />
+<Route path="/privacy" element={<PrivacyEditor />} />
               {/* </Route> */}
               <Route path="/admin-settings">
                 <Route path="shipping">
@@ -540,12 +552,12 @@ function App() {
               />
               <Route path="/admin-settings/tax" element={<Vaxtax />} />
               <Route path="edittax" element={<Edittax />} />
-              <Route path="editinhouse" element={<Editinhouse />} />
+              <Route path="Editinhouse" element={<Editinhouse />} />
               <Route path="editattribute" element={<Editattribute />} />
 
               <Route path="/web-settings">
                 <Route path="header" element={<Headerpage />} />
-                <Route path="footer" element={<FooterWidget />} />
+                {/* <Route path="footer" element={<FooterWidget />} /> */}
                 <Route path="page" element={<Pages />} />
                 </Route>
 
@@ -568,17 +580,19 @@ function App() {
                   <Route path='classifieds' element={<Classified />} />
                   <Route path='newest' element={<NewestPreorderProducts />} />
                   <Route path='topbrands' element={<TopBrands />} />
+                  
                 </Route>
-                <Route path="addpage" element={<Addpage />} />
-                <Route path="editaddpage" element={<Editpage />} />
+               
               </Route>
 
-
-
+              
 
               <Route path="/web-settings/footer" element={<FooterWidget />} />
               <Route path="/web-settings/apearence" element={<Appeareance />} />
-
+              <Route path="/contact-us" element={<ContactUs />} />
+              <Route path="/admin-chat" element={<AdminChat />} />
+              <Route path='addpage' element={<Addpage />} />
+              <Route path= 'editaddpage/:id' element={<Editpage />} />
             </Routes>
           </div>
         </div>

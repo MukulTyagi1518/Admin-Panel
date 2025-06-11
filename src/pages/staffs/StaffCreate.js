@@ -54,7 +54,7 @@
 
 import React, { useState } from 'react';
 import './StaffCreate.css';
-
+import { motion } from "framer-motion";
 const StaffCreate = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -76,7 +76,7 @@ const StaffCreate = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/staff', {
+      const response = await fetch('https://e-commerce-backend-1-0.onrender.com/api/staff', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,6 +106,34 @@ const StaffCreate = () => {
 
   return (
     <div className="staff-form-container">
+       <motion.div
+          className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 text-black"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div>
+            {/* Title Animation */}
+            <motion.h1
+              className="text-5xl font-semibold tracking-tight mb-2 animate-gradient-text"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              Create New Staff
+            </motion.h1>
+
+            {/* Description Animation */}
+            <motion.p
+              className="text-lg mt-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600 animate-text-fade"
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }} // Delay to stagger the animations
+            >
+              Fill in the details below to add a new staff.
+            </motion.p>
+          </div>
+        </motion.div>
       <div className='staffbox'>
         <h2>Staff Information</h2>
         <form className="staff-form" onSubmit={handleSubmit}>

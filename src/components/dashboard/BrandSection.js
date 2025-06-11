@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Tag } from "lucide-react";
-import apiInstance from "../../utils/axios";
+import axios from "axios";
 
 // Mapping for brand colors
 const colorMap = {
@@ -18,7 +18,7 @@ function BrandSection() {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await apiInstance.get("/topbrands/list");
+        const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/topbrands/list");
         const brands = response.data.brands || [];
 
         // Calculate total brands

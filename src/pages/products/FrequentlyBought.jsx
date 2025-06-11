@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./FrequentlyBought.css";
 import { IoClose } from "react-icons/io5";
 import { useProductContext } from "../../productContex";
-import apiInstance from "../../utils/axios.js";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const FrequentlyBought = () => {
@@ -46,9 +46,9 @@ const FrequentlyBought = () => {
   useEffect(() => {
     const fetchProductsAndCategories = async () => {
       try {
-        const productsRes = await apiInstance.get("/products"); // ✅ your endpoint may vary
-        const categoriesRes = await apiInstance.get(
-          "/categories/get-all-categories"
+        const productsRes = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/products"); // ✅ your endpoint may vary
+        const categoriesRes = await axios.get(
+          "https://e-commerce-backend-1-0.onrender.com/api/categories/get-all-categories"
         ); // ✅ your endpoint may vary
         setAllProducts(productsRes.data.data);
         setAllCategories(categoriesRes.data);
@@ -163,7 +163,7 @@ const FrequentlyBought = () => {
 
     
     try {
-      await apiInstance.post("/products/store", formDataToSend);
+      await axios.post("https://e-commerce-backend-1-0.onrender.com/api/products/store", formDataToSend);
 
       alert("Product added");
       navigate("/products/all");

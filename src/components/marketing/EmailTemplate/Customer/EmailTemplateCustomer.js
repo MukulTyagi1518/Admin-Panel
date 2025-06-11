@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEmailTemplates } from "../../../../context/EmailTemplateContext";
 import { Mail } from "lucide-react";
-import apiInstance from "../../../../utils/axios";
+import axios from "axios";
 import { ActionButtons } from "../MainPageComponents/ActionButtons";
 import { PageHeader } from "../MainPageComponents/PageHeader";
 import { SearchBar } from "../MainPageComponents/SearchBar";
@@ -21,7 +21,7 @@ const EmailTemplateCustomer = () => {
   const toggleStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
     try {
-      await apiInstance.put(`/Customer-templates/${id}`, { status: newStatus });
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/Customer-templates/${id}`, { status: newStatus });
       setCustomerTemplates((prev) =>
         prev.map((template) =>
           template._id === id ? { ...template, status: newStatus } : template
@@ -34,7 +34,7 @@ const EmailTemplateCustomer = () => {
 
   const deleteTemplate = async (id) => {
     try {
-      await apiInstance.delete(`/Customer-templates/${id}`);
+      await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/Customer-templates/${id}`);
       setCustomerTemplates((prev) => prev.filter((template) => template._id !== id));
     } catch (error) {
       console.error("Error deleting template:", error);

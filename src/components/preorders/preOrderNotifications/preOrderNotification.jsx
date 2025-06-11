@@ -9,7 +9,7 @@ export default function PreOrderNotification() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/preorder-notification");
+      const res = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/preorder-notification");
       if (res.data?.data) {
         setNotifications(res.data.data);
       }
@@ -25,7 +25,7 @@ export default function PreOrderNotification() {
 
   const handleToggleStatus = async (id, currentStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/preorder-notification/${id}`, {
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/preorder-notification/${id}`, {
         status: currentStatus === "active" ? "inactive" : "active",
       });
       fetchNotifications(); // refetch after update
@@ -39,7 +39,7 @@ export default function PreOrderNotification() {
     if (!newText || newText === currentDefaultText) return;
 
     try {
-      await axios.put(`http://localhost:5000/api/preorder-notification/${id}`, {
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/preorder-notification/${id}`, {
         defaultText: newText,
       });
       fetchNotifications(); // refetch after update

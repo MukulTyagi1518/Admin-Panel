@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import apiInstance from "../utils/axios";
+import axios from "axios";
 
 const CustomerContext = createContext()
 
@@ -16,7 +16,7 @@ export default function CustomerProvider({ children }) {
 
     const fetchUsers = async () => {
         try {
-            const response = await apiInstance.get("/user1/");
+            const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/user1");
             setCustomers(response.data);
             console.log(response.data)
             setFetchCustomers(false)

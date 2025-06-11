@@ -1,11 +1,11 @@
 // src/services/customAlertService.js
-import apiInstance from "../utils/axios";
+import axios from "axios";
 
 const CustomAlertService = {
   // Get all custom alerts
   getAllAlerts: async () => {
     try {
-      const response = await apiInstance.get("/custom-alert");
+      const response = await axios.get("https://e-commerce-backend-1-0.onrender.com/api/custom-alert");
       return response.data;
     } catch (error) {
       throw new Error(
@@ -17,7 +17,7 @@ const CustomAlertService = {
   // Get a single alert by ID
   getAlertById: async (id) => {
     try {
-      const response = await apiInstance.get(`/custom-alert/${id}`);
+      const response = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/custom-alert/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || "Failed to fetch alert");
@@ -38,7 +38,7 @@ const CustomAlertService = {
         }
       });
 
-      const response = await apiInstance.post("/custom-alert", formData);
+      const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/custom-alert", formData);
       return response.data;
     } catch (error) {
       throw new Error(
@@ -61,7 +61,7 @@ const CustomAlertService = {
         }
       });
 
-      const response = await apiInstance.put(`/custom-alert/${id}`, formData);
+      const response = await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/custom-alert/${id}`, formData);
       return response.data;
     } catch (error) {
       throw new Error(
@@ -73,7 +73,7 @@ const CustomAlertService = {
   // Delete an alert
   deleteAlert: async (id) => {
     try {
-      const response = await apiInstance.delete(`/custom-alert/${id}`);
+      const response = await axios.delete(`https://e-commerce-backend-1-0.onrender.com/api/custom-alert/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(

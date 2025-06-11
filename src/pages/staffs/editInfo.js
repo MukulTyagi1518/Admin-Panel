@@ -21,7 +21,7 @@ const EditInfo = () => {
     // Fetch current staff data by ID
     const fetchStaff = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/staff/${id}`);
+        const res = await axios.get(`https://e-commerce-backend-1-0.onrender.com/api/staff/${id}`);
         setStaff(res.data);
       } catch (err) {
         console.error('Failed to fetch staff info:', err);
@@ -38,7 +38,7 @@ const EditInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/staff/${id}`, staff);
+      await axios.put(`https://e-commerce-backend-1-0.onrender.com/api/staff/${id}`, staff);
       alert('Staff updated successfully!');
       navigate('/staffs'); // Go back to staff list
     } catch (err) {

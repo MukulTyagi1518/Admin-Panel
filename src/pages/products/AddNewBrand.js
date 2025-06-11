@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import apiInstance from "../../utils/axios"; 
+import axios from "axios"; 
 import './AddNewBrand.css';
 
 export default function AddNewBrand({ onBrandAdded }) {
@@ -42,7 +42,7 @@ export default function AddNewBrand({ onBrandAdded }) {
         }
 
         try {
-            await apiInstance.post("/brands/create", formDataToSend, {
+            await axios.post("https://e-commerce-backend-1-0.onrender.com/api/brands/create", formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

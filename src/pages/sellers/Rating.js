@@ -12,7 +12,7 @@ const Rating = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/seller-reviews")
+      .get("https://e-commerce-backend-1-0.onrender.com/api/seller-reviews")
       .then((response) => {
         const approvedSellers = response.data.filter((seller) => !seller.isBanned); // Filter non-banned sellers
         setSellers(approvedSellers);
@@ -40,7 +40,7 @@ const Rating = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/seller-reviews/update-custom-followers/${modalSeller._id}`, // Use _id
+        `https://e-commerce-backend-1-0.onrender.com/api/seller-reviews/update-custom-followers/${modalSeller._id}`, // Use _id
         { customFollowers: Number(customFollowers) } // Ensure it's a number
       );
 

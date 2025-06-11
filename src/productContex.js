@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import apiInstance from "./utils/axios"
+import axios from "axios"
 
 const ProductContext = createContext()
 
@@ -7,31 +7,32 @@ export default function ProductProvider({ children }) {
 
     const [productData, setProductData] = useState({
         // Basic Info
-        name: "",
+        productName: "",
         brand: "",
         unit: "",
-        weight: "",
+        // weight: "",
         minPurchaseQty: "",
         tags: [],
         barcode: "",
-        category: [],
+        // category: [],
         description: "",
         refundable: "",
         refundNote: "",
         featured: "",
         todaysDeal: "",
         flashDeal: {
-            addToFlash: "",
+            isActive: "",
+            title: "",
             discount: "0",
             discountType: ""
         },
         tax: {
             type: "",
-            value: "0"
+            amount: "0"
         },
         vat: {
             type: "",
-            value: "0"
+            amount: "0"
         },
         videoProvider: "",
         videoLink: "",
@@ -40,19 +41,19 @@ export default function ProductProvider({ children }) {
         pdfSpecification: "",
 
         // Price & Stock
-        colors: [],
-        attributes: [],
+        // colors: [],
+        // attributes: [],
         unitPrice: "",
-        discountDate: "",
-        discount: "",
-        discountType: "",
+        // discountDate: "",
+        // discount: "",
+        // discountType: "",
         setPoint: "",
         quantity: "",
         sku: "",
-        externalLink: "",
-        externalLinkButtonText: "",
+        // externalLink: "",
+        // externalLinkButtonText: "",
         lowStockQuantityWarning: "",
-        showStockQuantity: "",
+        quantity: "",
         showStockWithTextOnly: "",
         hideStock: "",
 
@@ -62,7 +63,7 @@ export default function ProductProvider({ children }) {
         metaImage: "",
 
         // Shipping Configuration
-        shippingConfiguration: {
+        shippingConfig: {
             cashOnDelivery: "",
             freeShipping: "",
             flatRate: "",
@@ -75,12 +76,17 @@ export default function ProductProvider({ children }) {
 
         // Frequently Bought
         frequentlyBought: {
-            selectionType: "",
+            // selectionType: "",
             products: [],
-            category: ""
+            categories: [
+                {
+                    category: "",
+                    subcategories: [{ subcategory: "", items: [] }]
+                }
+            ],
+            category: "",
         }
     });
-
 
     const [allProducts, setAllProducts] = useState([
 
@@ -89,23 +95,16 @@ export default function ProductProvider({ children }) {
     const [fetchProducts, setFetchProducts] = useState(false)
 
 
-    useEffect(() => {
-        const fetchAllProducts = async () => {
-            const response = await apiInstance.get('/products/');
-
-            setAllProducts(response.data.data)
-            setFetchProducts(false)
-
-
-        }
-        fetchAllProducts();
-    }, [fetchProducts])
+    // useEffect(() => {
+    //     const fetchAllProducts = async () => {
+    //         const response = await axios.get('/products/');
+    //         setAllProducts(response.data.data)
+    //         setFetchProducts(false)
+    //     }
+    //     fetchAllProducts();
+    // }, [fetchProducts])
 
     console.log(allProducts)
-
-
-
-
     return (
         <ProductContext.Provider value={{ productData, setProductData, allProducts, setAllProducts, setFetchProducts }}>
             {children}
