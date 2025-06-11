@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import  { useState } from "react";
+
 import {
     FaBold,
     FaItalic,
@@ -23,8 +24,8 @@ import ContactInfo from "./Footer/Contactinfo";
 import Linkwidgetone from "./Footer/Linkwidgetone";
 import Footerbottom from "./Footer/Footerbottom";
 import Socialwidget from "./Footer/Socialwidget";
-import Downloadapp from "./Footer/Downloadapp";
-import Paymentwidget from "./Footer/Paymentwidget";
+// import Downloadapp from "./Footer/Downloadapp";
+// import Paymentwidget from "./Footer/Paymentwidget";
 import { Socialingo } from "./Footer/Socialingo";
 
 const FooterWidget = () => {
@@ -107,17 +108,17 @@ const FooterWidget = () => {
 
     return (
         <div className="bg-white min-h-screen py-6 px-4 sm:px-8">
-            {/* Header */}
+            
             <h2 className="text-xl font-semibold text-gray-900 mb-2">Footer Widget</h2>
             <div className="border-b border-gray-300 mb-4"></div>
 
-            {/* Language Tabs */}
+           
             <div className="bg-white rounded-lg shadow border border-gray-200 mb-8">
                 
-                {/* Footer Info Widget */}
+               
                <FooterInfo title={title} setTitle={setTitle} description={description} setDescription={setDescription} handleUpdate={handleUpdate}/>
                
-                {/* Contact Info Widget */}
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <ContactInfo  handleUpdate={handleUpdate} handleFileChangefile={handleFileChangefile} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/>
                 <Socialingo/>
@@ -129,33 +130,15 @@ const FooterWidget = () => {
                 <h1 className="text-lg font-semibold mb-4 ml-4 mr-4">Footer Bottom</h1>
                 <div className="border-b border-gray-300 mb-4 ml-4 mr-4"></div>
 
-                {/* Footer Bottom */}
-                {/* <Footerbottom handleUpdate={handleUpdate} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/> */}
-
-                {/* Social Link Widget */}   {/* Download App Link */} {/* Payment Methods Widget */}
+                
                 <Socialwidget  handleUpdate={handleUpdate} handleFileChangefile={handleFileChangefile} fileName={fileName} setShowLinks={setShowLinks} showLinks={showLinks} socialLinks={socialLinks} handleChange={handleChange} FaBold={FaBold} FaLink={FaLink} FaItalic={FaItalic} FaUnderline={FaUnderline} FaListUl={FaListUl} FaListOl={FaListOl} MdOutlineFormatClear={MdOutlineFormatClear} MdFormatColorText={MdFormatColorText} FaTable={FaTable} FaImage={FaImage} FaVideo={FaVideo} FaCode={FaCode} FaUndo={FaUndo} FaRedo={FaRedo}/>
 
               
 
-                 {/* <Downloadapp /> */}
-
-                
-                  {/* <Paymentwidget handleFileChangefile={handleFileChangefile} fileName={fileName}/> */}
+                 
 
             </div>
-            {/* <div className="text-right mt-3">
-                            <button
-                                onClick={handleUpdate}
-                                className="bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-6 rounded shadow-sm"
-                            >
-                                Update
-                            </button>
-                        </div> */}
-
-           
-
-
-            {/* About Widget */}
+            
 
         </div>
     );
