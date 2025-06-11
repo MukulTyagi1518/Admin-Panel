@@ -149,7 +149,7 @@ import Editpage from "./components/websetting/Editpage.jsx";
 import Headerpage from "./components/websetting/Headerpage.jsx";
 
 // import FooterWidget from "./components/websetting/FooterPage.jsx"
-import FooterWidget from "./components/websetting/FooterPage.jsx"
+// import FooterWidget from "./components/websetting/FooterPage.jsx"
 import Appeareance from "./components/websetting/Appearence.jsx"
 
 import Settings from "./components/marketing/Notification/Settings.js";
@@ -588,7 +588,7 @@ function App() {
 
               
 
-              <Route path="/web-settings/footer" element={<FooterWidget />} />
+              {/* <Route path="/web-settings/footer" element={<FooterWidget />} /> */}
               <Route path="/web-settings/apearence" element={<Appeareance />} />
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/admin-chat" element={<AdminChat />} />
