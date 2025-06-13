@@ -175,6 +175,9 @@ import PrivacyEditor from "./components/Contenrmangement/Privacypolicy.js";
 import TermsEditor from "./components/Contenrmangement/Termscondition.js";
 import ContactUs from "./components/websetting/ContactUs.jsx" 
 import AdminChat from "./components/AdminChat.js"
+import ForgotPassword from "./pages/ForgotPassword.js";
+import ProfileForm from "./components/ProfileForm/index.js";
+import RegisterPage from "./pages/RegisterPage.js";
 function App() {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -299,6 +302,9 @@ function App() {
               />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/verify-otp" element={<VerifyOtp />} />
+              <Route path="/forgot-password" element={<ForgotPassword/>} />
+                <Route path="/profile" element={<ProfileForm/>} />
+                <Route path="/register" element={<RegisterPage/>} />
               <Route path="/" element={<Dashboard />} />
               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/preorders" element={<PreordersPage />} />

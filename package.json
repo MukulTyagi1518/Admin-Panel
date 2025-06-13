@@ -12,6 +12,7 @@
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.0",
         "@headlessui/react": "^2.2.1",
+        "@lottiefiles/dotlottie-react": "^0.14.1",
         "@mui/icons-material": "^7.0.2",
         "@mui/material": "^7.0.2",
         "@testing-library/dom": "^10.4.0",
@@ -53,9 +54,8 @@
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build --remote base",
         "start": "craco start",
-"build": "craco build",
-"test": "craco test",
-
+        "build": "craco build",
+        "test": "craco test",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
