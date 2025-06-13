@@ -1,7 +1,3 @@
-
-
-
-
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import {
@@ -198,6 +194,7 @@ import {
   Box
 } from "@mui/material";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import axios from "axios"; // ✅ Add this at the top
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -219,16 +216,28 @@ function RegisterPage() {
     }));
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-
+  
     if (userData.password !== userData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-
-    console.log("Registering user:", userData);
-    navigate("/otpverify");
+  
+    try {
+      const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/admin-login/register", userData);
+      
+      if (response.status === 201) {
+        alert(response.data.message); // Optional: show success message
+        navigate("/otpverify");
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message || "Registration failed");
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    }
   };
 
   return (

@@ -36,8 +36,8 @@
 //         <svg viewBox="0 0 1921 819.8" className="w-full h-auto">
 //           <defs>
 //             <linearGradient id="waveGradientAlt" x1="0" y1="0" x2="1" y2="1">
-//               <stop offset="0%" stopColor="#87CEEB" /> 
-//               <stop offset="100%" stopColor="#40E0D0" /> 
+//               <stop offset="0%" stopColor="#87CEEB" />
+//               <stop offset="100%" stopColor="#40E0D0" />
 //             </linearGradient>
 //           </defs>
 //           <path
@@ -63,8 +63,6 @@
 //           />
 //         </svg>
 //       </div>
-
-
 
 //       {/* Main Card */}
 //       <div className="relative z-10 bg-white shadow-2xl rounded-2xl flex flex-col md:flex-row overflow-hidden w-full max-w-5xl">
@@ -187,12 +185,11 @@
 // };
 
 // export default ForgotPasswordAlt;
-
-
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -200,22 +197,40 @@ const ForgotPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpSent, setOtpSent] = useState(false);
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!showResetFields) {
-      // Simulate sending OTP
-      setOtpSent(true);
-      setShowResetFields(true);
+      try {
+        const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/admin-login/forgot-password", {
+          email,
+        });
+        alert(response.data.message);
+        setOtpSent(true);
+        setShowResetFields(true);
+      } catch (error) {
+        alert(error.response?.data?.message || "Something went wrong");
+      }
     } else {
       if (newPassword !== confirmPassword) {
         alert("Passwords do not match!");
         return;
       }
 
-      // Simulate reset and redirect
-      navigate("/login");
+      try {
+        const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/admin-login/reset-password", {
+          email,
+          otp,
+          newPassword,
+        });
+        alert(response.data.message);
+        navigate("/login");
+      } catch (error) {
+        alert(error.response?.data?.message || "Failed to reset password");
+      }
     }
   };
 
@@ -269,30 +284,46 @@ const ForgotPassword = () => {
             }}
           >
             {otpSent
-              ? " OTP Sent Successfully!"
+              ? "OTP Sent Successfully!"
               : "No worries! We'll send you a reset link or OTP to your email."}
           </Typography>
 
           <Box component="form" onSubmit={handleSubmit}>
             {!showResetFields && (
-             <TextField
-  label="Email Address"
-  type="email"
-  variant="standard"
-  fullWidth
-  required
-  sx={{
-    marginBottom: 4,
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#A855F7", // purple underline after focus
-    },
-  }}
-/>
-
+              <TextField
+                label="Email Address"
+                type="email"
+                variant="standard"
+                fullWidth
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{
+                  marginBottom: 4,
+                  "& .MuiInput-underline:after": {
+                    borderBottomColor: "#A855F7",
+                  },
+                }}
+              />
             )}
 
             {showResetFields && (
               <>
+                <TextField
+                  label="OTP"
+                  type="text"
+                  variant="standard"
+                  fullWidth
+                  required
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  sx={{
+                    marginBottom: 4,
+                    "& .MuiInput-underline:after": {
+                      borderBottomColor: "#06B6D4",
+                    },
+                  }}
+                />
                 <TextField
                   label="New Password"
                   type="password"

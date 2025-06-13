@@ -7,7 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useProductContext } from "../../productContex";
 import Switch from "../Switch";
 import ProductCategory from "../ProductCategory";
-import axios from "../../utils/axios";
+import axios from "axios";
 
 export default function PreOrderFaq() {
   // const [quantity, setQuantity] = React.useState(1);

@@ -8,6 +8,7 @@ import { useAdminContext } from "../adminContext";
 import { TextField } from "@mui/material";
 
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import axios from 'axios'
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const { adminData, setAdminData } = useAdminContext();
@@ -23,26 +24,31 @@ function LoginPage() {
     }));
   };
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
 
-  //   const otpCode = Math.floor(100000 + Math.random() * 900000);
-  //   await setAdminData((prev) => ({
-  //     ...prev,
-  //     mailOtp: otpCode,
-  //   }));
-
-  //   await api.post("/admin/send-mail-otp", {
-  //     adminEmail: adminData.email,
-  //     otp: otpCode,
-  //   });
-
-  //   navigate("/verify-otp");
-  // };
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/");
+    
+    
+    try {
+      const response = await axios.post("https://e-commerce-backend-1-0.onrender.com/api/admin-login/login", {
+        email: adminData.email,
+        password: adminData.password,
+      });
+  
+      if (response.status === 200) {
+        // ✅ Successful login
+        localStorage.setItem("isAdminLoggedIn", "true"); // Set login flag
+
+        console.log("Login successful:", response.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message || "Login failed");
+      } else {
+        alert("Something went wrong");
+      }
+    }
   };
 
 
